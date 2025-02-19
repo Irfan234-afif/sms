@@ -1,0 +1,1 @@
+const r={isRequired(e="Input"){return{required:!0,message:`${e} wajib diisi.`}},isNumber(e="Input"){return{type:"number",message:`${e} harus berupa angka.`}},isEmail(e="Input"){return{type:"email",message:`${e} harus berupa alamat email yang valid.`}},isLength(e,a){return{min:e,max:a,message:`Karakter harus antara ${e} hingga ${a}.`,trigger:"change"}}};export{r as f};

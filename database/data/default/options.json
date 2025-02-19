@@ -1,0 +1,15 @@
+{
+    "schoolInformationSources": [
+        "SCHOOL_WEBSITE",
+        "CHAT_GROUP",
+        "SCHOOL_BULLETIN",
+        "NOTICE_BOARD",
+        "CIRCULAR_LETTER",
+        "PARENT_MEETING",
+        "TEACHERS_STAFF",
+        "EDUCATION_DEPARTMENT",
+        "PRINT_MEDIA",
+        "EDUCATION_FORUM"
+    ],
+    "religions": ["ISLAM", "CHRISTIAN", "CATHOLIC", "HINDU", "BUDDHIST", "CONFUCIAN", "OTHER"]
+}

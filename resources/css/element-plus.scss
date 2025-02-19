@@ -1,0 +1,10 @@
+/* theme color */
+:root {
+  --el-color-primary: #1d4ed8;
+  --el-color-danger: #dc2626;
+  --el-color-warning: #eab308;
+  --el-color-success: #16a34a;
+  --el-border-radius-base:11px;
+}
+
+@import "element-plus/dist/index.css";

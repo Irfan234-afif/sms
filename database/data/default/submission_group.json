@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Install & Repair",
+        "code": "INSTALL_REPAIR",
+        "reference_code": "IRP",
+        "reference_number": 1
+    },
+    {
+        "name": "Design",
+        "code": "DESIGN",
+        "reference_code": "DSN",
+        "reference_number": 1
+    },
+    {
+        "name": "Documentation",
+        "code": "DOCUMENTATION",
+        "reference_code": "DOC",
+        "reference_number": 1
+    },
+    {
+        "name": "Broadcast",
+        "code": "BROADCAST",
+        "reference_code": "BRC",
+        "reference_number": 1
+    },
+    {
+        "name": "Media Post",
+        "code": "MEDIA_POST",
+        "reference_code": "MDP",
+        "reference_number": 1
+    },
+    {
+        "name": "Card",
+        "code": "CARD",
+        "reference_code": "CRD",
+        "reference_number": 1
+    },
+    {
+        "name": "Vehicle",
+        "code": "VEHICLE",
+        "reference_code": "VHC",
+        "reference_number": 1
+    },
+    {
+        "name": "Material",
+        "code": "MATERIAL",
+        "reference_code": "MTL",
+        "reference_number": 1
+    },
+    {
+        "name": "Event",
+        "code": "EVENT",
+        "reference_code": "EVT",
+        "reference_number": 1
+    },
+    {
+        "name": "Attendance",
+        "code": "ATTENDANCE",
+        "reference_code": "ATD",
+        "reference_number": 1
+    },
+    {
+        "name": "Equipment",
+        "code": "EQUIPMENT",
+        "reference_code": "EQP",
+        "reference_number": 1
+    },
+    {
+        "name": "Outstation",
+        "code": "OUTSTATION",
+        "reference_code": "OTS",
+        "reference_number": 1
+    },
+    {
+        "name": "Leave",
+        "code": "LEAVE",
+        "reference_code": "LEV",
+        "reference_number": 1
+    },
+    {
+        "name": "Training",
+        "code": "TRAINING",
+        "reference_code": "TRN",
+        "reference_number": 1
+    },
+    {
+        "name": "Resignation",
+        "code": "RESIGNATION",
+        "reference_code": "RSN",
+        "reference_number": 1
+    }
+]

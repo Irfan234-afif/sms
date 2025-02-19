@@ -1,0 +1,1 @@
+const c={init(){return new Promise((t,r)=>{let n="https://app.sandbox.midtrans.com/snap/snap.js",s;if(document.querySelector(`script[src="${n}"]`)){t();return}const e=document.createElement("script");e.src=n,e.setAttribute("data-client-key",s),e.onload=t,e.onerror=r,document.head.appendChild(e)})}};export{c as m};

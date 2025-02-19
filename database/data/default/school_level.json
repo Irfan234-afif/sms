@@ -1,0 +1,136 @@
+[
+    {
+        "title": "Kindergarten",
+        "code": "KINDERGARTEN",
+        "sort_number": 1,
+        "phases": [
+            {
+                "title": "Foundation Phase",
+                "sort_number": 1,
+                "grades": [
+                    {
+                        "title": "1",
+                        "sort_number": 1
+                    },
+                    {
+                        "title": "2",
+                        "sort_number": 2
+                    },
+                    {
+                        "title": "3",
+                        "sort_number": 3
+                    },
+                    {
+                        "title": "4",
+                        "sort_number": 4
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Elementary",
+        "code": "ELEMENTARY",
+        "sort_number": 2,
+        "phases": [
+            {
+                "title": "Phase A",
+                "sort_number": 1,
+                "grades": [
+                    {
+                        "title": "1",
+                        "sort_number": 1
+                    },
+                    {
+                        "title": "2",
+                        "sort_number": 2
+                    }
+                ]
+            },
+            {
+                "title": "Phase B",
+                "sort_number": 2,
+                "grades": [
+                    {
+                        "title": "3",
+                        "sort_number": 3
+                    },
+                    {
+                        "title": "4",
+                        "sort_number": 4
+                    }
+                ]
+            },
+            {
+                "title": "Phase C",
+                "sort_number": 3,
+                "grades": [
+                    {
+                        "title": "5",
+                        "sort_number": 5
+                    },
+                    {
+                        "title": "6",
+                        "sort_number": 6
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Middle",
+        "code": "MIDDLE",
+        "sort_number": 3,
+        "phases": [
+            {
+                "title": "Phase D",
+                "sort_number": 1,
+                "grades": [
+                    {
+                        "title": "7",
+                        "sort_number": 7
+                    },
+                    {
+                        "title": "8",
+                        "sort_number": 8
+                    },
+                    {
+                        "title": "9",
+                        "sort_number": 9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "High",
+        "code": "HIGH",
+        "sort_number": 4,
+        "phases": [
+            {
+                "title": "Phase E",
+                "sort_number": 1,
+                "grades": [
+                    {
+                        "title": "10",
+                        "sort_number": 10
+                    }
+                ]
+            },
+            {
+                "title": "Phase F",
+                "sort_number": 2,
+                "grades": [
+                    {
+                        "title": "11",
+                        "sort_number": 11
+                    },
+                    {
+                        "title": "12",
+                        "sort_number": 12
+                    }
+                ]
+            }
+        ]
+    }
+]

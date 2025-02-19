@@ -1,0 +1,312 @@
+[
+    {
+        "school_level": "KINDERGARTEN",
+        "stages": [
+            {
+                "title": "Observasi Calon Siswa",
+                "type": "PRE",
+                "sort_number": 1,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Lanjut",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Penyampaian Hasil Observasi Calon Siswa",
+                "type": "PRE",
+                "sort_number": 2,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Lanjut",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Wawancara Wali",
+                "type": "PRE",
+                "sort_number": 3,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Lulus",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    },
+                    {
+                        "title": "Gagal",
+                        "sort_number": 3,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Seragam",
+                "type": "POST",
+                "sort_number": 1,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Buku",
+                "type": "POST",
+                "sort_number": 2,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "school_level": "ELEMENTARY",
+        "stages": [
+            {
+                "title": "Wawancara Wali",
+                "type": "PRE",
+                "sort_number": 3,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Lulus",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    },
+                    {
+                        "title": "Gagal",
+                        "sort_number": 3,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Seragam",
+                "type": "POST",
+                "sort_number": 1,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Buku",
+                "type": "POST",
+                "sort_number": 2,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "school_level": "MIDDLE",
+        "stages": [
+            {
+                "title": "Wawancara Wali",
+                "type": "PRE",
+                "sort_number": 3,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Lulus",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    },
+                    {
+                        "title": "Gagal",
+                        "sort_number": 3,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Seragam",
+                "type": "POST",
+                "sort_number": 1,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Buku",
+                "type": "POST",
+                "sort_number": 2,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "school_level": "HIGH",
+        "stages": [
+            {
+                "title": "Wawancara Wali",
+                "type": "PRE",
+                "sort_number": 3,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Lulus",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    },
+                    {
+                        "title": "Gagal",
+                        "sort_number": 3,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Seragam",
+                "type": "POST",
+                "sort_number": 1,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            },
+            {
+                "title": "Kelengkapan Buku",
+                "type": "POST",
+                "sort_number": 2,
+                "statuses": [
+                    {
+                        "title": "Menunggu",
+                        "sort_number": 1,
+                        "color": "",
+                        "is_finished": false
+                    },
+                    {
+                        "title": "Selesai",
+                        "sort_number": 2,
+                        "color": "",
+                        "is_finished": true
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "name": "SAFFix",
+        "email": "admin@saffix.id",
+        "password": "admin123",
+        "roles": ["System Admin"]
+    },
+    {
+        "name": "HBICS",
+        "email": "admin@hbics.sch.id",
+        "password": "admin123",
+        "roles": ["Site Admin"]
+    }
+]
