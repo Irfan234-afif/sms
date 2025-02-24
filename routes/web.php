@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified'])
                             ->name('.admissionStage')
                             ->group(function () {
                                 Route::get('/', [AdmissionStageController::class, 'index']);
+                                Route::post('save', [AdmissionStageController::class, 'save'])->name('.save');
                             });
                     });
             });

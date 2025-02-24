@@ -8,7 +8,7 @@ import DefaultButton from '@/Components/DefaultButton.vue';
 import Badge from '@/Components/Badge.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 const breadcrumbs = [
-  { label: 'Home', href: route('office') },
+  { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
   { label: 'Pendaftaran Siswa Baru', href: route('office.icc.activity.admissionStudent') },
   { label: 'Lihat', href: '#' },
@@ -55,11 +55,6 @@ export default {
   <OfficeLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
-      <div
-        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
-      >
-        <div class="w-full md:w-1/3"></div>
-      </div>
     </template>
     <template #sidebar>
       <ICCSidebar />
@@ -68,8 +63,7 @@ export default {
       <!-- Data -->
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">
         <div class="px-4 2xl:px-0">
-          <h1 class="text-base font-medium text-gray-900 dark:text-white md:pb-4">Detail Pendaftaran Siswa Baru</h1>
-          <div class="grid gap-4 py-4 sm:gap-8 md:grid-cols-2 md:py-6">
+          <div class="grid gap-4 pb-4 sm:gap-8 md:grid-cols-2 md:pb-6">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <div class="flex items-center space-x-4">

@@ -62,8 +62,7 @@ export default {
       <!-- Data -->
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">
         <div class="px-4 2xl:px-0">
-          <h1 class="text-base font-medium text-gray-900 dark:text-white md:pb-4">Detail Pendaftaran Siswa Baru</h1>
-          <div class="grid gap-4 py-4 sm:gap-8 md:grid-cols-2 md:py-6">
+          <div class="grid gap-4 pb-4 sm:gap-8 md:grid-cols-2 md:pb-6">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <div class="flex items-center space-x-4">

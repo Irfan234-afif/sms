@@ -65,7 +65,6 @@ export default {
                   <th scope="col" class="p-4">Nomor Pendaftaran</th>
                   <th scope="col" class="p-4">Terdaftar di Sekolah</th>
                   <th scope="col" class="p-4">Tanggal Terdaftar</th>
-                  <th scope="col" class="p-4">Terakhir di Perbarui</th>
                   <th scope="col" class="p-4">Status</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
@@ -115,9 +114,6 @@ export default {
                     <div v-else>
                       <Badge type="dark">Belum Terdaftar</Badge>
                     </div>
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-3">
-                    {{ admission_student.updated_at }}
                   </td>
                   <td class="px-4 py-3">
                     <Badge v-if="admission_student.status == 'NEW'" type="default">{{

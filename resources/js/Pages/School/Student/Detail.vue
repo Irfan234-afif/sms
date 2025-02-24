@@ -66,7 +66,7 @@ export default {
           <h1 class="text-base font-medium text-gray-900 dark:text-white md:pb-2">
             {{ student.data.profile.name }}
           </h1>
-          <div class="grid gap-4 py-2 sm:gap-8 md:grid-cols-2 md:py-4">
+          <div class="grid gap-4 pb-2 sm:gap-8 md:grid-cols-2 md:pb-4">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <div class="flex items-center space-x-4">

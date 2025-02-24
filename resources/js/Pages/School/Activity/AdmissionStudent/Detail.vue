@@ -7,6 +7,12 @@ import DefaultButton from '@/Components/DefaultButton.vue';
 import StageForm from './StageForm.vue';
 import Badge from '@/Components/Badge.vue';
 import AcceptForm from './AcceptForm.vue';
+import Breadcrumb from '@/Components/Breadcrumb.vue';
+const breadcrumbs = [
+  { label: 'Sekolah', href: route('school') },
+  { label: 'Pendaftaran Siswa Baru', href: route('school.activity.admissionStudent') },
+  { label: 'Lihat', href: '#' },
+];
 </script>
 
 <script>
@@ -49,13 +55,6 @@ export default {
   <SchoolLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
-      <div
-        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
-      >
-        <div class="w-full md:w-1/3">
-          <Search :search_params="search_params" />
-        </div>
-      </div>
     </template>
     <template #sidebar>
       <SchoolSidebar />
@@ -66,7 +65,7 @@ export default {
         <div class="px-4 2xl:px-0">
           <!--  -->
 
-          <div class="grid gap-4 py-2 sm:gap-8 md:grid-cols-2 md:py-4">
+          <div class="grid gap-4 pb-2 sm:gap-8 md:grid-cols-2 md:pb-4">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <div class="flex items-center space-x-4">
@@ -584,6 +583,7 @@ export default {
                     {{ stage.description }}
                   </p>
                   <DefaultButton
+                    v-if="stage.scheduled_at"
                     type="light"
                     @click="
                       openModal({

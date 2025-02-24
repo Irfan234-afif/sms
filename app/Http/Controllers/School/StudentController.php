@@ -23,7 +23,6 @@ class StudentController extends Controller
 
         $students = $students->with('profile')
             ->with('school.area')
-            ->with('school_year')
             ->with('school_grade')
             ->latest()
             ->paginate(15);
@@ -43,7 +42,6 @@ class StudentController extends Controller
         $student = Student::where('school_national_id', $school_national_id)
             ->with('profile')
             ->with('school.area')
-            ->with('school_year')
             ->with('school_grade')
             ->firstOrFail();
 

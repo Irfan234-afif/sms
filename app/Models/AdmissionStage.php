@@ -10,6 +10,14 @@ class AdmissionStage extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $fillable = [
+        'model_type',
+        'model_id',
+        'type',
+        'title',
+        'sort_number',
+    ];
+
     public function model()
     {
         return $this->morphTo();
