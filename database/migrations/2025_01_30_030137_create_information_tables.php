@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('name');
             $table->string('relation'); // FATHER, MOTHER, ETC
             $table->string('national_identity_number')->nullable()->unique();
@@ -29,7 +29,7 @@ return new class extends Migration
         Schema::create('academic_records', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('title');
             $table->string('institution');
             $table->string('attachment')->nullable();
@@ -41,7 +41,7 @@ return new class extends Migration
         Schema::create('training_records', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('title');
             $table->string('institution');
             $table->string('attachment')->nullable();
@@ -53,7 +53,7 @@ return new class extends Migration
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('type');
             $table->string('major');
             $table->string('minor');
@@ -65,7 +65,7 @@ return new class extends Migration
         Schema::create('experiences', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('position');
             $table->string('institution');
             $table->date('start_date');
@@ -78,7 +78,7 @@ return new class extends Migration
         Schema::create('certifications', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('type');
             $table->string('subject');
             $table->string('institution');
@@ -91,7 +91,7 @@ return new class extends Migration
         Schema::create('community_involvements', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('title');
             $table->string('location');
             $table->date('start_date')->nullable();
@@ -106,7 +106,7 @@ return new class extends Migration
         Schema::create('honor_prizes', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('title');
             $table->string('level');
             $table->date('award_date');
@@ -118,7 +118,7 @@ return new class extends Migration
         Schema::create('language_skills', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('title');
             $table->string('reading');
             $table->string('writing');
