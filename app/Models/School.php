@@ -36,4 +36,9 @@ class School extends Model
     {
         return $this->morphMany(AdmissionStage::class, 'model');
     }
+
+    public function admission_student_quotas()
+    {
+        return $this->hasMany(AdmissionStudentQuota::class, 'school_id', 'school_id');
+    }
 }

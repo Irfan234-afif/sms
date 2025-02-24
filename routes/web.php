@@ -11,6 +11,7 @@ use App\Http\Controllers\Office\HCM\HCMController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
+use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
@@ -63,6 +64,14 @@ Route::middleware(['auth', 'verified'])
                             ->group(function () {
                                 Route::get('/', [AdmissionStageController::class, 'index']);
                                 Route::post('save', [AdmissionStageController::class, 'save'])->name('.save');
+                            });
+                        // admission student quota routes
+                        Route::prefix('admission-student-quota')
+                            ->name('.admissionStudentQuota')
+                            ->group(function () {
+                                Route::get('/', [AdmissionStudentQuotaController::class, 'index']);
+                                Route::get('get-student-quota', [AdmissionStudentQuotaController::class, 'getStudentQuota'])->name('.getStudentQuota');
+                                Route::post('save', [AdmissionStudentQuotaController::class, 'save'])->name('.save');
                             });
                     });
             });

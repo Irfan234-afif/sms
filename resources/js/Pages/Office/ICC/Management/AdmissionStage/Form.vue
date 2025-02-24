@@ -18,7 +18,7 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      school: this.propertyModal?.data?.school || '',
+      school: this.propertyModal?.data?.school,
       admission_stages: [],
     };
   },

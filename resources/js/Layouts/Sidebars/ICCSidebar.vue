@@ -227,6 +227,13 @@ import { Link } from '@inertiajs/vue3';
                 >Tahap Pendaftaran</Link
               >
             </li>
+            <li>
+              <Link
+                :href="route('office.icc.management.admissionStudentQuota')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Kuota Pendaftaran</Link
+              >
+            </li>
           </ul>
         </li>
         <li>
