@@ -222,6 +222,13 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-management" class="hidden space-y-2 py-2">
             <li>
               <Link
+                :href="route('office.icc.management.schoolYear')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Tahun Ajaran</Link
+              >
+            </li>
+            <li>
+              <Link
                 :href="route('office.icc.management.admissionStage')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Tahap Pendaftaran</Link

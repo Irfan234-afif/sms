@@ -45,7 +45,9 @@ return new class extends Migration
         Schema::create('school_years', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->year('start_year')->unique();
+            $table->year('end_year');
             $table->boolean('is_active')->default(false);
             $table->timestampsTz();
             $table->softDeletes();

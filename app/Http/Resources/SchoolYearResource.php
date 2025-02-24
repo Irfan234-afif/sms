@@ -14,6 +14,13 @@ class SchoolYearResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'name' => $this->name,
+            'start_year' => $this->start_year,
+            'end_year' => $this->end_year,
+            'is_active' => (bool) $this->is_active,
+            'admission_student_quotas' => $this->whenLoaded('admission_student_quotas', fn() => AdmissionStudentQuotaResource::collection($this->admission_student_quotas)),
+        ];
     }
 }

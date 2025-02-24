@@ -99,7 +99,7 @@ class AdmissionStudentController extends Controller
 
     public function optionSchoolYear()
     {
-        $school_years = SchoolYear::query();
+        $school_years = SchoolYear::where('is_active', true);
 
         if (request()->has('search')) {
             $school_years->where('name', 'like', '%' . request('search') . '%');

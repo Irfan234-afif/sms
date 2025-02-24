@@ -12,6 +12,7 @@ use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as Activ
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
+use App\Http\Controllers\Office\ICC\Management\SchoolYearController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
@@ -58,6 +59,14 @@ Route::middleware(['auth', 'verified'])
                 Route::prefix('management')
                     ->name('.management')
                     ->group(function () {
+                        // school year routes
+                        Route::prefix('school-year')
+                            ->name('.schoolYear')
+                            ->group(function () {
+                                Route::get('/', [SchoolYearController::class, 'index']);
+                                Route::post('save', [SchoolYearController::class, 'save'])->name('.save');
+                                Route::delete('delete', [SchoolYearController::class, 'delete'])->name('.delete');
+                            });
                         // admission stage routes
                         Route::prefix('admission-stage')
                             ->name('.admissionStage')

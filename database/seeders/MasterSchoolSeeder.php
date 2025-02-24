@@ -33,6 +33,8 @@ class MasterSchoolSeeder extends Seeder
                     $school_year_created = SchoolYear::firstOrCreate([
                         'name' => $school_year->name,
                     ], [
+                        'start_year' => $school_year->start_year,
+                        'end_year' => $school_year->end_year,
                         'is_active' => $school_year->is_active,
                     ]);
 
