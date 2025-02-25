@@ -16,4 +16,9 @@ class SubmissionGroup extends Model
         'reference_code',
         'reference_number',
     ];
+
+    public function approvers()
+    {
+        return $this->hasMany(SubmissionApprover::class, 'submission_group_id');
+    }
 }

@@ -51,9 +51,11 @@ import { Link } from '@inertiajs/vue3';
           </Link>
         </li>
         <li>
-          <Link
-            href="#"
-            class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          <button
+            type="button"
+            class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            aria-controls="dropdown-submission"
+            data-collapse-toggle="dropdown-submission"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,8 +74,30 @@ import { Link } from '@inertiajs/vue3';
               <path d="M19 22v.01" />
               <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" />
             </svg>
-            <span class="ml-3 flex-1 whitespace-nowrap">Permintaan</span>
-          </Link>
+            <span class="ml-3 flex-1 whitespace-nowrap text-left">Permintaan</span>
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <ul id="dropdown-submission" class="hidden space-y-2 py-2">
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.material')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Material</Link
+              >
+            </li>
+          </ul>
         </li>
         <li>
           <Link

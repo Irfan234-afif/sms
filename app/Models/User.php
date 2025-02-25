@@ -22,6 +22,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'profile_id',
         'name',
         'email',
         'phone',
@@ -53,6 +54,6 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->belongsTo(Profile::class);
+        return $this->hasOne(Profile::class, 'id', 'profile_id');
     }
 }

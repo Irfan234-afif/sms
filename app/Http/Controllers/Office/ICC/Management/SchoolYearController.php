@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Office\ICC\Management;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SchoolYearResource;
-use App\Models\School;
 use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +19,7 @@ class SchoolYearController extends Controller
             $school_years->where('name', 'like', '%' . request('search') . '%');
         }
 
-        $school_years = $school_years->orderBy('start_year')
+        $school_years = $school_years->orderByDesc('start_year')
             ->paginate(15);
 
         $data = [
@@ -73,7 +72,7 @@ class SchoolYearController extends Controller
         DB::beginTransaction();
 
         try {
-            $school_year = SchoolYear::where('uuid', request('school_year'))->first();
+            $school_year = SchoolYear::where('uuid', request('school_year'))->firstOrFail();
 
             $school_year->delete();
 

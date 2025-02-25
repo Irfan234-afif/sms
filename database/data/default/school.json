@@ -1,30 +1,30 @@
 [
-    {
-        "name": "HHK Harapan Bangsa",
-        "level": "KINDERGARTEN",
-        "email": "admin.hhk@hbics.sch.id",
-        "use_major": false,
-        "use_subject": false
-    },
-    {
-        "name": "SDK Harapan Bangsa",
-        "level": "ELEMENTARY",
-        "email": "admin.sdk@hbics.sch.id",
-        "use_major": false,
-        "use_subject": true
-    },
-    {
-        "name": "SMPK Harapan Bangsa",
-        "level": "MIDDLE",
-        "email": "admin.smpk@hbics.sch.id",
-        "use_major": false,
-        "use_subject": true
-    },
-    {
-        "name": "SMAK Harapan Bangsa",
-        "level": "HIGH",
-        "email": "admin.smak@hbics.sch.id",
-        "use_major": true,
-        "use_subject": true
-    }
+  {
+    "name": "KB & TK Happy Holy Kids",
+    "level": "KINDERGARTEN",
+    "email": "admin.hhk@hbics.sch.id",
+    "use_major": false,
+    "use_subject": false
+  },
+  {
+    "name": "SDK Harapan Bangsa",
+    "level": "ELEMENTARY",
+    "email": "admin.sdk@hbics.sch.id",
+    "use_major": false,
+    "use_subject": true
+  },
+  {
+    "name": "SMPK Harapan Bangsa",
+    "level": "MIDDLE",
+    "email": "admin.smpk@hbics.sch.id",
+    "use_major": false,
+    "use_subject": true
+  },
+  {
+    "name": "SMAK Harapan Bangsa",
+    "level": "HIGH",
+    "email": "admin.smak@hbics.sch.id",
+    "use_major": true,
+    "use_subject": true
+  }
 ]

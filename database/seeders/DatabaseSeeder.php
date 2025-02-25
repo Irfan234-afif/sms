@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterEmployeeSeeder::class);
         // dummy
         $this->command->warn('Executing dummy seeder');
+        $this->call(DummySubmissionActivitySeeder::class);
         $this->call(DummyAdmissionStudentActivitySeeder::class);
     }
 }

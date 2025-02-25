@@ -30,7 +30,7 @@ class AdmissionStudentQuotaController extends Controller
             ->latest()
             ->paginate(15);
 
-        $school_years = SchoolYear::latest()->get();
+        $school_years = SchoolYear::orderByDesc('start_year')->get();
 
         $data = [
             'search_params' => [
@@ -48,11 +48,14 @@ class AdmissionStudentQuotaController extends Controller
         DB::beginTransaction();
 
         try {
+            $school = School::where('uuid', request('school'))->firstOrFail();
+            $school_year = SchoolYear::where('uuid', request('school_year'))->firstOrFail();
+
             foreach (request('admission_student_quotas') as $quota) {
                 AdmissionStudentQuota::updateOrCreate(
                     [
-                        'school_id' => $quota['school_id'],
-                        'school_year_id' => $quota['school_year_id'],
+                        'school_id' => $school->id,
+                        'school_year_id' => $school_year->id,
                         'school_grade_id' => $quota['school_grade_id'],
                     ],
                     [

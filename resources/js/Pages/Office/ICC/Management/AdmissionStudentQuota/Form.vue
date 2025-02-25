@@ -52,18 +52,15 @@ export default {
             route('office.icc.management.admissionStudentQuota.getStudentQuota', {
               school: this.form.school?.uuid,
               school_year: this.form.school_year?.uuid,
-              school_grade: this.form.school_grade?.uuid,
             }),
           )
           .then((response) => {
             this.admission_student_quotas = [];
             let admission_student_quotas = response.data;
-            if (admission_student_quotas) {
+            if (admission_student_quotas && admission_student_quotas.length > 0) {
               admission_student_quotas.forEach((item) => {
                 let obj = {
                   title: item.school_grade.title,
-                  school_id: item.school_id,
-                  school_year_id: item.school_year_id,
                   school_grade_id: item.school_grade_id,
                   max_quota: item.max_quota,
                   used_quota: item.used_quota,
@@ -73,12 +70,10 @@ export default {
               });
             } else {
               let school = this.propertyModal?.data?.school;
-              school_grades = school.level.grades;
+              let school_grades = school.level.grades;
               school_grades.forEach((item) => {
                 let obj = {
                   title: item.title,
-                  school_id: this.form.school.id,
-                  school_year_id: this.form.school_year_id,
                   school_grade_id: item.id,
                   max_quota: 0,
                   used_quota: 0,
@@ -98,6 +93,8 @@ export default {
     submit() {
       this.process = true;
       let requestPayload = {
+        school: this.form.school?.uuid,
+        school_year: this.form.school_year?.uuid,
         admission_student_quotas: this.admission_student_quotas,
       };
 

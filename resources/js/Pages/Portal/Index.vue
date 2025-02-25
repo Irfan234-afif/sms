@@ -1,11 +1,6 @@
 <script setup>
 import PortalLayout from '@/Layouts/PortalLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
-import Breadcrumb from '@/Components/Breadcrumb.vue';
-const breadcrumbs = [
-  { label: 'Wali', href: route('guardian') },
-  { label: 'Tagihan & Pembayaran', href: route('guardian.transactionPayment') },
-];
 </script>
 
 <template>

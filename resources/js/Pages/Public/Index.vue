@@ -9,11 +9,6 @@ export default {
 </script>
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import Breadcrumb from '@/Components/Breadcrumb.vue';
-const breadcrumbs = [
-  { label: 'Wali', href: route('guardian') },
-  { label: 'Tagihan & Pembayaran', href: route('guardian.transactionPayment') },
-];
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 defineProps({
@@ -515,6 +510,16 @@ defineProps({
                         data-nimg="1"
                         style="color: transparent"
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Yamaha_logo.svg/1280px-Yamaha_logo.svg.png"
+                      />
+                    </li>
+                    <li class="flex">
+                      <img
+                        loading="lazy"
+                        class="h-11 md:h-16"
+                        decoding="async"
+                        data-nimg="1"
+                        style="color: transparent"
+                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjd5WP6MZLQ1009-HusSUVWTw5ndxOnlqsCLHknHgacedWFd8mTCJ9B1MhniNmpvzChRKRTxS3-ckEMv-XsS_lWYvLowSg48LpP-RcuqnVgeKDEgFlB__GeqOSMvsBv6ESQECrhfEcmLTc/s1600/Bank+Panin+Samarinda.png"
                       />
                     </li>
                   </ul>

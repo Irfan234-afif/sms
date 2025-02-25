@@ -1162,7 +1162,7 @@ export default {
                         stroke-width="1.5"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-16 w-16 text-gray-500"
+                        class="h-14 w-14 text-gray-500"
                       >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
@@ -1345,7 +1345,7 @@ export default {
                           stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="h-16 w-16 text-gray-500"
+                          class="h-14 w-14 text-gray-500"
                         >
                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                           <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
@@ -1539,7 +1539,7 @@ export default {
                           stroke-width="1.5"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="h-16 w-16 text-gray-500"
+                          class="h-14 w-14 text-gray-500"
                         >
                           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                           <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />

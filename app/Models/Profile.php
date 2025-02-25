@@ -11,7 +11,6 @@ class Profile extends Model
     use GenerateUuid, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
         'national_id',
         'name',
         'birth_place',
@@ -29,6 +28,6 @@ class Profile extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class, 'profile_id');
     }
 }

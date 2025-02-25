@@ -436,7 +436,7 @@ export default {
       <div class="ms-3 text-xs font-medium">
         Ingin mengetahui simulasi biaya sekolah?
         <a
-          href="https://api.whatsapp.com/send?phone=6281350114557&text=Halo%2C%20saya%20membutuhkan%20simulasi%20biaya%20sekolah%20untuk%20anak%20saya.%20Dapatkah%20Anda%20membantu%3F"
+          href="https://api.whatsapp.com/send?phone=081140001557&text=Halo%2C%20saya%20membutuhkan%20simulasi%20biaya%20sekolah%20untuk%20anak%20saya.%20Dapatkah%20Anda%20membantu%3F"
           target="_blank"
           class="font-medium underline hover:no-underline"
           >Hubungi kami</a

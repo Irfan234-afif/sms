@@ -34,8 +34,8 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
     {
         $options = json_decode(file_get_contents('database/data/default/options.json'));
         $questionnaires = json_decode(file_get_contents('database/data/default/questionnaires.json'));
-
         $this->faker = Factory::create();
+        
         // Purchasing the admission form
         if (App::environment(['local', 'testing'])) {
             $customers = User::role(['System Admin', 'Site Admin', 'Guardian'])->get();

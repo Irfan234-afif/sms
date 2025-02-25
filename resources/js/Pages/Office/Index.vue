@@ -2,6 +2,8 @@
 import OfficeLayout from '@/Layouts/OfficeLayout.vue';
 import MyProfileSidebar from '@/Layouts/Sidebars/MyProfileSidebar.vue';
 import { Head } from '@inertiajs/vue3';
+import Breadcrumb from '@/Components/Breadcrumb.vue';
+const breadcrumbs = [{ label: 'Yayasan', href: route('office') }];
 </script>
 
 <template>
@@ -10,13 +12,6 @@ import { Head } from '@inertiajs/vue3';
   <OfficeLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
-      <div
-        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
-      >
-        <div class="w-full md:w-1/3">
-          <Search :search_params="search_params" />
-        </div>
-      </div>
     </template>
     <template #sidebar>
       <MyProfileSidebar />
@@ -158,79 +153,81 @@ import { Head } from '@inertiajs/vue3';
             </div>
           </div>
           <div class="pt-4 md:pt-8">
-            <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
-              <div class="space-y-4">
-                <div class="flex space-x-4">
-                  <img class="h-16 w-16 rounded-lg" src="/assets/icons/user-circle.png" alt="user photo" />
-                  <div>
-                    <span
-                      class="bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300 mb-2 inline-block rounded py-0.5 text-xs font-medium"
-                    >
-                      {{ $page.props.auth.user.email }}
-                    </span>
-                    <h2 class="flex items-center text-base font-medium leading-none text-gray-900 dark:text-white">
-                      {{ $page.props.auth.user.name }}
-                    </h2>
+            <div class="grid gap-4 pb-2 sm:gap-8 md:grid-cols-2 md:pb-4">
+              <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
+                <div class="space-y-4">
+                  <div class="flex items-center space-x-4">
+                    <img
+                      v-if="$page.props.auth.user.profile.avatar_path"
+                      :src="$page.props.auth.user.profile.avatar_path"
+                      class="h-20 w-20 rounded-lg object-cover"
+                    />
+                    <div v-else class="flex h-20 w-20 items-center justify-center rounded-lg bg-gray-100">
+                      <svg
+                        class="h-14 w-14 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        viewBox="0 0 24 24"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2 class="text-base font-medium text-gray-900 dark:text-white">
+                        {{ $page.props.auth.user.profile.name ?? '-' }}
+                      </h2>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">
+                        {{ $page.props.auth.user.email ?? '-' }}
+                      </p>
+                    </div>
                   </div>
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ $page.props.auth.user.profile.birth_place ?? '-' }},
+                      {{ $page.props.auth.user.profile.birth_date ?? '-' }}
+                    </dd>
+                  </dl>
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Jenis Kelamin</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ $page.props.auth.user.profile.gender ?? '-' }}
+                    </dd>
+                  </dl>
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ $page.props.auth.user.profile.religion ?? '-' }}
+                    </dd>
+                  </dl>
                 </div>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Tempat, Tanggal Lahir</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">Indonesia, 04 November 2023</dd>
-                </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Jenis Kelamin</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">Laki-laki</dd>
-                </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Golongan Darah</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">-</dd>
-                </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Agama</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">Islam</dd>
-                </dl>
-              </div>
-              <div class="space-y-4">
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Status Pernikahan</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">-</dd>
-                </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Nomor Telepon</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">-</dd>
-                </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Alamat</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">-</dd>
-                </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-900 dark:text-white">Kode Pos</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">-</dd>
-                </dl>
+                <div class="space-y-4">
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ $page.props.auth.user.profile.phone ?? '-' }}
+                    </dd>
+                  </dl>
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ $page.props.auth.user.profile.address ?? '-' }}
+                    </dd>
+                  </dl>
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Kode Pos</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ $page.props.auth.user.profile.postal_code ?? '-' }}
+                    </dd>
+                  </dl>
+                </div>
               </div>
             </div>
-
-            <button
-              type="button"
-              class="inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="me-2 h-3.5 w-3.5"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                <path d="M16 5l3 3" />
-              </svg>
-              Sunting Profil
-            </button>
           </div>
         </div>
       </section>

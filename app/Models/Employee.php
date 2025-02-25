@@ -18,6 +18,11 @@ class Employee extends Model
         'status',
     ];
 
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class, 'profile_id');
+    }
+
     public function assignments()
     {
         return $this->hasMany(EmployeeAssignment::class, 'employee_id', 'id');

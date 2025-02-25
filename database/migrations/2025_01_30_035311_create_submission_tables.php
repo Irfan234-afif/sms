@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('code')->unique();
             $table->string('reference_code')->unique();
-            $table->integer('reference_number');
+            $table->integer('reference_number')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,8 +27,17 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('submission_group_id')->constrained('submission_groups');
             $table->foreignId('area_id')->constrained('areas');
-            $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('approver_id')->constrained('employees');
             $table->integer('sort_number');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('submission_approval_delegates', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid')->unique();
+            $table->foreignId('submission_approver_id')->constrained('submission_approvers');
+            $table->foreignId('delegate_id')->constrained('employees');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -38,7 +47,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('submission_group_id')->constrained('submission_groups');
             $table->foreignId('area_id')->constrained('areas');
-            $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('submitter_id')->constrained('employees');
             $table->string('reference_number')->unique();
             $table->dateTime('datetime');
             $table->string('status'); // APPROVED, REJECTED, PENDING
@@ -50,7 +59,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('submission_id')->constrained('submissions');
-            $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('approver_id')->constrained('employees');
+            $table->foreignId('delegate_id')->nullable()->constrained('employees');
+            $table->boolean('is_delegated')->default(false);
             $table->integer('sort_number');
             $table->dateTime('datetime')->nullable();
             $table->string('status'); // APPROVED, REJECTED, PENDING
@@ -62,7 +73,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('submission_id')->constrained('submissions');
-            $table->foreignId('employee_assigned_id')->nullable()->constrained('employees');
+            $table->foreignId('assigned_id')->nullable()->constrained('employees');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -97,6 +108,7 @@ return new class extends Migration
             $table->string('title');
             $table->date('due_date')->nullable();
             $table->string('description')->nullable();
+            $table->string('attachment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -170,16 +182,15 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('sub_material_id')->constrained('sub_materials');
             $table->string('name');
-            $table->integer('quantity')->nullable();
+            $table->string('reference_number');
+            $table->integer('quantity')->default();
             $table->string('unit')->nullable();
             $table->decimal('price', 15, 2)->default(0);
             $table->decimal('bill_amount', 15, 2)->default(0);
-            $table->longText('attachment')->nullable();
             $table->date('due_date')->nullable();
-            $table->string('status_approval_ga')->nullable();
-            $table->string('status_approval_fa')->nullable();
-            $table->text('reason')->nullable();
             $table->text('description')->nullable();
+            $table->string('attachment')->nullable();
+            $table->string('status'); // REJECTED, ORDERED, DELIVERED, RECEIVED, CANCELED, PENDING
             $table->timestamps();
             $table->softDeletes();
         });
@@ -281,7 +292,7 @@ return new class extends Migration
             $table->foreignId('sub_resignation_id')->constrained('sub_resignations');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignId('employee_checker_id')->nullable()->constrained('employees');
+            $table->foreignId('checker_id')->nullable()->constrained('employees');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -314,6 +325,7 @@ return new class extends Migration
         Schema::dropIfExists('sub_install_repairs');
         Schema::dropIfExists('submission_approvals');
         Schema::dropIfExists('submissions');
+        Schema::dropIfExists('submission_approval_delegates');
         Schema::dropIfExists('submission_approvers');
         Schema::dropIfExists('submission_groups');
     }

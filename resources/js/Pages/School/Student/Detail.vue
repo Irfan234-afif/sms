@@ -77,7 +77,7 @@ export default {
                   />
                   <div v-else class="flex h-20 w-20 items-center justify-center rounded-lg bg-gray-100">
                     <svg
-                      class="h-16 w-16 text-gray-500"
+                      class="h-14 w-14 text-gray-500"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.5"
