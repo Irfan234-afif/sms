@@ -236,11 +236,12 @@ export default {
                               <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
                               <path d="M16 5l3 3" />
                             </svg>
-                            <div>Sunting</div>
+                            <div>{{ admission_student.status == 'NEW' ? 'Isi Formulir' : 'Sunting Formulir' }}</div>
                           </div>
                         </OutlineButton>
                       </Link>
                       <Link
+                        v-if="admission_student.status != 'NEW'"
                         :href="
                           route('guardian.admissionStudent.detail', {
                             registration_number: admission_student.registration_number,
