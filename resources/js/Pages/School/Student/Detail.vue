@@ -3,6 +3,7 @@ import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
+import FilePreview from '@/Components/FilePreview.vue';
 import StageForm from './StageForm.vue';
 import AcceptForm from './AcceptForm.vue';
 </script>
