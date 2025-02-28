@@ -1,11 +1,8 @@
 <script setup>
 import DefaultButton from '@/Components/DefaultButton.vue';
-import midtrans from '@/Configs/midtrans';
 import fieldValidation from '@/Helpers/fieldValidation';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
-
-midtrans.init();
 </script>
 
 <script>

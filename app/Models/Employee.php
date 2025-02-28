@@ -23,6 +23,11 @@ class Employee extends Model
         return $this->belongsTo(Profile::class, 'profile_id');
     }
 
+    public function assignment()
+    {
+        return $this->hasOne(EmployeeAssignment::class, 'employee_id', 'id');
+    }
+
     public function assignments()
     {
         return $this->hasMany(EmployeeAssignment::class, 'employee_id', 'id');

@@ -8,6 +8,7 @@ import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import AdmissionStageForm from './Form.vue';
+import ChatForm from '@/Components/ChatForm.vue';
 import Badge from '@/Components/Badge.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
@@ -23,7 +24,6 @@ export default {
   props: {
     search_params: Object,
     submissions: Object,
-    submission_groups: Object,
   },
   data() {
     return {
@@ -123,9 +123,10 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Nomor Referensi</th>
+                  <th scope="col" class="p-4">Nomor Permintaan</th>
                   <th scope="col" class="p-4">Tanggal</th>
                   <th scope="col" class="p-4">Barang</th>
+                  <th scope="col" class="p-4">Kode Barang</th>
                   <th scope="col" class="p-4">Jumlah</th>
                   <th scope="col" class="p-4">Keterangan</th>
                   <th scope="col" class="p-4">Status Persetujuan</th>
@@ -167,6 +168,11 @@ export default {
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
+                      {{ submission.material.items[0].reference_number }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
                       {{ submission.material.items[0].quantity }} {{ submission.material.items[0].unit }}
                     </div>
                   </th>
@@ -192,6 +198,40 @@ export default {
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
+                      <OutlineButton
+                        type="purple"
+                        @click="
+                          openModal({
+                            title: 'Percakapan',
+                            mode: 'chat-form',
+                            maxWidth: '3xl',
+                            data: {
+                              user: $page.props.auth.user,
+                              model_id: submission.material.items[0].id,
+                              model_type: 'App\Models\SubMaterialItem',
+                              chats: submission.material.items[0].chats,
+                            },
+                          })
+                        "
+                      >
+                        <div class="flex items-center space-x-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="h-4"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+                            <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+                          </svg>
+                          <div>Percakapan</div>
+                        </div>
+                      </OutlineButton>
                       <OutlineButton
                         type="default"
                         @click="
@@ -280,6 +320,7 @@ export default {
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
+          <ChatForm v-if="propertyModal?.mode == 'chat-form'" :propertyModal="propertyModal" @close="closeModal()" />
           <DeleteConfirm
             v-if="propertyModal?.mode == 'submission-delete-confirm'"
             :propertyModal="propertyModal"

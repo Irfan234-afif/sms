@@ -76,7 +76,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
-            href="#"
+            :href="route('office.hcm.employee')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
             <svg
@@ -102,7 +102,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
-            href="#"
+            :href="route('office.hcm.placement')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
             <svg
@@ -191,7 +191,7 @@ import { Link } from '@inertiajs/vue3';
             </li>
           </ul>
         </li>
-        <li>
+        <li v-if="false">
           <button
             type="button"
             class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -245,7 +245,7 @@ import { Link } from '@inertiajs/vue3';
             </li>
           </ul>
         </li>
-        <li>
+        <li v-if="false">
           <button
             type="button"
             class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"

@@ -10,6 +10,20 @@ class SubMaterialItem extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $fillable = [
+        'sub_material_id',
+        'name',
+        'reference_number',
+        'quantity',
+        'unit',
+        'price',
+        'bill_amount',
+        'due_date',
+        'description',
+        'attachment',
+        'status',
+    ];
+
     public function chats()
     {
         return $this->morphMany(Chat::class, 'model');

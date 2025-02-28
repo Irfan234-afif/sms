@@ -7,10 +7,14 @@ use App\Http\Controllers\Office\Finance\Activity\AdmissionStudentController as F
 use App\Http\Controllers\Office\Finance\FinanceController;
 use App\Http\Controllers\Office\GA\Activity\AdmissionStudentController as GAActivityAdmissionStudentController;
 use App\Http\Controllers\Office\GA\GAController;
+use App\Http\Controllers\Office\HCM\Employee\EmployeeController;
 use App\Http\Controllers\Office\HCM\HCMController;
+use App\Http\Controllers\Office\HCM\Placement\EmployeeController as PlacementEmployeeController;
+use App\Http\Controllers\Office\HCM\Placement\PlacementController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
+use App\Http\Controllers\Office\ICC\Management\AdmissionStudentPriceController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
 use App\Http\Controllers\Office\ICC\Management\SchoolYearController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
@@ -96,6 +100,13 @@ Route::middleware(['auth', 'verified'])
                                 Route::get('get-student-quota', [AdmissionStudentQuotaController::class, 'getStudentQuota'])->name('.getStudentQuota');
                                 Route::post('save', [AdmissionStudentQuotaController::class, 'save'])->name('.save');
                             });
+                        // admission student price routes
+                        Route::prefix('admission-student-price')
+                            ->name('.admissionStudentPrice')
+                            ->group(function () {
+                                Route::get('/', [AdmissionStudentPriceController::class, 'index']);
+                                Route::post('save', [AdmissionStudentPriceController::class, 'save'])->name('.save');
+                            });
                     });
             });
         // hcm routes
@@ -103,6 +114,31 @@ Route::middleware(['auth', 'verified'])
             ->name('.hcm')
             ->group(function () {
                 Route::get('/', [HCMController::class, 'index']);
+                // employee routes
+                Route::prefix('employee')
+                    ->name('.employee')
+                    ->group(function () {
+                        Route::get('/', [EmployeeController::class, 'index']);
+                        Route::post('store', [EmployeeController::class, 'store'])->name('.store');
+                        Route::post('update', [EmployeeController::class, 'update'])->name('.update');
+                        Route::post('reset-password', [EmployeeController::class, 'resetPassword'])->name('.resetPassword');
+                        Route::delete('delete', [EmployeeController::class, 'delete'])->name('.delete');
+                    });
+                // placement routes
+                Route::prefix('placement')
+                    ->name('.placement')
+                    ->group(function () {
+                        Route::get('/', [PlacementController::class, 'index']);
+                        // area routes
+                        Route::prefix('{area_id}/area')
+                            ->name('.area')
+                            ->group(function () {
+                                Route::get('/', [PlacementEmployeeController::class, 'index']);
+                                Route::get('option-employee', [PlacementEmployeeController::class, 'optionEmployee'])->name('.optionEmployee');
+                                Route::post('assign', [PlacementEmployeeController::class, 'assign'])->name('.assign');
+                                Route::delete('remove', [PlacementEmployeeController::class, 'remove'])->name('.remove');
+                            });
+                    });
             });
         // ga routes
         Route::prefix('ga')

@@ -7,7 +7,7 @@ import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import AdmissionStageForm from './Form.vue';
+import SchoolYearForm from './Form.vue';
 import Badge from '@/Components/Badge.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
@@ -238,7 +238,7 @@ export default {
       <!-- Modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
-          <AdmissionStageForm
+          <SchoolYearForm
             v-if="propertyModal?.mode == 'school-year-edit-form' || propertyModal?.mode == 'school-year-create-form'"
             :propertyModal="propertyModal"
             @close="closeModal()"
