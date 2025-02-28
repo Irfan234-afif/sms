@@ -56,7 +56,9 @@ class MasterEmployeeSeeder extends Seeder
 
                     if ($employee->area && $employee->position) {
                         $area = Area::where('name', $employee->area)->firstOrFail();
-                        $position = Position::where('name', $employee->position)->firstOrFail();
+                        $position = $area->positions()
+                            ->where('name', $employee->position)
+                            ->firstOrFail();
 
                         $employee_created->assignments()->updateOrCreate([
                             'area_id' => $area->id,

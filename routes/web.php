@@ -9,6 +9,8 @@ use App\Http\Controllers\Office\GA\Activity\AdmissionStudentController as GAActi
 use App\Http\Controllers\Office\GA\GAController;
 use App\Http\Controllers\Office\HCM\Employee\EmployeeController;
 use App\Http\Controllers\Office\HCM\HCMController;
+use App\Http\Controllers\Office\HCM\Placement\EmployeeController as PlacementEmployeeController;
+use App\Http\Controllers\Office\HCM\Placement\PlacementController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
@@ -113,6 +115,21 @@ Route::middleware(['auth', 'verified'])
                         Route::post('update', [EmployeeController::class, 'update'])->name('.update');
                         Route::post('reset-password', [EmployeeController::class, 'resetPassword'])->name('.resetPassword');
                         Route::delete('delete', [EmployeeController::class, 'delete'])->name('.delete');
+                    });
+                // placement routes
+                Route::prefix('placement')
+                    ->name('.placement')
+                    ->group(function () {
+                        Route::get('/', [PlacementController::class, 'index']);
+                        // area routes
+                        Route::prefix('{area_id}/area')
+                            ->name('.area')
+                            ->group(function () {
+                                Route::get('/', [PlacementEmployeeController::class, 'index']);
+                                Route::get('option-employee', [PlacementEmployeeController::class, 'optionEmployee'])->name('.optionEmployee');
+                                Route::post('assign', [PlacementEmployeeController::class, 'assign'])->name('.assign');
+                                Route::delete('remove', [PlacementEmployeeController::class, 'remove'])->name('.remove');
+                            });
                     });
             });
         // ga routes

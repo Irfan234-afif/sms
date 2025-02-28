@@ -10,6 +10,12 @@ class EmployeeAssignment extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $fillable = [
+        'employee_id',
+        'area_id',
+        'position_id',
+    ];
+
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id');

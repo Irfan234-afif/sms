@@ -28,6 +28,11 @@ class Area extends Model
 
     public function positions()
     {
-        return $this->hasMany(Position::class, 'position_id');
+        return $this->hasMany(Position::class, 'area_id');
+    }
+
+    public function employee_assignments()
+    {
+        return $this->hasMany(EmployeeAssignment::class, 'area_id');
     }
 }
