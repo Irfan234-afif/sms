@@ -237,7 +237,7 @@ export default {
                             <path d="M10 16l4 4" />
                             <path d="M10 20l4 -4" />
                           </svg>
-                          <div>Lepas</div>
+                          <div>Lepas Penempatan</div>
                         </div>
                       </OutlineButton>
                     </div>
