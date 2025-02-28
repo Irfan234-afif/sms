@@ -164,6 +164,7 @@ class AdmissionStudentController extends Controller
     public function submit()
     {
         $data = json_decode(request('full_form_data'), true);
+        $data['status'] = 'DRAFT';
 
         DB::beginTransaction();
 

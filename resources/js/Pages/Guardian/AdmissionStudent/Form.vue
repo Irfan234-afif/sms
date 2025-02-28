@@ -28,39 +28,30 @@ export default {
 
       avatarPreview: null,
       avatarFile: null,
-      fileList: [],
 
       fatherAvatarPreview: null,
       fatherAvatarFile: null,
-      fatherFileList: [],
 
       motherAvatarPreview: null,
       motherAvatarFile: null,
-      motherFileList: [],
 
       familyCardPreview: null,
       familyCardFile: null,
-      familyCardFileList: [],
 
       fatherIdCardPreview: null,
       fatherIdCardFile: null,
-      fatherIdCardFileList: [],
 
       motherIdCardPreview: null,
       motherIdCardFile: null,
-      motherIdCardFileList: [],
 
       birthCertificatePreview: null,
       birthCertificateFile: null,
-      birthCertificateFileList: [],
 
       lastReportPreview: null,
       lastReportFile: null,
-      lastReportFileList: [],
 
       previousSchoolLetterPreview: null,
       previousSchoolLetterFile: null,
-      previousSchoolLetterFileList: [],
 
       studentForm: {
         admission_student_id: this.admission_student.data.uuid,
@@ -812,51 +803,87 @@ export default {
     handleFatherFileChange(file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.avatarFatherPreview = e.target.result;
+        this.fatherAvatarPreview = e.target.result;
       };
       reader.readAsDataURL(file.raw);
 
       this.parentForm.father_avatar = null;
-      this.avatarFatherFile = file.raw;
+      this.fatherAvatarFile = file.raw;
     },
     handleMotherFileChange(file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.avatarMotherPreview = e.target.result;
+        this.motherAvatarPreview = e.target.result;
       };
       reader.readAsDataURL(file.raw);
 
       this.parentForm.mother_avatar = null;
-      this.avatarMotherFile = file.raw;
+      this.motherAvatarFile = file.raw;
     },
-    handleFamilyCardFileChange(event) {
-      this.attachmentForm.family_card_attachment = null;
-      this.familyCardFile = event.target.files[0];
+    handleFamilyCardFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.familyCardPreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.attachmentForm.family_card = null;
+      this.familyCardFile = file.raw;
     },
 
-    handleFatherIdCardFileChange(event) {
-      this.attachmentForm.father_id_card_attachment = null;
-      this.fatherIdCardFile = event.target.files[0];
+    handleFatherIdCardFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.fatherIdCardPreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.attachmentForm.father_id_card = null;
+      this.fatherIdCardFile = file.raw;
     },
 
-    handleMotherIdCardFileChange(event) {
-      this.attachmentForm.mother_id_card_attachment = null;
-      this.motherIdCardFile = event.target.files[0];
+    handleMotherIdCardFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.motherIdCardPreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.attachmentForm.mother_id_card = null;
+      this.motherIdCardFile = file.raw;
     },
 
-    handleBirthCertificateFileChange(event) {
-      this.attachmentForm.birth_certificate_attachment = null;
-      this.birthCertificateFile = event.target.files[0];
+    handleBirthCertificateFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.birthCertificatePreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.attachmentForm.birth_certificate = null;
+      this.birthCertificateFile = file.raw;
     },
 
-    handleLastReportFileChange(event) {
-      this.attachmentForm.last_report_attachment = null;
-      this.lastReportFile = event.target.files[0];
+    handleLastReportFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.lastReportPreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.attachmentForm.last_report = null;
+      this.lastReportFile = file.raw;
     },
 
-    handlePreviousSchoolLetterFileChange(event) {
-      this.attachmentForm.previous_school_letter_attachment = null;
-      this.previousSchoolLetterFile = event.target.files[0];
+    handlePreviousSchoolLetterFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.previousSchoolLetterPreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.attachmentForm.previous_school_letter = null;
+      this.previousSchoolLetterFile = file.raw;
     },
   },
 };
@@ -1145,13 +1172,7 @@ export default {
                   :error="field.avatar.error"
                   prop="avatar"
                 >
-                  <el-upload
-                    class="avatar-uploader"
-                    action="#"
-                    :auto-upload="false"
-                    :show-file-list="false"
-                    :on-change="handleFileChange"
-                  >
+                  <el-upload action="#" :auto-upload="false" :show-file-list="false" :on-change="handleFileChange">
                     <img v-if="avatarPreview" :src="avatarPreview" class="flex h-28 w-28 rounded-lg object-cover" />
                     <div v-else class="flex h-28 w-28 items-center justify-center rounded-lg bg-gray-100">
                       <svg
@@ -1325,7 +1346,6 @@ export default {
                     prop="father_avatar"
                   >
                     <el-upload
-                      class="avatar-uploader"
                       action="#"
                       :auto-upload="false"
                       :show-file-list="false"
@@ -1519,7 +1539,6 @@ export default {
                     prop="mother_avatar"
                   >
                     <el-upload
-                      class="avatar-uploader"
                       action="#"
                       :auto-upload="false"
                       :show-file-list="false"
@@ -2024,14 +2043,25 @@ export default {
                     :rules="field.family_card_attachment.rules"
                     :error="field.family_card_attachment.error"
                     prop="family_card"
-                    @change="handleFamilyCardFileChange"
                   >
-                    <input
-                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-xs text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                      type="file"
-                      accept=".png, .jpg, .pdf"
-                    />
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDG (maks. 1mb).</p>
+                    <div>
+                      <el-upload
+                        action="#"
+                        :auto-upload="false"
+                        :show-file-list="false"
+                        :on-change="handleFamilyCardFileChange"
+                      >
+                        <div v-if="familyCardFile || familyCardPreview">
+                          <DefaultButton type="default">
+                            {{ familyCardFile?.name ?? attachmentForm.family_card_attachment }}</DefaultButton
+                          >
+                        </div>
+                        <div v-else>
+                          <DefaultButton type="alternative"> Pilih File </DefaultButton>
+                        </div>
+                      </el-upload>
+                      <div class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</div>
+                    </div>
                   </el-form-item>
 
                   <div class="invisible"></div>
@@ -2042,14 +2072,25 @@ export default {
                     :rules="field.father_id_card_attachment.rules"
                     :error="field.father_id_card_attachment.error"
                     prop="father_id_card"
-                    @change="handleFatherIdCardFileChange"
                   >
-                    <input
-                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-xs text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                      type="file"
-                      accept=".png, .jpg, .pdf"
-                    />
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</p>
+                    <div>
+                      <el-upload
+                        action="#"
+                        :auto-upload="false"
+                        :show-file-list="false"
+                        :on-change="handleFatherIdCardFileChange"
+                      >
+                        <div v-if="fatherIdCardFile || fatherIdCardPreview">
+                          <DefaultButton type="default">
+                            {{ fatherIdCardFile?.name ?? attachmentForm.father_id_card_attachment }}</DefaultButton
+                          >
+                        </div>
+                        <div v-else>
+                          <DefaultButton type="alternative"> Pilih File </DefaultButton>
+                        </div>
+                      </el-upload>
+                      <div class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</div>
+                    </div>
                   </el-form-item>
 
                   <div class="invisible"></div>
@@ -2060,14 +2101,25 @@ export default {
                     :rules="field.mother_id_card_attachment.rules"
                     :error="field.mother_id_card_attachment.error"
                     prop="mother_id_card"
-                    @change="handleMotherIdCardFileChange"
                   >
-                    <input
-                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-xs text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                      type="file"
-                      accept=".png, .jpg, .pdf"
-                    />
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</p>
+                    <div>
+                      <el-upload
+                        action="#"
+                        :auto-upload="false"
+                        :show-file-list="false"
+                        :on-change="handleMotherIdCardFileChange"
+                      >
+                        <div v-if="motherIdCardFile || motherIdCardPreview">
+                          <DefaultButton type="default">
+                            {{ motherIdCardFile?.name ?? attachmentForm.mother_id_card_attachment }}</DefaultButton
+                          >
+                        </div>
+                        <div v-else>
+                          <DefaultButton type="alternative"> Pilih File </DefaultButton>
+                        </div>
+                      </el-upload>
+                      <div class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</div>
+                    </div>
                   </el-form-item>
 
                   <div class="invisible"></div>
@@ -2078,14 +2130,27 @@ export default {
                     :rules="field.birth_certificate_attachment.rules"
                     :error="field.birth_certificate_attachment.error"
                     prop="birth_certificate"
-                    @change="handleBirthCertificateFileChange"
                   >
-                    <input
-                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-xs text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                      type="file"
-                      accept=".png, .jpg, .pdf"
-                    />
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</p>
+                    <div>
+                      <el-upload
+                        action="#"
+                        :auto-upload="false"
+                        :show-file-list="false"
+                        :on-change="handleBirthCertificateFileChange"
+                      >
+                        <div v-if="birthCertificateFile || birthCertificatePreview">
+                          <DefaultButton type="default">
+                            {{
+                              birthCertificateFile?.name ?? attachmentForm.birth_certificate_attachment
+                            }}</DefaultButton
+                          >
+                        </div>
+                        <div v-else>
+                          <DefaultButton type="alternative"> Pilih File </DefaultButton>
+                        </div>
+                      </el-upload>
+                      <div class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</div>
+                    </div>
                   </el-form-item>
 
                   <div class="invisible"></div>
@@ -2096,14 +2161,25 @@ export default {
                     :rules="field.last_report_attachment.rules"
                     :error="field.last_report_attachment.error"
                     prop="last_report"
-                    @change="handleLastReportFileChange"
                   >
-                    <input
-                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-xs text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                      type="file"
-                      accept=".png, .jpg, .pdf"
-                    />
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</p>
+                    <div>
+                      <el-upload
+                        action="#"
+                        :auto-upload="false"
+                        :show-file-list="false"
+                        :on-change="handleLastReportFileChange"
+                      >
+                        <div v-if="lastReportFile || lastReportPreview">
+                          <DefaultButton type="default">
+                            {{ lastReportFile?.name ?? attachmentForm.last_report_attachment }}</DefaultButton
+                          >
+                        </div>
+                        <div v-else>
+                          <DefaultButton type="alternative"> Pilih File </DefaultButton>
+                        </div>
+                      </el-upload>
+                      <div class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</div>
+                    </div>
                   </el-form-item>
 
                   <div class="invisible"></div>
@@ -2114,14 +2190,27 @@ export default {
                     :rules="field.previous_school_letter_attachment.rules"
                     :error="field.previous_school_letter_attachment.error"
                     prop="previous_school_letter"
-                    @change="handlePreviousSchoolLetterFileChange"
                   >
-                    <input
-                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-xs text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                      type="file"
-                      accept=".png, .jpg, .pdf"
-                    />
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</p>
+                    <div>
+                      <el-upload
+                        action="#"
+                        :auto-upload="false"
+                        :show-file-list="false"
+                        :on-change="handlePreviousSchoolLetterFileChange"
+                      >
+                        <div v-if="previousSchoolLetterFile || previousSchoolLetterPreview">
+                          <DefaultButton type="default">
+                            {{
+                              previousSchoolLetterFile?.name ?? attachmentForm.previous_school_letter_attachment
+                            }}</DefaultButton
+                          >
+                        </div>
+                        <div v-else>
+                          <DefaultButton type="alternative"> Pilih File </DefaultButton>
+                        </div>
+                      </el-upload>
+                      <div class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</div>
+                    </div>
                   </el-form-item>
                 </div>
               </el-form>

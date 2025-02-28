@@ -34,6 +34,8 @@ RUN groupadd -g ${GROUP_ID} laravel && \
 # Set working directory
 WORKDIR /var/www/html
 
+
+
 # Copy application files
 COPY . .
 
@@ -50,7 +52,9 @@ RUN composer install
 RUN npm install
 
 # Pastikan folder dengan permission benar
-RUN chown -R laravel:laravel /var/www/html/storage /var/www/html/bootstrap/cache
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chown -R laravel:laravel /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
