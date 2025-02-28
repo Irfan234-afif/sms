@@ -7,6 +7,7 @@ use App\Http\Controllers\Office\Finance\Activity\AdmissionStudentController as F
 use App\Http\Controllers\Office\Finance\FinanceController;
 use App\Http\Controllers\Office\GA\Activity\AdmissionStudentController as GAActivityAdmissionStudentController;
 use App\Http\Controllers\Office\GA\GAController;
+use App\Http\Controllers\Office\HCM\Employee\EmployeeController;
 use App\Http\Controllers\Office\HCM\HCMController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
@@ -103,6 +104,16 @@ Route::middleware(['auth', 'verified'])
             ->name('.hcm')
             ->group(function () {
                 Route::get('/', [HCMController::class, 'index']);
+                // employee routes
+                Route::prefix('employee')
+                    ->name('.employee')
+                    ->group(function () {
+                        Route::get('/', [EmployeeController::class, 'index']);
+                        Route::post('store', [EmployeeController::class, 'store'])->name('.store');
+                        Route::post('update', [EmployeeController::class, 'update'])->name('.update');
+                        Route::post('reset-password', [EmployeeController::class, 'resetPassword'])->name('.resetPassword');
+                        Route::delete('delete', [EmployeeController::class, 'delete'])->name('.delete');
+                    });
             });
         // ga routes
         Route::prefix('ga')

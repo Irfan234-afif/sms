@@ -3,19 +3,19 @@ import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import OfficeLayout from '@/Layouts/OfficeLayout.vue';
-import MyProfileSidebar from '@/Layouts/Sidebars/MyProfileSidebar.vue';
+import HCMSidebar from '@/Layouts/Sidebars/HCMSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import AdmissionStageForm from './Form.vue';
-import ChatForm from '@/Components/ChatForm.vue';
+import EmployeeForm from './Form.vue';
 import Badge from '@/Components/Badge.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
+import ResetPasswordForm from './ResetPasswordForm.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
-  { label: 'My Profile', href: route('office.myProfile') },
-  { label: 'Permintaan Material', href: route('office.myProfile.submission.material') },
+  { label: 'HCM', href: route('office.hcm') },
+  { label: 'Karyawan', href: route('office.hcm.employee') },
 ];
 </script>
 
@@ -23,7 +23,7 @@ const breadcrumbs = [
 export default {
   props: {
     search_params: Object,
-    submissions: Object,
+    employees: Object,
   },
   data() {
     return {
@@ -73,9 +73,9 @@ export default {
             type="default"
             @click="
               openModal({
-                title: 'Permintaan Baru',
-                mode: 'submission-create-form',
-                maxWidth: 'md',
+                title: 'Karyawan Baru',
+                mode: 'employee-create-form',
+                maxWidth: '7xl',
                 data: {},
               })
             "
@@ -95,14 +95,14 @@ export default {
                 <path d="M12 5l0 14" />
                 <path d="M5 12l14 0" />
               </svg>
-              <div>Permintaan Baru</div>
+              <div>Karyawan Baru</div>
             </div>
           </DefaultButton>
         </div>
       </div>
     </template>
     <template #sidebar>
-      <MyProfileSidebar />
+      <HCMSidebar />
     </template>
     <template #content>
       <!-- Data -->
@@ -123,20 +123,17 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Nomor Permintaan</th>
-                  <th scope="col" class="p-4">Tanggal</th>
-                  <th scope="col" class="p-4">Barang</th>
-                  <th scope="col" class="p-4">Kode Barang</th>
-                  <th scope="col" class="p-4">Jumlah</th>
-                  <th scope="col" class="p-4">Keterangan</th>
-                  <th scope="col" class="p-4">Status Persetujuan</th>
-                  <th scope="col" class="p-4">Status Barang</th>
+                  <th scope="col" class="p-4">ID</th>
+                  <th scope="col" class="p-4">Karyawan</th>
+                  <th scope="col" class="p-4">Email</th>
+                  <th scope="col" class="p-4">Posisi</th>
+                  <th scope="col" class="p-4">Status</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
               <tbody class="text-xs">
                 <tr
-                  v-for="(submission, index) in submissions.data"
+                  v-for="(employee, index) in employees.data"
                   :key="index"
                   class="border-b hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
                 >
@@ -153,94 +150,47 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.reference_number }}
+                      {{ employee.identity_number }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.datetime }}
+                      {{ employee.profile.name }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.material.items[0].name }}
+                      {{ employee.profile.email }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.material.items[0].reference_number }}
+                      <Badge v-if="employee.assignment" type="default">
+                        {{ employee.assignment.area.name }} > {{ employee.assignment.position.name }}
+                      </Badge>
+                      <Badge v-else type="dark">Belum ada posisi</Badge>
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.material.items[0].quantity }} {{ submission.material.items[0].unit }}
+                      <Badge v-if="employee.status === 'PERMANENT'" type="green">{{ employee.status_label }}</Badge>
+                      <Badge v-if="employee.status === 'CONTRACT'" type="yellow">{{ employee.status_label }}</Badge>
+                      <Badge v-if="employee.status === 'PROBATION'" type="indigo">{{ employee.status_label }}</Badge>
+                      <Badge v-if="employee.status === 'DAILY'" type="red">{{ employee.status_label }}</Badge>
+                      <Badge v-if="employee.status === 'PART_TIME'" type="purple">{{ employee.status_label }}</Badge>
                     </div>
                   </th>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ submission.material.items[0].description }}
-                    </div>
-                  </th>
-                  <td class="whitespace-nowrap px-4 py-3">
-                    <Badge v-if="submission.status == 'DRAFT'" type="dark">Draf</Badge>
-                    <Badge v-else-if="submission.status == 'PENDING'" type="yellow">Menunggu</Badge>
-                    <Badge v-else-if="submission.status == 'REJECTED'" type="red">Ditolak</Badge>
-                    <Badge v-else-if="submission.status == 'APPROVED'" type="green">Disetujui</Badge>
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-3">
-                    <Badge v-if="submission.material.items[0].status == 'DRAFT'" type="dark">Draf</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'PENDING'" type="yellow">Menunggu</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'REJECTED'" type="red">Ditolak</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'ORDERED'" type="default">Dipesan</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'DELIVERED'" type="purple">Dikirim</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'RECEIVED'" type="dark">Diterima</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'CANCELED'" type="gray">Dibatalkan</Badge>
-                  </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
-                      <OutlineButton
-                        type="purple"
-                        @click="
-                          openModal({
-                            title: 'Percakapan',
-                            mode: 'chat-form',
-                            maxWidth: '3xl',
-                            data: {
-                              user: $page.props.auth.user,
-                              model_id: submission.material.items[0].id,
-                              model_type: 'App\Models\SubMaterialItem',
-                              chats: submission.material.items[0].chats,
-                            },
-                          })
-                        "
-                      >
-                        <div class="flex items-center space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="h-4"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-                            <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-                          </svg>
-                          <div>Percakapan</div>
-                        </div>
-                      </OutlineButton>
                       <OutlineButton
                         type="default"
                         @click="
                           openModal({
-                            title: 'Sunting Permintaan',
-                            mode: 'school-year-edit-form',
-                            maxWidth: 'md',
+                            title: 'Sunting Karyawan',
+                            mode: 'employee-edit-form',
+                            maxWidth: '7xl',
                             data: {
-                              submission: submission,
+                              employee: employee,
                             },
                           })
                         "
@@ -265,18 +215,52 @@ export default {
                         </div>
                       </OutlineButton>
                       <OutlineButton
+                        v-if="employee.profile.user"
+                        type="default"
+                        @click="
+                          openModal({
+                            title: 'Ubah Kata Sandi',
+                            mode: 'reset-password-form',
+                            maxWidth: 'md',
+                            data: {
+                              user: employee.profile.user,
+                            },
+                          })
+                        "
+                      >
+                        <div class="flex items-center space-x-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="h-4"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                              d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z"
+                            />
+                            <path d="M15 9h.01" />
+                          </svg>
+                          <div>Ubah Kata Sandi</div>
+                        </div>
+                      </OutlineButton>
+                      <OutlineButton
                         type="red"
                         @click="
                           openModal({
-                            title: 'Hapus Permintaan',
-                            mode: 'school-year-delete-confirm',
+                            title: 'Hapus Karyawan',
+                            mode: 'employee-delete-confirm',
                             maxWidth: 'md',
                             data: {
-                              actionUrl: route('office.icc.management.schoolYear.delete', {
-                                submission: submission,
+                              actionUrl: route('office.hcm.employee.delete', {
+                                employee_id: employee.uuid,
                               }),
-                              redirectUrl: route('office.icc.management.schoolYear'),
-                              message: 'Ingin menghapus Permintaan?',
+                              redirectUrl: route('office.hcm.employee'),
+                              message: 'Ingin menghapus Karyawan?',
                             },
                           })
                         "
@@ -309,20 +293,24 @@ export default {
             </table>
           </div>
           <!-- Pagination -->
-          <Pagination :search_params="search_params" :meta="submissions.meta" :links="submissions.links" />
+          <Pagination :search_params="search_params" :meta="employees.meta" :links="employees.links" />
         </div>
       </section>
       <!-- Modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
-          <AdmissionStageForm
-            v-if="propertyModal?.mode == 'school-year-edit-form' || propertyModal?.mode == 'submission-create-form'"
+          <EmployeeForm
+            v-if="propertyModal?.mode == 'employee-create-form' || propertyModal?.mode == 'employee-edit-form'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
-          <ChatForm v-if="propertyModal?.mode == 'chat-form'" :propertyModal="propertyModal" @close="closeModal()" />
+          <ResetPasswordForm
+            v-if="propertyModal?.mode == 'reset-password-form'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
           <DeleteConfirm
-            v-if="propertyModal?.mode == 'submission-delete-confirm'"
+            v-if="propertyModal?.mode == 'employee-delete-confirm'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

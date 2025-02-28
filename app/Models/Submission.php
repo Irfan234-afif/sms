@@ -10,6 +10,15 @@ class Submission extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $fillable = [
+        'submission_group_id',
+        'area_id',
+        'submitter_id',
+        'reference_number',
+        'datetime',
+        'status',
+    ];
+
     public function group()
     {
         return $this->belongsTo(SubmissionGroup::class, 'submission_group_id');

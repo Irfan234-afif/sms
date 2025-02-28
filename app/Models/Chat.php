@@ -13,4 +13,9 @@ class Chat extends Model
     {
         return $this->morphTo();
     }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+    }
 }

@@ -10,6 +10,11 @@ class SubMaterial extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $fillable = [
+        'submission_id',
+        'bill_amount',
+    ];
+
     public function items()
     {
         return $this->hasMany(SubMaterialItem::class, 'sub_material_id');

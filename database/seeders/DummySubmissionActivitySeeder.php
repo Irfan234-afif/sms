@@ -99,12 +99,12 @@ class DummySubmissionActivitySeeder extends Seeder
                                     'reference_number' =>  'ITEM-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6)),
                                     'name' => $this->faker->word,
                                     'quantity' => rand(1, 10),
-                                    'unit' => 'PCS',
+                                    'unit' => 'PIECE',
                                     'price' => rand(500, 2000) / 100,
                                     'bill_amount' => rand(1000, 5000) / 100,
                                     'due_date' => Carbon::now()->addDays(rand(1, 30)),
                                     'description' => $this->faker->word,
-                                    'status' => Arr::random(['REJECTED', 'ORDERED', 'DELIVERED', 'RECEIVED', 'CANCELED', 'PENDING']),
+                                    'status' => Arr::random(['REJECTED', 'ORDERED', 'DELIVERED', 'RECEIVED', 'CANCELED', 'PENDING', 'DRAFT']),
                                 ]);
 
                                 // chat logs

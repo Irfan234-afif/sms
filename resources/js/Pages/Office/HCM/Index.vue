@@ -2,6 +2,11 @@
 import OfficeLayout from '@/Layouts/OfficeLayout.vue';
 import HCMSidebar from '@/Layouts/Sidebars/HCMSidebar.vue';
 import { Head } from '@inertiajs/vue3';
+import Breadcrumb from '@/Components/Breadcrumb.vue';
+const breadcrumbs = [
+  { label: 'Yayasan', href: route('office') },
+  { label: 'HCM', href: route('office.hcm') },
+];
 </script>
 
 <template>
@@ -10,13 +15,6 @@ import { Head } from '@inertiajs/vue3';
   <OfficeLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
-      <div
-        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
-      >
-        <div class="w-full md:w-1/3">
-          <Search :search_params="search_params" />
-        </div>
-      </div>
     </template>
     <template #sidebar>
       <HCMSidebar />
