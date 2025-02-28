@@ -3,6 +3,7 @@ import OfficeLayout from '@/Layouts/OfficeLayout.vue';
 import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
+import FilePreview from '@/Components/FilePreview.vue';
 import VerificationForm from './VerificationForm.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import Badge from '@/Components/Badge.vue';
@@ -381,7 +382,20 @@ export default {
               >
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center rounded-t-lg border-b border-gray-200 px-4 py-3 text-xs font-medium hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  :class="{
+                    'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
+                      admission_student.data.family_card_attachment_path,
+                  }"
+                  @click="
+                    openModal({
+                      mode: 'file-preview',
+                      maxWidth: '7xl',
+                      data: {
+                        fileSrc: admission_student.data.family_card_attachment_path,
+                      },
+                    })
+                  "
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -402,7 +416,20 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 px-4 py-3 text-xs font-medium hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  :class="{
+                    'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
+                      admission_student.data.father_id_card_attachment_path,
+                  }"
+                  @click="
+                    openModal({
+                      mode: 'file-preview',
+                      maxWidth: '7xl',
+                      data: {
+                        fileSrc: admission_student.data.father_id_card_attachment_path,
+                      },
+                    })
+                  "
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -423,7 +450,20 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 px-4 py-3 text-xs font-medium hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  :class="{
+                    'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
+                      admission_student.data.mother_id_card_attachment_path,
+                  }"
+                  @click="
+                    openModal({
+                      mode: 'file-preview',
+                      maxWidth: '7xl',
+                      data: {
+                        fileSrc: admission_student.data.mother_id_card_attachment_path,
+                      },
+                    })
+                  "
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -444,7 +484,20 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 px-4 py-3 text-xs font-medium hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  :class="{
+                    'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
+                      admission_student.data.birth_certificate_attachment_path,
+                  }"
+                  @click="
+                    openModal({
+                      mode: 'file-preview',
+                      maxWidth: '7xl',
+                      data: {
+                        fileSrc: admission_student.data.birth_certificate_attachment_path,
+                      },
+                    })
+                  "
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -465,7 +518,20 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 px-4 py-3 text-xs font-medium hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  :class="{
+                    'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
+                      admission_student.data.last_report_attachment_path,
+                  }"
+                  @click="
+                    openModal({
+                      mode: 'file-preview',
+                      maxWidth: '7xl',
+                      data: {
+                        fileSrc: admission_student.data.last_report_attachment_path,
+                      },
+                    })
+                  "
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -486,7 +552,20 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 px-4 py-3 text-xs font-medium hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  :class="{
+                    'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
+                      admission_student.data.previous_school_letter_attachment_path,
+                  }"
+                  @click="
+                    openModal({
+                      mode: 'file-preview',
+                      maxWidth: '7xl',
+                      data: {
+                        fileSrc: admission_student.data.previous_school_letter_attachment_path,
+                      },
+                    })
+                  "
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -503,7 +582,7 @@ export default {
                       d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5"
                     />
                   </svg>
-                  Surat Keterangan Sehat
+                  Surat Pindah Sekolah
                 </button>
               </div>
             </div>
@@ -619,6 +698,11 @@ export default {
         <template v-slot="{ propertyModal }">
           <VerificationForm
             v-if="propertyModal?.mode == 'unverified-form' || propertyModal?.mode == 'verified-form'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
+          <FilePreview
+            v-if="propertyModal?.mode == 'file-preview'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

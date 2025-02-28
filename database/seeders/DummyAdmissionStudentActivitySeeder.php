@@ -35,7 +35,7 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
         $options = json_decode(file_get_contents('database/data/default/options.json'));
         $questionnaires = json_decode(file_get_contents('database/data/default/questionnaires.json'));
         $this->faker = Factory::create();
-        
+
         // Purchasing the admission form
         if (App::environment(['local', 'testing'])) {
             $customers = User::role(['System Admin', 'Site Admin', 'Guardian'])->get();
@@ -134,7 +134,6 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
                         'school_grade_id' => $module['school_grade_id'],
                         'registration_number' => 'ADM-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6)),
                         'name' => $module['name'],
-                        'avatar' => $this->faker->imageUrl(200, 200, 'people'),
                         'birth_place' => $this->faker->city,
                         'birth_date' => $module['birth_date'],
                         'gender' => $this->faker->randomElement(['MALE', 'FEMALE']),
