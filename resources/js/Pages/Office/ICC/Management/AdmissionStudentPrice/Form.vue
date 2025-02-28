@@ -19,25 +19,20 @@ export default {
       loaded: true,
       isValid: false,
       form: {
-        school_year: null,
+        product_id: null,
         name: null,
-        year_range: null,
-        is_active: false,
+        price: null,
       },
       field: {
         name: {
-          label: 'Tahun Ajaran',
-          rules: [fieldValidation.isRequired('Tahun Ajaran')],
+          label: 'Formulir',
+          rules: [fieldValidation.isRequired('Formulir')],
           error: null,
+          disabled: true,
         },
-        year_range: {
-          label: 'Rentang Tahun',
-          rules: [fieldValidation.isRequired('Rentang Tahun')],
-          error: null,
-        },
-        is_active: {
-          label: 'Status',
-          rules: [],
+        price: {
+          label: 'Harga',
+          rules: [fieldValidation.isRequired('Harga')],
           error: null,
         },
       },
@@ -45,35 +40,22 @@ export default {
   },
   created() {
     let mode = this.propertyModal.mode;
-    if (mode == 'school-year-edit-form') {
-      this.form.school_year = this.propertyModal.data.school_year?.uuid;
-      this.form.name = this.propertyModal.data.school_year?.name;
-      this.form.year_range =
-        this.propertyModal.data.school_year?.start_year && this.propertyModal.data.school_year?.end_year
-          ? [
-              new Date(this.propertyModal.data.school_year.start_year, 0, 1),
-              new Date(this.propertyModal.data.school_year.end_year, 0, 1),
-            ]
-          : null;
-      this.form.is_active = this.propertyModal.data.school_year?.is_active;
+    if (mode == 'admission-student-price-edit-form') {
+      this.form.product_id = this.propertyModal.data.product?.uuid;
+      this.form.name = this.propertyModal.data.product?.name;
+      this.form.price = Math.round(this.propertyModal.data.product?.price);
     }
   },
   methods: {
     submit() {
-      this.$refs['schoolYearForm'].validate((valid) => {
+      this.$refs['admissionStudentForm'].validate((valid) => {
         if (valid) {
           this.process = true;
 
-          let requestPayload = {
-            ...this.form,
-            start_year: this.form.year_range ? this.form.year_range[0].getFullYear() : null,
-            end_year: this.form.year_range ? this.form.year_range[1].getFullYear() : null,
-          };
-
-          delete requestPayload.year_range;
+          let requestPayload = this.form;
 
           axios
-            .post(route('office.icc.management.schoolYear.save'), requestPayload, {
+            .post(route('office.icc.management.admissionStudentPrice.save'), requestPayload, {
               headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
@@ -104,7 +86,7 @@ export default {
               if (error.response?.data?.errors) {
                 for (let field in error.response.data.errors) {
                   this.field[field].error = error.response.data.errors[field];
-                  this.$refs['schoolYearForm'].validateField(field);
+                  this.$refs['admissionStudentForm'].validateField(field);
                 }
               }
             })
@@ -127,7 +109,7 @@ export default {
       {{ propertyModal?.title }}
     </h2>
     <div class="px-2">
-      <el-form v-if="loaded" ref="schoolYearForm" label-position="top" :model="form" :disabled="process">
+      <el-form v-if="loaded" ref="admissionStudentForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
           :label="field.name.label"
@@ -135,33 +117,17 @@ export default {
           :error="field.name.error"
           prop="name"
         >
-          <el-input v-model="form.name" autocomplete="off" />
+          <el-input :disabled="field.name.disabled" v-model="form.name" autocomplete="off" />
         </el-form-item>
 
         <el-form-item
           class="font-medium"
-          :label="field.year_range.label"
-          :rules="field.year_range.rules"
-          :error="field.year_range.error"
-          prop="year_range"
+          :label="field.price.label"
+          :rules="field.price.rules"
+          :error="field.price.error"
+          prop="price"
         >
-          <el-date-picker
-            v-model="form.year_range"
-            type="yearrange"
-            range-separator="Sampai"
-            start-placeholder="Tahun Mulai"
-            end-placeholder="Tahun Akhir"
-          />
-        </el-form-item>
-
-        <el-form-item
-          class="font-medium"
-          :label="field.is_active.label"
-          :rules="field.is_active.rules"
-          :error="field.is_active.error"
-          prop="is_active"
-        >
-          <el-checkbox border v-model="form.is_active" :label="form.is_active ? 'Aktif' : 'Tidak Aktif'" />
+          <el-input type="number" v-model.number="form.price" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

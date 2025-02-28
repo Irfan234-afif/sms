@@ -14,6 +14,7 @@ use App\Http\Controllers\Office\HCM\Placement\PlacementController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
+use App\Http\Controllers\Office\ICC\Management\AdmissionStudentPriceController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
 use App\Http\Controllers\Office\ICC\Management\SchoolYearController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
@@ -98,6 +99,13 @@ Route::middleware(['auth', 'verified'])
                                 Route::get('/', [AdmissionStudentQuotaController::class, 'index']);
                                 Route::get('get-student-quota', [AdmissionStudentQuotaController::class, 'getStudentQuota'])->name('.getStudentQuota');
                                 Route::post('save', [AdmissionStudentQuotaController::class, 'save'])->name('.save');
+                            });
+                        // admission student price routes
+                        Route::prefix('admission-student-price')
+                            ->name('.admissionStudentPrice')
+                            ->group(function () {
+                                Route::get('/', [AdmissionStudentPriceController::class, 'index']);
+                                Route::post('save', [AdmissionStudentPriceController::class, 'save'])->name('.save');
                             });
                     });
             });

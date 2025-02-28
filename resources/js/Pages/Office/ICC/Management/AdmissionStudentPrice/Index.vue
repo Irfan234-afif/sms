@@ -1,20 +1,16 @@
 <script setup>
 import Pagination from '@/Components/Pagination.vue';
-import Search from '@/Components/Search.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import OfficeLayout from '@/Layouts/OfficeLayout.vue';
 import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import SchoolYearForm from './Form.vue';
-import Badge from '@/Components/Badge.vue';
-import DefaultButton from '@/Components/DefaultButton.vue';
-import DeleteConfirm from '@/Components/DeleteConfirm.vue';
+import AdmissionStudentPriceForm from './Form.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
-  { label: 'Tahun Ajaran', href: route('office.icc.management.schoolYear') },
+  { label: 'Harga Formulir Pendaftaran', href: route('office.icc.management.admissionStudentPrice') },
 ];
 </script>
 
@@ -22,7 +18,7 @@ const breadcrumbs = [
 export default {
   props: {
     search_params: Object,
-    school_years: Object,
+    products: Object,
   },
   data() {
     return {
@@ -59,46 +55,6 @@ export default {
   <OfficeLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
-      <div
-        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
-      >
-        <div class="w-full md:w-1/3">
-          <Search :search_params="search_params" />
-        </div>
-        <div
-          class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0"
-        >
-          <DefaultButton
-            type="default"
-            @click="
-              openModal({
-                title: 'Tahun Ajaran Baru',
-                mode: 'school-year-create-form',
-                maxWidth: 'md',
-                data: {},
-              })
-            "
-          >
-            <div class="flex items-center space-x-1 text-xs">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-4"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 5l0 14" />
-                <path d="M5 12l14 0" />
-              </svg>
-              <div>Tahun Ajaran Baru</div>
-            </div>
-          </DefaultButton>
-        </div>
-      </div>
     </template>
     <template #sidebar>
       <ICCSidebar />
@@ -122,14 +78,14 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Tahun Ajaran</th>
-                  <th scope="col" class="p-4">Status</th>
+                  <th scope="col" class="p-4">Formulir</th>
+                  <th scope="col" class="p-4">Harga</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
               <tbody class="text-xs">
                 <tr
-                  v-for="(school_year, index) in school_years.data"
+                  v-for="(product, index) in products.data"
                   :key="index"
                   class="border-b hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
                 >
@@ -146,24 +102,21 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ school_year.name }}
+                      {{ product.name }}
                     </div>
                   </th>
-                  <td class="whitespace-nowrap px-4 py-3">
-                    <Badge v-if="school_year.is_active" type="green">Aktif</Badge>
-                    <Badge v-else type="dark">Tidak Aktif</Badge>
-                  </td>
+                  <td class="whitespace-nowrap px-4 py-3">IDR {{ product.price }}</td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
                         type="default"
                         @click="
                           openModal({
-                            title: 'Sunting Tahun Ajaran',
-                            mode: 'school-year-edit-form',
+                            title: 'Ubah Harga Formulir',
+                            mode: 'admission-student-price-edit-form',
                             maxWidth: 'md',
                             data: {
-                              school_year: school_year,
+                              product: product,
                             },
                           })
                         "
@@ -184,45 +137,7 @@ export default {
                             <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
                             <path d="M16 5l3 3" />
                           </svg>
-                          <div>Sunting</div>
-                        </div>
-                      </OutlineButton>
-                      <OutlineButton
-                        type="red"
-                        @click="
-                          openModal({
-                            title: 'Hapus Tahun Ajaran',
-                            mode: 'school-year-delete-confirm',
-                            maxWidth: 'md',
-                            data: {
-                              actionUrl: route('office.icc.management.schoolYear.delete', {
-                                school_year: school_year,
-                              }),
-                              redirectUrl: route('office.icc.management.schoolYear'),
-                              message: 'Ingin menghapus Tahun Ajaran?',
-                            },
-                          })
-                        "
-                      >
-                        <div class="flex items-center space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="h-4"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M4 7l16 0" />
-                            <path d="M10 11l0 6" />
-                            <path d="M14 11l0 6" />
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                          </svg>
-                          <div>Hapus</div>
+                          <div>Ubah Harga</div>
                         </div>
                       </OutlineButton>
                     </div>
@@ -232,19 +147,14 @@ export default {
             </table>
           </div>
           <!-- Pagination -->
-          <Pagination :search_params="search_params" :meta="school_years.meta" :links="school_years.links" />
+          <Pagination :search_params="search_params" :meta="products.meta" :links="products.links" />
         </div>
       </section>
       <!-- Modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
-          <SchoolYearForm
-            v-if="propertyModal?.mode == 'school-year-edit-form' || propertyModal?.mode == 'school-year-create-form'"
-            :propertyModal="propertyModal"
-            @close="closeModal()"
-          />
-          <DeleteConfirm
-            v-if="propertyModal?.mode == 'school-year-delete-confirm'"
+          <AdmissionStudentPriceForm
+            v-if="propertyModal?.mode == 'admission-student-price-edit-form'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
