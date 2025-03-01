@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AdmissionStudentResource;
 use App\Models\AdmissionStage;
 use App\Models\AdmissionStudent;
+use App\Models\AdmissionStudentQuota;
 use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -70,14 +71,22 @@ class AdmissionStudentController extends Controller
             $message = request('status') == 'VERIFIED' ? 'Berhasil memverifikasi formulir' : 'Berhasil menolak formulir';
 
             if (request('status') == 'VERIFIED') {
+                $admission_student_quota = AdmissionStudentQuota::where([
+                    'school_id' => $admission_student->school_id,
+                    'school_year_id' => $admission_student->school_year_id,
+                    'school_grade_id' => $admission_student->school_grade_id,
+                ])->firstOrFail();
+                $admission_student_quota->increment('used_quota', 1);
+
                 $admission_stages = AdmissionStage::whereHasMorph('model', School::class, function ($school) use ($admission_student) {
                     $school->where('id', $admission_student->school_id);
                 })->get();
 
                 foreach ($admission_stages as $admission_stage) {
+                    $admission_stage_status = $admission_stage->statuses()->orderBy('sort_number', 'ASC')->first();
                     $admission_student->stages()->create([
                         'admission_stage_id' => $admission_stage->id,
-                        'status' => 'PENDING',
+                        'admission_stage_status_id' => $admission_stage_status->id,
                     ]);
                 }
             }

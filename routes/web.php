@@ -226,6 +226,12 @@ Route::middleware(['auth', 'verified'])
                 Route::post('process-payment', [TransactionPaymentController::class, 'processPayment'])->name('.processPayment');
             });
     });
+// payment routes
+Route::middleware(['auth', 'verified'])
+    ->prefix('payment')
+    ->group(function () {
+        Route::get('/', [GuardianController::class, 'index']);
+    });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
