@@ -342,6 +342,31 @@ class AdmissionStudentController extends Controller
         }
     }
 
+    public function cancelAdmission()
+    {
+        DB::beginTransaction();
+
+        try {
+            $admission_student = AdmissionStudent::where('registration_number', request('registration_number'))->firstOrFail();
+
+            $admission_student->update(['status' => 'CANCELED']);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pendaftaran dibatalkan',
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
     public function setSchedule()
     {
         DB::beginTransaction();

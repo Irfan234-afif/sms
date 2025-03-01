@@ -97,10 +97,10 @@ export default {
       {{ message }}
     </h3>
     <div class="flex justify-center space-x-3">
-      <DefaultButton type="red" class="w-full md:w-1/3" @click="submit()" :disabled="process">
+      <DefaultButton type="red" class="w-full md:w-1/2" @click="submit()" :disabled="process">
         Ya, Hapus Data
       </DefaultButton>
-      <DefaultButton type="light" class="w-full md:w-1/3" @click="close" :disabled="process"
+      <DefaultButton type="light" class="w-full md:w-1/2" @click="close" :disabled="process"
         >Tidak, Batalkan
       </DefaultButton>
     </div>

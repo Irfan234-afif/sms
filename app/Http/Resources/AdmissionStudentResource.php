@@ -50,6 +50,9 @@ class AdmissionStudentResource extends JsonResource
             case 'ENROLLED':
                 $status_label = 'Pendaftaran Selesai';
                 break;
+            case 'CANCELED':
+                $status_label = 'Pendaftaran dibatalkan';
+                break;
             default:
                 $status_label = 'Tidak Diketahui';
                 break;
