@@ -24,7 +24,7 @@ class AdmissionStageController extends Controller
 
         $schools = $schools->with('area')
             ->with('level')
-            ->with('admission_stages')
+            ->with('admission_stages.statuses')
             ->latest()
             ->paginate(15);
 
@@ -44,27 +44,42 @@ class AdmissionStageController extends Controller
 
         try {
             $school = School::where('uuid', request('school'))->firstOrFail();
+            // stages
             $existingStageIds = [];
-
             foreach (request('admission_stages') as $stage) {
-                $admission_stage_created = AdmissionStage::updateOrCreate(
-                    [
-                        'id' => $stage['id'],
-                    ],
-                    [
-                        'model_id' => $school->id,
-                        'model_type' => School::class,
+                $admission_stage_created = $school->admission_stages()
+                    ->updateOrCreate([
+                        'uuid' => $stage['admission_stage_id'],
+                    ], [
                         'type' => $stage['type'],
                         'title' => $stage['title'],
                         'sort_number' => $stage['sort_number'],
-                    ]
-                );
+                    ]);
+                // statuses
+                $existingStageStatusIds = [];
+                foreach ($stage['statuses'] as $status) {
+                    $admission_stage_status_created = $admission_stage_created->statuses()
+                        ->updateOrCreate([
+                            'uuid' => $status['admission_stage_status_id'],
+                        ], [
+                            'title' => $status['title'],
+                            'sort_number' => $status['sort_number'],
+                            'is_finished' => $status['is_finished'],
+                        ]);
 
-                array_push($existingStageIds, $admission_stage_created->id);
+                    array_push($existingStageStatusIds, $admission_stage_status_created->uuid);
+                }
+
+                $admission_stage_created->statuses()
+                    ->whereNotIn('uuid', $existingStageStatusIds)
+                    ->delete();
+
+
+                array_push($existingStageIds, $admission_stage_created->uuid);
             }
 
             $school->admission_stages()
-                ->whereNotIn('id', $existingStageIds)
+                ->whereNotIn('uuid', $existingStageIds)
                 ->delete();
 
             DB::commit();

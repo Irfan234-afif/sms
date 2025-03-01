@@ -11,7 +11,7 @@ import AdmissionStageForm from './Form.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
-  { label: 'Tahapan Pendaftaran', href: route('office.icc.management.admissionStage') },
+  { label: 'Tahap Pendaftaran', href: route('office.icc.management.admissionStage') },
 ];
 </script>
 
@@ -126,9 +126,9 @@ export default {
                         type="default"
                         @click="
                           openModal({
-                            title: `Tahapan Pendaftaran ${school.area.name}`,
+                            title: `Tahap Pendaftaran ${school.area.name}`,
                             mode: 'admission-stage-form',
-                            maxWidth: '2xl',
+                            maxWidth: '4xl',
                             data: {
                               school: school,
                               admission_stages: school.admission_stages,

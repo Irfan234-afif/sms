@@ -19,7 +19,7 @@ class SchoolResource extends JsonResource
             'area' => $this->whenLoaded('area', fn() => AreaResource::make($this->area)),
             'level' => $this->whenLoaded('level', fn() => SchoolLevelResource::make($this->level)),
             'grades' => $this->whenLoaded('grades', fn() => SchoolGradeResource::collection($this->grades)),
-            'admission_stages' => $this->whenLoaded('admission_stages', fn() => SchoolGradeResource::collection($this->admission_stages)),
+            'admission_stages' => $this->whenLoaded('admission_stages', fn() => AdmissionStageResource::collection($this->admission_stages)),
         ];
     }
 }
