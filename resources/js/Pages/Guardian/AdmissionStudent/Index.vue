@@ -10,6 +10,7 @@ import CheckoutForm from './CheckoutForm.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import AdmissionCancellationForm from './AdmissionCancellationForm.vue';
 const breadcrumbs = [
   { label: 'Wali', href: route('guardian') },
   { label: 'Tagihan & Pembayaran', href: route('guardian.transactionPayment') },
@@ -201,7 +202,10 @@ export default {
                     <Badge v-if="admission_student.status == 'REJECTED'" type="red">{{
                       admission_student.status_label
                     }}</Badge>
-                    <Badge v-if="admission_student.status == 'ENROLLED'" type="dark">{{
+                    <Badge v-if="admission_student.status == 'ENROLLED'" type="green">{{
+                      admission_student.status_label
+                    }}</Badge>
+                    <Badge v-if="admission_student.status == 'CANCELED'" type="dark">{{
                       admission_student.status_label
                     }}</Badge>
                   </td>
@@ -268,7 +272,23 @@ export default {
                           </div>
                         </OutlineButton>
                       </Link>
-                      <OutlineButton type="red">
+                      <OutlineButton
+                        v-if="admission_student.status != 'ENROLLED' && admission_student.status != 'CANCELED'"
+                        @click="
+                          openModal({
+                            title: 'Kirim Formulir',
+                            mode: 'admission-cancellation-form',
+                            maxWidth: 'sm',
+                            data: {
+                              description: 'Batalkan pendaftaran?',
+                              actionUrl: route('guardian.admissionStudent.cancelAdmission', {
+                                registration_number: admission_student.registration_number,
+                              }),
+                            },
+                          })
+                        "
+                        type="red"
+                      >
                         <div class="flex items-center space-x-1">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -306,6 +326,11 @@ export default {
         <template v-slot="{ propertyModal }">
           <CheckoutForm
             v-if="propertyModal?.mode == 'purchase-form'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
+          <AdmissionCancellationForm
+            v-if="propertyModal?.mode == 'admission-cancellation-form'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

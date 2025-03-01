@@ -216,6 +216,7 @@ Route::middleware(['auth', 'verified'])
                 Route::get('{registration_number}/detail', [AdmissionStudentController::class, 'detail'])->name('.detail');
                 Route::post('submit', [AdmissionStudentController::class, 'submit'])->name('.submit');
                 Route::post('send', [AdmissionStudentController::class, 'send'])->name('.send');
+                Route::post('cancel-admission', [AdmissionStudentController::class, 'cancelAdmission'])->name('.cancelAdmission');
                 Route::post('set-schedule', [AdmissionStudentController::class, 'setSchedule'])->name('.setSchedule');
             });
         // transaction payment routes
@@ -225,12 +226,6 @@ Route::middleware(['auth', 'verified'])
                 Route::get('/', [TransactionPaymentController::class, 'index']);
                 Route::post('process-payment', [TransactionPaymentController::class, 'processPayment'])->name('.processPayment');
             });
-    });
-// payment routes
-Route::middleware(['auth', 'verified'])
-    ->prefix('payment')
-    ->group(function () {
-        Route::get('/', [GuardianController::class, 'index']);
     });
 
 Route::middleware('auth')->group(function () {

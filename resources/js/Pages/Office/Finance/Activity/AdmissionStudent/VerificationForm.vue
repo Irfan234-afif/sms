@@ -116,7 +116,7 @@ export default {
       >
         Ya, Tolak Formulir
       </DefaultButton>
-      <DefaultButton type="light" class="w-full md:w-1/3" @click="close" :disabled="process"
+      <DefaultButton type="light" class="w-full md:w-1/2" @click="close" :disabled="process"
         >Tidak, Batalkan
       </DefaultButton>
     </div>
