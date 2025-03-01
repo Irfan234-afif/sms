@@ -66,6 +66,43 @@ export default {
         <div class="px-4 2xl:px-0">
           <!-- alert -->
           <div>
+            <!-- PENDING -->
+            <div
+              v-if="admission_student.data.status == 'PENDING'"
+              id="alert-verified"
+              class="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-yellow-800 dark:border-yellow-800 dark:bg-gray-800 dark:text-yellow-400"
+              role="alert"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="me-2 h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+                  />
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="text-base font-medium">Pendaftaran sedang diproses</h3>
+              </div>
+              <div class="mb-4 mt-2 text-xs">
+                Pendaftaran Anda sedang diproses. Harap tunggu, kami akan menginformasikan hasilnya segera.
+              </div>
+              <div class="flex">
+                <button
+                  type="button"
+                  class="rounded-lg border border-yellow-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-yellow-800 hover:bg-yellow-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-yellow-200 dark:border-yellow-600 dark:text-yellow-400 dark:hover:bg-yellow-600 dark:hover:text-white dark:focus:ring-yellow-800"
+                  data-dismiss-target="#alert-verified"
+                  aria-label="Close"
+                >
+                  tutup
+                </button>
+              </div>
+            </div>
+            <!-- VERIFIED -->
             <div
               v-if="admission_student.data.status == 'VERIFIED'"
               id="alert-verified"
@@ -102,6 +139,7 @@ export default {
                 </button>
               </div>
             </div>
+            <!-- UNVERIFIED -->
             <div
               v-if="admission_student.data.status == 'UNVERIFIED'"
               id="alert-unverified"
@@ -138,6 +176,7 @@ export default {
                 </button>
               </div>
             </div>
+            <!-- ACCEPTED -->
             <div
               v-if="admission_student.data.status == 'ACCEPTED'"
               id="alert-accepted"
@@ -176,6 +215,7 @@ export default {
                 </button>
               </div>
             </div>
+            <!-- REJECTED -->
             <div
               v-if="admission_student.data.status == 'REJECTED'"
               id="alert-rejected"
@@ -212,6 +252,79 @@ export default {
                   aria-label="Close"
                 >
                   Tutup
+                </button>
+              </div>
+            </div>
+            <!-- ENROLLED -->
+            <div
+              v-if="admission_student.data.status == 'ENROLLED'"
+              id="alert-accepted"
+              class="mb-4 rounded-lg border border-green-300 bg-green-50 p-4 text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
+              role="alert"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="me-2 h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+                  />
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="text-base font-medium">Pendaftaran telah selesai</h3>
+              </div>
+              <div class="mb-4 mt-2 text-xs">
+                Terima kasih telah mendaftar! Jika diperlukan, silakan hubungi kami untuk informasi lebih lanjut.
+              </div>
+              <div class="flex">
+                <button
+                  type="button"
+                  class="rounded-lg border border-green-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-green-800 hover:bg-green-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-200 dark:border-green-600 dark:text-green-400 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-800"
+                  data-dismiss-target="#alert-accepted"
+                  aria-label="Close"
+                >
+                  tutup
+                </button>
+              </div>
+            </div>
+            <!-- CANCELED -->
+            <div
+              v-if="admission_student.data.status == 'CANCELED'"
+              id="alert-accepted"
+              class="mb-4 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-800 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-400"
+              role="alert"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="me-2 h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+                  />
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="text-base font-medium">Pendaftaran dibatalkan</h3>
+              </div>
+              <div class="mb-4 mt-2 text-xs">
+                Anda telah membatalkan pendaftaran. Jika ingin mendaftar kembali, silakan lakukan proses pendaftaran
+                ulang.
+              </div>
+              <div class="flex">
+                <button
+                  type="button"
+                  class="rounded-lg border border-gray-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-gray-800 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-800"
+                  data-dismiss-target="#alert-accepted"
+                  aria-label="Close"
+                >
+                  tutup
                 </button>
               </div>
             </div>

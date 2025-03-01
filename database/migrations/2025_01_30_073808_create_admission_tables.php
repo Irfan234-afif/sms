@@ -123,7 +123,7 @@ return new class extends Migration
             $table->string('last_report_attachment')->nullable();
             $table->string('previous_school_letter_attachment')->nullable();
             $table->json('school_info_sources')->nullable();
-            $table->string('status');  // DRAFT, PENDING, VERIFIED, UNVERIFIED, ACCEPTED, REJECTED, ENROLLED
+            $table->string('status');  // DRAFT, PENDING, VERIFIED, UNVERIFIED, ACCEPTED, REJECTED, ENROLLED, CANCELED
             $table->timestampsTz();
             $table->softDeletes();
         });
