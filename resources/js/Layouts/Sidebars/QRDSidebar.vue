@@ -14,7 +14,7 @@ import { Link } from '@inertiajs/vue3';
 
 <template>
   <div>
-    <div class="h-full overflow-y-auto bg-white px-3 py-1 dark:bg-gray-800">
+    <div class="h-screen overflow-y-auto bg-white px-3 py-1 dark:bg-gray-800">
       <ul class="space-y-2">
         <li>
           <Link

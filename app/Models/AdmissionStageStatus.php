@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AdmissionStageStatus extends Model
 {
     use GenerateUuid, SoftDeletes;
+
+    protected $fillable = [
+        'title',
+        'sort_number',
+        'color',
+        'is_finished',
+    ];
 }

@@ -375,7 +375,7 @@ export default {
           </div>
           <div>
             <hr class="my-4" />
-            <h1 class="text-base font-medium text-gray-900 dark:text-white md:pb-4">Tahapan Pendaftaran</h1>
+            <h1 class="text-base font-medium text-gray-900 dark:text-white md:pb-4">Tahap Pendaftaran</h1>
             <ol class="relative mx-3 max-w-2xl border-s border-gray-200 dark:border-gray-700">
               <li v-for="(stage, index) in admission_student.data.stages" class="mb-10 ms-8" :key="index">
                 <span
