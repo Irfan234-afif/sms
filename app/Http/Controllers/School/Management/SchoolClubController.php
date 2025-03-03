@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\School\Management;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\SchoolSubjectResource;
 use App\Models\Employee;
 use App\Models\School;
@@ -27,10 +28,11 @@ class SchoolClubController extends Controller
         $school_clubs = SchoolClub::where('school_id', $this->school->id);
 
         if (request()->has('search')) {
-            $school_clubs->where('name', 'like', '%' . request('search') . '%');
+            $school_clubs->where('title', 'like', '%' . request('search') . '%');
         }
 
-        $school_clubs = $school_clubs->latest()
+        $school_clubs = $school_clubs->with('mentor.profile')
+            ->latest()
             ->paginate(15);
 
         $data = [
@@ -41,6 +43,21 @@ class SchoolClubController extends Controller
         ];
 
         return Inertia::render('School/Management/SchoolClub/Index', $data);
+    }
+
+    public function optionMentor()
+    {
+        $mentors = Employee::whereHas('assignments', function ($assignments) {
+            $assignments->where('area_id', $this->school->area->id);
+        });
+
+        if (request()->has('search')) {
+            $mentors->whereHas('profile', function ($profile) {
+                $profile->where('name', 'like', '%' . request('search') . '%');
+            })->orWhere('identity_number', 'like', '%' . request('search') . '%');
+        }
+
+        return response()->json(EmployeeResource::collection($mentors->with('profile')->latest()->get()), 200);
     }
 
     public function save()

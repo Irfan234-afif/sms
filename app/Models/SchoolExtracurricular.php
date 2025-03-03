@@ -9,4 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SchoolExtracurricular extends Model
 {
     use GenerateUuid, SoftDeletes;
+
+    protected $fillable = [
+        'school_id',
+        'mentor_id',
+        'title',
+    ];
+
+    public function mentor()
+    {
+        return $this->belongsTo(Employee::class, 'mentor_id');
+    }
 }
