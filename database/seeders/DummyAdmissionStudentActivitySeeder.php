@@ -47,7 +47,7 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
                 DB::beginTransaction();
 
                 try {
-                    foreach (range(1, rand(100, 250)) as $index) {
+                    foreach (range(1, rand(25, 50)) as $index) {
                         $transaction = Transaction::create([
                             'customer_id' => $customer->id,
                             'type' => 'SALES',

@@ -227,6 +227,9 @@ Route::middleware(['auth', 'verified'])
                     ->name('.schoolClassroom')
                     ->group(function () {
                         Route::get('/', [SchoolClassroomController::class, 'index']);
+                        Route::get('option-school-grade', [SchoolClassroomController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
+                        Route::get('option-school-major', [SchoolClassroomController::class, 'optionSchoolMajor'])->name('.optionSchoolMajor');
+                        Route::get('option-homeroom-teacher', [SchoolClassroomController::class, 'optionHomeroomTeacher'])->name('.optionHomeroomTeacher');
                         Route::post('save', [SchoolClassroomController::class, 'save'])->name('.save');
                         Route::delete('delete', [SchoolClassroomController::class, 'delete'])->name('.delete');
                     });
@@ -235,6 +238,7 @@ Route::middleware(['auth', 'verified'])
                     ->name('.schoolExtracurricular')
                     ->group(function () {
                         Route::get('/', [SchoolExtracurricularController::class, 'index']);
+                        Route::get('option-mentor', [SchoolExtracurricularController::class, 'optionMentor'])->name('.optionMentor');
                         Route::post('save', [SchoolExtracurricularController::class, 'save'])->name('.save');
                         Route::delete('delete', [SchoolExtracurricularController::class, 'delete'])->name('.delete');
                     });
@@ -243,6 +247,7 @@ Route::middleware(['auth', 'verified'])
                     ->name('.schoolClub')
                     ->group(function () {
                         Route::get('/', [SchoolClubController::class, 'index']);
+                        Route::get('option-mentor', [SchoolSubjectController::class, 'optionMentor'])->name('.optionMentor');
                         Route::post('save', [SchoolClubController::class, 'save'])->name('.save');
                         Route::delete('delete', [SchoolClubController::class, 'delete'])->name('.delete');
                     });

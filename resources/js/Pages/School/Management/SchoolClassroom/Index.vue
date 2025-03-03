@@ -12,7 +12,7 @@ import DefaultButton from '@/Components/DefaultButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 const breadcrumbs = [
   { label: 'Sekolah', href: route('school') },
-  { label: 'Kelas', href: route('school.management.schoolSubject') },
+  { label: 'Kelas', href: route('school.management.schoolClassroom') },
 ];
 </script>
 
@@ -71,9 +71,11 @@ export default {
             @click="
               openModal({
                 title: 'Kelas Baru',
-                mode: 'school-subject-create-form',
+                mode: 'school-classroom-create-form',
                 maxWidth: 'md',
-                data: {},
+                data: {
+                  school: $page.props.auth.active_school,
+                },
               })
             "
           >
@@ -121,13 +123,15 @@ export default {
                     </div>
                   </th>
                   <th scope="col" class="p-4">Kelas</th>
-                  <th scope="col" class="p-4">Grup Kelas</th>
+                  <th scope="col" class="p-4">Tingkat Kelas</th>
+                  <th v-if="$page.props.auth.active_school.use_major" scope="col" class="p-4">Jurusan</th>
+                  <th scope="col" class="p-4">Wali Kelas</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
               <tbody class="text-xs">
                 <tr
-                  v-for="(school_subject, index) in school_classrooms.data"
+                  v-for="(school_classroom, index) in school_classrooms.data"
                   :key="index"
                   class="border-b hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
                 >
@@ -144,12 +148,26 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ school_subject.title }}
+                      {{ school_classroom.title }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ school_subject.group.title }}
+                      {{ school_classroom.grade.title }}
+                    </div>
+                  </th>
+                  <th
+                    v-if="$page.props.auth.active_school.use_major"
+                    scope="row"
+                    class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white"
+                  >
+                    <div class="flex items-center">
+                      {{ school_classroom.major?.title ?? '-' }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ school_classroom.homeroom_teacher?.profile?.name ?? '-' }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -159,10 +177,11 @@ export default {
                         @click="
                           openModal({
                             title: 'Sunting Kelas',
-                            mode: 'school-subject-edit-form',
+                            mode: 'school-classroom-edit-form',
                             maxWidth: 'md',
                             data: {
-                              school_subject: school_subject,
+                              school: $page.props.auth.active_school,
+                              school_classroom: school_classroom,
                             },
                           })
                         "
@@ -191,13 +210,13 @@ export default {
                         @click="
                           openModal({
                             title: 'Hapus Kelas',
-                            mode: 'school-subject-delete-confirm',
+                            mode: 'school-classroom-delete-confirm',
                             maxWidth: 'md',
                             data: {
-                              actionUrl: route('school.management.schoolSubject.delete', {
-                                school_subject_id: school_subject.uuid,
+                              actionUrl: route('school.management.schoolClassroom.delete', {
+                                school_classroom_id: school_classroom.uuid,
                               }),
-                              redirectUrl: route('school.management.schoolSubject'),
+                              redirectUrl: route('school.management.schoolClassroom'),
                               message: 'Ingin menghapus Kelas?',
                             },
                           })
@@ -239,13 +258,14 @@ export default {
         <template v-slot="{ propertyModal }">
           <SchoolSubjectForm
             v-if="
-              propertyModal?.mode == 'school-subject-edit-form' || propertyModal?.mode == 'school-subject-create-form'
+              propertyModal?.mode == 'school-classroom-edit-form' ||
+              propertyModal?.mode == 'school-classroom-create-form'
             "
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
           <DeleteConfirm
-            v-if="propertyModal?.mode == 'school-subject-delete-confirm'"
+            v-if="propertyModal?.mode == 'school-classroom-delete-confirm'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

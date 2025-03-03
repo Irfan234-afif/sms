@@ -140,6 +140,15 @@ export default {
       <el-form v-if="loaded" ref="schoolSubjectForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
+          :label="field.title.label"
+          :rules="field.title.rules"
+          :error="field.title.error"
+          prop="title"
+        >
+          <el-input v-model="form.title" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
           :label="field.school_subject_group_id.label"
           :rules="field.school_subject_group_id.rules"
           :error="field.school_subject_group_id.error"
@@ -167,15 +176,6 @@ export default {
               :value="option"
             />
           </el-select>
-        </el-form-item>
-        <el-form-item
-          class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
-        >
-          <el-input v-model="form.title" autocomplete="off" />
         </el-form-item>
         <el-form-item
           class="font-medium"

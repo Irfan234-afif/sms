@@ -80,6 +80,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('school_id')->constrained('schools');
+            // todo: change title to name
             $table->string('title');
             $table->timestampsTz();
             $table->softDeletes();
@@ -92,6 +93,7 @@ return new class extends Migration
             $table->foreignId('school_grade_id')->constrained('school_grades');
             $table->foreignId('school_major_id')->nullable()->constrained('school_majors');
             $table->foreignId('homeroom_teacher_id')->nullable()->constrained('employees');
+            // todo: change title to name
             $table->string('title');
             $table->integer('capacity')->default(0);
             $table->timestampsTz();
@@ -103,6 +105,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('school_id')->constrained('schools');
             $table->foreignId('mentor_id')->nullable()->constrained('employees');
+            // todo: change title to name
             $table->string('title');
             $table->timestampsTz();
             $table->softDeletes();
@@ -113,6 +116,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('school_id')->constrained('schools');
             $table->foreignId('mentor_id')->nullable()->constrained('employees');
+            // todo: change title to name
             $table->string('title');
             $table->timestampsTz();
             $table->softDeletes();
@@ -136,7 +140,7 @@ return new class extends Migration
             $table->foreignId('guardian_id')->constrained('users');
             $table->timestampsTz();
         });
-        // remove for future
+        // todo: remove table student_schools for future
         Schema::create('student_schools', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

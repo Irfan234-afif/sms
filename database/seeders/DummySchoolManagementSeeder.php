@@ -121,7 +121,7 @@ class DummySchoolManagementSeeder extends Seeder
                                     $school->classrooms()->firstOrCreate([
                                         'school_grade_id' => $school_grade->id,
                                         'school_major_id' => $school_major->id,
-                                        'title' => $school_major->id . ' ' . $school_grade->title . ' ' . $group,
+                                        'title' => $school_grade->title . ' ' . $school_major->title   . ' ' . $group,
                                     ], [
                                         'homeroom_teacher_id' => Employee::inRandomOrder()->first()->id,
                                         'capacity' => rand(30, 50),
@@ -161,6 +161,8 @@ class DummySchoolManagementSeeder extends Seeder
                     foreach ($school_extracurriculars as $school_extracurricular) {
                         $school->extracurriculars()->firstOrCreate([
                             'title' => $school_extracurricular->title,
+                        ], [
+                            'mentor_id' => Employee::inRandomOrder()->first()->id,
                         ]);
                     }
 
@@ -186,6 +188,8 @@ class DummySchoolManagementSeeder extends Seeder
                     foreach ($school_clubs as $school_club) {
                         $school->clubs()->firstOrCreate([
                             'title' => $school_club->title,
+                        ], [
+                            'mentor_id' => Employee::inRandomOrder()->first()->id,
                         ]);
                     }
 
