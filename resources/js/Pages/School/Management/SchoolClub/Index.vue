@@ -4,7 +4,7 @@ import Search from '@/Components/Search.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import SchoolSubjectForm from './Form.vue';
@@ -186,6 +186,33 @@ export default {
                           <div>Sunting</div>
                         </div>
                       </OutlineButton>
+                      <Link
+                        :href="
+                          route('school.management.schoolClub.detail', {
+                            school_club_id: school_club.uuid,
+                          })
+                        "
+                      >
+                        <OutlineButton type="yellow">
+                          <div class="flex items-center space-x-1">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-4"
+                            >
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                              <path d="M21 21l-6 -6" />
+                            </svg>
+                            <div>Lihat</div>
+                          </div>
+                        </OutlineButton>
+                      </Link>
                       <OutlineButton
                         type="red"
                         @click="

@@ -11,7 +11,7 @@ class SchoolClubMember extends Model
     use GenerateUuid, SoftDeletes;
 
     protected $fillable = [
-        'school_extracurricular_id',
+        'school_club_id',
         'student_id',
         'school_classroom_id',
     ];

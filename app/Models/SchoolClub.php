@@ -23,6 +23,6 @@ class SchoolClub extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Student::class, 'school_extracurricular_members', 'school_extracurricular_id', 'student_id')->withPivot('uuid');
+        return $this->belongsToMany(Student::class, 'school_club_members', 'school_club_id', 'student_id')->withPivot('uuid');
     }
 }

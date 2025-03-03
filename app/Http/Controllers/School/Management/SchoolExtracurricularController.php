@@ -43,7 +43,7 @@ class SchoolExtracurricularController extends Controller
             'search_params' => [
                 'search' => request('search'),
             ],
-            'school_extracurriculars' => SchoolSubjectResource::collection($school_extracurriculars)
+            'school_extracurriculars' => SchoolExtracurricularResource::collection($school_extracurriculars)
         ];
 
         return Inertia::render('School/Management/SchoolExtracurricular/Index', $data);
