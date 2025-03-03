@@ -12,6 +12,6 @@ class SchoolClassroomMember extends Model
 
     protected $fillable = [
         'school_classroom_id',
-        'member_id',
+        'student_id',
     ];
 }

@@ -9,4 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SchoolClubMember extends Model
 {
     use GenerateUuid, SoftDeletes;
+
+    protected $fillable = [
+        'school_extracurricular_id',
+        'student_id',
+        'school_classroom_id',
+    ];
 }

@@ -19,7 +19,7 @@ export default {
       loaded: true,
       isValid: false,
       form: {
-        school_classroom_id: this.propertyModal.data.school_classroom.uuid,
+        school_extracurricular_id: this.propertyModal.data.school_extracurricular.uuid,
         student_id: null,
       },
       field: {
@@ -39,8 +39,7 @@ export default {
       this.field.student_id.loading = true;
       axios
         .get(
-          route('school.management.schoolClassroom.optionMember', {
-            school_classroom_id: this.form.school_classroom_id,
+          route('school.management.schoolExtracurricular.optionMember', {
             search: search,
           }),
         )
@@ -63,7 +62,7 @@ export default {
           requestPayload.student_id = requestPayload.student_id.uuid;
 
           axios
-            .post(route('school.management.schoolClassroom.assignMember'), requestPayload, {
+            .post(route('school.management.schoolExtracurricular.assignMember'), requestPayload, {
               headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {

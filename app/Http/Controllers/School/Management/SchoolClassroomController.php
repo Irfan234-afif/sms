@@ -62,14 +62,14 @@ class SchoolClassroomController extends Controller
             ->with('homeroom_teacher.profile')
             ->firstOrFail();
 
-        $members = $school_classroom->members()->with('profile')->latest()->get();
+        $students = $school_classroom->members()->with('profile')->latest()->get();
 
         $data = [
             'search_params' => [
                 'search' => request('search'),
             ],
             'school_classroom' => SchoolClassroomResource::make($school_classroom),
-            'members' => StudentResource::collection($members),
+            'members' => StudentResource::collection($students),
         ];
 
         return Inertia::render('School/Management/SchoolClassroom/Detail', $data);
@@ -182,17 +182,17 @@ class SchoolClassroomController extends Controller
     {
         $school_classroom = SchoolClassroom::where('uuid', request('school_classroom_id'))->firstOrFail();
 
-        $members = Student::where('school_id', $this->school->id)
+        $students = Student::where('school_id', $this->school->id)
             ->where('school_grade_id', $school_classroom->school_grade_id);
 
 
         if (request()->has('search')) {
-            $members->whereHas('profile', function ($profile) {
+            $students->whereHas('profile', function ($profile) {
                 $profile->where('name', 'like', '%' . request('search') . '%');
             })->orWhere('school_national_id', 'like', '%' . request('search') . '%');
         }
 
-        return response()->json(StudentResource::collection($members->with('profile')->latest()->get()), 200);
+        return response()->json(StudentResource::collection($students->with('profile')->latest()->get()), 200);
     }
 
     public function assignMember()
@@ -201,12 +201,12 @@ class SchoolClassroomController extends Controller
 
         try {
             $school_classroom = SchoolClassroom::where('uuid', request('school_classroom_id'))->firstOrFail();
-            $member = Student::where('uuid', request('member_id'))->firstOrFail();
+            $student = Student::where('uuid', request('student_id'))->firstOrFail();
 
             SchoolClassroomMember::updateOrCreate(
                 [
                     'school_classroom_id' => $school_classroom->id,
-                    'member_id' => $member->id,
+                    'student_id' => $student->id,
                 ]
             );
 

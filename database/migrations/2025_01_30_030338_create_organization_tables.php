@@ -151,7 +151,6 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-
         Schema::create('school_extracurricular_members', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
@@ -171,6 +170,7 @@ return new class extends Migration
             $table->timestampsTz();
             $table->softDeletes();
         });
+        
         Schema::create('school_subject_groups', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

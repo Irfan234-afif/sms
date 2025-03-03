@@ -23,6 +23,6 @@ class SchoolExtracurricular extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Student::class, 'school_classroom_members');
+        return $this->belongsToMany(Student::class, 'school_extracurricular_members', 'school_extracurricular_id', 'student_id')->withPivot('uuid');
     }
 }
