@@ -26,7 +26,7 @@ class SchoolController extends Controller
 
         if ($user->hasRole('System Admin') || $user->hasRole('Site Admin')) {
             Session::put('active_school', $active_school);
-            return redirect()->back();
+            return redirect()->route('school');
         }
 
         $employee = optional($user->profile)->employee;
@@ -44,6 +44,6 @@ class SchoolController extends Controller
         }
 
         Session::put('active_school', $active_school);
-        return redirect()->back();
+        return redirect()->route('school');
     }
 }

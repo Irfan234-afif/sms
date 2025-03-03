@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('school_classroom_id')->constrained('school_classrooms');
-            $table->foreignId('student_id')->constrained('students');
+            $table->foreignId('member_id')->constrained('students');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -33,4 +33,9 @@ class SchoolClassroom extends Model
     {
         return $this->belongsTo(Employee::class, 'homeroom_teacher_id');
     }
+
+    public function members()
+    {
+        return $this->belongsToMany(Student::class, 'school_classroom_members', 'school_classroom_id', 'member_id')->withPivot('uuid');
+    }
 }

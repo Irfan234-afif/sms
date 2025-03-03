@@ -7,11 +7,14 @@ use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\SchoolClassroomResource;
 use App\Http\Resources\SchoolGradeResource;
 use App\Http\Resources\SchoolMajorResource;
+use App\Http\Resources\StudentResource;
 use App\Models\Employee;
 use App\Models\School;
 use App\Models\SchoolClassroom;
+use App\Models\SchoolClassroomMember;
 use App\Models\SchoolGrade;
 use App\Models\SchoolMajor;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -50,6 +53,28 @@ class SchoolClassroomController extends Controller
 
         return Inertia::render('School/Management/SchoolClassroom/Index', $data);
     }
+
+    public function detail($school_classroom_id)
+    {
+        $school_classroom = SchoolClassroom::where('uuid', $school_classroom_id)
+            ->with('grade')
+            ->with('major')
+            ->with('homeroom_teacher.profile')
+            ->firstOrFail();
+
+        $members = $school_classroom->members()->with('profile')->latest()->get();
+
+        $data = [
+            'search_params' => [
+                'search' => request('search'),
+            ],
+            'school_classroom' => SchoolClassroomResource::make($school_classroom),
+            'members' => StudentResource::collection($members),
+        ];
+
+        return Inertia::render('School/Management/SchoolClassroom/Detail', $data);
+    }
+
 
     public function optionSchoolGrade()
     {
@@ -104,7 +129,7 @@ class SchoolClassroomController extends Controller
                 ],
                 [
                     'school_id' => $this->school->id,
-                    'school_grade_id' => $school_grade ? $school_grade->id : null,
+                    'school_grade_id' => $school_grade->id,
                     'school_major_id' => $school_major ? $school_major->id : null,
                     'homeroom_teacher_id' => $homeroom_teacher ? $homeroom_teacher->id : null,
                     'title' => request('title'),
@@ -141,6 +166,80 @@ class SchoolClassroomController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Kelas berhasil dihapus.',
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    public function optionMember()
+    {
+        $school_classroom = SchoolClassroom::where('uuid', request('school_classroom_id'))->firstOrFail();
+
+        $members = Student::where('school_id', $this->school->id)
+            ->where('school_grade_id', $school_classroom->school_grade_id);
+
+
+        if (request()->has('search')) {
+            $members->whereHas('profile', function ($profile) {
+                $profile->where('name', 'like', '%' . request('search') . '%');
+            })->orWhere('school_national_id', 'like', '%' . request('search') . '%');
+        }
+
+        return response()->json(StudentResource::collection($members->with('profile')->latest()->get()), 200);
+    }
+
+    public function assignMember()
+    {
+        DB::beginTransaction();
+
+        try {
+            $school_classroom = SchoolClassroom::where('uuid', request('school_classroom_id'))->firstOrFail();
+            $member = Student::where('uuid', request('member_id'))->firstOrFail();
+
+            SchoolClassroomMember::updateOrCreate(
+                [
+                    'school_classroom_id' => $school_classroom->id,
+                    'member_id' => $member->id,
+                ]
+            );
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Anggota berhasil ditambahkan.',
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function removeMember()
+    {
+        DB::beginTransaction();
+
+        try {
+            $school_classroom_member = SchoolClassroomMember::where('uuid', request('school_classroom_member_id'))->firstOrFail();
+
+            $school_classroom_member->forceDelete();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Anggota berhasil dihapus.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();

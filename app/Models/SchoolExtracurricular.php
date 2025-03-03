@@ -20,4 +20,9 @@ class SchoolExtracurricular extends Model
     {
         return $this->belongsTo(Employee::class, 'mentor_id');
     }
+
+    public function members()
+    {
+        return $this->belongsToMany(Student::class, 'school_classroom_members');
+    }
 }
