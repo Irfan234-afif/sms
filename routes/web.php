@@ -191,6 +191,7 @@ Route::middleware(['auth', 'verified'])
             ->group(function () {
                 Route::get('/', [StudentController::class, 'index']);
                 Route::get('{school_national_id}/detail', [StudentController::class, 'detail'])->name('.detail');
+                Route::post('update', [StudentController::class, 'update'])->name('.update');
             });
         // activity routes
         Route::prefix('activity/admission-student')

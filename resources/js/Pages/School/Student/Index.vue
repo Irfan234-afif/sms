@@ -5,7 +5,9 @@ import OutlineButton from '@/Components/OutlineButton.vue';
 import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import StudentForm from './Form.vue';
 const breadcrumbs = [
   { label: 'Sekolah', href: route('school') },
   { label: 'Siswa', href: route('school.student') },
@@ -19,8 +21,32 @@ export default {
     product: Object,
     students: Object,
   },
-  data() {},
-  methods: {},
+  data() {
+    return {
+      showModal: false,
+      propertyModal: {
+        title: null,
+        mode: null,
+        maxWidth: null,
+        data: null,
+      },
+    };
+  },
+  methods: {
+    openModal(property) {
+      this.showModal = true;
+      this.propertyModal = property;
+    },
+    closeModal() {
+      this.showModal = false;
+      this.propertyModal = {
+        title: null,
+        mode: null,
+        maxWidth: null,
+        data: null,
+      };
+    },
+  },
 };
 </script>
 
@@ -62,7 +88,7 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Siswa</th>
                   <th scope="col" class="p-4">Nomor Induk</th>
-                  <th scope="col" class="p-4">Kelas</th>
+                  <th scope="col" class="p-4">Tingkat Kelas</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -103,6 +129,38 @@ export default {
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
+                      <OutlineButton
+                        type="default"
+                        @click="
+                          openModal({
+                            title: 'Sunting Siswa',
+                            mode: 'student-edit-form',
+                            maxWidth: '4xl',
+                            data: {
+                              student: student,
+                            },
+                          })
+                        "
+                      >
+                        <div class="flex items-center space-x-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="h-4"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                            <path d="M16 5l3 3" />
+                          </svg>
+                          <div>Sunting</div>
+                        </div>
+                      </OutlineButton>
                       <Link
                         :href="
                           route('school.student.detail', {
@@ -140,6 +198,26 @@ export default {
           <Pagination :search_params="search_params" :meta="students.meta" :links="students.links" />
         </div>
       </section>
+      <!-- Modal -->
+      <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
+        <template v-slot="{ propertyModal }">
+          <StudentForm
+            v-if="propertyModal?.mode == 'student-create-form' || propertyModal?.mode == 'student-edit-form'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
+          <ResetPasswordForm
+            v-if="propertyModal?.mode == 'reset-password-form'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
+          <DeleteConfirm
+            v-if="propertyModal?.mode == 'student-delete-confirm'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
+        </template>
+      </Modal>
     </template>
   </SchoolLayout>
 </template>
