@@ -1,0 +1,66 @@
+[
+  {
+    "title": "Matematika",
+    "description": "Mempelajari konsep bilangan, aljabar, geometri, statistika, dan kalkulus untuk melatih logika dan pemecahan masalah."
+  },
+  {
+    "title": "Bahasa Inggris",
+    "description": "Mengembangkan keterampilan mendengar, berbicara, membaca, dan menulis dalam bahasa Inggris untuk komunikasi global."
+  },
+  {
+    "title": "Bahasa Indonesia",
+    "description": "Menjelajahi kaidah bahasa, sastra, dan keterampilan komunikasi dalam bahasa Indonesia secara lisan maupun tulisan."
+  },
+  {
+    "title": "Seni Budaya dan Prakarya",
+    "description": "Mengasah kreativitas melalui seni rupa, musik, tari, teater, serta keterampilan membuat karya tangan dan kerajinan."
+  },
+  {
+    "title": "Pendidikan Agama",
+    "description": "Mempelajari nilai-nilai keagamaan, etika, dan moral sesuai dengan keyakinan yang dianut untuk membentuk karakter yang baik."
+  },
+  {
+    "title": "Mandarin",
+    "description": "Mempelajari bahasa Mandarin meliputi kosakata, tata bahasa, pelafalan, serta pemahaman budaya Tiongkok."
+  },
+  {
+    "title": "Musik",
+    "description": "Mempelajari teori musik, teknik bermain alat musik, serta ekspresi seni melalui suara, melodi, dan harmoni."
+  },
+  {
+    "title": "Informatika",
+    "description": "Belajar tentang komputer, pemrograman, jaringan, keamanan siber, dan teknologi informasi untuk mendukung perkembangan digital."
+  },
+  {
+    "title": "Pendidikan Kewarganegaraan",
+    "description": "Mempelajari hak dan kewajiban sebagai warga negara, demokrasi, konstitusi, serta nilai-nilai kebangsaan dan toleransi."
+  },
+  {
+    "title": "Ekonomi",
+    "description": "Mempelajari prinsip ekonomi, pasar, keuangan, bisnis, dan pengelolaan sumber daya untuk memahami kegiatan ekonomi dalam kehidupan sehari-hari."
+  },
+  {
+    "title": "Geografi",
+    "description": "Mempelajari fenomena alam dan sosial, termasuk bentang alam, iklim, kependudukan, dan hubungan manusia dengan lingkungannya."
+  },
+  {
+    "title": "Sosiologi",
+    "description": "Mempelajari interaksi sosial, kelompok masyarakat, norma, budaya, dan perubahan sosial dalam kehidupan bermasyarakat."
+  },
+  {
+    "title": "Sejarah",
+    "description": "Mempelajari peristiwa masa lalu, peradaban manusia, dan perkembangan sejarah baik nasional maupun dunia."
+  },
+  {
+    "title": "Biologi",
+    "description": "Mempelajari makhluk hidup, ekosistem, genetika, serta berbagai proses biologis yang terjadi di dalam tubuh manusia, hewan, dan tumbuhan."
+  },
+  {
+    "title": "Fisika",
+    "description": "Mempelajari konsep energi, gaya, gerak, listrik, optik, dan fenomena alam lainnya berdasarkan prinsip ilmiah."
+  },
+  {
+    "title": "Kimia",
+    "description": "Mempelajari unsur, senyawa, reaksi kimia, dan aplikasinya dalam kehidupan sehari-hari serta industri."
+  }
+]

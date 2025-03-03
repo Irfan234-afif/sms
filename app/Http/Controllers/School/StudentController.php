@@ -4,15 +4,25 @@ namespace App\Http\Controllers\School;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
+use App\Models\School;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class StudentController extends Controller
 {
+    private $school;
+
+    public function __construct()
+    {
+        $active_school = Session::get('active_school');
+        $this->school = School::where('uuid', $active_school?->uuid)->firstOrFail();
+    }
+
     public function index()
     {
-        $students = Student::query();
+        $students = Student::where('school_id', $this->school->id);
 
         if (request()->has('search')) {
             $students->where('school_national_id', 'like', '%' . request('search') . '%')

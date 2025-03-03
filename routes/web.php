@@ -24,6 +24,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
 use App\Http\Controllers\School\SchoolController;
 use App\Http\Controllers\School\StudentController;
+use App\Http\Controllers\School\Management\SchoolClassroomController;
+use App\Http\Controllers\School\Management\SchoolClubController;
+use App\Http\Controllers\School\Management\SchoolExtracurricularController;
+use App\Http\Controllers\School\Management\SchoolSubjectController;
+use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -179,6 +184,7 @@ Route::middleware(['auth', 'verified'])
     ->name('school')
     ->group(function () {
         Route::get('/', [SchoolController::class, 'index']);
+        Route::get('{active_school_id}/switch-active-school', [SchoolController::class, 'switchActiveSchool'])->name('.switchActiveSchool');
         // student routes
         Route::prefix('student')
             ->name('.student')
@@ -194,6 +200,51 @@ Route::middleware(['auth', 'verified'])
                 Route::get('{registration_number}/detail', [SchoolActivityAdmissionStudentController::class, 'detail'])->name('.detail');
                 Route::post('update-stage', [SchoolActivityAdmissionStudentController::class, 'updateStage'])->name('.updateStage');
                 Route::post('update-status', [SchoolActivityAdmissionStudentController::class, 'updateStatus'])->name('.updateStatus');
+            });
+        // management routes
+        Route::prefix('management')
+            ->name('.management')
+            ->group(function () {
+                // school subject group routes
+                Route::prefix('school-subject-group')
+                    ->name('.schoolSubjectGroup')
+                    ->group(function () {
+                        Route::get('/', [SchoolSubjectGroupController::class, 'index']);
+                        Route::post('save', [SchoolSubjectGroupController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolSubjectGroupController::class, 'delete'])->name('.delete');
+                    });
+                // school subject routes
+                Route::prefix('school-subject')
+                    ->name('.schoolSubject')
+                    ->group(function () {
+                        Route::get('/', [SchoolSubjectController::class, 'index']);
+                        Route::post('save', [SchoolSubjectController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolSubjectController::class, 'delete'])->name('.delete');
+                    });
+                // school classroom routes
+                Route::prefix('school-classroom')
+                    ->name('.schoolClassroom')
+                    ->group(function () {
+                        Route::get('/', [SchoolClassroomController::class, 'index']);
+                        Route::post('save', [SchoolClassroomController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolClassroomController::class, 'delete'])->name('.delete');
+                    });
+                // school extracurricular routes
+                Route::prefix('school-extracurricular')
+                    ->name('.schoolExtracurricular')
+                    ->group(function () {
+                        Route::get('/', [SchoolExtracurricularController::class, 'index']);
+                        Route::post('save', [SchoolExtracurricularController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolExtracurricularController::class, 'delete'])->name('.delete');
+                    });
+                // school club routes
+                Route::prefix('school-club')
+                    ->name('.schoolClub')
+                    ->group(function () {
+                        Route::get('/', [SchoolClubController::class, 'index']);
+                        Route::post('save', [SchoolClubController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolClubController::class, 'delete'])->name('.delete');
+                    });
             });
     });
 

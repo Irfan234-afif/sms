@@ -7,19 +7,30 @@ use App\Http\Resources\AdmissionStudentResource;
 use App\Models\AdmissionStageStatus;
 use App\Models\AdmissionStudent;
 use App\Models\AdmissionStudentStage;
+use App\Models\Employee;
 use App\Models\Profile;
+use App\Models\School;
 use App\Models\Student;
 use App\Models\StudentGuardian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
 
 class AdmissionStudentController extends Controller
 {
+    private $school;
+
+    public function __construct()
+    {
+        $active_school = Session::get('active_school');
+        $this->school = School::where('uuid', $active_school?->uuid)->firstOrFail();
+    }
+
     public function index()
     {
-        $admission_students = AdmissionStudent::whereNotIn('status', ['NEW', 'DRAFT', 'PENDING', 'UNVERIFIED']);
+        $admission_students = AdmissionStudent::where('school_id', $this->school->id)->whereNotIn('status', ['NEW', 'DRAFT', 'PENDING', 'UNVERIFIED']);
 
         if (request()->has('search')) {
             $admission_students->where('name', 'like', '%' . request('search') . '%')

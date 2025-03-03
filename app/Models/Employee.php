@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Employee extends Model
 {
@@ -31,5 +32,82 @@ class Employee extends Model
     public function assignments()
     {
         return $this->hasMany(EmployeeAssignment::class, 'employee_id', 'id');
+    }
+
+    public static function getSchools()
+    {
+        $user = User::where('uuid',  Auth::user()->uuid)->first();
+
+        if (!$user) {
+            abort(404, 'User tidak ditemukan');
+        }
+
+        if ($user->hasRole('System Admin') || $user->hasRole('Site Admin')) {
+            return School::with('area')->get();
+        }
+
+        $employee = optional($user->profile)->employee ?? null;
+
+        if (!$employee) {
+            abort(404, 'Employee tidak ditemukan');
+        }
+
+        $school_ids = $employee->assignments()
+            ->whereHas('area', function ($query) {
+                $query->whereHasMorph('model', [School::class]);
+            })
+            ->with('area')
+            ->get()
+            ->map(fn($assignment) => $assignment->area->model_id)
+            ->toArray();
+
+        $schools = School::whereIn('id', $school_ids)
+            ->with('area')
+            ->get();
+
+        if ($schools->isEmpty()) {
+            abort(404, 'Sekolah tidak ditemukan');
+        }
+
+        return $schools;
+    }
+
+
+    public static function getOfficeSession()
+    {
+        $user = User::where('uuid',  Auth::user()->uuid)->first();
+
+        if (!$user) {
+            abort(404, 'User tidak ditemukan');
+        }
+
+        if ($user->hasRole('System Admin') || $user->hasRole('Site Admin')) {
+            return School::with('area')->get();
+        }
+
+        $employee = optional($user->profile)->employee ?? null;
+
+        if (!$employee) {
+            abort(404, 'Employee tidak ditemukan');
+        }
+
+        $office_ids = $employee->assignments()
+            ->whereHas('area', function ($query) {
+                $query->whereHasMorph('model', [Office::class]);
+            })
+            ->with('area')
+            ->get()
+            ->map(fn($assignment) => $assignment->area->model_id)
+            ->toArray();
+
+        $office = Office::whereIn('id', $office_ids)
+            ->with('area')
+            ->get();
+
+        if ($office->isEmpty()) {
+            abort(404, 'Yayasan tidak ditemukan');
+        }
+
+        return $office;
     }
 }

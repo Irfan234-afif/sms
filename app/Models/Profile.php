@@ -30,4 +30,9 @@ class Profile extends Model
     {
         return $this->hasOne(User::class, 'profile_id');
     }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'profile_id');
+    }
 }

@@ -28,7 +28,6 @@ class MasterOfficeSeeder extends Seeder
                 DB::beginTransaction();
 
                 try {
-
                     Product::firstOrCreate([
                         'name' => $product->name,
                         'code' => $product->code,
@@ -53,7 +52,6 @@ class MasterOfficeSeeder extends Seeder
                 DB::beginTransaction();
 
                 try {
-
                     $school = School::whereHas('level', function ($level) use ($school_admission_stage) {
                         $level->where('code', $school_admission_stage->school_level);
                     })->firstOrFail();

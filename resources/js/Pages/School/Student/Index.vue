@@ -7,8 +7,8 @@ import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 const breadcrumbs = [
-  { label: 'Wali', href: route('guardian') },
-  { label: 'Tagihan & Pembayaran', href: route('guardian.transactionPayment') },
+  { label: 'Sekolah', href: route('school') },
+  { label: 'Siswa', href: route('school.student') },
 ];
 </script>
 
@@ -62,7 +62,6 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Siswa</th>
                   <th scope="col" class="p-4">Nomor Induk</th>
-                  <th scope="col" class="p-4">Terdaftar di Sekolah</th>
                   <th scope="col" class="p-4">Kelas</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
@@ -94,11 +93,6 @@ export default {
                       class="bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300 rounded py-0.5 font-medium"
                     >
                       {{ student.school_national_id }}
-                    </div>
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ student.school.area.name }}
                     </div>
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

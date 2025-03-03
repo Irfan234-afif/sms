@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -34,10 +36,28 @@ class HandleInertiaRequests extends Middleware
             ->with('profile')
             ->first();
 
+        $available_schools = collect();
+        $active_school = null;
+
+        if ($request->user()) {
+            $available_schools = Employee::getSchools() ?? collect();
+
+            if ($available_schools->isNotEmpty()) {
+                $active_school = Session::get('active_school');
+
+                if (!$active_school) {
+                    $active_school = $available_schools->first();
+                    Session::put('active_school', $active_school);
+                }
+            }
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $user,
+                'available_schools' => $available_schools,
+                'active_school' => $active_school,
             ],
         ];
     }

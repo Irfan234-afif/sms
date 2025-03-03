@@ -136,7 +136,7 @@ return new class extends Migration
             $table->foreignId('guardian_id')->constrained('users');
             $table->timestampsTz();
         });
-
+        // remove for future
         Schema::create('student_schools', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

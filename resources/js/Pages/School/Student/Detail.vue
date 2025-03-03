@@ -3,9 +3,12 @@ import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
-import FilePreview from '@/Components/FilePreview.vue';
-import StageForm from './StageForm.vue';
-import AcceptForm from './AcceptForm.vue';
+import Breadcrumb from '@/Components/Breadcrumb.vue';
+const breadcrumbs = [
+  { label: 'Sekolah', href: route('school') },
+  { label: 'Siswa', href: route('school.student') },
+  { label: 'Lihat', href: '#' },
+];
 </script>
 
 <script>
@@ -48,13 +51,6 @@ export default {
   <SchoolLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
-      <div
-        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
-      >
-        <div class="w-full md:w-1/3">
-          <Search :search_params="search_params" />
-        </div>
-      </div>
     </template>
     <template #sidebar>
       <SchoolSidebar />
@@ -374,18 +370,7 @@ export default {
       </section>
       <!-- Modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
-        <template v-slot="{ propertyModal }">
-          <AcceptForm
-            v-if="
-              propertyModal?.mode == 'accepted-form' ||
-              propertyModal?.mode == 'rejected-form' ||
-              propertyModal?.mode == 'enrolled-form'
-            "
-            :propertyModal="propertyModal"
-            @close="closeModal()"
-          />
-          <StageForm v-if="propertyModal?.mode == 'stage-form'" :propertyModal="propertyModal" @close="closeModal()" />
-        </template>
+        <template v-slot="{ propertyModal }"> </template>
       </Modal>
     </template>
   </SchoolLayout>
