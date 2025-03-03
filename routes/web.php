@@ -218,6 +218,7 @@ Route::middleware(['auth', 'verified'])
                     ->name('.schoolSubject')
                     ->group(function () {
                         Route::get('/', [SchoolSubjectController::class, 'index']);
+                        Route::get('option-school-subject-group', [SchoolSubjectController::class, 'optionSchoolSubjectGroup'])->name('.optionSchoolSubjectGroup');
                         Route::post('save', [SchoolSubjectController::class, 'save'])->name('.save');
                         Route::delete('delete', [SchoolSubjectController::class, 'delete'])->name('.delete');
                     });

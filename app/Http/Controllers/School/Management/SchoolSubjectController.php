@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\School\Management;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SchoolSubjectGroupResource;
 use App\Http\Resources\SchoolSubjectResource;
 use App\Models\School;
 use App\Models\SchoolSubject;
+use App\Models\SchoolSubjectGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -43,12 +45,24 @@ class SchoolSubjectController extends Controller
         return Inertia::render('School/Management/SchoolSubject/Index', $data);
     }
 
+    public function optionSchoolSubjectGroup()
+    {
+        $school_subject_groups = SchoolSubjectGroup::where('school_id', $this->school->id);
+
+        if (request()->has('search')) {
+            $school_subject_groups->where('title', 'like', '%' . request('search') . '%');
+        }
+
+        return response()->json(SchoolSubjectGroupResource::collection($school_subject_groups->latest()->get()), 200);
+    }
+
     public function save()
     {
         DB::beginTransaction();
 
         try {
             $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
+            $school_subject_group = SchoolSubjectGroup::where('uuid', request('school_subject_group_id'))->first();
 
             SchoolSubject::updateOrCreate(
                 [
@@ -56,7 +70,9 @@ class SchoolSubjectController extends Controller
                 ],
                 [
                     'school_id' => $this->school->id,
+                    'school_subject_group_id' => $school_subject_group->id,
                     'title' => request('title'),
+                    'description' => request('description'),
                 ]
             );
 
