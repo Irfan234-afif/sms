@@ -32,6 +32,36 @@ class School extends Model
         return $this->hasMany(SchoolGrade::class, 'school_level_id', 'school_level_id');
     }
 
+    public function majors()
+    {
+        return $this->hasMany(SchoolMajor::class, 'school_id');
+    }
+
+    public function subject_groups()
+    {
+        return $this->hasMany(SchoolSubjectGroup::class, 'school_id');
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(SchoolSubject::class, 'school_id');
+    }
+
+    public function classrooms()
+    {
+        return $this->hasMany(SchoolClassroom::class, 'school_id');
+    }
+
+    public function extracurriculars()
+    {
+        return $this->hasMany(SchoolExtracurricular::class, 'school_id');
+    }
+
+    public function clubs()
+    {
+        return $this->hasMany(SchoolClub::class, 'school_id');
+    }
+
     public function admission_stages()
     {
         return $this->morphMany(AdmissionStage::class, 'model');

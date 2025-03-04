@@ -63,7 +63,7 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Siswa</th>
                   <th scope="col" class="p-4">Nomor Pendaftaran</th>
-                  <th scope="col" class="p-4">Terdaftar di Sekolah</th>
+                  <th scope="col" class="p-4">Tahun Ajaran</th>
                   <th scope="col" class="p-4">Tanggal Terdaftar</th>
                   <th scope="col" class="p-4">Status</th>
                   <th scope="col" class="p-4"></th>
@@ -100,11 +100,7 @@ export default {
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ admission_student.school.area.name }}
-                      > Tahun Ajaran
                       {{ admission_student.school_year.name }}
-                      > Kelas
-                      {{ admission_student.school_grade.title }}
                     </div>
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

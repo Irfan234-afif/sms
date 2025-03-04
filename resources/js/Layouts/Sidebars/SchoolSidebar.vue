@@ -17,36 +17,49 @@ import { Link } from '@inertiajs/vue3';
     <div class="h-screen overflow-y-auto bg-white px-3 py-1 dark:bg-gray-800">
       <ul class="space-y-2">
         <li>
-          <Link
-            :href="route('school')"
-            class="group -mt-1 flex items-center rounded-lg bg-blue-800 px-4 py-3 text-xs font-medium text-white"
+          <button
+            id="availableSchoolDropdownButton"
+            data-dropdown-toggle="available-school-dropdown"
+            class="inline-flex w-full items-center rounded-lg bg-blue-800 px-4 py-3 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
           >
-            <span>Sekolah</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="#"
-            class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-          >
+            {{ $page.props.auth.active_school?.area?.name }}
             <svg
+              class="ml-auto h-2.5 w-2.5"
+              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-6 w-6 flex-shrink-0 text-gray-700 transition duration-75 group-hover:text-gray-800 dark:text-gray-500 dark:group-hover:text-white"
+              viewBox="0 0 10 6"
             >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-              <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
             </svg>
-            <span class="ml-3 flex-1 whitespace-nowrap">Staf & Guru</span>
-          </Link>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="available-school-dropdown"
+            class="z-10 hidden w-full divide-y divide-gray-100 rounded-lg bg-white shadow-lg dark:bg-gray-700"
+          >
+            <ul class="py-2 text-xs text-gray-700 dark:text-gray-200" aria-labelledby="multiLevelDropdownButton">
+              <li v-for="(available_school, index) in $page.props.auth.available_schools" :key="index">
+                <Link
+                  :href="
+                    route('school.switchActiveSchool', {
+                      active_school_id: available_school.uuid,
+                    })
+                  "
+                  class="block px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >{{ available_school.area.name }}</Link
+                >
+              </li>
+            </ul>
+          </div>
         </li>
         <li>
           <Link
@@ -119,7 +132,7 @@ import { Link } from '@inertiajs/vue3';
                 >Pendaftaran Siswa Baru</Link
               >
             </li>
-            <li>
+            <!-- <li>
               <Link
                 href="#"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -132,7 +145,7 @@ import { Link } from '@inertiajs/vue3';
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Rapor Siswa Sekolah</Link
               >
-            </li>
+            </li> -->
           </ul>
         </li>
         <li>
@@ -173,7 +186,7 @@ import { Link } from '@inertiajs/vue3';
             </svg>
           </button>
           <ul id="dropdown-management" class="hidden space-y-2 py-2">
-            <li>
+            <!-- <li>
               <Link
                 href="#"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -186,38 +199,38 @@ import { Link } from '@inertiajs/vue3';
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Kurikulum</Link
               >
-            </li>
+            </li> -->
             <li>
               <Link
-                href="#"
+                :href="route('school.management.schoolSubjectGroup')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Grup Mata Pelajaran</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('school.management.schoolSubject')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Mata Pelajaran</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('school.management.schoolClassroom')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Ruang Kelas</Link
+                >Kelas</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('school.management.schoolExtracurricular')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Ekstrakurikuler</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('school.management.schoolClub')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Klub</Link
               >
@@ -280,7 +293,7 @@ import { Link } from '@inertiajs/vue3';
           </ul>
         </li>
       </ul>
-      <ul class="mt-5 space-y-2 border-t border-gray-200 pt-5 dark:border-gray-700">
+      <ul v-if="false" class="mt-5 space-y-2 border-t border-gray-200 pt-5 dark:border-gray-700">
         <li>
           <Link
             :href="route('school')"

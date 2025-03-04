@@ -276,7 +276,7 @@ export default {
                         v-if="admission_student.status != 'ENROLLED' && admission_student.status != 'CANCELED'"
                         @click="
                           openModal({
-                            title: 'Kirim Formulir',
+                            title: 'Batalkan Pendaftaran',
                             mode: 'admission-cancellation-form',
                             maxWidth: 'sm',
                             data: {

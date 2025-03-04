@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Matematika",
+    "description": "Mempelajari konsep bilangan, aljabar, geometri, statistika, dan kalkulus untuk melatih logika dan pemecahan masalah."
+  },
+  {
+    "title": "Bahasa Inggris",
+    "description": "Mengembangkan keterampilan mendengar, berbicara, membaca, dan menulis dalam bahasa Inggris untuk komunikasi global."
+  },
+  {
+    "title": "Ilmu Pengetahuan Alam",
+    "description": "Mempelajari fisika, kimia, dan biologi untuk memahami fenomena alam serta penerapannya dalam kehidupan sehari-hari."
+  },
+  {
+    "title": "Bahasa Indonesia",
+    "description": "Menjelajahi kaidah bahasa, sastra, dan keterampilan komunikasi dalam bahasa Indonesia secara lisan maupun tulisan."
+  },
+  {
+    "title": "Seni Budaya dan Prakarya",
+    "description": "Mengasah kreativitas melalui seni rupa, musik, tari, teater, serta keterampilan membuat karya tangan dan kerajinan."
+  },
+  {
+    "title": "Tematik",
+    "description": "Pendekatan pembelajaran berbasis tema yang menghubungkan berbagai mata pelajaran secara holistik dan kontekstual."
+  },
+  {
+    "title": "Mandarin",
+    "description": "Mempelajari bahasa Mandarin meliputi kosakata, tata bahasa, pelafalan, serta pemahaman budaya Tiongkok."
+  },
+  {
+    "title": "Musik",
+    "description": "Mempelajari teori musik, teknik bermain alat musik, serta ekspresi seni melalui suara, melodi, dan harmoni."
+  },
+  {
+    "title": "Informatika",
+    "description": "Belajar tentang komputer, pemrograman, jaringan, keamanan siber, dan teknologi informasi untuk mendukung perkembangan digital."
+  },
+  {
+    "title": "PKLH",
+    "description": "Pendidikan Kependudukan dan Lingkungan Hidup yang membahas isu-isu ekologi, konservasi, serta keberlanjutan lingkungan."
+  }
+]

@@ -38,7 +38,7 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
 
         // Purchasing the admission form
         if (App::environment(['local', 'testing'])) {
-            $customers = User::role(['System Admin', 'Site Admin', 'Guardian'])->get();
+            $customers = User::role(['System Admin', 'Site Admin', 'Guardian', 'Employee'])->get();
             $product = Product::where('code', 'ADMISSION_STUDENT_FORM')->first();
 
             $this->command->warn('Purchasing the admission form');
@@ -47,7 +47,7 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
                 DB::beginTransaction();
 
                 try {
-                    foreach (range(1, rand(100, 200)) as $index) {
+                    foreach (range(1, rand(25, 50)) as $index) {
                         $transaction = Transaction::create([
                             'customer_id' => $customer->id,
                             'type' => 'SALES',

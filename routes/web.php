@@ -24,6 +24,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
 use App\Http\Controllers\School\SchoolController;
 use App\Http\Controllers\School\StudentController;
+use App\Http\Controllers\School\Management\SchoolClassroomController;
+use App\Http\Controllers\School\Management\SchoolClubController;
+use App\Http\Controllers\School\Management\SchoolExtracurricularController;
+use App\Http\Controllers\School\Management\SchoolSubjectController;
+use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -179,12 +184,14 @@ Route::middleware(['auth', 'verified'])
     ->name('school')
     ->group(function () {
         Route::get('/', [SchoolController::class, 'index']);
+        Route::get('{active_school_id}/switch-active-school', [SchoolController::class, 'switchActiveSchool'])->name('.switchActiveSchool');
         // student routes
         Route::prefix('student')
             ->name('.student')
             ->group(function () {
                 Route::get('/', [StudentController::class, 'index']);
                 Route::get('{school_national_id}/detail', [StudentController::class, 'detail'])->name('.detail');
+                Route::post('update', [StudentController::class, 'update'])->name('.update');
             });
         // activity routes
         Route::prefix('activity/admission-student')
@@ -194,6 +201,69 @@ Route::middleware(['auth', 'verified'])
                 Route::get('{registration_number}/detail', [SchoolActivityAdmissionStudentController::class, 'detail'])->name('.detail');
                 Route::post('update-stage', [SchoolActivityAdmissionStudentController::class, 'updateStage'])->name('.updateStage');
                 Route::post('update-status', [SchoolActivityAdmissionStudentController::class, 'updateStatus'])->name('.updateStatus');
+            });
+        // management routes
+        Route::prefix('management')
+            ->name('.management')
+            ->group(function () {
+                // school subject group routes
+                Route::prefix('school-subject-group')
+                    ->name('.schoolSubjectGroup')
+                    ->group(function () {
+                        Route::get('/', [SchoolSubjectGroupController::class, 'index']);
+                        Route::post('save', [SchoolSubjectGroupController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolSubjectGroupController::class, 'delete'])->name('.delete');
+                    });
+                // school subject routes
+                Route::prefix('school-subject')
+                    ->name('.schoolSubject')
+                    ->group(function () {
+                        Route::get('/', [SchoolSubjectController::class, 'index']);
+                        Route::get('option-school-subject-group', [SchoolSubjectController::class, 'optionSchoolSubjectGroup'])->name('.optionSchoolSubjectGroup');
+                        Route::post('save', [SchoolSubjectController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolSubjectController::class, 'delete'])->name('.delete');
+                    });
+                // school classroom routes
+                Route::prefix('school-classroom')
+                    ->name('.schoolClassroom')
+                    ->group(function () {
+                        Route::get('/', [SchoolClassroomController::class, 'index']);
+                        Route::get('{school_classroom_id}/detail', [SchoolClassroomController::class, 'detail'])->name('.detail');
+                        Route::get('option-school-grade', [SchoolClassroomController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
+                        Route::get('option-school-major', [SchoolClassroomController::class, 'optionSchoolMajor'])->name('.optionSchoolMajor');
+                        Route::get('option-homeroom-teacher', [SchoolClassroomController::class, 'optionHomeroomTeacher'])->name('.optionHomeroomTeacher');
+                        Route::post('save', [SchoolClassroomController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolClassroomController::class, 'delete'])->name('.delete');
+                        Route::get('option-member', [SchoolClassroomController::class, 'optionMember'])->name('.optionMember');
+                        Route::post('assign-member', [SchoolClassroomController::class, 'assignMember'])->name('.assignMember');
+                        Route::post('remove-member', [SchoolClassroomController::class, 'removeMember'])->name('.removeMember');
+                    });
+                // school extracurricular routes
+                Route::prefix('school-extracurricular')
+                    ->name('.schoolExtracurricular')
+                    ->group(function () {
+                        Route::get('/', [SchoolExtracurricularController::class, 'index']);
+                        Route::get('{school_extracurricular_id}/detail', [SchoolExtracurricularController::class, 'detail'])->name('.detail');
+                        Route::get('option-mentor', [SchoolExtracurricularController::class, 'optionMentor'])->name('.optionMentor');
+                        Route::post('save', [SchoolExtracurricularController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolExtracurricularController::class, 'delete'])->name('.delete');
+                        Route::get('option-member', [SchoolExtracurricularController::class, 'optionMember'])->name('.optionMember');
+                        Route::post('assign-member', [SchoolExtracurricularController::class, 'assignMember'])->name('.assignMember');
+                        Route::post('remove-member', [SchoolExtracurricularController::class, 'removeMember'])->name('.removeMember');
+                    });
+                // school club routes
+                Route::prefix('school-club')
+                    ->name('.schoolClub')
+                    ->group(function () {
+                        Route::get('/', [SchoolClubController::class, 'index']);
+                        Route::get('{school_club_id}/detail', [SchoolClubController::class, 'detail'])->name('.detail');
+                        Route::get('option-mentor', [SchoolSubjectController::class, 'optionMentor'])->name('.optionMentor');
+                        Route::post('save', [SchoolClubController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolClubController::class, 'delete'])->name('.delete');
+                        Route::get('option-member', [SchoolClubController::class, 'optionMember'])->name('.optionMember');
+                        Route::post('assign-member', [SchoolClubController::class, 'assignMember'])->name('.assignMember');
+                        Route::post('remove-member', [SchoolClubController::class, 'removeMember'])->name('.removeMember');
+                    });
             });
     });
 

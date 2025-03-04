@@ -237,7 +237,7 @@ export default {
         class="grid gap-3 md:grid-cols-3"
       >
         <div>
-          <h2 class="mb-2 border-b pb-2 text-base font-medium text-gray-900">Personal Data</h2>
+          <h2 class="mb-2 border-b pb-2 text-base font-medium text-gray-900">Data Personal</h2>
           <el-form-item
             class="font-medium"
             :label="field.national_id.label"

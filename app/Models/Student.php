@@ -31,4 +31,9 @@ class Student extends Model
     {
         return $this->belongsTo(SchoolGrade::class, 'school_grade_id');
     }
+
+    public function active_school_classroom()
+    {
+        return $this->belongsToMany(SchoolClassroom::class, 'school_classroom_members', 'student_id', 'school_classroom_id');
+    }
 }
