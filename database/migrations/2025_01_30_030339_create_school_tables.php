@@ -180,7 +180,7 @@ return new class extends Migration
         // Schema::dropIfExists('school_club_members');
         // Schema::dropIfExists('school_extracurricular_members');
         // Schema::dropIfExists('school_classroom_members');
-        // Schema::dropIfExists('student_schools');
+        Schema::dropIfExists('student_schools');
         // Schema::dropIfExists('student_guardians');
         // Schema::dropIfExists('students');
         // Schema::dropIfExists('school_clubs');
