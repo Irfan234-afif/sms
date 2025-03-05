@@ -35,4 +35,9 @@ class Profile extends Model
     {
         return $this->hasOne(Employee::class, 'profile_id');
     }
+
+    public function families()
+    {
+        return $this->hasMany(Family::class, 'profile_id');
+    }
 }

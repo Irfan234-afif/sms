@@ -127,6 +127,39 @@ class AdmissionStudentController extends Controller
                     'postal_code' => $admission_student->postal_code,
                 ]);
 
+                // father
+                $profile_created->families()->updateOrCreate([
+                    'relation' => 'FATHER'
+                ], [
+                    'name' => $admission_student->father_name,
+                    'avatar' => $admission_student->father_avatar,
+                    'national_id' => $admission_student->father_national_id,
+                    'birth_place' => $admission_student->father_birth_place,
+                    'birth_date' => $admission_student->father_birth_date,
+                    'religion' => $admission_student->father_religion,
+                    'languages' => $admission_student->father_languages,
+                    'phone' => $admission_student->father_phone,
+                    'address' => $admission_student->father_address,
+                    'education' => $admission_student->father_education,
+                    'occupation' => $admission_student->father_occupation,
+                ]);
+                // mother
+                $profile_created->families()->updateOrCreate([
+                    'relation' => 'MOTHER'
+                ], [
+                    'name' => $admission_student->mother_name,
+                    'avatar' => $admission_student->mother_avatar,
+                    'national_id' => $admission_student->mother_national_id,
+                    'birth_place' => $admission_student->mother_birth_place,
+                    'birth_date' => $admission_student->mother_birth_date,
+                    'religion' => $admission_student->mother_religion,
+                    'languages' => $admission_student->mother_languages,
+                    'phone' => $admission_student->mother_phone,
+                    'address' => $admission_student->mother_address,
+                    'education' => $admission_student->mother_education,
+                    'occupation' => $admission_student->mother_occupation,
+                ]);
+
                 $student_created = Student::firstOrCreate([
                     'profile_id' => $profile_created->id,
                 ], [

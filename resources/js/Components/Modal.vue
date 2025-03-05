@@ -91,12 +91,13 @@ const maxWidthClass = computed(() => {
         leave-from-class="opacity-100 translate-y-0 sm:scale-100"
         leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       >
-        <div
-          v-show="show"
-          class="my-auto w-full transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto"
-          :class="maxWidthClass"
-        >
-          <slot v-if="show" :propertyModal="property" />
+        <div v-show="show" class="mt-10 w-full">
+          <div
+            class="transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto"
+            :class="maxWidthClass"
+          >
+            <slot v-if="show" :propertyModal="property" />
+          </div>
         </div>
       </transition>
     </div>

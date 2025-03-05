@@ -190,8 +190,11 @@ Route::middleware(['auth', 'verified'])
             ->name('.student')
             ->group(function () {
                 Route::get('/', [StudentController::class, 'index']);
+                Route::get('download-import-template', [StudentController::class, 'downloadImportTemplate'])
+                    ->name('.downloadImportTemplate');
                 Route::get('{school_national_id}/detail', [StudentController::class, 'detail'])->name('.detail');
                 Route::post('update', [StudentController::class, 'update'])->name('.update');
+                Route::post('import', [StudentController::class, 'import'])->name('.import');
             });
         // activity routes
         Route::prefix('activity/admission-student')
