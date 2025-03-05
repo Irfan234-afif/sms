@@ -2,8 +2,10 @@
 import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
+import DefaultButton from '@/Components/DefaultButton.vue';
 import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
+import StudentImportForm from './Import/Form.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
@@ -18,12 +20,12 @@ const breadcrumbs = [
 export default {
   props: {
     search_params: Object,
-    product: Object,
     students: Object,
   },
   data() {
     return {
       showModal: false,
+      closeable: true,
       propertyModal: {
         title: null,
         mode: null,
@@ -61,6 +63,72 @@ export default {
       >
         <div class="w-full md:w-1/3">
           <Search :search_params="search_params" />
+        </div>
+        <div
+          class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0"
+        >
+          <DefaultButton
+            type="purple"
+            @click="
+              closeable = false;
+              openModal({
+                title: 'Import CSV Siswa',
+                mode: 'student-import-form',
+                maxWidth: '7xl',
+                data: {},
+              });
+            "
+          >
+            <div class="flex items-center space-x-1 text-xs">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                <path d="M15 15h-6" />
+                <path d="M11.5 17.5l-2.5 -2.5l2.5 -2.5" />
+              </svg>
+              <div>Import CSV Siswa</div>
+            </div>
+          </DefaultButton>
+          <DefaultButton
+            type="default"
+            @click="
+              closeable = true;
+              openModal({
+                title: 'Siswa Baru',
+                mode: 'student-create-form',
+                maxWidth: '4xl',
+                data: {},
+              });
+            "
+          >
+            <div class="flex items-center space-x-1 text-xs">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 5l0 14" />
+                <path d="M5 12l14 0" />
+              </svg>
+              <div>Siswa Baru</div>
+            </div>
+          </DefaultButton>
         </div>
       </div>
     </template>
@@ -132,6 +200,7 @@ export default {
                       <OutlineButton
                         type="default"
                         @click="
+                          closeable = true;
                           openModal({
                             title: 'Sunting Siswa',
                             mode: 'student-edit-form',
@@ -139,7 +208,7 @@ export default {
                             data: {
                               student: student,
                             },
-                          })
+                          });
                         "
                       >
                         <div class="flex items-center space-x-1">
@@ -199,20 +268,21 @@ export default {
         </div>
       </section>
       <!-- Modal -->
-      <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
+      <Modal
+        :show="showModal"
+        :property="propertyModal"
+        :maxWidth="propertyModal?.maxWidth"
+        @close="closeModal"
+        :closeable="closeable"
+      >
         <template v-slot="{ propertyModal }">
           <StudentForm
             v-if="propertyModal?.mode == 'student-create-form' || propertyModal?.mode == 'student-edit-form'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
-          <ResetPasswordForm
-            v-if="propertyModal?.mode == 'reset-password-form'"
-            :propertyModal="propertyModal"
-            @close="closeModal()"
-          />
-          <DeleteConfirm
-            v-if="propertyModal?.mode == 'student-delete-confirm'"
+          <StudentImportForm
+            v-if="propertyModal?.mode == 'student-import-form'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
