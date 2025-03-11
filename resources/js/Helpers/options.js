@@ -96,8 +96,13 @@ const testimonialTypes = [
   { label: 'Siswa', value: 'STUDENT' },
   { label: 'Guru', value: 'TEACHER' },
 ];
+const achievementTypes = [
+  { label: 'Siswa', value: 'STUDENT' },
+  { label: 'Guru', value: 'TEACHER' },
+];
 
 export {
+  achievementTypes,
   admissionStagePostStatuses,
   admissionStagePreStatuses,
   bloodTypes,

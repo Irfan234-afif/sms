@@ -1,6 +1,7 @@
 <script setup>
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
+import { achievementTypes } from '@/Helpers/options';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
 </script>
@@ -21,11 +22,30 @@ export default {
       form: {
         achievement_id: null,
         title: null,
+        description: null,
+        category: null,
+        status: 'PUBLISHED',
       },
       field: {
         title: {
           label: 'Pencapaian',
           rules: [fieldValidation.isRequired('Pencapaian')],
+          error: null,
+        },
+        description: {
+          label: 'Keterangan',
+          rules: [fieldValidation.isRequired('Keterangan')],
+          error: null,
+        },
+        category: {
+          label: 'Kategori',
+          rules: [fieldValidation.isRequired('Keterkaitan')],
+          error: null,
+          options: achievementTypes,
+        },
+        status: {
+          label: 'Status',
+          rules: [fieldValidation.isRequired('Status')],
           error: null,
         },
       },
@@ -36,6 +56,9 @@ export default {
     if (mode == 'achievement-edit-form') {
       this.form.achievement_id = this.propertyModal.data.achievement?.uuid;
       this.form.title = this.propertyModal.data.achievement?.title;
+      this.form.description = this.propertyModal.data.achievement?.description;
+      this.form.category = this.propertyModal.data.achievement?.category;
+      this.form.status = this.propertyModal.data.achievement?.status;
     }
   },
   methods: {
@@ -104,12 +127,34 @@ export default {
       <el-form v-if="loaded" ref="achievementForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
+          :label="field.category.label"
+          :rules="field.category.rules"
+          :error="field.category.error"
+          prop="category"
+        >
+          <el-radio-group v-model="form.category">
+            <el-radio v-for="option in field.category.options" :key="option.value" :value="option.value">{{
+              option.label
+            }}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
           :label="field.title.label"
           :rules="field.title.rules"
           :error="field.title.error"
           prop="title"
         >
-          <el-input v-model="form.title" autocomplete="off" />
+          <el-input type="textarea" v-model="form.title" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.description.label"
+          :rules="field.description.rules"
+          :error="field.description.error"
+          prop="description"
+        >
+          <el-input type="textarea" v-model="form.description" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

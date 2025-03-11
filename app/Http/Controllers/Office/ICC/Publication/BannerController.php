@@ -46,7 +46,7 @@ class BannerController extends Controller
                 ],
                 [
                     'title' => request('title'),
-                    'slug' => Str::slug(request('title') + Uuid::uuid1(), '-'),
+                    'slug' => Str::slug(request('title') . Uuid::uuid1(), '-'),
                     'content' => request('content'),
                     'file_name' => request('file_name'),
                 ]

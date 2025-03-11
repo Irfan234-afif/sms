@@ -46,7 +46,7 @@ class AchievementController extends Controller
                 ],
                 [
                     'title' => request('title'),
-                    'slug' => Str::slug(request('title') + Uuid::uuid1(), '-'),
+                    'slug' => Str::slug(request('title') . Uuid::uuid1(), '-'),
                     'description' => request('description'),
                     'category' => request('category'),
                     'status' => request('status'),

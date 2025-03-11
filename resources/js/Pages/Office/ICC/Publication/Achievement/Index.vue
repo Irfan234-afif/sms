@@ -73,7 +73,7 @@ export default {
               openModal({
                 title: 'Pencapaian Baru',
                 mode: 'achievement-create-form',
-                maxWidth: 'md',
+                maxWidth: '2xl',
                 data: {},
               })
             "
@@ -121,6 +121,7 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
+                  <th scope="col" class="p-4">Kategori</th>
                   <th scope="col" class="p-4">Pencapaian</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
@@ -144,6 +145,11 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
+                      {{ achievement.category }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
                       {{ achievement.title }}
                     </div>
                   </th>
@@ -155,7 +161,7 @@ export default {
                           openModal({
                             title: 'Sunting Pencapaian',
                             mode: 'achievement-edit-form',
-                            maxWidth: 'md',
+                            maxWidth: '2xl',
                             data: {
                               achievement: achievement,
                             },

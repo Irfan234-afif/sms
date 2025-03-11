@@ -64,7 +64,7 @@ class NewsController extends Controller
                     'post_category_id' => $post_category->id,
                     'type' => 'NEWS',
                     'title' => request('title'),
-                    'slug' => Str::slug(request('title') + Uuid::uuid1(), '-'),
+                    'slug' => Str::slug(request('title') . Uuid::uuid1(), '-'),
                     'content' => request('content'),
                     'thumbnail' => request('thumbnail'),
                     'published_at' => request('published_at'),
