@@ -20,10 +20,10 @@ export default {
       isValid: false,
       form: {
         operational_area_id: null,
-        title: null,
+        name: null,
       },
       field: {
-        title: {
+        name: {
           label: 'Area Operasional',
           rules: [fieldValidation.isRequired('Area Operasional')],
           error: null,
@@ -35,7 +35,7 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'operational-area-edit-form') {
       this.form.operational_area_id = this.propertyModal.data.operational_area?.uuid;
-      this.form.title = this.propertyModal.data.operational_area?.title;
+      this.form.name = this.propertyModal.data.operational_area?.name;
     }
   },
   methods: {
@@ -104,12 +104,12 @@ export default {
       <el-form v-if="loaded" ref="operationalAreaForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
+          :label="field.name.label"
+          :rules="field.name.rules"
+          :error="field.name.error"
+          prop="name"
         >
-          <el-input v-model="form.title" autocomplete="off" />
+          <el-input v-model="form.name" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

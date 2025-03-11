@@ -68,7 +68,7 @@ class OperationalAreaController extends Controller
         DB::beginTransaction();
 
         try {
-            $operational_area = OperationalArea::where('uuid', request('career_id'))->firstOrFail();
+            $operational_area = OperationalArea::where('uuid', request('operational_area_id'))->firstOrFail();
 
             $operational_area->delete();
 
