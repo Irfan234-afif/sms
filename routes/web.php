@@ -17,6 +17,20 @@ use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentPriceController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
 use App\Http\Controllers\Office\ICC\Management\SchoolYearController;
+use App\Http\Controllers\Office\ICC\Publication\AchievementController;
+use App\Http\Controllers\Office\ICC\Publication\ArticleController;
+use App\Http\Controllers\Office\ICC\Publication\BannerController;
+use App\Http\Controllers\Office\ICC\Publication\CareerController;
+use App\Http\Controllers\Office\ICC\Publication\EventController;
+use App\Http\Controllers\Office\ICC\Publication\FaqController;
+use App\Http\Controllers\Office\ICC\Publication\GalleryController;
+use App\Http\Controllers\Office\ICC\Publication\NewsController;
+use App\Http\Controllers\Office\ICC\Publication\OperationalAreaController;
+use App\Http\Controllers\Office\ICC\Publication\OperationalHourController;
+use App\Http\Controllers\Office\ICC\Publication\PageController;
+use App\Http\Controllers\Office\ICC\Publication\PostCategoryController;
+use App\Http\Controllers\Office\ICC\Publication\PublicFeedbackController;
+use App\Http\Controllers\Office\ICC\Publication\TestimonialController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
@@ -77,6 +91,124 @@ Route::middleware(['auth', 'verified'])
                         Route::get('/', [ActivityAdmissionStudentController::class, 'index']);
                         Route::get('{registration_number}/detail', [ActivityAdmissionStudentController::class, 'detail'])->name('.detail');
                         Route::post('update-verification', [ActivityAdmissionStudentController::class, 'updateVerification'])->name('.updateVerification');
+                    });
+                // publication routes
+                Route::prefix('publication')
+                    ->name('.publication')
+                    ->group(function () {
+                        // operational area routes
+                        Route::prefix('operational-area')
+                            ->name('.operationalArea')
+                            ->group(function () {
+                                Route::get('/', [OperationalAreaController::class, 'index']);
+                                Route::post('save', [OperationalAreaController::class, 'save'])->name('.save');
+                                Route::delete('delete', [OperationalAreaController::class, 'delete'])->name('.delete');
+                            });
+                        // operational hour routes
+                        Route::prefix('operational-hour')
+                            ->name('.operationalHour')
+                            ->group(function () {
+                                Route::get('/', [OperationalHourController::class, 'index']);
+                                Route::get('option-operational-area', [OperationalHourController::class, 'optionOperationalArea'])->name('.optionOperationalArea');
+                                Route::post('save', [OperationalHourController::class, 'save'])->name('.save');
+                                Route::delete('delete', [OperationalHourController::class, 'delete'])->name('.delete');
+                            });
+                        // post category routes
+                        Route::prefix('post-category')
+                            ->name('.postCategory')
+                            ->group(function () {
+                                Route::get('/', [PostCategoryController::class, 'index']);
+                                Route::post('save', [PostCategoryController::class, 'save'])->name('.save');
+                                Route::delete('delete', [PostCategoryController::class, 'delete'])->name('.delete');
+                            });
+                        // page routes
+                        Route::prefix('page')
+                            ->name('.page')
+                            ->group(function () {
+                                Route::get('/', [PageController::class, 'index']);
+                                Route::post('save', [PageController::class, 'save'])->name('.save');
+                            });
+                        // article routes
+                        Route::prefix('article')
+                            ->name('.article')
+                            ->group(function () {
+                                Route::get('/', [ArticleController::class, 'index']);
+                                Route::get('option-post-category', [ArticleController::class, 'optionPostCategory'])->name('.optionPostCategory');
+                                Route::post('save', [ArticleController::class, 'save'])->name('.save');
+                                Route::delete('delete', [ArticleController::class, 'delete'])->name('.delete');
+                            });
+                        // news routes
+                        Route::prefix('news')
+                            ->name('.news')
+                            ->group(function () {
+                                Route::get('/', [NewsController::class, 'index']);
+                                Route::get('option-post-category', [NewsController::class, 'optionPostCategory'])->name('.optionPostCategory');
+                                Route::post('save', [NewsController::class, 'save'])->name('.save');
+                                Route::delete('delete', [NewsController::class, 'delete'])->name('.delete');
+                            });
+                        // achievement routes
+                        Route::prefix('achievement')
+                            ->name('.achievement')
+                            ->group(function () {
+                                Route::get('/', [AchievementController::class, 'index']);
+                                Route::post('save', [AchievementController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AchievementController::class, 'delete'])->name('.delete');
+                            });
+                        // banner routes
+                        Route::prefix('banner')
+                            ->name('.banner')
+                            ->group(function () {
+                                Route::get('/', [BannerController::class, 'index']);
+                                Route::post('save', [BannerController::class, 'save'])->name('.save');
+                                Route::delete('delete', [BannerController::class, 'delete'])->name('.delete');
+                            });
+                        // career routes
+                        Route::prefix('career')
+                            ->name('.career')
+                            ->group(function () {
+                                Route::get('/', [CareerController::class, 'index']);
+                                Route::post('save', [CareerController::class, 'save'])->name('.save');
+                                Route::delete('delete', [CareerController::class, 'delete'])->name('.delete');
+                            });
+                        // event routes
+                        Route::prefix('event')
+                            ->name('.event')
+                            ->group(function () {
+                                Route::get('/', [EventController::class, 'index']);
+                                Route::post('save', [EventController::class, 'save'])->name('.save');
+                                Route::delete('delete', [EventController::class, 'delete'])->name('.delete');
+                            });
+                        // faq routes
+                        Route::prefix('faq')
+                            ->name('.faq')
+                            ->group(function () {
+                                Route::get('/', [FaqController::class, 'index']);
+                                Route::post('save', [FaqController::class, 'save'])->name('.save');
+                                Route::delete('delete', [FaqController::class, 'delete'])->name('.delete');
+                            });
+                        // gallery routes
+                        Route::prefix('gallery')
+                            ->name('.gallery')
+                            ->group(function () {
+                                Route::get('/', [GalleryController::class, 'index']);
+                                Route::post('save', [GalleryController::class, 'save'])->name('.save');
+                                Route::delete('delete', [GalleryController::class, 'delete'])->name('.delete');
+                            });
+                        // public feedback routes
+                        Route::prefix('public-feedback')
+                            ->name('.publicFeedback')
+                            ->group(function () {
+                                Route::get('/', [PublicFeedbackController::class, 'index']);
+                                Route::delete('delete', [PublicFeedbackController::class, 'delete'])->name('.delete');
+                            });
+                        // testimonial routes
+                        Route::prefix('testimonial')
+                            ->name('.testimonial')
+                            ->group(function () {
+                                Route::get('/', [TestimonialController::class, 'index']);
+                                Route::post('save', [TestimonialController::class, 'save'])->name('.save');
+                                Route::delete('delete', [TestimonialController::class, 'delete'])->name('.delete');
+                            });
                     });
                 // management routes
                 Route::prefix('management')

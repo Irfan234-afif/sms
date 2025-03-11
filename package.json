@@ -28,6 +28,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "ckeditor5": "^44.3.0",
         "element-plus": "^2.9.3",
         "flowbite": "^2.5.2"
     }

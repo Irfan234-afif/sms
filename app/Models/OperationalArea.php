@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OperationalArea extends Model
 {
-    //
+    use GenerateUuid, SoftDeletes;
+
+    protected $fillable = [
+        'name',
+    ];
 }

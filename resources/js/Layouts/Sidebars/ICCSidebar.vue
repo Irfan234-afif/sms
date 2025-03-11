@@ -112,73 +112,107 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-publication" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.page')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Halaman</Link
               >
+                Halaman
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.banner')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Spanduk</Link
               >
+                Spanduk
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.news')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Berita</Link
               >
+                Berita
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.article')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Artikel</Link
               >
+                Artikel
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.event')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Acara</Link
               >
+                Acara
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.gallery')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Galeri</Link
               >
+                Galeri
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.achievement')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Pencapaian</Link
               >
+                Pencapaian
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.testimonial')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Testimoni</Link
               >
+                Testimoni
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.faq')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >FAQ</Link
               >
+                FAQ
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.publicFeedback')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Umpan Balik</Link
               >
+                Umpan Balik
+              </Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.publication.operationalArea')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Area Operasional
+              </Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.publication.operationalHour')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Jam Operasional
+              </Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.publication.postCategory')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Kategori Postingan
+              </Link>
             </li>
           </ul>
         </li>

@@ -139,7 +139,7 @@ export default {
                   </dd>
                 </dl>
                 <dl>
-                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Asal Sekolah Sebelumnya</dt>
+                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Asal Yayasan Sebelumnya</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
                     {{ admission_student.data.previous_school ?? '-' }}
                   </dd>
@@ -588,7 +588,7 @@ export default {
                       d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5"
                     />
                   </svg>
-                  Surat Pindah Sekolah
+                  Surat Pindah Yayasan
                 </button>
               </div>
             </div>

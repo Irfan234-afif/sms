@@ -87,7 +87,7 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Sekolah</th>
+                  <th scope="col" class="p-4">Yayasan</th>
                   <th scope="col" class="p-4">Jenjang</th>
                   <th scope="col" class="p-4"></th>
                 </tr>

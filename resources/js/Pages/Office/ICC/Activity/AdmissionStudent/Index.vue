@@ -64,7 +64,7 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Siswa</th>
                   <th scope="col" class="p-4">Nomor Pendaftaran</th>
-                  <th scope="col" class="p-4">Terdaftar di Sekolah</th>
+                  <th scope="col" class="p-4">Terdaftar di Yayasan</th>
                   <th scope="col" class="p-4">Tanggal Terdaftar</th>
                   <th scope="col" class="p-4">Status</th>
                   <th scope="col" class="p-4"></th>

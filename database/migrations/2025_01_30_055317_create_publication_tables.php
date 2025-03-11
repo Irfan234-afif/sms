@@ -41,7 +41,7 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('type');
+            $table->string('type'); // 
             $table->string('title');
             $table->longText('content');
             $table->timestamps();

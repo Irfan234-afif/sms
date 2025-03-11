@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Office;
+use App\Models\Page;
 use App\Models\SchoolLevel;
 use App\Models\SubmissionGroup;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +21,7 @@ class DefaultSystemSeeder extends Seeder
     {
         // data default
         $roles = json_decode(file_get_contents('database/data/default/role.json'));
+        $pages = json_decode(file_get_contents('database/data/default/page.json'));
         $submission_groups = json_decode(file_get_contents('database/data/default/submission_group.json'));
         $school_levels = json_decode(file_get_contents('database/data/default/school_level.json'));
 
@@ -111,6 +113,29 @@ class DefaultSystemSeeder extends Seeder
                 $this->command->getOutput()->progressAdvance();
             }
             $this->command->getOutput()->progressFinish();
+        }
+        // create page
+        $this->command->warn('Create page');
+        $this->command->getOutput()->progressStart(count($pages));
+        foreach ($pages as $page) {
+            DB::beginTransaction();
+
+            try {
+
+                Page::firstOrCreate([
+                    'type' => $page->type,
+                ], [
+                    'title' => $page->title,
+                    'content' => $page->content,
+                ]);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+
+                throw $th;
+            }
+            $this->command->getOutput()->progressAdvance();
         }
     }
 }
