@@ -19,6 +19,6 @@ class OperationalHour extends Model
 
     public function area()
     {
-        return $this->belongsTo(OperationalArea::class, 'operational_area_id');
+        return $this->belongsTo(OperationalArea::class, 'operational_area_id')->withTrashed();
     }
 }

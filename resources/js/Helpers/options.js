@@ -81,10 +81,21 @@ const maritalStatuses = [
   { value: 'WIDOWED', label: 'Duda/Janda' },
 ];
 
+const days = [
+  { label: 'Minggu', value: 'SUNDAY' },
+  { label: 'Senin', value: 'MONDAY' },
+  { label: 'Selasa', value: 'TUESDAY' },
+  { label: 'Rabu', value: 'WEDNESDAY' },
+  { label: 'Kamis', value: 'THURSDAY' },
+  { label: 'Jumat', value: 'FRIDAY' },
+  { label: 'Sabtu', value: 'SATURDAY' },
+];
+
 export {
   admissionStagePostStatuses,
   admissionStagePreStatuses,
   bloodTypes,
+  days,
   employeeStatus,
   genders,
   maritalStatuses,

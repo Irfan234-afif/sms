@@ -13,7 +13,7 @@ import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
-  { label: 'Jam Operational', href: route('office.icc.publication.operationalHour') },
+  { label: 'Jam Operasional', href: route('office.icc.publication.operationalHour') },
 ];
 </script>
 
@@ -71,7 +71,7 @@ export default {
             type="default"
             @click="
               openModal({
-                title: 'Jam Operational Baru',
+                title: 'Jam Operasional Baru',
                 mode: 'operational-hour-create-form',
                 maxWidth: 'md',
                 data: {},
@@ -93,7 +93,7 @@ export default {
                 <path d="M12 5l0 14" />
                 <path d="M5 12l14 0" />
               </svg>
-              <div>Jam Operational Baru</div>
+              <div>Jam Operasional Baru</div>
             </div>
           </DefaultButton>
         </div>
@@ -121,8 +121,9 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Jam Operational</th>
-                  <th scope="col" class="p-4">Area Operational</th>
+                  <th scope="col" class="p-4">Area Operasional</th>
+                  <th scope="col" class="p-4">Hari</th>
+                  <th scope="col" class="p-4">Jam Operasional</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -145,12 +146,17 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ operational_hour.title }}
+                      {{ operational_hour.area.name }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ operational_hour.group.title }}
+                      {{ operational_hour.day }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ operational_hour.open_time }} > {{ operational_hour.closed_time }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -159,7 +165,7 @@ export default {
                         type="default"
                         @click="
                           openModal({
-                            title: 'Sunting Jam Operational',
+                            title: 'Sunting Jam Operasional',
                             mode: 'operational-hour-edit-form',
                             maxWidth: 'md',
                             data: {
@@ -191,7 +197,7 @@ export default {
                         type="red"
                         @click="
                           openModal({
-                            title: 'Hapus Jam Operational',
+                            title: 'Hapus Jam Operasional',
                             mode: 'operational-hour-delete-confirm',
                             maxWidth: 'md',
                             data: {
@@ -199,7 +205,7 @@ export default {
                                 operational_hour_id: operational_hour.uuid,
                               }),
                               redirectUrl: route('office.icc.publication.operationalHour'),
-                              message: 'Ingin menghapus Jam Operational?',
+                              message: 'Ingin menghapus Jam Operasional?',
                             },
                           })
                         "
