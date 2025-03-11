@@ -20,12 +20,19 @@ export default {
       isValid: false,
       form: {
         faq_id: null,
-        title: null,
+        question: null,
+        answer: null,
+        status: 'PUBLISH',
       },
       field: {
-        title: {
-          label: 'FAQ',
-          rules: [fieldValidation.isRequired('FAQ')],
+        question: {
+          label: 'Pertanyaan',
+          rules: [fieldValidation.isRequired('Pertanyaan')],
+          error: null,
+        },
+        answer: {
+          label: 'Jawaban',
+          rules: [fieldValidation.isRequired('Jawaban')],
           error: null,
         },
       },
@@ -35,7 +42,8 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'faq-edit-form') {
       this.form.faq_id = this.propertyModal.data.faq?.uuid;
-      this.form.title = this.propertyModal.data.faq?.title;
+      this.form.question = this.propertyModal.data.faq?.question;
+      this.form.answer = this.propertyModal.data.faq?.answer;
     }
   },
   methods: {
@@ -104,12 +112,21 @@ export default {
       <el-form v-if="loaded" ref="faqForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
+          :label="field.question.label"
+          :rules="field.question.rules"
+          :error="field.question.error"
+          prop="question"
         >
-          <el-input v-model="form.title" autocomplete="off" />
+          <el-input type="textarea" v-model="form.question" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.answer.label"
+          :rules="field.answer.rules"
+          :error="field.answer.error"
+          prop="answer"
+        >
+          <el-input type="textarea" v-model="form.answer" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

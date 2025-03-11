@@ -7,7 +7,7 @@ import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import OperationalAreaForm from './Form.vue';
+import OperationalHourForm from './Form.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 const breadcrumbs = [
@@ -244,7 +244,7 @@ export default {
       <!-- Modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
-          <OperationalAreaForm
+          <OperationalHourForm
             v-if="
               propertyModal?.mode == 'operational-hour-edit-form' ||
               propertyModal?.mode == 'operational-hour-create-form'

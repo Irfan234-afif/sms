@@ -73,7 +73,7 @@ export default {
               openModal({
                 title: 'FAQ Baru',
                 mode: 'faq-create-form',
-                maxWidth: 'md',
+                maxWidth: '2xl',
                 data: {},
               })
             "
@@ -121,7 +121,8 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">FAQ</th>
+                  <th scope="col" class="p-4">Pertanyaan</th>
+                  <th scope="col" class="p-4">Jawaban</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -142,9 +143,14 @@ export default {
                       <label for="checkbox-table-search" class="sr-only">checkbox</label>
                     </div>
                   </td>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                  <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ faq.title }}
+                      {{ faq.question }}
+                    </div>
+                  </th>
+                  <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ faq.answer }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -155,7 +161,7 @@ export default {
                           openModal({
                             title: 'Sunting FAQ',
                             mode: 'faq-edit-form',
-                            maxWidth: 'md',
+                            maxWidth: '2xl',
                             data: {
                               faq: faq,
                             },
