@@ -21,11 +21,29 @@ export default {
       form: {
         event_id: null,
         title: null,
+        datetime_range: [],
+        location: null,
+        content: null,
       },
       field: {
         title: {
           label: 'Acara',
           rules: [fieldValidation.isRequired('Acara')],
+          error: null,
+        },
+        datetime_range: {
+          label: 'Waktu Acara',
+          rules: [fieldValidation.isRequired('Waktu Acara')],
+          error: null,
+        },
+        location: {
+          label: 'Lokasi',
+          rules: [fieldValidation.isRequired('Lokasi')],
+          error: null,
+        },
+        content: {
+          label: 'Keterangan',
+          rules: [fieldValidation.isRequired('Keterangan')],
           error: null,
         },
       },
@@ -36,6 +54,12 @@ export default {
     if (mode == 'event-edit-form') {
       this.form.event_id = this.propertyModal.data.event?.uuid;
       this.form.title = this.propertyModal.data.event?.title;
+      this.form.datetime_range = [
+        this.propertyModal.data.event?.start_datetime,
+        this.propertyModal.data.event?.end_datetime,
+      ];
+      this.form.location = this.propertyModal.data.event?.location;
+      this.form.content = this.propertyModal.data.event?.content;
     }
   },
   methods: {
@@ -44,7 +68,11 @@ export default {
         if (valid) {
           this.process = true;
 
-          let requestPayload = this.form;
+          let requestPayload = {
+            ...this.form,
+            start_datetime: this.form.datetime_range[0],
+            end_datetime: this.form.datetime_range[1],
+          };
 
           axios
             .post(route('office.icc.publication.event.save'), requestPayload, {
@@ -102,14 +130,41 @@ export default {
     </h2>
     <div class="px-2">
       <el-form v-if="loaded" ref="EventForm" label-position="top" :model="form" :disabled="process">
-        <el-form-item
-          class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
-        >
+        <el-form-item :label="field.title.label" :rules="field.title.rules" :error="field.title.error" prop="title">
           <el-input v-model="form.title" autocomplete="off" />
+        </el-form-item>
+
+        <el-form-item
+          :label="field.datetime_range.label"
+          :rules="field.datetime_range.rules"
+          :error="field.datetime_range.error"
+          prop="datetime_range"
+        >
+          <el-date-picker
+            v-model="form.datetime_range"
+            type="datetimerange"
+            range-separator="to"
+            start-placeholder="Mulai"
+            end-placeholder="Selesai"
+          />
+        </el-form-item>
+
+        <el-form-item
+          :label="field.location.label"
+          :rules="field.location.rules"
+          :error="field.location.error"
+          prop="location"
+        >
+          <el-input v-model="form.location" autocomplete="off" />
+        </el-form-item>
+
+        <el-form-item
+          :label="field.content.label"
+          :rules="field.content.rules"
+          :error="field.content.error"
+          prop="content"
+        >
+          <el-input type="textarea" v-model="form.content" rows="25" />
         </el-form-item>
       </el-form>
     </div>

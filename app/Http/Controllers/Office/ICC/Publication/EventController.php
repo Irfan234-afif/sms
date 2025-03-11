@@ -38,7 +38,7 @@ class EventController extends Controller
         DB::beginTransaction();
 
         try {
-            $event = Event::where('uuid', request('post_category_id'))->first();
+            $event = Event::where('uuid', request('event_id'))->first();
 
             Event::updateOrCreate(
                 [

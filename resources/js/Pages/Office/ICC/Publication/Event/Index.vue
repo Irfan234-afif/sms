@@ -73,7 +73,7 @@ export default {
               openModal({
                 title: 'Acara Baru',
                 mode: 'event-create-form',
-                maxWidth: 'md',
+                maxWidth: '5xl',
                 data: {},
               })
             "
@@ -122,6 +122,8 @@ export default {
                     </div>
                   </th>
                   <th scope="col" class="p-4">Acara</th>
+                  <th scope="col" class="p-4">Lokasi</th>
+                  <th scope="col" class="p-4">Waktu</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -142,10 +144,18 @@ export default {
                       <label for="checkbox-table-search" class="sr-only">checkbox</label>
                     </div>
                   </td>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                  <th scope="row" class="w-1/3 px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
                       {{ event.title }}
                     </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ event.location }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">{{ event.start_datetime }} > {{ event.end_datetime }}</div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
@@ -155,7 +165,7 @@ export default {
                           openModal({
                             title: 'Sunting Acara',
                             mode: 'event-edit-form',
-                            maxWidth: 'md',
+                            maxWidth: '5xl',
                             data: {
                               event: event,
                             },

@@ -111,7 +111,7 @@ export default {
                           openModal({
                             title: 'Sunting Halaman',
                             mode: 'page-edit-form',
-                            maxWidth: '7xl',
+                            maxWidth: '5xl',
                             data: {
                               page: page,
                             },
