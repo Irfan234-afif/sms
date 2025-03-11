@@ -73,7 +73,7 @@ export default {
               openModal({
                 title: 'Testimoni Baru',
                 mode: 'testimonial-create-form',
-                maxWidth: 'md',
+                maxWidth: '2xl',
                 data: {},
               })
             "
@@ -121,6 +121,9 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
+                  <th scope="col" class="p-4">Kategori</th>
+                  <th scope="col" class="p-4">Nama</th>
+                  <th scope="col" class="p-4">Keterkaitan</th>
                   <th scope="col" class="p-4">Testimoni</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
@@ -144,7 +147,22 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ testimonial.title }}
+                      {{ testimonial.type }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ testimonial.name }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ testimonial.relation }}
+                    </div>
+                  </th>
+                  <th scope="row" class="w-1/4 px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ testimonial.message }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -155,7 +173,7 @@ export default {
                           openModal({
                             title: 'Sunting Testimoni',
                             mode: 'testimonial-edit-form',
-                            maxWidth: 'md',
+                            maxWidth: '2xl',
                             data: {
                               testimonial: testimonial,
                             },

@@ -53,14 +53,14 @@ class TestimonialController extends Controller
             DB::commit();
 
             return response()->json([
-                'message' => 'success',
+                'status' => 'success',
                 'message' => 'Testimoni berhasil disimpan.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
 
             return response()->json([
-                'message' => 'error',
+                'status' => 'error',
                 'message' => $th->getMessage(),
             ], 500);
         }
@@ -78,14 +78,14 @@ class TestimonialController extends Controller
             DB::commit();
 
             return response()->json([
-                'message' => 'success',
+                'status' => 'success',
                 'message' => 'Testimoni berhasil dihapus.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
 
             return response()->json([
-                'message' => 'error',
+                'status' => 'error',
                 'message' => $th->getMessage(),
             ], 500);
         }

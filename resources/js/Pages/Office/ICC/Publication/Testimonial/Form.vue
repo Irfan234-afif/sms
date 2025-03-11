@@ -1,6 +1,7 @@
 <script setup>
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
+import { testimonialTypes } from '@/Helpers/options';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
 </script>
@@ -20,10 +21,29 @@ export default {
       isValid: false,
       form: {
         testimonial_id: null,
-        title: null,
+        type: null,
+        name: null,
+        relation: null,
+        message: null,
       },
       field: {
-        title: {
+        type: {
+          label: 'Kategori',
+          rules: [fieldValidation.isRequired('Kategori')],
+          error: null,
+          options: testimonialTypes,
+        },
+        name: {
+          label: 'Nama',
+          rules: [fieldValidation.isRequired('Nama')],
+          error: null,
+        },
+        relation: {
+          label: 'Keterkaitan',
+          rules: [fieldValidation.isRequired('Keterkaitan')],
+          error: null,
+        },
+        message: {
           label: 'Testimoni',
           rules: [fieldValidation.isRequired('Testimoni')],
           error: null,
@@ -35,7 +55,10 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'testimonial-edit-form') {
       this.form.testimonial_id = this.propertyModal.data.testimonial?.uuid;
-      this.form.title = this.propertyModal.data.testimonial?.title;
+      this.form.type = this.propertyModal.data.testimonial?.type;
+      this.form.name = this.propertyModal.data.testimonial?.name;
+      this.form.relation = this.propertyModal.data.testimonial?.relation;
+      this.form.message = this.propertyModal.data.testimonial?.message;
     }
   },
   methods: {
@@ -104,12 +127,43 @@ export default {
       <el-form v-if="loaded" ref="testimonialForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
+          :label="field.type.label"
+          :rules="field.type.rules"
+          :error="field.type.error"
+          prop="type"
         >
-          <el-input v-model="form.title" autocomplete="off" />
+          <el-radio-group v-model="form.type">
+            <el-radio v-for="option in field.type.options" :key="option.value" :value="option.value">{{
+              option.label
+            }}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.name.label"
+          :rules="field.name.rules"
+          :error="field.name.error"
+          prop="name"
+        >
+          <el-input v-model="form.name" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.relation.label"
+          :rules="field.relation.rules"
+          :error="field.relation.error"
+          prop="relation"
+        >
+          <el-input v-model="form.relation" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.message.label"
+          :rules="field.message.rules"
+          :error="field.message.error"
+          prop="message"
+        >
+          <el-input type="textarea" v-model="form.message" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

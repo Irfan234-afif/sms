@@ -91,6 +91,12 @@ const days = [
   { label: 'Sabtu', value: 'SATURDAY' },
 ];
 
+const testimonialTypes = [
+  { label: 'Orang Tua', value: 'PARENT' },
+  { label: 'Siswa', value: 'STUDENT' },
+  { label: 'Guru', value: 'TEACHER' },
+];
+
 export {
   admissionStagePostStatuses,
   admissionStagePreStatuses,
@@ -101,5 +107,6 @@ export {
   maritalStatuses,
   religions,
   schoolInformationSources,
+  testimonialTypes,
   units,
 };
