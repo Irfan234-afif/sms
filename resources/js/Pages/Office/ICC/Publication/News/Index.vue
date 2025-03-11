@@ -73,7 +73,7 @@ export default {
               openModal({
                 title: 'Berita Baru',
                 mode: 'post-create-form',
-                maxWidth: 'md',
+                maxWidth: '5xl',
                 data: {},
               })
             "
@@ -121,6 +121,7 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
+                  <th scope="col" class="p-4">Penulis</th>
                   <th scope="col" class="p-4">Berita</th>
                   <th scope="col" class="p-4">Kategori</th>
                   <th scope="col" class="p-4"></th>
@@ -145,12 +146,17 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ post.title }}
+                      {{ post.author.name }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ post.group.title }}
+                      {{ post.title }}
+                    </div>
+                  </th>
+                  <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ post.category.name }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -161,7 +167,7 @@ export default {
                           openModal({
                             title: 'Sunting Berita',
                             mode: 'post-edit-form',
-                            maxWidth: 'md',
+                            maxWidth: '5xl',
                             data: {
                               post: post,
                             },

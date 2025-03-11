@@ -21,4 +21,14 @@ class Post extends Model
         'published_at',
         'status',
     ];
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id')->withTrashed();
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(PostCategory::class, 'category_id')->withTrashed();
+    }
 }

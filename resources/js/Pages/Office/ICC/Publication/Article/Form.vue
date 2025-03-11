@@ -22,7 +22,8 @@ export default {
         post_id: null,
         post_category_id: null,
         title: null,
-        description: null,
+        content: null,
+        status: 'PUBLISHED',
       },
       field: {
         post_category_id: {
@@ -37,9 +38,9 @@ export default {
           rules: [fieldValidation.isRequired('Artikel')],
           error: null,
         },
-        description: {
-          label: 'Keterangan',
-          rules: [fieldValidation.isRequired('Keterangan')],
+        content: {
+          label: 'Konten',
+          rules: [fieldValidation.isRequired('Konten')],
           error: null,
         },
       },
@@ -49,10 +50,10 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'post-edit-form') {
       this.form.post_id = this.propertyModal.data.post?.uuid;
-      this.form.post_category_id = this.propertyModal.data.post.group;
-      this.field.post_category_id.options = [this.propertyModal.data.post.group];
+      this.form.post_category_id = this.propertyModal.data.post.category;
+      this.field.post_category_id.options = [this.propertyModal.data.post.category];
       this.form.title = this.propertyModal.data.post?.title;
-      this.form.description = this.propertyModal.data.post?.description;
+      this.form.content = this.propertyModal.data.post?.content;
     }
   },
   methods: {
@@ -179,12 +180,12 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.description.label"
-          :rules="field.description.rules"
-          :error="field.description.error"
-          prop="description"
+          :label="field.content.label"
+          :rules="field.content.rules"
+          :error="field.content.error"
+          prop="content"
         >
-          <el-input type="textarea" :rows="4" v-model="form.description" autocomplete="off" />
+          <el-input type="textarea" :rows="25" v-model="form.content" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

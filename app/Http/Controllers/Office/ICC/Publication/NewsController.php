@@ -8,6 +8,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -20,10 +21,11 @@ class NewsController extends Controller
         $posts = Post::query();
 
         if (request()->has('search')) {
-            $posts->where('day', 'like', '%' . request('search') . '%');
+            $posts->where('title', 'like', '%' . request('search') . '%');
         }
 
-        $posts = $posts->with('group')
+        $posts = $posts->with('author')
+            ->with('category')
             ->latest()
             ->paginate(15);
 
@@ -61,13 +63,14 @@ class NewsController extends Controller
                     'id' => $post ? $post->id : null,
                 ],
                 [
+                    'author_id' => $post ? $post->author_id : Auth::user()->id,
                     'post_category_id' => $post_category->id,
                     'type' => 'NEWS',
                     'title' => request('title'),
                     'slug' => Str::slug(request('title') . Uuid::uuid1(), '-'),
                     'content' => request('content'),
                     'thumbnail' => request('thumbnail'),
-                    'published_at' => request('published_at'),
+                    'published_at' => now(),
                     'status' => request('status'),
                 ]
             );
