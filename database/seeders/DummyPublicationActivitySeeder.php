@@ -103,7 +103,7 @@ class DummyPublicationActivitySeeder extends Seeder
         }
         // Create post
         if (App::environment(['local', 'testing'])) {
-            $post_types = ['ARTICLE', 'NEWS'];
+            $post_types = ['ARTICLE', 'NEWS', 'ADMISSION_INFORMATION'];
             $post_status = ['DRAFT', 'PUBLISHED'];
             $this->command->warn('Create post');
             $this->command->getOutput()->progressStart(200);

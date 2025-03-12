@@ -128,6 +128,14 @@ import { Link } from '@inertiajs/vue3';
             </li>
             <li>
               <Link
+                :href="route('office.icc.publication.admissionInformation')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Informasi Pendaftaran
+              </Link>
+            </li>
+            <li>
+              <Link
                 :href="route('office.icc.publication.news')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
               >

@@ -18,6 +18,7 @@ use App\Http\Controllers\Office\ICC\Management\AdmissionStudentPriceController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
 use App\Http\Controllers\Office\ICC\Management\SchoolYearController;
 use App\Http\Controllers\Office\ICC\Publication\AchievementController;
+use App\Http\Controllers\Office\ICC\Publication\AdmissionInformationController;
 use App\Http\Controllers\Office\ICC\Publication\ArticleController;
 use App\Http\Controllers\Office\ICC\Publication\BannerController;
 use App\Http\Controllers\Office\ICC\Publication\CareerController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
 use App\Http\Controllers\School\SchoolController;
 use App\Http\Controllers\School\StudentController;
@@ -46,15 +48,24 @@ use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-// public routes
-Route::get('/', function () {
-    return Inertia::render('Public/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+
+Route::prefix('/')->group(function () {
+    Route::get('/', [PublicController::class, 'index']);
+    Route::get('history', [PublicController::class, 'history'])->name('history');
+    Route::get('vision-mission', [PublicController::class, 'visionMission'])->name('visionMission');
+    Route::get('operational-hour', [PublicController::class, 'operationalHour'])->name('operationalHour');
+    Route::get('admission-Information', [PublicController::class, 'admissionInformation'])->name('admissionInformation');
+    Route::get('news', [PublicController::class, 'news'])->name('news');
+    Route::get('article', [PublicController::class, 'article'])->name('article');
+    Route::get('gallery', [PublicController::class, 'gallery'])->name('gallery');
+    Route::get('event', [PublicController::class, 'event'])->name('event');
+    Route::get('teacher-achievement', [PublicController::class, 'teacherAchievement'])->name('teacherAchievement');
+    Route::get('student-achievement', [PublicController::class, 'studentAchievement'])->name('studentAchievement');
+    Route::get('public-feedback', [PublicController::class, 'publicFeedback'])->name('publicFeedback');
+    Route::get('career', [PublicController::class, 'career'])->name('career');
+    Route::get('faq', [PublicController::class, 'faq'])->name('faq');
 });
+
 // portal routes
 Route::get('portal', function () {
     return Inertia::render('Portal/Index');
@@ -145,6 +156,15 @@ Route::middleware(['auth', 'verified'])
                                 Route::get('option-post-category', [NewsController::class, 'optionPostCategory'])->name('.optionPostCategory');
                                 Route::post('save', [NewsController::class, 'save'])->name('.save');
                                 Route::delete('delete', [NewsController::class, 'delete'])->name('.delete');
+                            });
+                        // admission information routes
+                        Route::prefix('admission-information')
+                            ->name('.admissionInformation')
+                            ->group(function () {
+                                Route::get('/', [AdmissionInformationController::class, 'index']);
+                                Route::get('option-post-category', [AdmissionInformationController::class, 'optionPostCategory'])->name('.optionPostCategory');
+                                Route::post('save', [AdmissionInformationController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AdmissionInformationController::class, 'delete'])->name('.delete');
                             });
                         // achievement routes
                         Route::prefix('achievement')

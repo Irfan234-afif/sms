@@ -66,7 +66,7 @@ class Employee extends Model
             ->get();
 
         if ($schools->isEmpty()) {
-            // abort(404, 'Sekolah tidak ditemukan');
+            abort(404, 'Sekolah tidak ditemukan');
         }
 
         return $schools;

@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -40,7 +41,9 @@ class HandleInertiaRequests extends Middleware
         $active_school = null;
 
         if ($request->user()) {
-            $available_schools = Employee::getSchools() ?? collect();
+            if (Str::startsWith($request->path(), 'school')) {
+                $available_schools = Employee::getSchools() ?? collect();
+            }
 
             if ($available_schools->isNotEmpty()) {
                 $active_school = Session::get('active_school');
