@@ -144,7 +144,7 @@ import { Link } from '@inertiajs/vue3';
             data-dropdown-toggle="dropdown"
           >
             <span class="sr-only">Open user menu</span>
-            <img class="h-7 w-7 rounded-full" src="/assets/icons/user-circle.png" alt="user photo" />
+            <img class="h-7 w-7 rounded-full bg-white" src="/assets/icons/user-circle.png" alt="user photo" />
           </button>
           <!-- Dropdown menu -->
           <div

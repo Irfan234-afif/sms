@@ -36,7 +36,7 @@ const submit = () => {
     <div
       class="w-full rounded-lg bg-white p-6 shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md sm:p-8 md:mt-0"
     >
-      <h2 class="mb-1 text-base font-medium leading-tight tracking-tight text-gray-900 dark:text-white md:text-xl">
+      <h2 class="mb-1 text-base font-medium leading-tight tracking-tight text-gray-900 dark:text-white md:text-lg">
         Ubah Kata Sandi
       </h2>
       <form @submit.prevent="submit" class="mt-4 space-y-4 md:space-y-5 lg:mt-5">

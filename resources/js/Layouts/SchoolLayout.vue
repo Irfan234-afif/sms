@@ -106,7 +106,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png"
                     alt="Bonnie Green avatar"
                   />
@@ -144,7 +144,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
                     alt="Jese Leos avatar"
                   />
@@ -180,7 +180,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
                     alt="Joseph McFall avatar"
                   />
@@ -218,7 +218,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
                     alt="Roberta Casas image"
                   />
@@ -253,7 +253,7 @@ import { Link } from '@inertiajs/vue3';
               <Link href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600">
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/robert-brown.png"
                     alt="Robert image"
                   />
@@ -389,7 +389,7 @@ import { Link } from '@inertiajs/vue3';
             data-dropdown-toggle="dropdown"
           >
             <span class="sr-only">Open user menu</span>
-            <img class="h-7 w-7 rounded-full" src="/assets/icons/user-circle.png" alt="user photo" />
+            <img class="h-7 w-7 rounded-full bg-white" src="/assets/icons/user-circle.png" alt="user photo" />
           </button>
           <!-- Dropdown menu -->
           <div

@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
@@ -38,21 +39,32 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $profile_created = Profile::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-        ]);
+        DB::beginTransaction();
 
-        $user = User::firstOrCreate([
-            'profile_id' => $profile_created->id,
-        ], [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $profile_created = Profile::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+            ]);
 
+            $user = User::firstOrCreate([
+                'profile_id' => $profile_created->id,
+            ], [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => Hash::make($request->password),
+            ]);
+
+            $user->assignRole(['Member', 'Guardian']);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            abort(500);
+        }
 
         event(new Registered($user));
 

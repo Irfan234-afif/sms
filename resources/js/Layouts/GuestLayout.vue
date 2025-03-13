@@ -14,7 +14,9 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-  <section class="min-h-screen bg-gray-100 dark:bg-gray-900">
+  <section
+    class="bg-custom min-h-screen bg-gray-50 bg-[url('/assets/patterns/education-pattern.png')] bg-repeat dark:bg-gray-900"
+  >
     <div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
       <Link href="/" class="mb-6 flex items-center text-xl font-medium text-gray-900 dark:text-white">
         <ApplicationLogo class="h-16" />
