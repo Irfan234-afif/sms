@@ -8,6 +8,7 @@ import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import AdmissionStageForm from './Form.vue';
+import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
@@ -70,7 +71,7 @@ export default {
     </template>
     <template #content>
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
+        <div v-if="school_years.data.length > 0" class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
           <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
@@ -163,6 +164,9 @@ export default {
           </div>
           <!-- pagination -->
           <Pagination :search_params="search_params" :meta="schools.meta" :links="schools.links" />
+        </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
         </div>
       </section>
       <!-- modal -->

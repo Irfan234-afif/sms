@@ -19,8 +19,10 @@ class AdmissionStudentController extends Controller
         $admission_students = AdmissionStudent::whereNotIn('status', ['NEW', 'DRAFT']);
 
         if (request()->has('search')) {
-            $admission_students->where('name', 'like', '%' . request('search') . '%')
-                ->orWhere('registration_number', 'like', '%' . request('search') . '%');
+            $admission_students->where(function ($self) {
+                $self->where('name', 'like', '%' . request('search') . '%')
+                    ->orWhere('registration_number', 'like', '%' . request('search') . '%');
+            });
         }
 
         $admission_students = $admission_students->with('school.area')

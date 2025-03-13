@@ -7,6 +7,7 @@ import OfficeLayout from '@/Layouts/OfficeLayout.vue';
 import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
@@ -45,7 +46,10 @@ export default {
     </template>
     <template #content>
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
+        <div
+          v-if="admission_students.data.length > 0"
+          class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800"
+        >
           <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
@@ -185,6 +189,9 @@ export default {
             :meta="admission_students.meta"
             :links="admission_students.links"
           />
+        </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
         </div>
       </section>
     </template>

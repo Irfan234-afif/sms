@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-center rounded-lg border border-gray-300 bg-gray-50 py-8 text-xs text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300"
+    class="flex items-center justify-center rounded-lg border border-gray-300 bg-gray-50 py-4 text-xs text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300"
     role="alert"
   >
     <svg

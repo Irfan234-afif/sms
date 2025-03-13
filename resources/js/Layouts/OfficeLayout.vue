@@ -14,7 +14,7 @@ import { Link } from '@inertiajs/vue3';
 
 <template>
   <div
-    class="bg-custom min-h-screen bg-gray-50 bg-[url('/assets/patterns/education-pattern.png')] bg-repeat dark:bg-gray-900"
+    class="min-h-screen bg-gray-50 bg-[url('/assets/patterns/education-pattern.png')] bg-custom bg-repeat dark:bg-gray-900"
   >
     <!-- navbar -->
 
@@ -361,6 +361,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">My Profile</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['ICC'])"
                 :href="route('office.icc')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -385,6 +386,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">ICC</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['HCM'])"
                 :href="route('office.hcm')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -421,6 +423,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">HCM</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['GA'])"
                 :href="route('office.ga')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -443,6 +446,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">GA</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['QRD'])"
                 :href="route('office.qrd')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -467,6 +471,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">QRD</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['FA'])"
                 :href="route('office.finance')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >

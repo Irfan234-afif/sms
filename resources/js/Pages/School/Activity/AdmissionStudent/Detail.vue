@@ -702,7 +702,7 @@ export default {
                     {{ stage.description }}
                   </p>
                   <DefaultButton
-                    v-if="stage.scheduled_at"
+                    v-if="stage.scheduled_at && !stage.status.is_finished"
                     type="light"
                     @click="
                       openModal({

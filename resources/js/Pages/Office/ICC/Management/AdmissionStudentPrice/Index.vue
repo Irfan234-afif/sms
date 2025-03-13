@@ -61,7 +61,7 @@ export default {
     </template>
     <template #content>
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
+        <div v-if="products.data.length > 0" class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
           <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
@@ -104,7 +104,7 @@ export default {
                       {{ product.name }}
                     </div>
                   </th>
-                  <td class="whitespace-nowrap px-4 py-3">IDR {{ product.price }}</td>
+                  <td class="whitespace-nowrap px-4 py-3">{{ product.price_label }}</td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
@@ -147,6 +147,9 @@ export default {
           </div>
           <!-- pagination -->
           <Pagination :search_params="search_params" :meta="products.meta" :links="products.links" />
+        </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
         </div>
       </section>
       <!-- modal -->
