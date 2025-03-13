@@ -72,8 +72,7 @@ class Employee extends Model
         return $schools;
     }
 
-
-    public static function getOfficeSession()
+    public static function getOffices()
     {
         $user = User::where('uuid',  Auth::user()->uuid)->first();
 
@@ -82,7 +81,9 @@ class Employee extends Model
         }
 
         if ($user->hasRole('System Admin') || $user->hasRole('Site Admin')) {
-            return School::with('area')->get();
+            return Office::with('area')
+                ->pluck('name')
+                ->toArray();
         }
 
         $employee = optional($user->profile)->employee ?? null;
@@ -100,14 +101,15 @@ class Employee extends Model
             ->map(fn($assignment) => $assignment->area->model_id)
             ->toArray();
 
-        $office = Office::whereIn('id', $office_ids)
+        $offices = Office::whereIn('id', $office_ids)
             ->with('area')
-            ->get();
+            ->pluck('name')
+            ->toArray();
 
-        if ($office->isEmpty()) {
-            abort(404, 'Yayasan tidak ditemukan');
+        if ($offices->isEmpty()) {
+            abort(404, 'Area tidak ditemukan');
         }
 
-        return $office;
+        return $offices;
     }
 }

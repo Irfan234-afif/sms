@@ -14,5 +14,12 @@ export default {
       }
       return false;
     };
+    app.config.globalProperties.$authHasAreaOffices = function (auth, collect) {
+      const { available_offices } = auth;
+      if (available_offices && collect) {
+        return available_offices.some((r) => collect.indexOf(r) >= 0);
+      }
+      return false;
+    };
   },
 };

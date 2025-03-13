@@ -464,6 +464,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['ICC'])"
             :href="route('office.icc')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -504,6 +505,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['HCM'])"
             :href="route('office.hcm')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -554,6 +556,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['GA'])"
             :href="route('office.ga')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -592,6 +595,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['QRD'])"
             :href="route('office.qrd')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -632,6 +636,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['FA'])"
             :href="route('office.finance')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >

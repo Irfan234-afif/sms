@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
 
         $available_schools = collect();
         $active_school = null;
+        $available_offices = collect();
 
         if ($request->user()) {
             if (Str::startsWith($request->path(), 'school')) {
@@ -53,6 +54,10 @@ class HandleInertiaRequests extends Middleware
                     Session::put('active_school', $active_school);
                 }
             }
+
+            if (Str::startsWith($request->path(), 'office')) {
+                $available_offices = Employee::getOffices() ?? collect();
+            }
         }
 
         return [
@@ -63,6 +68,7 @@ class HandleInertiaRequests extends Middleware
                 'permissions' => $request->user()?->getPermissionsViaRoles()->pluck('name'),
                 'available_schools' => $available_schools,
                 'active_school' => $active_school,
+                'available_offices' => $available_offices,
             ],
         ];
     }
