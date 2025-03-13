@@ -56,7 +56,6 @@ export default {
       <SchoolSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">
         <div class="px-4 2xl:px-0">
           <!--  -->
@@ -368,7 +367,7 @@ export default {
           </div>
         </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }"> </template>
       </Modal>

@@ -408,7 +408,7 @@ export default {
       <div class="space-y-4">
         <dl class="flex items-center justify-between gap-4">
           <dt class="font-normal text-gray-500 dark:text-gray-400">Harga</dt>
-          <dd class="font-medium text-gray-900 dark:text-white">IDR {{ product.price }}</dd>
+          <dd class="font-medium text-gray-900 dark:text-white">{{ product.price_label }}</dd>
         </dl>
         <dl class="flex items-center justify-between gap-4">
           <dt class="font-normal text-gray-500 dark:text-gray-400">Diskon</dt>
@@ -417,10 +417,10 @@ export default {
       </div>
       <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 text-base dark:border-gray-700">
         <dt class="font-medium text-gray-900 dark:text-white">Total</dt>
-        <dd class="font-medium text-gray-900 dark:text-white">IDR {{ product.price }}</dd>
+        <dd class="font-medium text-gray-900 dark:text-white">{{ product.price_label }}</dd>
       </dl>
     </div>
-    <div class="flex items-center rounded-lg bg-yellow-50 p-4 text-yellow-800 dark:bg-gray-800 dark:text-yellow-300">
+    <div class="flex items-center rounded-lg bg-purple-50 p-4 text-purple-800 dark:bg-gray-800 dark:text-purple-300">
       <svg
         class="h-4 w-4 shrink-0"
         aria-hidden="true"
@@ -445,7 +445,6 @@ export default {
     </div>
     <div class="flex justify-end space-x-3">
       <DefaultButton class="w-full" type="light" @click="close" :disabled="process"> Batal </DefaultButton>
-
       <DefaultButton class="w-full" type="default" @click="submit" :disabled="process"> Beli Formulir </DefaultButton>
     </div>
   </div>

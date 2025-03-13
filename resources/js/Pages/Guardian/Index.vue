@@ -2,12 +2,17 @@
 import GuardianLayout from '@/Layouts/GuardianLayout.vue';
 import GuardianSidebar from '@/Layouts/Sidebars/GuardianSidebar.vue';
 import { Head } from '@inertiajs/vue3';
+import Breadcrumb from '@/Components/Breadcrumb.vue';
+const breadcrumbs = [{ label: 'Wali', href: route('guardian') }];
 </script>
 
 <template>
   <Head title="Wali" />
 
   <GuardianLayout>
+    <template #header>
+      <Breadcrumb :breadcrumbs="breadcrumbs" />
+    </template>
     <template #sidebar>
       <GuardianSidebar />
     </template>

@@ -12,7 +12,9 @@ const showingNavigationDropdown = ref(false);
 
 <template>
   <div>
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div
+      class="bg-custom min-h-screen bg-gray-50 bg-[url('/assets/patterns/education-pattern.png')] bg-repeat dark:bg-gray-900"
+    >
       <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
         <!-- Primary Navigation Menu -->
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

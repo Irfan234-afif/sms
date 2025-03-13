@@ -49,6 +49,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// public routes
 Route::prefix('/')->group(function () {
     Route::get('/', [PublicController::class, 'index']);
     Route::get('history', [PublicController::class, 'history'])->name('history');
@@ -65,13 +66,12 @@ Route::prefix('/')->group(function () {
     Route::get('career', [PublicController::class, 'career'])->name('career');
     Route::get('faq', [PublicController::class, 'faq'])->name('faq');
 });
-
 // portal routes
 Route::get('portal', function () {
     return Inertia::render('Portal/Index');
 })->middleware(['auth', 'verified'])->name('portal');
 // office routes
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
     ->prefix('office')
     ->name('office')
     ->group(function () {
@@ -331,7 +331,7 @@ Route::middleware(['auth', 'verified'])
             });
     });
 // school routes
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
     ->prefix('school')
     ->name('school')
     ->group(function () {
@@ -423,7 +423,7 @@ Route::middleware(['auth', 'verified'])
     });
 
 // guardian routes
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Guardian'])
     ->prefix('guardian')
     ->name('guardian')
     ->group(function () {
@@ -452,7 +452,7 @@ Route::middleware(['auth', 'verified'])
                 Route::post('process-payment', [TransactionPaymentController::class, 'processPayment'])->name('.processPayment');
             });
     });
-
+// auth
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

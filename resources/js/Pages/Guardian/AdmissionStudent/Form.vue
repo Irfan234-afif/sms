@@ -894,7 +894,6 @@ export default {
 
   <CenterLayout>
     <template #content>
-      <!-- Data -->
       <section class="bg-white antialiased shadow-md dark:bg-gray-900 sm:rounded-lg">
         <div class="flex flex-col justify-center space-y-3 p-4 md:flex-row md:items-center md:space-x-4 md:space-y-0">
           <div class="flex items-center justify-center space-x-2">

@@ -59,7 +59,6 @@ export default {
       <FinanceSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">
         <div class="px-4 2xl:px-0">
           <div class="grid gap-4 pb-4 sm:gap-8 md:grid-cols-2 md:pb-6">
@@ -446,7 +445,7 @@ export default {
           </div>
         </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
           <VerificationForm

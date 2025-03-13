@@ -1,3 +1,7 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>
+
 <script>
 import { initFlowbite } from 'flowbite';
 export default {
@@ -7,14 +11,11 @@ export default {
 };
 </script>
 
-<script setup>
-import { Link } from '@inertiajs/vue3';
-</script>
-
 <template>
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+  <div
+    class="bg-custom min-h-screen bg-gray-50 bg-[url('/assets/patterns/education-pattern.png')] bg-repeat dark:bg-gray-900"
+  >
     <!-- navbar -->
-
     <nav
       class="fixed left-0 right-0 top-0 z-50 border-b border-gray-200 bg-white px-4 py-2.5 dark:border-gray-700 dark:bg-gray-800"
     >
@@ -188,9 +189,7 @@ import { Link } from '@inertiajs/vue3';
         </div>
       </div>
     </nav>
-
     <!-- sidebar -->
-
     <aside
       class="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-20 transition-transform dark:border-gray-700 dark:bg-gray-800 md:translate-x-0"
       aria-label="Sidenav"
@@ -199,9 +198,7 @@ import { Link } from '@inertiajs/vue3';
     >
       <slot name="sidebar" />
     </aside>
-
     <!-- main -->
-
     <main class="-mt-1 flex h-screen flex-col overflow-hidden pt-16 md:ml-64">
       <!-- main header -->
       <section class="border-gray-200 bg-white">

@@ -40,10 +40,9 @@ export default {
       <HCMSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section>
         <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
-          <!-- Table List -->
+          <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
               <thead class="bg-gray-50 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -119,7 +118,7 @@ export default {
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
+          <!-- pagination -->
           <Pagination :search_params="search_params" :meta="areas.meta" :links="areas.links" />
         </div>
       </section>
