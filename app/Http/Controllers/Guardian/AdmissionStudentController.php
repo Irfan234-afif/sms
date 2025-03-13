@@ -31,11 +31,10 @@ class AdmissionStudentController extends Controller
         });
 
         if (request()->has('search')) {
-            $admission_students->where('name', 'like', '%' . request('search') . '%')
-                ->orWhere('registration_number', 'like', '%' . request('search') . '%')
-                ->orWhereHas('transaction', function ($transaction) {
-                    $transaction->where('reference_number', 'like', '%' . request('search') . '%');
-                });
+            $admission_students->where(function ($self) {
+                $self->where('name', 'like', '%' . request('search') . '%')
+                    ->orWhere('registration_number', 'like', '%' . request('search') . '%');
+            });
         }
 
         $admission_students = $admission_students->with('transaction')

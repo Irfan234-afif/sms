@@ -20,7 +20,7 @@ export default {
         60: '60',
       },
       backgroundSize: {
-        custom: '15rem',
+        custom: '12rem',
       },
     },
   },

@@ -64,6 +64,12 @@ const employeeStatus = [
   { label: 'Paruh Waktu', value: 'PART_TIME' },
 ];
 
+const responsibleFee = [
+  { value: 'FATHER', label: 'Ayah' },
+  { value: 'MOTHER', label: 'Ibu' },
+  { value: 'OTHER', label: 'Lainnya' },
+];
+
 const genders = [
   {
     value: 'MALE',
@@ -111,6 +117,7 @@ export {
   genders,
   maritalStatuses,
   religions,
+  responsibleFee,
   schoolInformationSources,
   testimonialTypes,
   units,

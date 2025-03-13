@@ -63,9 +63,8 @@ export default {
     <template #content>
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">
         <div class="px-4 2xl:px-0">
-          <!--  -->
-
           <div class="grid gap-4 pb-2 sm:gap-8 md:grid-cols-2 md:pb-4">
+            <!-- personal data -->
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <div class="flex items-center space-x-4">
@@ -96,9 +95,13 @@ export default {
                     <p class="text-xs text-gray-500 dark:text-gray-400">
                       ID: {{ admission_student.data.registration_number ?? '-' }}
                     </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ admission_student.data.school.area.name }} > {{ admission_student.data.school_year.name }} >
+                      Kelas
+                      {{ admission_student.data.school_grade.title }}
+                    </p>
                   </div>
                 </div>
-
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -109,17 +112,27 @@ export default {
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Jenis Kelamin</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ admission_student.data.gender ?? '-' }}
+                    {{ admission_student.data.gender_label ?? '-' }}
                   </dd>
                 </dl>
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ admission_student.data.religion ?? '-' }}
+                    {{ admission_student.data.religion_label ?? '-' }}
+                  </dd>
+                </dl>
+                <dl>
+                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan</dt>
+                  <dd class="text-xs text-gray-500 dark:text-gray-400">
+                    <span v-if="admission_student.data.languages && admission_student.data.languages.length">
+                      <span v-for="(language, index) in admission_student.data.languages" :key="index">
+                        {{ language }}<span v-if="index < admission_student.data.languages.length - 1">,</span>
+                      </span>
+                    </span>
+                    <span v-else>Tidak diketahui</span>
                   </dd>
                 </dl>
               </div>
-
               <div class="space-y-4">
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon</dt>
@@ -147,6 +160,7 @@ export default {
                 </dl>
               </div>
             </div>
+            <!-- parent information -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Informasi Orang Tua</h2>
               <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
@@ -157,14 +171,12 @@ export default {
                       {{ admission_student.data.father_name ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Kependudukan Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.father_national_id ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -174,28 +186,37 @@ export default {
                       }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ admission_student.data.father_religion ?? '-' }}
+                      {{ admission_student.data.father_religion_label ?? '-' }}
                     </dd>
                   </dl>
-
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan Ayah</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      <span
+                        v-if="admission_student.data.father_languages && admission_student.data.father_languages.length"
+                      >
+                        <span v-for="(language, index) in admission_student.data.father_languages" :key="index">
+                          {{ language }}<span v-if="index < admission_student.data.father_languages.length - 1">,</span>
+                        </span>
+                      </span>
+                      <span v-else>Tidak diketahui</span>
+                    </dd>
+                  </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.father_phone ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.father_address ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Pekerjaan Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -203,7 +224,6 @@ export default {
                     </dd>
                   </dl>
                 </div>
-
                 <div class="space-y-4">
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Ibu</dt>
@@ -211,14 +231,12 @@ export default {
                       {{ admission_student.data.mother_name ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Kependudukan Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.mother_national_id ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -228,28 +246,37 @@ export default {
                       }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ admission_student.data.mother_religion ?? '-' }}
+                      {{ admission_student.data.mother_religion_label ?? '-' }}
                     </dd>
                   </dl>
-
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan Ibu</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      <span
+                        v-if="admission_student.data.father_languages && admission_student.data.mother_languages.length"
+                      >
+                        <span v-for="(language, index) in admission_student.data.mother_languages" :key="index">
+                          {{ language }}<span v-if="index < admission_student.data.mother_languages.length - 1">,</span>
+                        </span>
+                      </span>
+                      <span v-else>Tidak diketahui</span>
+                    </dd>
+                  </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.mother_phone ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.mother_address ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Pekerjaan Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -259,9 +286,9 @@ export default {
                 </div>
               </div>
             </div>
+            <!-- health information -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Riwayat Kesehatan</h2>
-
               <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
                 <div class="space-y-4">
                   <dl>
@@ -270,14 +297,12 @@ export default {
                       {{ admission_student.data.health_info_remark ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Riwayat Kesehatan Keluarga</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.health_relate_family ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Menggunakan Asuransi?</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -307,7 +332,6 @@ export default {
                       {{ admission_student.data.recomended_hospital ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Dokter</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -317,9 +341,9 @@ export default {
                 </div>
               </div>
             </div>
+            <!-- support information -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Informasi Dukungan</h2>
-
               <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
                 <div class="space-y-4">
                   <dl>
@@ -381,19 +405,21 @@ export default {
                 </div>
               </div>
             </div>
+            <!-- attachment -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Lampiran</h2>
-
               <div
                 class="max-w-lg rounded-lg border border-gray-200 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               >
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center rounded-t-lg border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.family_card_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.family_card_attachment_path,
                   }"
+                  :disabled="!admission_student.data.family_card_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -423,11 +449,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.father_id_card_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.father_id_card_attachment_path,
                   }"
+                  :disabled="!admission_student.data.father_id_card_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -457,11 +485,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.mother_id_card_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.mother_id_card_attachment_path,
                   }"
+                  :disabled="!admission_student.data.mother_id_card_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -491,11 +521,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.birth_certificate_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.birth_certificate_attachment_path,
                   }"
+                  :disabled="!admission_student.data.birth_certificate_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -525,11 +557,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.last_report_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.last_report_attachment_path,
                   }"
+                  :disabled="!admission_student.data.last_report_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -559,11 +593,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center rounded-b-lg border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.previous_school_letter_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.previous_school_letter_attachment_path,
                   }"
+                  :disabled="!admission_student.data.previous_school_letter_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -595,7 +631,6 @@ export default {
             </div>
           </div>
           <hr class="my-4" />
-          <!--  -->
           <div v-if="admission_student.data.stages.length > 0">
             <h1 class="text-base font-medium text-gray-900 dark:text-white md:pb-4">Tahap Pendaftaran</h1>
             <ol class="relative mx-3 max-w-2xl border-s border-gray-200 dark:border-gray-700">
