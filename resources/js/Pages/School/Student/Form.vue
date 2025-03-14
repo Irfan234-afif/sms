@@ -18,10 +18,11 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      actionRoute: route('school.student.update'),
+      actionRoute: route('school.student.store'),
       modeForm: this.propertyModal.mode,
       form: {
         student_id: null,
+        school_grade_id: null,
         name: null,
         birth_place: null,
         birth_date: null,
@@ -72,7 +73,7 @@ export default {
         },
         phone: {
           label: 'Telepon',
-          rules: [fieldValidation.isRequired('Telepon')],
+          rules: [],
           error: null,
         },
         address: {
@@ -90,6 +91,14 @@ export default {
           rules: [fieldValidation.isRequired('Nomor Induk Siswa')],
           error: null,
         },
+        school_grade_id: {
+          label: 'Kelas',
+          rules: [fieldValidation.isRequired('Kelas')],
+          error: null,
+          disabled: false,
+          loading: false,
+          options: [],
+        },
         email: {
           label: 'Email',
           rules: [],
@@ -104,6 +113,11 @@ export default {
       this.actionRoute = route('school.student.update');
 
       this.form.student_id = student.uuid;
+      this.form.school_grade_id = student.school_grade;
+      if (student.school_grade) {
+        this.field.school_grade_id.options = [student.school_grade];
+        this.field.school_grade_id.disabled = true;
+      }
       this.form.name = student.profile.name;
       this.form.birth_place = student.profile.birth_place;
       this.form.birth_date = student.profile.birth_date;
@@ -118,11 +132,29 @@ export default {
     }
   },
   methods: {
+    optionSchoolGrade(search) {
+      this.field.school_grade.loading = true;
+      axios
+        .get(
+          route('school.student.optionSchoolGrade', {
+            search: search,
+          }),
+        )
+        .then((response) => {
+          this.field.school_grade.options = response.data;
+          this.field.school_grade.loading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.field.school_grade.loading = false;
+        });
+    },
     submit() {
-      this.$refs['employeeForm'].validate((valid) => {
+      this.$refs['studentForm'].validate((valid) => {
         if (valid) {
           this.process = true;
           let requestPayload = JSON.parse(JSON.stringify(this.form));
+          requestPayload.school_grade_id = requestPayload.school_grade?.uuid;
 
           axios
             .post(this.actionRoute, requestPayload, {
@@ -149,21 +181,27 @@ export default {
               }
             })
             .catch((error) => {
-              ElNotification({
-                title: 'Error',
-                message: 'Terjadi kesalahan.',
-                type: 'error',
-              });
-
+              let message = 'Terjadi kesalahan';
               if (error.response?.data?.errors) {
                 for (let field in error.response.data.errors) {
-                  this.field[field].error = error.response.data.errors[field];
-                  this.$refs['employeeForm'].validateField(field);
+                  this.field[field].error = error.response.data.errors[field][0];
+                  this.$refs['studentForm'].validateField(field);
+                  message = error.response.data.errors[field][0];
                 }
               }
+
+              ElNotification({
+                title: 'Error',
+                message: message,
+                type: 'error',
+              });
             })
             .finally(() => {
               this.process = false;
+              this.loaded = false;
+              this.$nextTick(() => {
+                this.loaded = true;
+              });
             });
         }
       });
@@ -182,7 +220,7 @@ export default {
     <div class="px-2">
       <el-form
         v-if="loaded"
-        ref="employeeForm"
+        ref="studentForm"
         label-position="top"
         :model="form"
         :disabled="process"
@@ -277,6 +315,36 @@ export default {
         </div>
         <div>
           <h2 class="mb-2 border-b pb-2 text-base font-medium text-gray-900">Data Sekolah</h2>
+          <el-form-item
+            class="font-medium"
+            :label="field.school_grade_id.label"
+            :rules="field.school_grade_id.rules"
+            :error="field.school_grade_id.error"
+            prop="school_grade_id"
+          >
+            <el-select
+              v-model="form.school_grade_id"
+              :placeholder="`Pilih ${field.school_grade_id.label}`"
+              loading-text="..."
+              no-match-text="Data tidak ditemukan"
+              no-data-text="Tidak ada data"
+              :disabled="field.school_grade_id.disabled"
+              :remote-method="optionSchoolGrade"
+              value-key="uuid"
+              remote
+              filterable
+              reserve-keyword
+              clearable
+              autocomplete="off"
+            >
+              <el-option
+                v-for="option in field.school_grade_id.options"
+                :key="option.uuid"
+                :label="option.title"
+                :value="option"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item
             class="font-medium"
             :label="field.school_national_id.label"

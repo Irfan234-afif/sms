@@ -16,6 +16,7 @@ export default {
     return {
       process: false,
       jsonResult: null,
+      separator: ',', // Default separator
       requiredHeaders: [
         'NAME',
         'SCHOOL_NATIONAL_ID',
@@ -45,8 +46,9 @@ export default {
       const file = event.target.files[0];
       if (!file) return;
 
+      // Validate file type (only CSV files are allowed)
       if (file.type !== 'text/csv') {
-        this.showNotification('Hanya file CSV yang diperbolehkan!', 'error');
+        this.showNotification('Only CSV files are allowed!', 'error');
         return;
       }
 
@@ -56,11 +58,13 @@ export default {
       reader.onload = (e) => {
         const text = e.target.result;
 
-        if (!this.validateCSV(text)) {
+        // Detect separator and validate CSV format
+        if (!this.detectSeparator(text) || !this.validateCSV(text)) {
           this.process = false;
           return;
         }
 
+        // Convert CSV to JSON and emit event on success
         this.jsonResult = this.csvToJson(text);
         if (this.jsonResult) {
           this.$emit('success', {
@@ -71,25 +75,52 @@ export default {
       };
       reader.readAsText(file);
     },
+
+    detectSeparator(csv) {
+      const firstLine = csv.split('\n')[0];
+
+      const possibleSeparators = [',', ';', '\t'];
+      let detectedSeparator = null;
+      let maxCount = 0;
+
+      // Find the most frequent separator in the first line
+      possibleSeparators.forEach((sep) => {
+        const count = (firstLine.match(new RegExp(`\\${sep}`, 'g')) || []).length;
+        if (count > maxCount) {
+          maxCount = count;
+          detectedSeparator = sep;
+        }
+      });
+
+      if (!detectedSeparator) {
+        this.showNotification(
+          'Failed to detect CSV separator. Ensure the file uses one of the following separators: comma (,), semicolon (;), or tab (↹).',
+          'error',
+        );
+        return false;
+      }
+
+      this.separator = detectedSeparator;
+      this.showNotification(`Detected separator: "${this.separator}"`, 'success');
+      return true;
+    },
+
     validateCSV(csv) {
       const lines = csv.split('\n').map((line) => line.trim());
+
+      // Ensure CSV contains at least a header and one row of data
       if (lines.length < 2) {
-        this.showNotification('File CSV harus memiliki header dan minimal satu baris data.', 'warning');
+        this.showNotification('The CSV file must have a header and at least one row of data.', 'warning');
         return false;
       }
 
-      const firstLine = lines[0];
-      if (!firstLine.includes(',')) {
-        this.showNotification('Format CSV tidak valid! Gunakan koma (,) sebagai pemisah.', 'error');
-        return false;
-      }
-
-      const headers = firstLine.split(',').map((header) => header.trim());
-
+      const headers = lines[0].split(this.separator).map((header) => header.trim());
       const missingHeaders = this.requiredHeaders.filter((h) => !headers.includes(h));
+
+      // Check for missing required headers
       if (missingHeaders.length > 0) {
         this.showNotification(
-          `Header CSV tidak valid! Pastikan memiliki header: ${missingHeaders.join(', ')}`,
+          `Invalid CSV headers! Ensure the following headers are included: ${missingHeaders.join(', ')}`,
           'error',
         );
         return false;
@@ -97,14 +128,18 @@ export default {
 
       return true;
     },
+
     csvToJson(csv) {
       const lines = csv.split('\n').map((line) => line.trim());
-      const headers = lines[0].split(',').map((header) => header.trim().toLowerCase()); // Ubah header menjadi lowercase
+      const headers = lines[0].split(this.separator).map((header) => header.trim().toLowerCase());
       const result = [];
+      const schoolIds = new Set(); // Store unique SCHOOL_NATIONAL_ID values
+      const duplicateIds = new Set(); // Store duplicate IDs
 
       for (let i = 1; i < lines.length; i++) {
-        const currentLine = lines[i].split(',').map((value) => value.trim());
+        const currentLine = lines[i].split(this.separator).map((value) => value.trim());
 
+        // Skip empty rows
         if (currentLine.every((value) => value === '')) {
           continue;
         }
@@ -114,18 +149,36 @@ export default {
           obj[header] = currentLine[index] || '';
         });
 
+        // Check for duplicate SCHOOL_NATIONAL_ID
+        if (obj['school_national_id']) {
+          if (schoolIds.has(obj['school_national_id'])) {
+            duplicateIds.add(obj['school_national_id']);
+          } else {
+            schoolIds.add(obj['school_national_id']);
+          }
+        }
+
         result.push(obj);
       }
+
+      // Notify if duplicate IDs are found
+      if (duplicateIds.size > 0) {
+        this.showNotification(`Duplicate SCHOOL_NATIONAL_ID found: ${Array.from(duplicateIds).join(', ')}`, 'error');
+        return null;
+      }
+
       return result;
     },
+
     showNotification(message, type) {
       ElNotification({
-        title: type === 'success' ? 'Berhasil' : type === 'warning' ? 'Peringatan' : 'Kesalahan',
+        title: type === 'success' ? 'Success' : type === 'warning' ? 'Warning' : 'Error',
         message,
         type,
         duration: 3000,
       });
     },
+
     close() {
       this.$emit('close');
     },

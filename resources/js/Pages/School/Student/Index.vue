@@ -232,7 +232,7 @@ export default {
                       <Link
                         :href="
                           route('school.student.detail', {
-                            school_national_id: student.school_national_id,
+                            student_id: student.uuid,
                           })
                         "
                       >

@@ -344,7 +344,9 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                 Route::get('/', [StudentController::class, 'index']);
                 Route::get('download-import-template', [StudentController::class, 'downloadImportTemplate'])
                     ->name('.downloadImportTemplate');
-                Route::get('{school_national_id}/detail', [StudentController::class, 'detail'])->name('.detail');
+                Route::get('{student_id}/detail', [StudentController::class, 'detail'])->name('.detail');
+                Route::get('option-school-grade', [StudentController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
+                Route::post('store', [StudentController::class, 'store'])->name('.store');
                 Route::post('update', [StudentController::class, 'update'])->name('.update');
                 Route::post('import', [StudentController::class, 'import'])->name('.import');
             });
