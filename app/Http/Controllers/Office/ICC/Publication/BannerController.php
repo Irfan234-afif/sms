@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BannerResource;
 use App\Models\Banner;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
@@ -38,9 +39,9 @@ class BannerController extends Controller
         DB::beginTransaction();
 
         try {
-            $banner = Banner::where('uuid', request('post_category_id'))->first();
+            $banner = Banner::where('uuid', request('banner_id'))->first();
 
-            Banner::updateOrCreate(
+            $banner_created = Banner::updateOrCreate(
                 [
                     'id' => $banner ? $banner->id : null,
                 ],
@@ -48,9 +49,25 @@ class BannerController extends Controller
                     'title' => request('title'),
                     'slug' => Str::slug(request('title') . Uuid::uuid1(), '-'),
                     'content' => request('content'),
-                    'file_name' => request('file_name'),
                 ]
             );
+
+            if (request()->hasFile('image_file')) {
+                $file = request()->file('image_file');
+
+
+                $filename = 'banner' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $file->storeAs('banners', $filename, 'public');
+
+                if ($banner_created->image) {
+                    Storage::disk('public')->delete('banners/' . $banner_created->image);
+                }
+
+                $banner_created->image = $filename;
+
+                $banner_created->save();
+            }
 
             DB::commit();
 

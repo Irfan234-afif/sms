@@ -18,7 +18,7 @@ class AdmissionInformationController extends Controller
 {
     public function index()
     {
-        $posts = Post::query();
+        $posts = Post::where('type', 'ADMISSION_INFORMATION');
 
         if (request()->has('search')) {
             $posts->where('title', 'like', '%' . request('search') . '%');

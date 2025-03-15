@@ -10,6 +10,7 @@ use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
@@ -18,7 +19,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $posts = Post::query();
+        $posts = Post::where('type', 'ARTICLE');
 
         if (request()->has('search')) {
             $posts->where('title', 'like', '%' . request('search') . '%');
@@ -58,22 +59,37 @@ class ArticleController extends Controller
             $post = Post::where('uuid', request('post_id'))->first();
             $post_category = PostCategory::where('uuid', request('post_category_id'))->first();
 
-            Post::updateOrCreate(
+            $post_created = Post::updateOrCreate(
                 [
                     'id' => $post ? $post->id : null,
                 ],
                 [
                     'author_id' => $post ? $post->author_id : Auth::user()->id,
-                    'post_category_id' => $post_category->id,
+                    'category_id' => $post_category ? $post_category->id : null,
                     'type' => 'ARTICLE',
                     'title' => request('title'),
                     'slug' => Str::slug(request('title') . Uuid::uuid1(), '-'),
                     'content' => request('content'),
-                    'thumbnail' => request('thumbnail'),
                     'published_at' => now(),
                     'status' => request('status'),
                 ]
             );
+
+            if (request()->hasFile('thumbnail_file')) {
+                $file = request()->file('thumbnail_file');
+
+                $filename = 'article-thumbnail' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $file->storeAs('thumbnails', $filename, 'public');
+
+                if ($post_created->thumbnail) {
+                    Storage::disk('public')->delete('thumbnails/' . $post_created->thumbnail);
+                }
+
+                $post_created->thumbnail = $filename;
+
+                $post_created->save();
+            }
 
             DB::commit();
 

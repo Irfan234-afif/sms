@@ -18,14 +18,22 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
+      imagePreview: null,
+      imageFile: null,
       form: {
         banner_id: null,
         title: null,
+        image: null,
       },
       field: {
         title: {
-          label: 'Spanduk',
-          rules: [fieldValidation.isRequired('Spanduk')],
+          label: 'Judul',
+          rules: [fieldValidation.isRequired('Judul')],
+          error: null,
+        },
+        image: {
+          label: 'Gambar',
+          rules: [],
           error: null,
         },
       },
@@ -36,19 +44,37 @@ export default {
     if (mode == 'banner-edit-form') {
       this.form.banner_id = this.propertyModal.data.banner?.uuid;
       this.form.title = this.propertyModal.data.banner?.title;
+      if (this.propertyModal.data.banner.image) {
+        this.imagePreview = this.propertyModal.data.banner.image_path;
+      }
     }
   },
   methods: {
+    handleImageFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.form.image = null;
+      this.imageFile = file.raw;
+    },
     submit() {
       this.$refs['bannerForm'].validate((valid) => {
         if (valid) {
           this.process = true;
 
-          let requestPayload = this.form;
+          let requestPayload = JSON.parse(JSON.stringify(this.form));
+
+          const formData = new FormData();
+          formData.append('banner_id', requestPayload.banner_id);
+          formData.append('title', requestPayload.title);
+          formData.append('image_file', this.imageFile);
 
           axios
-            .post(route('office.icc.publication.banner.save'), requestPayload, {
-              headers: { 'Content-Type': 'application/json' },
+            .post(route('office.icc.publication.banner.save'), formData, {
+              headers: { 'Content-Type': 'multipart/form-data' },
             })
             .then((response) => {
               if (response.data.status === 'success') {
@@ -117,6 +143,36 @@ export default {
           prop="title"
         >
           <el-input v-model="form.title" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.image.label"
+          :rules="field.image.rules"
+          :error="field.image.error"
+          prop="image"
+          style="width: 100%"
+        >
+          <el-upload action="#" :auto-upload="false" :show-file-list="false" :on-change="handleImageFileChange">
+            <img v-if="imagePreview" :src="imagePreview" class="h-36 rounded-lg object-cover" />
+            <div v-else class="mx-auto flex h-36 w-64 items-center justify-center rounded-lg bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-14 w-14 text-gray-500"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M15 8h.01" />
+                <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+                <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+              </svg>
+            </div>
+          </el-upload>
         </el-form-item>
       </el-form>
     </div>

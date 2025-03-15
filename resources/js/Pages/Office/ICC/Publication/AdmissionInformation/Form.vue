@@ -1,4 +1,5 @@
 <script setup>
+import CKEditor from '@/Components/CKEditor.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
 import axios from 'axios';
@@ -20,22 +21,14 @@ export default {
       isValid: false,
       form: {
         post_id: null,
-        post_category_id: null,
         title: null,
         content: null,
         status: 'PUBLISHED',
       },
       field: {
-        post_category_id: {
-          label: 'Kategori',
-          rules: [fieldValidation.isRequired('Kategori')],
-          error: null,
-          disabled: false,
-          options: [],
-        },
         title: {
-          label: 'Informasi Pendaftaran',
-          rules: [fieldValidation.isRequired('Informasi Pendaftaran')],
+          label: 'Judul',
+          rules: [fieldValidation.isRequired('Judul')],
           error: null,
         },
         content: {
@@ -50,8 +43,6 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'admission-information-edit-form') {
       this.form.post_id = this.propertyModal.data.post?.uuid;
-      this.form.post_category_id = this.propertyModal.data.post.category;
-      this.field.post_category_id.options = [this.propertyModal.data.post.category];
       this.form.title = this.propertyModal.data.post?.title;
       this.form.content = this.propertyModal.data.post?.content;
     }
@@ -80,8 +71,6 @@ export default {
           this.process = true;
 
           let requestPayload = JSON.parse(JSON.stringify(this.form));
-
-          // requestPayload.post_category_id = requestPayload.post_category_id.uuid;
 
           axios
             .post(route('office.icc.publication.admissionInformation.save'), requestPayload, {
@@ -155,36 +144,6 @@ export default {
         >
           <el-input v-model="form.title" autocomplete="off" />
         </el-form-item>
-        <!-- <el-form-item
-          class="font-medium"
-          :label="field.post_category_id.label"
-          :rules="field.post_category_id.rules"
-          :error="field.post_category_id.error"
-          prop="post_category_id"
-        >
-          <el-select
-            v-model="form.post_category_id"
-            :placeholder="`Pilih ${field.post_category_id.label}`"
-            loading-text="..."
-            no-match-text="Data tidak ditemukan"
-            no-data-text="Tidak ada data"
-            :disabled="field.post_category_id.disabled"
-            :remote-method="optionPostCategory"
-            value-key="uuid"
-            remote
-            filterable
-            reserve-keyword
-            clearable
-            autocomplete="off"
-          >
-            <el-option
-              v-for="option in field.post_category_id.options"
-              :key="option.uuid"
-              :label="option.name"
-              :value="option"
-            />
-          </el-select>
-        </el-form-item> -->
         <el-form-item
           class="font-medium"
           :label="field.content.label"
@@ -192,7 +151,9 @@ export default {
           :error="field.content.error"
           prop="content"
         >
-          <el-input type="textarea" :rows="25" v-model="form.content" autocomplete="off" />
+          <div style="width: 100%">
+            <CKEditor v-model="form.content" />
+          </div>
         </el-form-item>
       </el-form>
     </div>

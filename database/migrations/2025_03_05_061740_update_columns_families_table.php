@@ -35,7 +35,7 @@ return new class extends Migration
     {
         Schema::table('families', function (Blueprint $table) {
             $table->renameColumn('national_id', 'national_identity_number');
-            $table->unique('national_identity_number');
+            $table->unique('national_identity_number')->change();
             $table->dropColumn(['avatar', 'religion', 'languages', 'phone', 'address']);
             $table->string('birth_place')->nullable(false)->change();
             $table->string('birth_date')->nullable(false)->change();

@@ -73,7 +73,7 @@ export default {
               openModal({
                 title: 'Artikel Baru',
                 mode: 'post-create-form',
-                maxWidth: '5xl',
+                maxWidth: '7xl',
                 data: {},
               })
             "
@@ -155,7 +155,7 @@ export default {
                   </th>
                   <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ post.category.name }}
+                      {{ post.category?.name }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -166,7 +166,7 @@ export default {
                           openModal({
                             title: 'Sunting Artikel',
                             mode: 'post-edit-form',
-                            maxWidth: '5xl',
+                            maxWidth: '7xl',
                             data: {
                               post: post,
                             },

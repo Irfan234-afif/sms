@@ -12,7 +12,7 @@ class GalleryItem extends Model
 
     protected $fillable = [
         'gallery_id',
-        'file_name',
+        'image',
         'description',
         'is_thumbnail',
     ];

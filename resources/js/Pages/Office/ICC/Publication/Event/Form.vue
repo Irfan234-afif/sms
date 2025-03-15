@@ -1,4 +1,5 @@
 <script setup>
+import CKEditor from '@/Components/CKEditor.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
 import axios from 'axios';
@@ -171,7 +172,9 @@ export default {
           :error="field.content.error"
           prop="content"
         >
-          <el-input type="textarea" v-model="form.content" rows="25" />
+          <div style="width: 100%">
+            <CKEditor v-model="form.content" />
+          </div>
         </el-form-item>
       </el-form>
     </div>

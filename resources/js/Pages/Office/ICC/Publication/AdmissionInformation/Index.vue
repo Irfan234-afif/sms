@@ -120,9 +120,7 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <!-- <th scope="col" class="p-4">Penulis</th> -->
                   <th scope="col" class="p-4">Informasi Pendaftaran</th>
-                  <!-- <th scope="col" class="p-4">Kategori</th> -->
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -143,21 +141,11 @@ export default {
                       <label for="checkbox-table-search" class="sr-only">checkbox</label>
                     </div>
                   </td>
-                  <!-- <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ post.author.name }}
-                    </div>
-                  </th> -->
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
                       {{ post.title }}
                     </div>
                   </th>
-                  <!-- <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ post.category.name }}
-                    </div>
-                  </th> -->
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton

@@ -260,7 +260,7 @@ class DummyPublicationActivitySeeder extends Seeder
 
                     foreach (range(1, rand(5, 15)) as $item_index) {
                         $gallery_created->items()->create([
-                            'file_name' => '-',
+                            'image' => '-',
                             'description' => $this->faker->text,
                         ]);
                     }
