@@ -73,7 +73,7 @@ export default {
               openModal({
                 title: 'Galeri Baru',
                 mode: 'gallery-create-form',
-                maxWidth: 'md',
+                maxWidth: 'xl',
                 data: {},
               })
             "
@@ -154,7 +154,7 @@ export default {
                           openModal({
                             title: 'Sunting Galeri',
                             mode: 'gallery-edit-form',
-                            maxWidth: 'md',
+                            maxWidth: 'xl',
                             data: {
                               gallery: gallery,
                             },

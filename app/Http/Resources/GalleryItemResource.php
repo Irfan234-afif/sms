@@ -14,6 +14,12 @@ class GalleryItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'image' => $this->image,
+            'image_path' => $this->image ? '/storage/galleries/' . $this->image : null,
+            'description' => $this->description,
+            'is_thumbnail' => (bool) $this->is_thumbnail,
+        ];
     }
 }
