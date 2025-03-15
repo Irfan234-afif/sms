@@ -49,4 +49,9 @@ class GetLabel
     {
         return self::get('achievementTypes', $value);
     }
+    
+    public static function testimonialType($value)
+    {
+        return self::get('testimonialTypes', $value);
+    }
 }

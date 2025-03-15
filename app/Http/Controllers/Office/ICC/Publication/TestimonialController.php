@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TestimonialResource;
 use App\Models\Testimonial;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class TestimonialController extends Controller
@@ -38,7 +39,7 @@ class TestimonialController extends Controller
         try {
             $testimonial = Testimonial::where('uuid', request('testimonial_id'))->first();
 
-            Testimonial::updateOrCreate(
+            $testimonial_created = Testimonial::updateOrCreate(
                 [
                     'id' => $testimonial ? $testimonial->id : null,
                 ],
@@ -49,6 +50,24 @@ class TestimonialController extends Controller
                     'message' => request('message'),
                 ]
             );
+
+
+            if (request()->hasFile('avatar_file')) {
+                $file = request()->file('avatar_file');
+
+
+                $filename = 'avatar' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $file->storeAs('avatars', $filename, 'public');
+
+                if ($testimonial_created->avatar) {
+                    Storage::disk('public')->delete('avatars/' . $testimonial_created->avatar);
+                }
+
+                $testimonial_created->avatar = $filename;
+
+                $testimonial_created->save();
+            }
 
             DB::commit();
 
