@@ -44,4 +44,9 @@ class GetLabel
     {
         return self::get('religions', $value);
     }
+
+    public static function achievementType($value)
+    {
+        return self::get('achievementTypes', $value);
+    }
 }
