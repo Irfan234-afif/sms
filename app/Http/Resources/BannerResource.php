@@ -19,7 +19,7 @@ class BannerResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'image' => $this->image,
-            'image_path' => $this->image ? '/storage/banners/' . $this->image : null,
+            'image_path' => $this->image ? '/storage/banners/' . $this->image : 'https://www.cvent-assets.com/brand-page-guestside-site/assets/images/venue-card-placeholder.png',
             'content' => $this->content,
         ];
     }

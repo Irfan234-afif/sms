@@ -15,7 +15,7 @@ import { Link } from '@inertiajs/vue3';
 
 <template>
   <div
-    class="bg-custom flex min-h-screen flex-col bg-gray-50 bg-[url('/assets/patterns/education-pattern.png')] bg-repeat dark:bg-gray-900"
+    class="flex min-h-screen flex-col bg-gray-100 bg-[url('/assets/patterns/education-pattern.png')] bg-custom bg-repeat dark:bg-gray-900"
   >
     <!-- header -->
     <nav class="border-gray-200 bg-white dark:bg-gray-900">

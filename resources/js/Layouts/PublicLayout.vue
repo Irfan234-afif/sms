@@ -23,7 +23,7 @@ defineProps({
 
 <template>
   <Head title="Home" />
-  <div class="bg-white">
+  <div class="bg-gray-100 bg-[url('/assets/patterns/education-pattern.png')] bg-custom bg-repeat">
     <!-- header -->
     <nav class="z-50 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <div class="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between p-4">

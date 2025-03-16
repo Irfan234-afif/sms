@@ -14,7 +14,7 @@ import { Link } from '@inertiajs/vue3';
 
 <template>
   <div
-    class="min-h-screen bg-gray-50 bg-[url('/assets/patterns/education-pattern.png')] bg-custom bg-repeat dark:bg-gray-900"
+    class="min-h-screen bg-gray-100 bg-[url('/assets/patterns/education-pattern.png')] bg-custom bg-repeat dark:bg-gray-900"
   >
     <!-- navbar -->
 

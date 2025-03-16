@@ -25,7 +25,7 @@ defineProps({
   <Head title="Home" />
 
   <PublicLayout>
-    <div class="h-screen">
+    <div class="min-h-screen">
       <section class="relative flex bg-[url('/assets/pages/jumbotron.jpg')] bg-cover bg-fixed bg-no-repeat">
         <div class="absolute inset-0 bg-gradient-to-b from-blue-300 to-white opacity-70"></div>
         <div class="z-10 mx-auto max-w-screen-xl px-4 py-8 text-center lg:py-32">

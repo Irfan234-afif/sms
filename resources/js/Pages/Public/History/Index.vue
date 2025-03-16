@@ -1,7 +1,7 @@
 <script>
 import { initFlowbite } from 'flowbite';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
-import VueMarkdownIt from 'vue3-markdown-it';
+import PreviewContent from '@/Components/PreviewContent.vue';
 
 export default {
   mounted() {
@@ -29,7 +29,7 @@ defineProps({
   <Head title="Home" />
 
   <PublicLayout>
-    <div class="h-screen">
+    <div class="min-h-screen">
       <section class="relative flex bg-[url('/assets/pages/jumbotron.jpg')] bg-cover bg-fixed bg-no-repeat">
         <div class="absolute inset-0 bg-gradient-to-b from-blue-300 to-white opacity-70"></div>
         <div class="z-10 mx-auto max-w-screen-xl px-4 py-8 text-center lg:py-32">
@@ -42,8 +42,8 @@ defineProps({
       </section>
       <section>
         <div class="mx-auto max-w-7xl py-8 lg:py-16">
-          <div class="mx-auto max-w-2xl">
-            <VueMarkdownIt :source="page.data.content"></VueMarkdownIt>
+          <div class="mx-auto max-w-4xl">
+            <PreviewContent :content="page.data.content"></PreviewContent>
           </div>
         </div>
       </section>

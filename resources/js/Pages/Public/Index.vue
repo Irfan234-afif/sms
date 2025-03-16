@@ -18,6 +18,9 @@ defineProps({
   canRegister: {
     type: Boolean,
   },
+  banners: {
+    type: Object,
+  },
   events: {
     type: Object,
   },
@@ -63,27 +66,15 @@ defineProps({
     <section>
       <div id="default-carousel" class="relative w-full" data-carousel="slide">
         <!-- Carousel wrapper -->
-        <div class="relative h-48 overflow-hidden bg-black md:h-[50rem]">
-          <!-- Item 1 -->
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <div class="h-92 relative overflow-hidden bg-black md:h-[50rem]">
+          <div
+            v-for="(banner, index) in banners.data"
+            :key="index"
+            class="hidden duration-700 ease-in-out"
+            data-carousel-item
+          >
             <img
-              src="/assets/pages/slider1.jpg"
-              class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2"
-              alt="..."
-            />
-          </div>
-          <!-- Item 2 -->
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img
-              src="/assets/pages/slider2.jpg"
-              class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2"
-              alt="..."
-            />
-          </div>
-          <!-- Item 3 -->
-          <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img
-              src="/assets/pages/slider3.jpg"
+              :src="banner.image_path"
               class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2"
               alt="..."
             />
@@ -92,25 +83,13 @@ defineProps({
         <!-- Slider indicators -->
         <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
           <button
+            v-for="(banner, index) in banners.data"
+            :key="banner.uuid"
             type="button"
             class="h-3 w-3 rounded-full"
             aria-current="true"
             aria-label="Slide 1"
-            data-carousel-slide-to="0"
-          ></button>
-          <button
-            type="button"
-            class="h-3 w-3 rounded-full"
-            aria-current="false"
-            aria-label="Slide 2"
-            data-carousel-slide-to="1"
-          ></button>
-          <button
-            type="button"
-            class="h-3 w-3 rounded-full"
-            aria-current="false"
-            aria-label="Slide 3"
-            data-carousel-slide-to="2"
+            :data-carousel-slide-to="index"
           ></button>
         </div>
         <!-- Slider controls -->
@@ -339,15 +318,12 @@ defineProps({
                   class="absolute inset-0 h-full w-full object-cover"
                   style="color: transparent"
                   sizes="(min-width: 1280px) 21rem, (min-width: 1024px) 33vw, (min-width: 768px) 19rem, (min-width: 640px) 50vw, 100vw"
-                  src="https://www.cvent-assets.com/brand-page-guestside-site/assets/images/venue-card-placeholder.png"
+                  :src="event.thumbnail_path"
                 />
               </div>
             </div>
             <div>
               <h3 class="text-base font-medium tracking-tight text-gray-900">{{ event.title }}</h3>
-              <p class="mt-2 text-xs text-gray-600">
-                {{ event.content }}
-              </p>
             </div>
           </li>
         </ol>
@@ -373,14 +349,14 @@ defineProps({
                   class="absolute inset-0 h-full w-full object-cover"
                   style="color: transparent"
                   sizes="(min-width: 1280px) 21rem, (min-width: 1024px) 33vw, (min-width: 768px) 19rem, (min-width: 640px) 50vw, 100vw"
-                  src="https://www.cvent-assets.com/brand-page-guestside-site/assets/images/venue-card-placeholder.png"
+                  :src="news.thumbnail_path"
                 />
               </div>
             </div>
             <div>
               <h3 class="text-base font-medium tracking-tight text-gray-900">{{ news.title }}</h3>
               <p class="mt-2 text-xs text-gray-600">
-                {{ news.content }}
+                {{ news.author.name }} • {{ new Date(news.published_at).toLocaleDateString() }}
               </p>
             </div>
           </li>
@@ -476,9 +452,9 @@ defineProps({
                         loading="lazy"
                         decoding="async"
                         data-nimg="1"
-                        class="h-20 w-20 object-cover"
+                        class="h-16 w-16 object-cover"
                         style="color: transparent"
-                        src="https://img.freepik.com/premium-vector/illustration-vector-graphic-user-icon_717549-1636.jpg?w=360"
+                        :src="parent_testimonial.avatar_path"
                       />
                     </div>
                   </figcaption>
@@ -522,9 +498,9 @@ defineProps({
                         loading="lazy"
                         decoding="async"
                         data-nimg="1"
-                        class="h-20 w-20 object-cover"
+                        class="h-16 w-16 object-cover"
                         style="color: transparent"
-                        src="https://img.freepik.com/premium-vector/illustration-vector-graphic-user-icon_717549-1636.jpg?w=360"
+                        :src="student_testimonial.avatar_path"
                       />
                     </div>
                   </figcaption>
@@ -536,10 +512,10 @@ defineProps({
         <h1
           class="mt-16 text-center text-lg font-extrabold uppercase leading-none tracking-tight text-blue-700 dark:text-white md:mb-6 md:text-xl lg:mt-20 lg:text-2xl"
         >
-          Orang Tua
+          Guru
         </h1>
         <ul role="list" class="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none lg:grid-cols-3">
-          <li v-for="(parent_testimonial, index) in parent_testimonials.data" :key="index">
+          <li v-for="(teacher_testimonial, index) in teacher_testimonials.data" :key="index">
             <ul role="list" class="flex flex-col gap-y-6 sm:gap-y-8">
               <li
                 :class="{
@@ -554,13 +530,13 @@ defineProps({
                   </svg>
                   <blockquote class="relative">
                     <p class="text-xs tracking-tight text-gray-900">
-                      {{ parent_testimonial.message }}
+                      {{ teacher_testimonial.message }}
                     </p>
                   </blockquote>
                   <figcaption class="relative mt-auto flex items-center justify-between border-t border-gray-100 pt-6">
                     <div>
-                      <div class="font-display text-xs text-gray-900">{{ parent_testimonial.name }}</div>
-                      <div class="mt-1 text-xs text-gray-500">{{ parent_testimonial.relation }}</div>
+                      <div class="font-display text-xs text-gray-900">{{ teacher_testimonial.name }}</div>
+                      <div class="mt-1 text-xs text-gray-500">{{ teacher_testimonial.relation }}</div>
                     </div>
                     <div class="overflow-hidden rounded-full bg-gray-50">
                       <img
@@ -568,9 +544,9 @@ defineProps({
                         loading="lazy"
                         decoding="async"
                         data-nimg="1"
-                        class="h-20 w-20 object-cover"
+                        class="h-16 w-16 object-cover"
                         style="color: transparent"
-                        src="https://img.freepik.com/premium-vector/illustration-vector-graphic-user-icon_717549-1636.jpg?w=360"
+                        :src="teacher_testimonial.avatar_path"
                       />
                     </div>
                   </figcaption>
@@ -583,7 +559,7 @@ defineProps({
     </section>
     <!-- map -->
     <section>
-      <div class="mx-auto py-8 text-center lg:py-16">
+      <div class="mx-auto text-center">
         <h1 class="mb-4 text-3xl font-extrabold uppercase leading-none text-blue-800 md:mb-20">Temui Kami</h1>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13938.371761121383!2d116.85199315044005!3d-1.2308570736880493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df1463c0c5dd131%3A0x67995806f12d0389!2sHarapan%20Bangsa%20Integrated%20Christian%20School!5e0!3m2!1sid!2sid!4v1598653306485!5m2!1sid!2sid"

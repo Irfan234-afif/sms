@@ -21,8 +21,9 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'thumbnail' => $this->thumbnail,
-            'thumbnail_path' => $this->thumbnail ? '/storage/thumbnails/' . $this->thumbnail : null,
+            'thumbnail_path' => $this->thumbnail ? '/storage/thumbnails/' . $this->thumbnail : 'https://www.cvent-assets.com/brand-page-guestside-site/assets/images/venue-card-placeholder.png',
             'content' => $this->content,
+            'published_at' => $this->published_at,
             'status' => $this->status,
         ];
     }

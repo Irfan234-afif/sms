@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BannerResource;
 use App\Http\Resources\EventResource;
+use App\Http\Resources\GalleryResource;
 use App\Http\Resources\PageResource;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\TestimonialResource;
+use App\Models\Banner;
 use App\Models\Event;
+use App\Models\Gallery;
 use App\Models\OperationalHour;
 use App\Models\Page;
 use App\Models\Post;
@@ -22,6 +26,8 @@ class PublicController extends Controller
     {
         $events = Event::latest()->take(3)->get();
 
+        $banners = Banner::latest()->take(20)->get();
+
         $news = Post::where('type', 'NEWS')
             ->with(['author', 'category'])
             ->latest()
@@ -34,6 +40,7 @@ class PublicController extends Controller
             ->groupBy('type');
 
         return Inertia::render('Public/Index', [
+            'banners' => BannerResource::collection($banners),
             'events' => EventResource::collection($events),
             'news' => PostResource::collection($news),
             'parent_testimonials' => TestimonialResource::collection($testimonials->get('PARENT', collect())->take(3)),
@@ -83,7 +90,6 @@ class PublicController extends Controller
                 return array_search($key, $dayOrder);
             });
 
-
         return Inertia::render('Public/OperationalHour/Index', [
             'operational_hours' => $operational_hours,
             'canLogin' => Route::has('login'),
@@ -96,7 +102,13 @@ class PublicController extends Controller
 
     public function admissionInformation()
     {
+        $admission_informations = Post::where('type', 'ADMISSION_INFORMATION')
+            ->latest()
+            ->take(3)
+            ->get();
+
         return Inertia::render('Public/AdmissionInformation/Index', [
+            'admission_informations' => PostResource::collection($admission_informations),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
@@ -126,7 +138,15 @@ class PublicController extends Controller
 
     public function gallery()
     {
+        $galleries = Gallery::whereHas('items', function ($items) {
+            $items->where('is_thumbnail', true);
+        })->with('items')
+            ->take(15)
+            ->latest()
+            ->get();
+
         return Inertia::render('Public/Gallery/Index', [
+            'galleries' => GalleryResource::collection($galleries),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Ramsey\Uuid\Uuid;
@@ -40,7 +41,7 @@ class EventController extends Controller
         try {
             $event = Event::where('uuid', request('event_id'))->first();
 
-            Event::updateOrCreate(
+            $event_created = Event::updateOrCreate(
                 [
                     'id' => $event ? $event->id : null,
                 ],
@@ -52,6 +53,23 @@ class EventController extends Controller
                     'content' => request('content'),
                 ]
             );
+
+
+            if (request()->hasFile('thumbnail_file')) {
+                $file = request()->file('thumbnail_file');
+
+                $filename = 'news-thumbnail' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $file->storeAs('thumbnails', $filename, 'public');
+
+                if ($event_created->thumbnail) {
+                    Storage::disk('public')->delete('thumbnails/' . $event_created->thumbnail);
+                }
+
+                $event_created->thumbnail = $filename;
+
+                $event_created->save();
+            }
 
             DB::commit();
 

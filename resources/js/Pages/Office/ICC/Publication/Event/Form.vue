@@ -19,9 +19,12 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
+      thumbnailPreview: null,
+      thumbnailFile: null,
       form: {
         event_id: null,
         title: null,
+        thumbnail: null,
         datetime_range: [],
         location: null,
         content: null,
@@ -42,6 +45,11 @@ export default {
           rules: [fieldValidation.isRequired('Lokasi')],
           error: null,
         },
+        thumbnail: {
+          label: 'Thumbnail',
+          rules: [],
+          error: null,
+        },
         content: {
           label: 'Keterangan',
           rules: [fieldValidation.isRequired('Keterangan')],
@@ -59,13 +67,26 @@ export default {
         this.propertyModal.data.event?.start_datetime,
         this.propertyModal.data.event?.end_datetime,
       ];
+      if (this.propertyModal.data.event.thumbnail) {
+        this.thumbnailPreview = this.propertyModal.data.event.thumbnail_path;
+      }
       this.form.location = this.propertyModal.data.event?.location;
       this.form.content = this.propertyModal.data.event?.content;
     }
   },
   methods: {
+    handleThumbnailFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.thumbnailPreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.form.thumbnail = null;
+      this.thumbnailFile = file.raw;
+    },
     submit() {
-      this.$refs['EventForm'].validate((valid) => {
+      this.$refs['eventForm'].validate((valid) => {
         if (valid) {
           this.process = true;
 
@@ -75,9 +96,18 @@ export default {
             end_datetime: this.form.datetime_range[1],
           };
 
+          const formData = new FormData();
+          formData.append('event_id', requestPayload.event_id);
+          formData.append('title', requestPayload.title);
+          formData.append('thumbnail_file', this.thumbnailFile);
+          formData.append('start_datetime', requestPayload.start_datetime);
+          formData.append('end_datetime', requestPayload.end_datetime);
+          formData.append('location', requestPayload.location);
+          formData.append('content', requestPayload.content);
+
           axios
-            .post(route('office.icc.publication.event.save'), requestPayload, {
-              headers: { 'Content-Type': 'application/json' },
+            .post(route('office.icc.publication.event.save'), formData, {
+              headers: { 'Content-Type': 'multipart/form-data' },
             })
             .then((response) => {
               if (response.data.status === 'success') {
@@ -103,7 +133,7 @@ export default {
               if (error.response?.data?.errors) {
                 for (let field in error.response.data.errors) {
                   this.field[field].error = error.response.data.errors[field][0];
-                  this.$refs['EventForm'].validateField(field);
+                  this.$refs['eventForm'].validateField(field);
                   message = error.response.data.errors[field][0];
                 }
               }
@@ -137,9 +167,39 @@ export default {
       {{ propertyModal?.title }}
     </h2>
     <div class="px-2">
-      <el-form v-if="loaded" ref="EventForm" label-position="top" :model="form" :disabled="process">
+      <el-form v-if="loaded" ref="eventForm" label-position="top" :model="form" :disabled="process">
         <el-form-item :label="field.title.label" :rules="field.title.rules" :error="field.title.error" prop="title">
           <el-input v-model="form.title" autocomplete="off" />
+        </el-form-item>
+
+        <el-form-item
+          class="font-medium"
+          :label="field.thumbnail.label"
+          :rules="field.thumbnail.rules"
+          :error="field.thumbnail.error"
+          prop="thumbnail"
+        >
+          <el-upload action="#" :auto-upload="false" :show-file-list="false" :on-change="handleThumbnailFileChange">
+            <img v-if="thumbnailPreview" :src="thumbnailPreview" class="flex h-36 rounded-lg object-cover" />
+            <div v-else class="flex h-36 w-64 items-center justify-center rounded-lg bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-14 w-14 text-gray-500"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M15 8h.01" />
+                <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+                <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+              </svg>
+            </div>
+          </el-upload>
         </el-form-item>
 
         <el-form-item

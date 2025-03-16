@@ -23,7 +23,7 @@ class TestimonialResource extends JsonResource
             'relation' => $this->relation,
             'message' => $this->message,
             'avatar' => $this->avatar,
-            'avatar_path' => $this->avatar ? '/storage/avatars/' . $this->avatar : null,
+            'avatar_path' => $this->avatar ? '/storage/avatars/' . $this->avatar : 'https://i0.wp.com/passivesills.com/wp-content/uploads/2020/06/User-Icon-Grey.png?fit=400%2C400&ssl=1&w=640',
         ];
     }
 }
