@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BannerResource;
+use App\Http\Resources\CareerResource;
 use App\Http\Resources\EventResource;
+use App\Http\Resources\FaqResource;
 use App\Http\Resources\GalleryResource;
 use App\Http\Resources\PageResource;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\TestimonialResource;
 use App\Models\Banner;
+use App\Models\Career;
 use App\Models\Event;
+use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\OperationalHour;
 use App\Models\Page;
@@ -48,8 +52,6 @@ class PublicController extends Controller
             'teacher_testimonials' => TestimonialResource::collection($testimonials->get('TEACHER', collect())->take(3)),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
@@ -61,8 +63,6 @@ class PublicController extends Controller
             'page' => PageResource::make($page),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
@@ -74,8 +74,6 @@ class PublicController extends Controller
             'page' => PageResource::make($page),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
@@ -94,8 +92,6 @@ class PublicController extends Controller
             'operational_hours' => $operational_hours,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
@@ -104,35 +100,97 @@ class PublicController extends Controller
     {
         $admission_informations = Post::where('type', 'ADMISSION_INFORMATION')
             ->latest()
-            ->take(3)
+            ->take(12)
             ->get();
 
         return Inertia::render('Public/AdmissionInformation/Index', [
             'admission_informations' => PostResource::collection($admission_informations),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
+        ]);
+    }
+
+    public function admissionInformationDetail($slug)
+    {
+        $admission_information = Post::where('slug', $slug)
+            ->firstOrFail();
+
+        return Inertia::render('Public/AdmissionInformation/Detail', [
+            'admission_information' => PostResource::make($admission_information),
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
         ]);
     }
 
     public function news()
     {
+        $news = Post::where('type', 'NEWS')
+            ->with(['author', 'category'])
+            ->limit(100)
+            ->latest()
+            ->paginate(9);
+
         return Inertia::render('Public/News/Index', [
+            'news' => PostResource::collection($news),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
+        ]);
+    }
+
+    public function newsDetail($slug)
+    {
+        $news = Post::where('slug', $slug)
+            ->with(['author', 'category'])
+            ->firstOrFail();
+
+        $more_news = Post::where('type', 'NEWS')
+            ->whereNotIn('id', [$news->id])
+            ->with(['author', 'category'])
+            ->take(4)
+            ->latest()
+            ->get();
+
+        return Inertia::render('Public/News/Detail', [
+            'news' => PostResource::make($news),
+            'more_news' => PostResource::collection($more_news),
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
         ]);
     }
 
     public function article()
     {
+        $articles = Post::where('type', 'ARTICLE')
+            ->with(['author', 'category'])
+            ->limit(100)
+            ->latest()
+            ->paginate(9);
+
         return Inertia::render('Public/Article/Index', [
+            'articles' => PostResource::collection($articles),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
+        ]);
+    }
+
+    public function articleDetail($slug)
+    {
+        $article = Post::where('slug', $slug)
+            ->with(['author', 'category'])
+            ->firstOrFail();
+
+        $more_articles = Post::where('type', 'ARTICLE')
+            ->whereNotIn('id', [$article->id])
+            ->with(['author', 'category'])
+            ->take(4)
+            ->latest()
+            ->get();
+
+        return Inertia::render('Public/Article/Detail', [
+            'article' => PostResource::make($article),
+            'more_articles' => PostResource::collection($more_articles),
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
         ]);
     }
 
@@ -149,18 +207,36 @@ class PublicController extends Controller
             'galleries' => GalleryResource::collection($galleries),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
     public function event()
     {
+        $events = Event::limit(100)
+            ->latest()
+            ->paginate(9);
+
         return Inertia::render('Public/Event/Index', [
+            'events' => EventResource::collection($events),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
+        ]);
+    }
+
+    public function eventDetail($event_id)
+    {
+        $event = Event::where('uuid', $event_id)
+            ->firstOrFail();
+
+        $more_events = Event::take(4)
+            ->latest()
+            ->get();
+
+        return Inertia::render('Public/Event/Detail', [
+            'event' => EventResource::make($event),
+            'more_events' => EventResource::collection($more_events),
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
         ]);
     }
 
@@ -169,8 +245,6 @@ class PublicController extends Controller
         return Inertia::render('Public/TeacherAchievement/Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
@@ -179,38 +253,40 @@ class PublicController extends Controller
         return Inertia::render('Public/StudentAchievement/Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
     public function publicFeedback()
     {
+        abort(500);
         return Inertia::render('Public/PublicFeedback/Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
     public function career()
     {
+        $careers = Career::limit(100)
+            ->latest()
+            ->paginate(20);
+
         return Inertia::render('Public/Career/Index', [
+            'careers' => CareerResource::collection($careers),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
     public function faq()
     {
+        $faqs = Faq::latest()
+            ->paginate(12);
+
         return Inertia::render('Public/Faq/Index', [
+            'faqs' => FaqResource::collection($faqs),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 }

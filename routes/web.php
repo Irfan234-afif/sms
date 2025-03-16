@@ -55,11 +55,15 @@ Route::prefix('/')->group(function () {
     Route::get('history', [PublicController::class, 'history'])->name('history');
     Route::get('vision-mission', [PublicController::class, 'visionMission'])->name('visionMission');
     Route::get('operational-hour', [PublicController::class, 'operationalHour'])->name('operationalHour');
-    Route::get('admission-Information', [PublicController::class, 'admissionInformation'])->name('admissionInformation');
+    Route::get('admission-information', [PublicController::class, 'admissionInformation'])->name('admissionInformation');
+    Route::get('{slug}/admission-information', [PublicController::class, 'admissionInformationDetail'])->name('admissionInformation.detail');
     Route::get('news', [PublicController::class, 'news'])->name('news');
+    Route::get('{slug}/news', [PublicController::class, 'newsDetail'])->name('news.detail');
     Route::get('article', [PublicController::class, 'article'])->name('article');
+    Route::get('{slug}/article', [PublicController::class, 'articleDetail'])->name('article.detail');
     Route::get('gallery', [PublicController::class, 'gallery'])->name('gallery');
     Route::get('event', [PublicController::class, 'event'])->name('event');
+    Route::get('{event_id}/event', [PublicController::class, 'eventDetail'])->name('event.detail');
     Route::get('teacher-achievement', [PublicController::class, 'teacherAchievement'])->name('teacherAchievement');
     Route::get('student-achievement', [PublicController::class, 'studentAchievement'])->name('studentAchievement');
     Route::get('public-feedback', [PublicController::class, 'publicFeedback'])->name('publicFeedback');

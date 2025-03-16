@@ -9,7 +9,7 @@ export default {
 };
 </script>
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
   canLogin: {
@@ -51,8 +51,12 @@ defineProps({
               <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                 {{ admission_information.title }}
               </h5>
-              <a
-                href="#"
+              <Link
+                :href="
+                  route('admissionInformation.detail', {
+                    slug: admission_information.slug,
+                  })
+                "
                 class="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Lihat
@@ -71,7 +75,7 @@ defineProps({
                     d="M1 5h12m0 0L9 1m4 4L9 9"
                   />
                 </svg>
-              </a>
+              </Link>
             </Link>
           </div>
         </div>

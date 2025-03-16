@@ -14,7 +14,7 @@ class GalleryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $default_thumbnail = 'https://www.cvent-assets.com/brand-page-guestside-site/assets/images/venue-card-placeholder.png';
+        $default_thumbnail = 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png';
 
         $thumbnail_path = optional($this->items->where('is_thumbnail', true)->first())->image
             ? asset('storage/galleries/' . $this->items->where('is_thumbnail', true)->first()->image)

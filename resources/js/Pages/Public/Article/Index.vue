@@ -1,6 +1,7 @@
 <script>
 import { initFlowbite } from 'flowbite';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
+import Pagination from '@/Components/Pagination.vue';
 
 export default {
   mounted() {
@@ -9,7 +10,7 @@ export default {
 };
 </script>
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
   canLogin: {
@@ -17,6 +18,9 @@ defineProps({
   },
   canRegister: {
     type: Boolean,
+  },
+  articles: {
+    type: Object,
   },
 });
 </script>
@@ -38,7 +42,69 @@ defineProps({
       </section>
       <section>
         <div class="mx-auto max-w-7xl py-8 lg:py-16">
-          <div class="mx-auto max-w-2xl"></div>
+          <div class="mx-auto max-w-7xl">
+            <div class="grid grid-cols-3 gap-4">
+              <div
+                v-for="(article, index) in articles.data"
+                :key="index"
+                class="flex h-full flex-col rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+              >
+                <img class="h-64 rounded-t-lg object-cover" :src="article.thumbnail_path" alt="" />
+                <div class="flex flex-grow flex-col p-5">
+                  <h5 class="mb-2 text-lg font-medium tracking-tight text-gray-900 dark:text-white">
+                    {{ article.title }}
+                  </h5>
+                  <div class="mt-auto w-full pt-3">
+                    <div class="pb-3">
+                      <Link
+                        :href="
+                          route('article.detail', {
+                            slug: article.slug,
+                          })
+                        "
+                        class="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        Lihat Selengkapnya
+                        <svg
+                          class="ms-2 h-3.5 w-3.5 rtl:rotate-180"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 10"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M1 5h12m0 0L9 1m4 4L9 9"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div class="inline-flex w-full items-center border-t pt-4 text-sm text-gray-900 dark:text-white">
+                      <img class="mr-4 h-10 w-10 rounded-full" :src="article.author.avatar_path" alt="Jese Leos" />
+                      <div>
+                        <div class="text-base font-medium text-gray-900 dark:text-white">{{ article.author.name }}</div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                          <time>{{
+                            new Date(article.published_at).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: '2-digit',
+                              year: 'numeric',
+                            })
+                          }}</time>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-2">
+              <Pagination class="bg-white" :meta="articles.meta" :links="articles.links" />
+            </div>
+          </div>
         </div>
       </section>
     </div>

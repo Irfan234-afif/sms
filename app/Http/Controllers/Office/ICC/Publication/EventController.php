@@ -58,7 +58,7 @@ class EventController extends Controller
             if (request()->hasFile('thumbnail_file')) {
                 $file = request()->file('thumbnail_file');
 
-                $filename = 'news-thumbnail' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $filename = 'event-thumbnail' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
                 $file->storeAs('thumbnails', $filename, 'public');
 

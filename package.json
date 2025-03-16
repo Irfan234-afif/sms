@@ -30,6 +30,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
     "ckeditor5": "^44.3.0",
+    "date-fns": "^4.1.0",
     "element-plus": "^2.9.3",
     "flowbite": "^2.5.2",
     "vue3-markdown-it": "^1.0.10"
