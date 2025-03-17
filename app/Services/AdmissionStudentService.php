@@ -93,7 +93,7 @@ class AdmissionStudentService
         $transaction_payment = $transaction->payments()->create([
             'reference_number' => $params['transaction_details']['order_id'],
             'type' => 'ONLINE',
-            'amount' => $product->price,
+            'amount' => $transaction->bill_amount,
             'options' => [
                 'gateway_provider' => 'MIDTRANS',
                 'gateway_token' => $snapToken,
