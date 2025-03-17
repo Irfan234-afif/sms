@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\GeneratePivotUuid;
 use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Discount extends Model
 {
-    use GenerateUuid, SoftDeletes;
+    use GenerateUuid, GeneratePivotUuid, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -22,4 +23,9 @@ class Discount extends Model
         'used_quota',
         'is_active',
     ];
+
+    public function usages()
+    {
+        return $this->belongsToMany(Area::class, 'discount_usages');
+    }
 }

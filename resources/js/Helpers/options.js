@@ -106,6 +106,10 @@ const achievementTypes = [
   { label: 'Siswa', value: 'STUDENT' },
   { label: 'Guru', value: 'TEACHER' },
 ];
+const discountTypes = [
+  { label: 'Persen', value: 'PERCENTAGE' },
+  { label: 'Tetap', value: 'FIXED' },
+];
 
 export {
   achievementTypes,
@@ -113,6 +117,7 @@ export {
   admissionStagePreStatuses,
   bloodTypes,
   days,
+  discountTypes,
   employeeStatus,
   genders,
   maritalStatuses,

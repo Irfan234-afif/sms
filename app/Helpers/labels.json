@@ -89,5 +89,9 @@
   "achievementTypes": [
     { "label": "Siswa", "value": "STUDENT" },
     { "label": "Guru", "value": "TEACHER" }
+  ],
+  "discountTypes": [
+    { "label": "Persen", "value": "PERCENTAGE" },
+    { "label": "Tetap", "value": "FIXED" }
   ]
 }

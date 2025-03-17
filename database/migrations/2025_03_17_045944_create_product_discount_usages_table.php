@@ -11,6 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        Schema::table('products', function (Blueprint $table) {
+            $table->foreignId('area_id')->nullable()->constrained('areas')->after('uuid');
+            $table->boolean('is_active')->default(false)->after('price');
+        });
+
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
@@ -18,7 +24,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('type');
             $table->text('description')->nullable();
-            $table->decimal('value', 10, 2);
+            $table->decimal('value', 15, 2)->default(0);
             $table->dateTime('starts_at')->nullable();
             $table->dateTime('ends_at')->nullable();
             $table->integer('quota')->nullable();
@@ -36,9 +42,15 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('products', function (Blueprint $table) {
-            $table->foreignId('area_id')->nullable()->constrained('areas')->after('uuid');
-            $table->boolean('is_active')->default(false)->after('price');
+        Schema::create('transaction_discounts', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid')->unique();
+            $table->foreignId('transaction_id')->constrained('transactions');
+            $table->foreignId('discount_id')->constrained('discounts');
+            $table->string('type');
+            $table->decimal('value', 15, 2)->default(0);
+            $table->decimal('amount_discount', 15, 2)->default(0);
+            $table->timestamps();
         });
     }
 
@@ -47,11 +59,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('transaction_discounts');
+        Schema::dropIfExists('discount_usages');
+        Schema::dropIfExists('discounts');
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['area_id']);
             $table->dropColumn(['area_id', 'is_active']);
         });
-        Schema::dropIfExists('discount_usages');
-        Schema::dropIfExists('discounts');
     }
 };

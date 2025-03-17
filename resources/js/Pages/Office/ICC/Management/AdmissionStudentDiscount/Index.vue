@@ -6,7 +6,7 @@ import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import AdmissionStudentPriceForm from './Form.vue';
+import AdmissionStudentDiscountForm from './Form.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import Badge from '@/Components/Badge.vue';
 import Search from '@/Components/Search.vue';
@@ -14,7 +14,7 @@ import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
-  { label: 'Harga Formulir Pendaftaran', href: route('office.icc.management.admissionStudentPrice') },
+  { label: 'Diskon Formulir Pendaftaran', href: route('office.icc.management.admissionStudentDiscount') },
 ];
 </script>
 
@@ -22,7 +22,7 @@ const breadcrumbs = [
 export default {
   props: {
     search_params: Object,
-    products: Object,
+    discounts: Object,
   },
   data() {
     return {
@@ -72,8 +72,8 @@ export default {
             type="default"
             @click="
               openModal({
-                title: 'Tambah Harga Formulir Baru',
-                mode: 'admission-student-price-create-form',
+                title: 'Tambah Diskon Formulir Baru',
+                mode: 'admission-student-discount-create-form',
                 maxWidth: 'md',
                 data: {},
               })
@@ -94,7 +94,7 @@ export default {
                 <path d="M12 5l0 14" />
                 <path d="M5 12l14 0" />
               </svg>
-              <div>Harga Formulir Baru</div>
+              <div>Diskon Formulir Baru</div>
             </div>
           </DefaultButton>
         </div>
@@ -105,7 +105,7 @@ export default {
     </template>
     <template #content>
       <section>
-        <div v-if="products.data.length > 0" class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
+        <div v-if="discounts.data.length > 0" class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
           <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
@@ -121,16 +121,18 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Formulir</th>
-                  <th scope="col" class="p-4">Area</th>
-                  <th scope="col" class="p-4">Harga</th>
+                  <th scope="col" class="p-4">Diskon</th>
+                  <th scope="col" class="p-4">Nilai</th>
+                  <th scope="col" class="p-4">Berlaku</th>
+                  <th scope="col" class="p-4">Jumlah</th>
+                  <th scope="col" class="p-4">Terpakai</th>
                   <th scope="col" class="p-4">Status</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
               <tbody class="text-xs">
                 <tr
-                  v-for="(product, index) in products.data"
+                  v-for="(discount, index) in discounts.data"
                   :key="index"
                   class="border-b hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
                 >
@@ -147,17 +149,16 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ product.name }}
+                      {{ discount.name }}
                     </div>
                   </th>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ product.area.name }}
-                    </div>
-                  </th>
-                  <td class="whitespace-nowrap px-4 py-3">{{ product.price_label }}</td>
+                  <td class="whitespace-nowrap px-4 py-3">{{ discount.value_label }}</td>
+                  <td class="whitespace-nowrap px-4 py-3">{{ discount.starts_at }} > {{ discount.ends_at }}</td>
+                  <td class="whitespace-nowrap px-4 py-3">{{ discount.quota }}</td>
+                  <td class="whitespace-nowrap px-4 py-3">{{ discount.used_quota }}</td>
+
                   <td class="whitespace-nowrap px-4 py-3">
-                    <Badge v-if="product.is_active" type="green">Aktif</Badge>
+                    <Badge v-if="discount.is_active" type="green">Aktif</Badge>
                     <Badge v-else type="dark">Tidak Aktif</Badge>
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -166,11 +167,11 @@ export default {
                         type="default"
                         @click="
                           openModal({
-                            title: 'Ubah Harga Formulir',
-                            mode: 'admission-student-price-edit-form',
+                            title: 'Ubah Diskon Formulir',
+                            mode: 'admission-student-discount-edit-form',
                             maxWidth: 'md',
                             data: {
-                              product: product,
+                              discount: discount,
                             },
                           })
                         "
@@ -201,7 +202,7 @@ export default {
             </table>
           </div>
           <!-- pagination -->
-          <Pagination :search_params="search_params" :meta="products.meta" :links="products.links" />
+          <Pagination :search_params="search_params" :meta="discounts.meta" :links="discounts.links" />
         </div>
         <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
           <NoDataAlert />
@@ -210,10 +211,10 @@ export default {
       <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
-          <AdmissionStudentPriceForm
+          <AdmissionStudentDiscountForm
             v-if="
-              propertyModal?.mode == 'admission-student-price-create-form' ||
-              propertyModal?.mode == 'admission-student-price-edit-form'
+              propertyModal?.mode == 'admission-student-discount-create-form' ||
+              propertyModal?.mode == 'admission-student-discount-edit-form'
             "
             :propertyModal="propertyModal"
             @close="closeModal()"

@@ -14,6 +14,7 @@ use App\Http\Controllers\Office\HCM\Placement\PlacementController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
+use App\Http\Controllers\Office\ICC\Management\AdmissionStudentDiscountController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentPriceController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
 use App\Http\Controllers\Office\ICC\Management\SchoolYearController;
@@ -275,10 +276,11 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::prefix('admission-student-discount')
                             ->name('.admissionStudentDiscount')
                             ->group(function () {
-                                Route::get('/', [AdmissionStudentPriceController::class, 'index']);
-                                Route::get('option-area', [AdmissionStudentPriceController::class, 'optionArea'])->name('.optionArea');
-                                Route::post('store', [AdmissionStudentPriceController::class, 'store'])->name('.store');
-                                Route::delete('delete', [AdmissionStudentPriceController::class, 'delete'])->name('.delete');
+                                Route::get('/', [AdmissionStudentDiscountController::class, 'index']);
+                                Route::get('option-area', [AdmissionStudentDiscountController::class, 'optionArea'])->name('.optionArea');
+                                Route::post('store', [AdmissionStudentDiscountController::class, 'store'])->name('.store');
+                                Route::post('update', [AdmissionStudentDiscountController::class, 'update'])->name('.update');
+                                Route::delete('delete', [AdmissionStudentDiscountController::class, 'delete'])->name('.delete');
                             });
                     });
             });
