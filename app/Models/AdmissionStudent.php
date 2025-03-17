@@ -12,6 +12,7 @@ class AdmissionStudent extends Model
 
     protected $fillable = [
         'transaction_id',
+        'student_id',
         'school_id',
         'school_year_id',
         'school_grade_id',

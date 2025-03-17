@@ -105,7 +105,7 @@ import { Link } from '@inertiajs/vue3';
             <span class="ml-3 flex-1 whitespace-nowrap">Transaksi</span>
           </Link>
         </li>
-        <li>
+        <li v-if="false">
           <button
             type="button"
             class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"

@@ -127,7 +127,7 @@ export default {
                     <div
                       class="bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300 rounded py-0.5 font-medium"
                     >
-                      IDR {{ transaction.bill_amount }}
+                      Rp. {{ transaction.bill_amount }}
                     </div>
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

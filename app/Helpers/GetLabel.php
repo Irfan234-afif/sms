@@ -59,4 +59,9 @@ class GetLabel
     {
         return self::get('discountTypes', $value);
     }
+
+    public static function maritalStatus($value)
+    {
+        return self::get('maritalStatuses', $value);
+    }
 }

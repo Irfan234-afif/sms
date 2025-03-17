@@ -374,6 +374,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
             ->group(function () {
                 Route::get('/', [SchoolActivityAdmissionStudentController::class, 'index']);
                 Route::get('{registration_number}/detail', [SchoolActivityAdmissionStudentController::class, 'detail'])->name('.detail');
+                Route::get('export', [SchoolActivityAdmissionStudentController::class, 'export'])->name('.export');
                 Route::post('update-stage', [SchoolActivityAdmissionStudentController::class, 'updateStage'])->name('.updateStage');
                 Route::post('update-status', [SchoolActivityAdmissionStudentController::class, 'updateStatus'])->name('.updateStatus');
             });

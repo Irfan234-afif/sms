@@ -25,4 +25,8 @@ class Family extends Model
         'education',
         'occupation',
     ];
+
+    protected $casts = [
+        'languages' => 'json',
+    ];
 }

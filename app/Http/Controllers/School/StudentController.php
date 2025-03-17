@@ -59,6 +59,7 @@ class StudentController extends Controller
         $student = Student::where('school_id', $this->school->id)
             ->where('uuid', $student_id)
             ->with('profile')
+            ->with('admission')
             ->with('school.area')
             ->with('school_grade')
             ->firstOrFail();

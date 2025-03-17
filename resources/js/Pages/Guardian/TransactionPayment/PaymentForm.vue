@@ -168,7 +168,7 @@ export default {
         >
           <dl class="flex items-center justify-between gap-4 border-gray-200 text-base dark:border-gray-700">
             <dt class="font-medium text-gray-900 dark:text-white">Total</dt>
-            <dd class="font-medium text-gray-900 dark:text-white">IDR {{ transaction.bill_amount }}</dd>
+            <dd class="font-medium text-gray-900 dark:text-white">Rp. {{ transaction.bill_amount }}</dd>
           </dl>
         </div>
       </div>

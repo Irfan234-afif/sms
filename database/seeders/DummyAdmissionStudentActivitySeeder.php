@@ -328,6 +328,11 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
                             'school_national_id' => $this->faker->numerify('STD-######################')
                         ]);
 
+                        $admission_student->update([
+                            'student_id' => $student_created->id,
+                            'status' => 'ENROLLED',
+                        ]);
+
                         StudentGuardian::create([
                             'student_id' => $student_created->id,
                             'guardian_id' => $admission_student->transaction->customer_id,
