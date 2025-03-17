@@ -360,7 +360,7 @@ defineProps({
               <h2 class="mb-6 text-xs font-medium uppercase text-gray-900 dark:text-white">Pendaftaran</h2>
               <ul class="text-xs font-medium text-gray-500 dark:text-gray-400">
                 <li class="mb-4">
-                  <Link href="#" class="hover:underline">Info Pendaftaran</Link>
+                  <Link :href="route('admissionInformation')" class="hover:underline">Info Pendaftaran</Link>
                 </li>
               </ul>
             </div>
@@ -389,13 +389,13 @@ defineProps({
               <h2 class="mb-6 text-xs font-medium uppercase text-gray-900 dark:text-white">Hubungi Kami</h2>
               <ul class="text-xs font-medium text-gray-500 dark:text-gray-400">
                 <li class="mb-4">
-                  <Link href="#" class="hover:underline">Masukan Saran</Link>
+                  <Link :href="route('publicFeedback')" class="hover:underline">Masukan Saran</Link>
                 </li>
                 <li class="mb-4">
-                  <Link href="#" class="hover:underline">Karir</Link>
+                  <Link :href="route('career')" class="hover:underline">Karir</Link>
                 </li>
                 <li>
-                  <Link href="#" class="hover:underline">FAQ</Link>
+                  <Link :href="route('faq')" class="hover:underline">FAQ</Link>
                 </li>
               </ul>
             </div>

@@ -44,7 +44,7 @@ defineProps({
           <div class="mx-auto max-w-5xl">
             <section class="">
               <div class="mx-auto px-4 py-8 sm:py-16 lg:px-6">
-                <h2 class="mb-8 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                <h2 class="mb-8 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                   Frequently asked questions
                 </h2>
                 <div class="border-t border-gray-200 pt-8 text-left dark:border-gray-700">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AchievementResource;
 use App\Http\Resources\BannerResource;
 use App\Http\Resources\CareerResource;
 use App\Http\Resources\EventResource;
@@ -11,6 +12,7 @@ use App\Http\Resources\GalleryResource;
 use App\Http\Resources\PageResource;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\TestimonialResource;
+use App\Models\Achievement;
 use App\Models\Banner;
 use App\Models\Career;
 use App\Models\Event;
@@ -242,7 +244,13 @@ class PublicController extends Controller
 
     public function teacherAchievement()
     {
+        $achievements = Achievement::where('category', 'TEACHER')
+            ->limit(100)
+            ->latest()
+            ->paginate(20);
+
         return Inertia::render('Public/TeacherAchievement/Index', [
+            'achievements' => AchievementResource::collection($achievements),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
         ]);
@@ -250,7 +258,13 @@ class PublicController extends Controller
 
     public function studentAchievement()
     {
+        $achievements = Achievement::where('category', 'STUDENT')
+            ->limit(100)
+            ->latest()
+            ->paginate(20);
+
         return Inertia::render('Public/StudentAchievement/Index', [
+            'achievements' => AchievementResource::collection($achievements),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
         ]);
