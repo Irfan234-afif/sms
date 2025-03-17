@@ -18,21 +18,36 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
+      actionRoute: route('office.icc.management.admissionStudentPrice.store'),
       form: {
         product_id: null,
+        area_id: null,
         name: null,
         price: null,
+        is_active: false,
       },
       field: {
+        area_id: {
+          label: 'Area',
+          rules: [fieldValidation.isRequired('Area')],
+          error: null,
+          disabled: false,
+          options: [],
+        },
         name: {
           label: 'Formulir',
           rules: [fieldValidation.isRequired('Formulir')],
           error: null,
-          disabled: true,
+          disabled: false,
         },
         price: {
           label: 'Harga',
           rules: [fieldValidation.isRequired('Harga')],
+          error: null,
+        },
+        is_active: {
+          label: 'Status',
+          rules: [],
           error: null,
         },
       },
@@ -41,21 +56,47 @@ export default {
   created() {
     let mode = this.propertyModal.mode;
     if (mode == 'admission-student-price-edit-form') {
+      this.actionRoute = route('office.icc.management.admissionStudentPrice.update');
       this.form.product_id = this.propertyModal.data.product?.uuid;
+      this.form.area_id = this.propertyModal.data.product.area;
+      if (this.propertyModal.data.product.area) {
+        this.field.area_id.disabled = true;
+        this.field.area_id.options = [this.propertyModal.data.product.area];
+      }
       this.form.name = this.propertyModal.data.product?.name;
       this.form.price = Math.round(this.propertyModal.data.product?.price);
+      this.form.is_active = this.propertyModal.data.product?.is_active;
     }
   },
   methods: {
+    optionArea(search) {
+      this.field.area_id.loading = true;
+      axios
+        .get(
+          route('office.icc.management.admissionStudentPrice.optionArea', {
+            search: search,
+          }),
+        )
+        .then((response) => {
+          this.field.area_id.options = response.data;
+          this.field.area_id.loading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.field.area_id.loading = false;
+        });
+    },
     submit() {
-      this.$refs['admissionStudentForm'].validate((valid) => {
+      this.$refs['admissionStudentPriceForm'].validate((valid) => {
         if (valid) {
           this.process = true;
 
-          let requestPayload = this.form;
+          let requestPayload = JSON.parse(JSON.stringify(this.form));
+
+          requestPayload.area_id = requestPayload.area_id.uuid;
 
           axios
-            .post(route('office.icc.management.admissionStudentPrice.save'), requestPayload, {
+            .post(this.actionRoute, requestPayload, {
               headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
@@ -82,7 +123,7 @@ export default {
               if (error.response?.data?.errors) {
                 for (let field in error.response.data.errors) {
                   this.field[field].error = error.response.data.errors[field][0];
-                  this.$refs['admissionStudentForm'].validateField(field);
+                  this.$refs['admissionStudentPriceForm'].validateField(field);
                   message = error.response.data.errors[field][0];
                 }
               }
@@ -116,7 +157,37 @@ export default {
       {{ propertyModal?.title }}
     </h2>
     <div class="px-2">
-      <el-form v-if="loaded" ref="admissionStudentForm" label-position="top" :model="form" :disabled="process">
+      <el-form v-if="loaded" ref="admissionStudentPriceForm" label-position="top" :model="form" :disabled="process">
+        <el-form-item
+          class="font-medium"
+          :label="field.area_id.label"
+          :rules="field.area_id.rules"
+          :error="field.area_id.error"
+          prop="area_id"
+        >
+          <el-select
+            v-model="form.area_id"
+            :placeholder="`Pilih ${field.area_id.label}`"
+            loading-text="..."
+            no-match-text="Data tidak ditemukan"
+            no-data-text="Tidak ada data"
+            :disabled="field.area_id.disabled"
+            :remote-method="optionArea"
+            value-key="uuid"
+            remote
+            filterable
+            reserve-keyword
+            clearable
+            autocomplete="off"
+          >
+            <el-option
+              v-for="option in field.area_id.options"
+              :key="option.uuid"
+              :label="option.name"
+              :value="option"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item
           class="font-medium"
           :label="field.name.label"
@@ -135,6 +206,15 @@ export default {
           prop="price"
         >
           <el-input type="number" v-model.number="form.price" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.is_active.label"
+          :rules="field.is_active.rules"
+          :error="field.is_active.error"
+          prop="is_active"
+        >
+          <el-checkbox border v-model="form.is_active" :label="form.is_active ? 'Aktif' : 'Tidak Aktif'" />
         </el-form-item>
       </el-form>
     </div>

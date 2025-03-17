@@ -6,21 +6,20 @@ use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Discount extends Model
 {
     use GenerateUuid, SoftDeletes;
 
     protected $fillable = [
-        'area_id',
         'name',
         'code',
         'type',
-        'price',
+        'description',
+        'value',
+        'starts_at',
+        'ends_at',
+        'quota',
+        'used_quota',
         'is_active',
     ];
-
-    public function area()
-    {
-        return $this->belongsTo(Area::class, 'area_id')->withTrashed();
-    }
 }

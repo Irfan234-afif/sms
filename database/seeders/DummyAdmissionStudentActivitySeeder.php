@@ -39,7 +39,6 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
         // Purchasing the admission form
         if (App::environment(['local', 'testing'])) {
             $customers = User::role(['System Admin', 'Site Admin', 'Guardian', 'Employee'])->get();
-            $product = Product::where('code', 'ADMISSION_STUDENT_FORM')->first();
 
             $this->command->warn('Purchasing the admission form');
             $this->command->getOutput()->progressStart(count($customers));
@@ -48,6 +47,14 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
 
                 try {
                     foreach (range(1, rand(25, 50)) as $index) {
+                        $school = School::inRandomOrder()->first();
+                        $school_year = SchoolYear::inRandomOrder()->first();
+                        $school_grade = $school->level->grades()->inRandomOrder()->first();
+                        $product = Product::where('code', 'ADMISSION_STUDENT_FORM')
+                            ->where('area_id', $school->area->id)
+                            ->where('is_active', true)
+                            ->first();
+
                         $transaction = Transaction::create([
                             'customer_id' => $customer->id,
                             'type' => 'SALES',
@@ -59,9 +66,7 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
                             'bill_amount' => $product->price,
                         ]);
 
-                        $school = School::inRandomOrder()->first();
-                        $school_year = SchoolYear::inRandomOrder()->first();
-                        $school_grade = $school->level->grades()->inRandomOrder()->first();
+
                         $module = [
                             'name' => $this->faker->name,
                             'birth_date' => $this->faker->date,

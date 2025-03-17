@@ -266,7 +266,19 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->name('.admissionStudentPrice')
                             ->group(function () {
                                 Route::get('/', [AdmissionStudentPriceController::class, 'index']);
-                                Route::post('save', [AdmissionStudentPriceController::class, 'save'])->name('.save');
+                                Route::get('option-area', [AdmissionStudentPriceController::class, 'optionArea'])->name('.optionArea');
+                                Route::post('store', [AdmissionStudentPriceController::class, 'store'])->name('.store');
+                                Route::post('update', [AdmissionStudentPriceController::class, 'update'])->name('.update');
+                                Route::delete('delete', [AdmissionStudentPriceController::class, 'delete'])->name('.delete');
+                            });
+                        // admission student discount routes
+                        Route::prefix('admission-student-discount')
+                            ->name('.admissionStudentDiscount')
+                            ->group(function () {
+                                Route::get('/', [AdmissionStudentPriceController::class, 'index']);
+                                Route::get('option-area', [AdmissionStudentPriceController::class, 'optionArea'])->name('.optionArea');
+                                Route::post('store', [AdmissionStudentPriceController::class, 'store'])->name('.store');
+                                Route::delete('delete', [AdmissionStudentPriceController::class, 'delete'])->name('.delete');
                             });
                     });
             });
