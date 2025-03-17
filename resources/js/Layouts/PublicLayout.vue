@@ -10,6 +10,10 @@ export default {
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init();
 
 defineProps({
   canLogin: {

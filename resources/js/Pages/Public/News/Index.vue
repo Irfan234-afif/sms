@@ -40,7 +40,7 @@ defineProps({
           </h1>
         </div>
       </section>
-      <section>
+      <section data-aos="fade-down">
         <div class="mx-auto max-w-7xl py-8 lg:py-16">
           <div class="mx-auto max-w-7xl">
             <div class="grid grid-cols-3 gap-4">

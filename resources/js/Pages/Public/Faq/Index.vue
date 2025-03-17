@@ -39,7 +39,7 @@ defineProps({
           </h1>
         </div>
       </section>
-      <section>
+      <section data-aos="fade-down">
         <div class="mx-auto max-w-7xl">
           <div class="mx-auto max-w-5xl">
             <section class="">

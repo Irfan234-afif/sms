@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
+    "aos": "^2.3.4",
     "ckeditor5": "^44.3.0",
     "date-fns": "^4.1.0",
     "element-plus": "^2.9.3",

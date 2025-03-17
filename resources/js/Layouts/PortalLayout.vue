@@ -84,10 +84,10 @@ import { Link } from '@inertiajs/vue3';
             class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse"
           >
             <li>
-              <Link
+              <a
                 href="#"
                 class="block border-b border-gray-100 px-3 py-2 text-xs text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-blue-500 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-600 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
-                >Home</Link
+                >Home</a
               >
             </li>
             <li>
@@ -116,26 +116,26 @@ import { Link } from '@inertiajs/vue3';
               <!-- Dropdown menu -->
               <div
                 id="dropdownNavbarSchool"
-                class="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
+                class="z-50 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
               >
                 <ul class="py-2 text-xs text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
                   <li>
                     <Link
-                      href="#"
+                      :href="route('visionMission')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Visi & Misi</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('history')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Sejarah</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('operationalHour')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Jam Operasional</Link
                     >
@@ -169,12 +169,12 @@ import { Link } from '@inertiajs/vue3';
               <!-- Dropdown menu -->
               <div
                 id="dropdownNavbarAdmission"
-                class="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
+                class="z-50 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
               >
                 <ul class="py-2 text-xs text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
                   <li>
                     <Link
-                      href="#"
+                      :href="route('admissionInformation')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Informasi Pendaftaran</Link
                     >
@@ -208,33 +208,33 @@ import { Link } from '@inertiajs/vue3';
               <!-- Dropdown menu -->
               <div
                 id="dropdownNavbarPublication"
-                class="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
+                class="z-50 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
               >
                 <ul class="py-2 text-xs text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
                   <li>
                     <Link
-                      href="#"
+                      :href="route('news')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Berita</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('article')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Artikel</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('event')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Acara</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('gallery')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Galeri</Link
                     >
@@ -244,11 +244,11 @@ import { Link } from '@inertiajs/vue3';
             </li>
             <li>
               <button
-                id="dropdownNavbarLinkAchievementTestimonial"
-                data-dropdown-toggle="dropdownNavbarAchievementTestimonial"
+                id="dropdownNavbarLinkAchievement"
+                data-dropdown-toggle="dropdownNavbarAchievement"
                 class="flex w-full items-center justify-between px-3 py-2 text-xs text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:focus:text-white md:w-auto md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
               >
-                Pencapaian & Testimoni
+                Pencapaian
                 <svg
                   class="ms-2.5 h-2.5 w-2.5"
                   aria-hidden="true"
@@ -267,29 +267,22 @@ import { Link } from '@inertiajs/vue3';
               </button>
               <!-- Dropdown menu -->
               <div
-                id="dropdownNavbarAchievementTestimonial"
-                class="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
+                id="dropdownNavbarAchievement"
+                class="z-50 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
               >
                 <ul class="py-2 text-xs text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
                   <li>
                     <Link
-                      href="#"
+                      :href="route('teacherAchievement')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Pencapain Guru</Link
+                      >Pencapaian Guru</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('studentAchievement')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Pencapaian Siswa</Link
-                    >
-                  </li>
-                  <li>
-                    <Link
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Testimoni</Link
                     >
                   </li>
                 </ul>
@@ -321,26 +314,26 @@ import { Link } from '@inertiajs/vue3';
               <!-- Dropdown menu -->
               <div
                 id="dropdownNavbarContact"
-                class="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
+                class="z-50 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
               >
                 <ul class="py-2 text-xs text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
                   <li>
                     <Link
-                      href="#"
+                      :href="route('publicFeedback')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Masukan Saran</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('career')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Kesempatan Karir</Link
                     >
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      :href="route('faq')"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >FAQ</Link
                     >
@@ -357,7 +350,7 @@ import { Link } from '@inertiajs/vue3';
       <slot />
     </main>
     <!-- footer -->
-    <footer class="mt-auto bg-white dark:bg-gray-900">
+    <footer class="bg-white dark:bg-gray-900">
       <div class="mx-auto w-full max-w-screen-2xl p-4 py-6 lg:py-8">
         <div class="gap-2 md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
@@ -375,7 +368,7 @@ import { Link } from '@inertiajs/vue3';
               <h2 class="mb-6 text-xs font-medium uppercase text-gray-900 dark:text-white">Pendaftaran</h2>
               <ul class="text-xs font-medium text-gray-500 dark:text-gray-400">
                 <li class="mb-4">
-                  <Link href="#" class="hover:underline">Info Pendaftaran</Link>
+                  <Link :href="route('admissionInformation')" class="hover:underline">Info Pendaftaran</Link>
                 </li>
               </ul>
             </div>
@@ -383,22 +376,19 @@ import { Link } from '@inertiajs/vue3';
               <h2 class="mb-6 text-xs font-medium uppercase text-gray-900 dark:text-white">Ikuti Kami</h2>
               <ul class="text-xs font-medium text-gray-500 dark:text-gray-400">
                 <li class="mb-4">
-                  <Link target="_blank" href="https://www.facebook.com/HBICS/" class="hover:underline">Facebook</Link>
+                  <a target="_blank" href="https://www.facebook.com/HBICS/" class="hover:underline">Facebook</a>
                 </li>
                 <li class="mb-4">
-                  <Link
-                    target="_blank"
-                    href="https://www.instagram.com/harapanbangsa_balikpapan/"
-                    class="hover:underline"
-                    >Instagram</Link
+                  <a target="_blank" href="https://www.instagram.com/harapanbangsa_balikpapan/" class="hover:underline"
+                    >Instagram</a
                   >
                 </li>
                 <li>
-                  <Link
+                  <a
                     target="_blank"
                     href="https://www.youtube.com/c/HappyHolyKidsHBICSBalikpapan/"
                     class="hover:underline"
-                    >Youtube</Link
+                    >Youtube</a
                   >
                 </li>
               </ul>
@@ -407,13 +397,13 @@ import { Link } from '@inertiajs/vue3';
               <h2 class="mb-6 text-xs font-medium uppercase text-gray-900 dark:text-white">Hubungi Kami</h2>
               <ul class="text-xs font-medium text-gray-500 dark:text-gray-400">
                 <li class="mb-4">
-                  <Link href="#" class="hover:underline">Masukan Saran</Link>
+                  <Link :href="route('publicFeedback')" class="hover:underline">Masukan Saran</Link>
                 </li>
                 <li class="mb-4">
-                  <Link href="#" class="hover:underline">Karir</Link>
+                  <Link :href="route('career')" class="hover:underline">Karir</Link>
                 </li>
                 <li>
-                  <Link href="#" class="hover:underline">FAQ</Link>
+                  <Link :href="route('faq')" class="hover:underline">FAQ</Link>
                 </li>
               </ul>
             </div>
@@ -423,11 +413,10 @@ import { Link } from '@inertiajs/vue3';
         <div class="sm:flex sm:items-center sm:justify-between">
           <span class="text-xs text-gray-500 dark:text-gray-400 sm:text-center"
             >© {{ new Date().getFullYear() }}
-            <Link href="https://saffix.id/" target="_blank" class="hover:underline">saffix.id</Link>. All Rights
-            Reserved.
+            <a href="https://saffix.id/" target="_blank" class="hover:underline">saffix.id</a>. All Rights Reserved.
           </span>
           <div class="mt-4 flex sm:mt-0 sm:justify-center">
-            <Link
+            <a
               href="https://www.facebook.com/HBICS/"
               target="_blank"
               class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
@@ -446,8 +435,8 @@ import { Link } from '@inertiajs/vue3';
                 />
               </svg>
               <span class="sr-only">Facebook page</span>
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://www.instagram.com/harapanbangsa_balikpapan/"
               target="_blank"
               class="ms-5 text-gray-500 hover:text-gray-900 dark:hover:text-white"
@@ -466,8 +455,8 @@ import { Link } from '@inertiajs/vue3';
                 />
               </svg>
               <span class="sr-only">Instagram page</span>
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://www.youtube.com/c/HappyHolyKidsHBICSBalikpapan/"
               class="ms-5 text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
@@ -485,10 +474,60 @@ import { Link } from '@inertiajs/vue3';
                 />
               </svg>
               <span class="sr-only">Youtube community</span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
     </footer>
+    <!-- speed dial -->
+    <div data-dial-init class="group fixed bottom-6 end-6 z-30">
+      <div id="speed-dial-menu-default" class="mb-4 hidden flex-col items-center space-y-2">
+        <a
+          href="https://api.whatsapp.com/send?phone=081140001557"
+          target="_blank"
+          class="shadow-xs flex h-14 w-14 items-center justify-center rounded-full bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-700"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-7 w-7"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+            <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+          </svg>
+          <span class="sr-only">Whatsapp</span>
+        </a>
+      </div>
+      <button
+        type="button"
+        data-dial-toggle="speed-dial-menu-default"
+        aria-controls="speed-dial-menu-default"
+        aria-expanded="false"
+        class="flex h-14 w-14 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-7 w-7"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M21 10.663c0 -4.224 -4.041 -7.663 -9 -7.663s-9 3.439 -9 7.663c0 3.783 3.201 6.958 7.527 7.56c1.053 .239 .932 .644 .696 2.133c-.039 .238 -.184 .932 .777 .512c.96 -.42 5.18 -3.201 7.073 -5.48c1.304 -1.504 1.927 -3.029 1.927 -4.715v-.01z"
+          />
+        </svg>
+        <span class="sr-only">Open actions menu</span>
+      </button>
+    </div>
   </div>
 </template>

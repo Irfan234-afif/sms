@@ -61,7 +61,7 @@ defineProps({
           </h1>
         </div>
       </section>
-      <section>
+      <section data-aos="fade-down">
         <div class="mx-auto max-w-7xl py-8 lg:py-16">
           <div class="mx-auto max-w-2xl">
             <ol class="relative border-s border-gray-200 dark:border-gray-700">

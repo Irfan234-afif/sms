@@ -46,7 +46,7 @@ defineProps({
     <!-- jumbotron 1 -->
     <section class="relative flex h-screen bg-[url('/assets/pages/jumbotron.jpg')] bg-cover bg-fixed bg-no-repeat">
       <div class="absolute inset-0 bg-gradient-to-b from-white to-transparent"></div>
-      <div class="z-10 mx-auto my-auto max-w-5xl py-24 text-center lg:py-56">
+      <div data-aos="fade-up" class="z-10 mx-auto my-auto max-w-5xl py-24 text-center lg:py-56">
         <h1
           class="mb-4 space-y-4 text-2xl font-extrabold uppercase leading-none tracking-tight text-white md:text-3xl lg:text-4xl"
         >
@@ -63,7 +63,7 @@ defineProps({
       </div>
     </section>
     <!-- carousel -->
-    <section>
+    <section data-aos="fade-down">
       <div id="default-carousel" class="relative w-full" data-carousel="slide">
         <!-- Carousel wrapper -->
         <div class="h-92 relative overflow-hidden bg-black md:h-[50rem]">
@@ -150,7 +150,7 @@ defineProps({
     <!-- sponsor -->
     <section id="sponsors" aria-label="Sponsors">
       <div class="mx-auto max-w-7xl py-8 lg:py-16">
-        <div>
+        <div data-aos="fade-left">
           <h1
             class="mb-4 text-center text-xl font-extrabold uppercase leading-none tracking-tight text-blue-700 dark:text-white md:mb-12 md:text-2xl lg:text-3xl"
           >
@@ -229,7 +229,7 @@ defineProps({
           </div>
         </div>
         <hr class="my-12" />
-        <div>
+        <div data-aos="fade-right">
           <h1
             class="mb-4 text-center text-xl font-extrabold uppercase leading-none tracking-tight text-blue-700 dark:text-white md:mb-12 md:text-2xl lg:text-3xl"
           >
@@ -290,7 +290,7 @@ defineProps({
       </div>
     </section>
     <!-- news -->
-    <section>
+    <section data-aos="fade-up">
       <div class="mx-auto max-w-screen-xl px-4 py-8 text-center lg:py-16">
         <h1
           class="mb-4 text-center text-xl font-extrabold uppercase leading-none tracking-tight text-blue-700 dark:text-white md:mb-12 md:text-2xl lg:text-3xl"
@@ -365,6 +365,7 @@ defineProps({
     </section>
     <!-- join us -->
     <section
+      data-aos="fade-down"
       class="relative flex bg-[url('https://hbics.sch.id/wp-content/uploads/2021/10/Hnet.com-image-4-scaled.jpg')] bg-cover bg-fixed bg-no-repeat"
     >
       <div class="absolute inset-0 bg-gradient-to-b from-yellow-300 to-white opacity-70"></div>
@@ -404,7 +405,7 @@ defineProps({
       </div>
     </section>
     <!-- testimonial -->
-    <section id="testimonials" aria-label="Testimonials">
+    <section data-aos="fade-up" id="testimonials" aria-label="Testimonials">
       <div class="mx-auto max-w-7xl py-8 lg:py-16">
         <div class="mx-auto max-w-2xl text-center">
           <h1
@@ -558,7 +559,7 @@ defineProps({
       </div>
     </section>
     <!-- map -->
-    <section>
+    <section data-aos="fade-down">
       <div class="mx-auto text-center">
         <h1 class="mb-4 text-3xl font-extrabold uppercase leading-none text-blue-800 md:mb-20">Temui Kami</h1>
         <iframe
