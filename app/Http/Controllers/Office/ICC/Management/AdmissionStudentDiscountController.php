@@ -15,7 +15,7 @@ class AdmissionStudentDiscountController extends Controller
 {
     public function index()
     {
-        $discounts = Discount::where('code', 'ADMISSION_STUDENT_FORM');
+        $discounts = Discount::query();
 
         if (request()->has('search')) {
             $discounts->where('name', 'like', '%' . request('search') . '%');

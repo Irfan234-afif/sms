@@ -456,7 +456,8 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Guardian'])
                 Route::post('checkout', [AdmissionStudentController::class, 'checkout'])->name('.checkout');
                 Route::get('option-school', [AdmissionStudentController::class, 'optionSchool'])->name('.optionSchool');
                 Route::get('option-school-year', [AdmissionStudentController::class, 'optionSchoolYear'])->name('.optionSchoolYear');
-                Route::get('get-student-quota', [AdmissionStudentController::class, 'getStudentQuota'])->name('.getStudentQuota');
+                Route::get('get-admission-component', [AdmissionStudentController::class, 'getAdmissionComponent'])->name('.getAdmissionComponent');
+                Route::get('get-admission-discount', [AdmissionStudentController::class, 'getAdmissionDiscount'])->name('.getAdmissionDiscount');
                 Route::get('{registration_number}/form', [AdmissionStudentController::class, 'form'])->name('.form');
                 Route::get('{registration_number}/detail', [AdmissionStudentController::class, 'detail'])->name('.detail');
                 Route::post('submit', [AdmissionStudentController::class, 'submit'])->name('.submit');

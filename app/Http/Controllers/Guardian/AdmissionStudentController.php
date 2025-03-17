@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Guardian;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdmissionStudentQuotaResource;
 use App\Http\Resources\AdmissionStudentResource;
+use App\Http\Resources\DiscountResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SchoolResource;
 use App\Http\Resources\SchoolYearResource;
 use App\Models\AdmissionStudent;
 use App\Models\AdmissionStudentQuota;
 use App\Models\AdmissionStudentStage;
+use App\Models\Discount;
 use App\Models\Product;
 use App\Models\School;
 use App\Models\SchoolGrade;
 use App\Models\SchoolYear;
 use App\Services\AdmissionStudentService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -44,13 +47,10 @@ class AdmissionStudentController extends Controller
             ->latest()
             ->paginate(15);
 
-        $product = Product::where('code', 'ADMISSION_STUDENT_FORM')->first();
-
         $data = [
             'search_params' => [
                 'search' => request('search'),
             ],
-            'product' => ProductResource::make($product),
             'admission_students' => AdmissionStudentResource::collection($admission_students),
         ];
 
@@ -107,21 +107,90 @@ class AdmissionStudentController extends Controller
         return response()->json(SchoolYearResource::collection($school_years->latest()->get()), 200);
     }
 
-    public function getStudentQuota()
+    public function getAdmissionComponent()
     {
-        $school = School::where('uuid', request('school'))->firstOrFail();
-        $school_year = SchoolYear::where('uuid', request('school_year'))->firstOrFail();
-        $school_grade = SchoolGrade::where('uuid', request('school_grade'))->firstOrFail();
+        $school = School::where('uuid', request('school_id'))->firstOrFail();
+        $school_year = SchoolYear::where('uuid', request('school_year_id'))->firstOrFail();
+        $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->firstOrFail();
+        $product = Product::where('code', 'ADMISSION_STUDENT_FORM')
+            ->where('area_id', $school->area->id)
+            ->where('is_active', true)
+            ->first();
 
-        $admission_student_quota = AdmissionStudentQuota::where([
+        $student_quota = AdmissionStudentQuota::where([
             'school_id' => $school->id,
             'school_year_id' => $school_year->id,
             'school_grade_id' => $school_grade->id,
         ])->first();
 
-        $admission_student_quota = $admission_student_quota ? AdmissionStudentQuotaResource::make($admission_student_quota) : null;
+        $student_quota = $student_quota ? AdmissionStudentQuotaResource::make($student_quota) : null;
+        $product = $product ? ProductResource::make($product) : null;
 
-        return response()->json($admission_student_quota, 200);
+        return response()->json([
+            'student_quota' => $student_quota,
+            'product' => $product,
+        ], 200);
+    }
+
+    public function getAdmissionDiscount()
+    {
+        $response = [
+            'status' => 'error',
+            'message' => 'Kupon tidak ditemukan atau tidak berlaku',
+            'discount' => null,
+        ];
+
+        $school = School::where('uuid', request('school_id'))->first();
+
+        if (!$school) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Sekolah tidak ditemukan',
+                'discount' => null,
+            ], 404);
+        }
+
+        $discount = Discount::where('code', request('discount_code'))
+            ->whereHas('usages', fn($query) => $query->where('areas.id', $school->area->id))
+            ->first();
+
+        if (!$discount) {
+            return response()->json($response, 404);
+        }
+
+        $today = Carbon::now()->toDateTimeString();
+        $starts_at = Carbon::parse($discount->starts_at)->toDateTimeString();
+        $ends_at = Carbon::parse($discount->ends_at)->toDateTimeString();
+
+        if ($starts_at > $today) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Kupon belum dapat digunakan',
+                'discount' => null,
+            ], 400);
+        }
+
+        if ($ends_at < $today) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Kupon sudah kedaluwarsa',
+                'discount' => null,
+            ], 400);
+        }
+
+        if (!is_null($discount->quota) && $discount->used_quota >= $discount->quota) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Kuota kupon sudah habis',
+                'discount' => null,
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Kupon berhasil digunakan',
+            'discount' => new DiscountResource($discount),
+        ], 200);
     }
 
     public function form($registration_number)
@@ -130,8 +199,8 @@ class AdmissionStudentController extends Controller
             $transaction->where('customer_id', Auth::user()->id);
         })->where('registration_number', $registration_number)
             ->with('school.area')
-            ->with('school_year')
-            ->with('school_grade')
+            ->with('school_year_id')
+            ->with('school_grade_id')
             ->firstOrFail();
 
         $data = [
@@ -147,8 +216,8 @@ class AdmissionStudentController extends Controller
             $transaction->where('customer_id', Auth::user()->id);
         })->where('registration_number', $registration_number)
             ->with('school.area')
-            ->with('school_year')
-            ->with('school_grade')
+            ->with('school_year_id')
+            ->with('school_grade_id')
             ->with('stages.admission_stage.statuses')
             ->with('stages.status')
             ->firstOrFail();

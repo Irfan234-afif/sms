@@ -49,8 +49,9 @@ return new class extends Migration
             $table->foreignId('discount_id')->constrained('discounts');
             $table->string('type');
             $table->decimal('value', 15, 2)->default(0);
-            $table->decimal('amount_discount', 15, 2)->default(0);
+            $table->decimal('total_amount', 15, 2)->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

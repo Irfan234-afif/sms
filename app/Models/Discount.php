@@ -26,6 +26,6 @@ class Discount extends Model
 
     public function usages()
     {
-        return $this->belongsToMany(Area::class, 'discount_usages');
+        return $this->belongsToMany(Area::class, 'discount_usages')->withPivot('id', 'uuid');
     }
 }

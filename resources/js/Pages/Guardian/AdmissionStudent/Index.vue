@@ -22,7 +22,6 @@ const breadcrumbs = [
 export default {
   props: {
     search_params: Object,
-    product: Object,
     admission_students: Object,
   },
   data() {
@@ -76,9 +75,7 @@ export default {
                 title: 'Beli Formulir',
                 mode: 'purchase-form',
                 maxWidth: 'md',
-                data: {
-                  product: product.data,
-                },
+                data: {},
               })
             "
           >

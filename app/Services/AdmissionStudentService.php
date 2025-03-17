@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Discount;
 use App\Models\Product;
 use App\Models\School;
 use App\Models\SchoolGrade;
@@ -26,10 +27,11 @@ class AdmissionStudentService
     public function processCheckout($data)
     {
         $customer = Auth::user();
-        $product = Product::where('code', 'ADMISSION_STUDENT_FORM')->first();
-        $school = School::where('uuid', $data['school'])->firstOrFail();
-        $school_year = SchoolYear::where('uuid', $data['school_year'])->firstOrFail();
-        $school_grade = SchoolGrade::where('uuid', $data['school_grade'])->firstOrFail();
+        $school = School::where('uuid', $data['school_id'])->firstOrFail();
+        $school_year = SchoolYear::where('uuid', $data['school_year_id'])->firstOrFail();
+        $school_grade = SchoolGrade::where('uuid', $data['school_grade_id'])->firstOrFail();
+        $discount = Discount::where('uuid', $data['discount_id'])->firstOrFail();
+        $product = Product::where('uuid', $data['product_id'])->firstOrFail();
 
         $module = [
             'name' => $data['name'],
@@ -45,9 +47,9 @@ class AdmissionStudentService
             'sub_type' => 'ADMISSION_STUDENT_FORM',
             'reference_number' => 'TRX-ASF-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6)),
             'due_date' => now()->addDays(1),
-            'total_amount' => $product->price,
-            'discount_amount' => 0,
-            'bill_amount' => $product->price,
+            'total_amount' => $data['total_amount'],
+            'discount_amount' => $data['discount_amount'],
+            'bill_amount' => $data['bill_amount'],
             'paid_amount' => 0,
         ]);
 
@@ -61,6 +63,15 @@ class AdmissionStudentService
                 'module' => $module
             ],
         ]);
+
+        $transaction->discounts()->create([
+            'discount_id' => $discount->id,
+            'type' => $discount->type,
+            'value' => $discount->value,
+            'total_amount' =>  $data['discount_amount'],
+        ]);
+
+        $discount->increment('used_quota', 1);
 
         $params = [
             'transaction_details' => [
