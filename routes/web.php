@@ -50,6 +50,7 @@ use App\Http\Controllers\School\Management\SchoolExtracurricularController;
 use App\Http\Controllers\School\Management\SchoolMajorController;
 use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
+use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -381,6 +382,19 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                 Route::get('export', [SchoolActivityAdmissionStudentController::class, 'export'])->name('.export');
                 Route::post('update-stage', [SchoolActivityAdmissionStudentController::class, 'updateStage'])->name('.updateStage');
                 Route::post('update-status', [SchoolActivityAdmissionStudentController::class, 'updateStatus'])->name('.updateStatus');
+            });
+        // teaching program routes
+        Route::prefix('teaching-program')
+            ->name('.teachingProgram')
+            ->group(function () {
+                // subject threshold routes
+                Route::prefix('subject-threshold')
+                    ->name('.subjectThreshold')
+                    ->group(function () {
+                        Route::get('/', [SubjectThresholdController::class, 'index']);
+                        Route::get('get-subject-threshold', [SubjectThresholdController::class, 'getSubjectThreshold'])->name('.getSubjectThreshold');
+                        Route::post('save', [SubjectThresholdController::class, 'save'])->name('.save');
+                    });
             });
         // management routes
         Route::prefix('management')

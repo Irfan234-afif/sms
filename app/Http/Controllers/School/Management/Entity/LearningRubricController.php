@@ -41,7 +41,7 @@ class LearningRubricController extends Controller
                 ]
             );
 
-            $learning_rubric_ids = [];
+            $scale_ids = [];
 
             foreach (request('scales') as $scale) {
                 $scale_created = $learning_rubric_created->scales()->updateOrCreate([
@@ -52,11 +52,11 @@ class LearningRubricController extends Controller
                     'narrative' => $scale['narrative'],
                 ]);
 
-                array_push($learning_rubric_ids, $scale_created->id);
+                array_push($scale_ids, $scale_created->id);
             }
 
             $learning_rubric_created->scales()
-                ->whereNotIn('id', $learning_rubric_ids)
+                ->whereNotIn('id', $scale_ids)
                 ->delete();
 
             DB::commit();

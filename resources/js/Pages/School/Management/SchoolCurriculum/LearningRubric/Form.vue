@@ -163,18 +163,18 @@ export default {
         <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Skala</h2>
         <div class="space-y-3">
           <div
-            v-for="(scales, index) in form.scales"
+            v-for="(scale, index) in form.scales"
             :key="index"
             class="grid rounded-2xl border px-4 py-3 md:grid-cols-1"
           >
             <el-form-item class="font-medium" :label="`Skala ${index + 1}`">
-              <el-input v-model="scales.title" autocomplete="off" />
+              <el-input v-model="scale.title" autocomplete="off" />
             </el-form-item>
             <el-form-item class="font-medium" label="Nilai">
-              <el-input-number v-model="scales.value" autocomplete="off" />
+              <el-input-number v-model="scale.value" autocomplete="off" />
             </el-form-item>
             <el-form-item class="font-medium" label="Naratif">
-              <el-input type="textarea" v-model="scales.narrative" autocomplete="off" />
+              <el-input type="textarea" v-model="scale.narrative" autocomplete="off" />
             </el-form-item>
             <div class="flex items-center justify-end">
               <OutlineButton class="my-auto" type="red" @click="removeScale(index)">Hapus</OutlineButton>

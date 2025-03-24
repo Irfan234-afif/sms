@@ -16,4 +16,14 @@ class SubjectThreshold extends Model
         'school_grade_id',
         'minimum_value',
     ];
+
+    public function scales()
+    {
+        return $this->hasMany(SubjectThresholdScale::class, 'threshold_id');
+    }
+
+    public function narratives()
+    {
+        return $this->hasMany(SubjectThresholdNarrative::class, 'threshold_id');
+    }
 }

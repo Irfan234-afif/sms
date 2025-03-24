@@ -62,6 +62,30 @@ import { Link } from '@inertiajs/vue3';
           </div>
         </li>
         <li>
+          <div
+            class="group flex items-center rounded-lg bg-yellow-400 p-2 text-xs font-medium text-white dark:bg-yellow-500 dark:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6 flex-shrink-0"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12.5 21h-6.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v5" />
+              <path d="M16 3v4" />
+              <path d="M8 3v4" />
+              <path d="M4 11h16" />
+              <path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            </svg>
+            <span class="ml-3 flex-1 whitespace-nowrap">Tahun Ajaran 2025-2026</span>
+          </div>
+        </li>
+        <li>
           <Link
             :href="route('school.student')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -132,20 +156,73 @@ import { Link } from '@inertiajs/vue3';
                 >Pendaftaran Siswa Baru</Link
               >
             </li>
-            <!-- <li>
+          </ul>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            aria-controls="dropdown-teaching-program"
+            data-collapse-toggle="dropdown-teaching-program"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6 flex-shrink-0 text-gray-700 transition duration-75 group-hover:text-gray-800 dark:text-gray-500 dark:group-hover:text-white"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M10 19h-6a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h6a2 2 0 0 1 2 2a2 2 0 0 1 2 -2h6a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-6a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2z"
+              />
+              <path d="M12 5v16" />
+              <path d="M7 7h1" />
+              <path d="M7 11h1" />
+              <path d="M16 7h1" />
+              <path d="M16 11h1" />
+              <path d="M16 15h1" />
+            </svg>
+            <span class="ml-3 flex-1 whitespace-nowrap text-left">Program Ajaran</span>
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <ul id="dropdown-teaching-program" class="hidden space-y-2 py-2">
+            <li>
               <Link
-                href="#"
+                :href="route('school.activity.admissionStudent')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Kegiatan Belajar Mengajar</Link
+                >Indikator Pembelajaran</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('school.teachingProgram.subjectThreshold')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Rapor Siswa Sekolah</Link
+                >Kriteria Ketuntasan Minimal</Link
               >
-            </li> -->
+            </li>
+            <li>
+              <Link
+                :href="route('school.activity.admissionStudent')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Modul Penilaian</Link
+              >
+            </li>
           </ul>
         </li>
         <li>
