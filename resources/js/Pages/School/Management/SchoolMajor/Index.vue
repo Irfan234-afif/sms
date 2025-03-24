@@ -4,15 +4,15 @@ import Search from '@/Components/Search.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import SchoolCurriculumForm from './Form.vue';
+import SchoolMajorForm from './Form.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 const breadcrumbs = [
   { label: 'Sekolah', href: route('school') },
-  { label: 'Kurikulum', href: route('school.management.schoolCurriculum') },
+  { label: 'Jurusan', href: route('school.management.schoolMajor') },
 ];
 </script>
 
@@ -20,7 +20,7 @@ const breadcrumbs = [
 export default {
   props: {
     search_params: Object,
-    school_curriculums: Object,
+    school_majors: Object,
   },
   data() {
     return {
@@ -70,8 +70,8 @@ export default {
             type="default"
             @click="
               openModal({
-                title: 'Kurikulum Baru',
-                mode: 'school-curriculum-create-form',
+                title: 'Jurusan Baru',
+                mode: 'school-major-create-form',
                 maxWidth: 'md',
                 data: {},
               })
@@ -92,7 +92,7 @@ export default {
                 <path d="M12 5l0 14" />
                 <path d="M5 12l14 0" />
               </svg>
-              <div>Kurikulum Baru</div>
+              <div>Jurusan Baru</div>
             </div>
           </DefaultButton>
         </div>
@@ -119,14 +119,13 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Kurikulum</th>
-                  <th scope="col" class="p-4">Kode</th>
+                  <th scope="col" class="p-4">Jurusan</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
               <tbody class="text-xs">
                 <tr
-                  v-for="(school_curriculum, index) in school_curriculums.data"
+                  v-for="(school_major, index) in school_majors.data"
                   :key="index"
                   class="border-b hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
                 >
@@ -143,12 +142,7 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ school_curriculum.title }}
-                    </div>
-                  </th>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ school_curriculum.code }}
+                      {{ school_major.title }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -157,11 +151,11 @@ export default {
                         type="default"
                         @click="
                           openModal({
-                            title: 'Sunting Kurikulum',
-                            mode: 'school-curriculum-edit-form',
+                            title: 'Sunting Jurusan',
+                            mode: 'school-major-edit-form',
                             maxWidth: 'md',
                             data: {
-                              school_curriculum: school_curriculum,
+                              school_major: school_major,
                             },
                           })
                         "
@@ -185,47 +179,19 @@ export default {
                           <div>Sunting</div>
                         </div>
                       </OutlineButton>
-                      <Link
-                        :href="
-                          route('school.management.schoolCurriculum.detail', {
-                            school_curriculum_id: school_curriculum.uuid,
-                          })
-                        "
-                      >
-                        <OutlineButton type="yellow">
-                          <div class="flex items-center space-x-1">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="h-4"
-                            >
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                              <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                              <path d="M21 21l-6 -6" />
-                            </svg>
-                            <div>Lihat</div>
-                          </div>
-                        </OutlineButton>
-                      </Link>
                       <OutlineButton
                         type="red"
                         @click="
                           openModal({
-                            title: 'Hapus Kurikulum',
-                            mode: 'school-curriculum-delete-confirm',
+                            title: 'Hapus Jurusan',
+                            mode: 'school-major-delete-confirm',
                             maxWidth: 'md',
                             data: {
-                              actionUrl: route('school.management.schoolCurriculum.delete', {
-                                school_curriculum_id: school_curriculum.uuid,
+                              actionUrl: route('school.management.schoolMajor.delete', {
+                                school_major_id: school_major.uuid,
                               }),
-                              redirectUrl: route('school.management.schoolCurriculum'),
-                              message:
-                                'Ingin menghapus Kurikulum? Tindakan ini akan memengaruhi data terkait serta hasil penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
+                              redirectUrl: route('school.management.schoolMajor'),
+                              message: 'Ingin menghapus Jurusan?',
                             },
                           })
                         "
@@ -258,26 +224,19 @@ export default {
             </table>
           </div>
           <!-- pagination -->
-          <Pagination
-            :search_params="search_params"
-            :meta="school_curriculums.meta"
-            :links="school_curriculums.links"
-          />
+          <Pagination :search_params="search_params" :meta="school_majors.meta" :links="school_majors.links" />
         </div>
       </section>
       <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
-          <SchoolCurriculumForm
-            v-if="
-              propertyModal?.mode == 'school-curriculum-edit-form' ||
-              propertyModal?.mode == 'school-curriculum-create-form'
-            "
+          <SchoolMajorForm
+            v-if="propertyModal?.mode == 'school-major-edit-form' || propertyModal?.mode == 'school-major-create-form'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
           <DeleteConfirm
-            v-if="propertyModal?.mode == 'school-curriculum-delete-confirm'"
+            v-if="propertyModal?.mode == 'school-major-delete-confirm'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

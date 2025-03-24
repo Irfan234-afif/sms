@@ -46,6 +46,7 @@ use App\Http\Controllers\School\Management\SchoolClassroomController;
 use App\Http\Controllers\School\Management\SchoolClubController;
 use App\Http\Controllers\School\Management\SchoolCurriculumController;
 use App\Http\Controllers\School\Management\SchoolExtracurricularController;
+use App\Http\Controllers\School\Management\SchoolMajorController;
 use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
 use Illuminate\Foundation\Application;
@@ -384,7 +385,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
         Route::prefix('management')
             ->name('.management')
             ->group(function () {
-                // school curriculum
+                // school curriculum routes
                 Route::prefix('school-curriculum')
                     ->name('.schoolCurriculum')
                     ->group(function () {
@@ -416,6 +417,14 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('option-school-subject-group', [SchoolSubjectController::class, 'optionSchoolSubjectGroup'])->name('.optionSchoolSubjectGroup');
                         Route::post('save', [SchoolSubjectController::class, 'save'])->name('.save');
                         Route::delete('delete', [SchoolSubjectController::class, 'delete'])->name('.delete');
+                    });
+                // school major routes
+                Route::prefix('school-major')
+                    ->name('.schoolMajor')
+                    ->group(function () {
+                        Route::get('/', [SchoolMajorController::class, 'index']);
+                        Route::post('save', [SchoolMajorController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolMajorController::class, 'delete'])->name('.delete');
                     });
                 // school classroom routes
                 Route::prefix('school-classroom')
