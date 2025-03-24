@@ -4,6 +4,7 @@ namespace App\Http\Controllers\School\Management;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LearningObjectiveCategoryResource;
+use App\Http\Resources\LearningRubricResource;
 use App\Http\Resources\SchoolCurriculumResource;
 use App\Models\School;
 use App\Models\SchoolCurriculum;
@@ -53,12 +54,17 @@ class SchoolCurriculumController extends Controller
             ->with('parent')
             ->get();
 
+        $learning_rubrics = $school_curriculum->learning_rubrics()
+            ->with('scales')
+            ->get();
+
         $data = [
             'search_params' => [
                 'search' => request('search'),
             ],
             'school_curriculum' => SchoolCurriculumResource::make($school_curriculum),
             'learning_objective_categories' => LearningObjectiveCategoryResource::collection($learning_objective_categories),
+            'learning_rubrics' => LearningRubricResource::collection($learning_rubrics),
         ];
 
         return Inertia::render('School/Management/SchoolCurriculum/Detail', $data);

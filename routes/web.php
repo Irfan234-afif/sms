@@ -40,6 +40,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
 use App\Http\Controllers\School\Management\Entity\LearningObjectiveCategoryController;
+use App\Http\Controllers\School\Management\Entity\LearningRubricController;
 use App\Http\Controllers\School\SchoolController;
 use App\Http\Controllers\School\StudentController;
 use App\Http\Controllers\School\Management\SchoolClassroomController;
@@ -399,6 +400,12 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::get('option-parent', [LearningObjectiveCategoryController::class, 'optionParent'])->name('.optionParent');
                                 Route::post('save', [LearningObjectiveCategoryController::class, 'save'])->name('.save');
                                 Route::delete('delete', [LearningObjectiveCategoryController::class, 'delete'])->name('.delete');
+                            });
+                        Route::prefix('learning-rubric')
+                            ->name('.learningRubric')
+                            ->group(function () {
+                                Route::post('save', [LearningRubricController::class, 'save'])->name('.save');
+                                Route::delete('delete', [LearningRubricController::class, 'delete'])->name('.delete');
                             });
                     });
                 // school subject group routes

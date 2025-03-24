@@ -15,4 +15,9 @@ class LearningRubric extends Model
         'title',
         'code',
     ];
+
+    public function scales()
+    {
+        return $this->hasMany(LearningRubricScale::class, 'rubric_id');
+    }
 }

@@ -225,7 +225,7 @@ export default {
                               }),
                               redirectUrl: route('school.management.schoolCurriculum'),
                               message:
-                                'Ingin menghapus Kurikulum? Tindakan ini akan memengaruhi data terkait serta hasil penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
+                                'Ingin menghapus Kurikulum? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
                             },
                           })
                         "
