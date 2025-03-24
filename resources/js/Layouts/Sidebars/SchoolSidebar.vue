@@ -63,26 +63,12 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <div
-            class="group flex items-center rounded-lg bg-yellow-400 p-2 text-xs font-medium text-white dark:bg-yellow-500 dark:text-white"
+            class="group flex items-center rounded-lg bg-purple-700 px-4 py-3 text-xs font-medium text-white dark:bg-purple-800 dark:text-white"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-6 w-6 flex-shrink-0"
+            <span class="flex-1 whitespace-nowrap"
+              >Tahun Ajaran 2025-2026
+              <p>Kurikulum Merdeka</p></span
             >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M12.5 21h-6.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v5" />
-              <path d="M16 3v4" />
-              <path d="M8 3v4" />
-              <path d="M4 11h16" />
-              <path d="M19 19m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-            </svg>
-            <span class="ml-3 flex-1 whitespace-nowrap">Tahun Ajaran 2025-2026</span>
           </div>
         </li>
         <li>
@@ -204,7 +190,7 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-teaching-program" class="hidden space-y-2 py-2">
             <li>
               <Link
-                :href="route('school.activity.admissionStudent')"
+                :href="route('school.teachingProgram.learningObjective')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Indikator Pembelajaran</Link
               >

@@ -147,29 +147,4 @@ class SubjectThresholdController extends Controller
             ], 500);
         }
     }
-
-    public function delete()
-    {
-        DB::beginTransaction();
-
-        try {
-            $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
-
-            $school_subject->delete();
-
-            DB::commit();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Mata Pelajaran berhasil dihapus.',
-            ], 200);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            return response()->json([
-                'status' => 'error',
-                'message' => $th->getMessage(),
-            ], 500);
-        }
-    }
 }

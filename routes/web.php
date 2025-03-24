@@ -50,6 +50,7 @@ use App\Http\Controllers\School\Management\SchoolExtracurricularController;
 use App\Http\Controllers\School\Management\SchoolMajorController;
 use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
+use App\Http\Controllers\School\TeachingProgram\LearningObjectiveController;
 use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -394,6 +395,20 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('/', [SubjectThresholdController::class, 'index']);
                         Route::get('get-subject-threshold', [SubjectThresholdController::class, 'getSubjectThreshold'])->name('.getSubjectThreshold');
                         Route::post('save', [SubjectThresholdController::class, 'save'])->name('.save');
+                    });
+                // learning objective routes
+                Route::prefix('learning-objective')
+                    ->name('.learningObjective')
+                    ->group(function () {
+                        Route::get('/', [LearningObjectiveController::class, 'index']);
+                        Route::get('{learning_objective_category_id}/detail', [LearningObjectiveController::class, 'detail'])->name('.detail');
+                        Route::get('option-school-phase', [LearningObjectiveController::class, 'optionSchoolPhase'])->name('.optionSchoolPhase');
+                        Route::get('option-school-grade', [LearningObjectiveController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
+                        Route::get('option-school-subject', [LearningObjectiveController::class, 'optionSchoolSubject'])->name('.optionSchoolSubject');
+                        Route::get('option-learning-objective', [LearningObjectiveController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
+                        Route::get('get-learning-objective', [LearningObjectiveController::class, 'getLearningObjective'])->name('.getLearningObjective');
+                        Route::post('save', [LearningObjectiveController::class, 'save'])->name('.save');
+                        Route::delete('delete', [LearningObjectiveController::class, 'delete'])->name('.delete');
                     });
             });
         // management routes

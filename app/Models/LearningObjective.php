@@ -22,4 +22,9 @@ class LearningObjective extends Model
         'code',
         'narrative',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(LearningObjective::class, 'parent_id');
+    }
 }

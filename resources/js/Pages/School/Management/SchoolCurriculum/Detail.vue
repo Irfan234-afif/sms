@@ -19,7 +19,6 @@ const breadcrumbs = [
 
 <script>
 export default {
-  components: { Badge },
   props: {
     school_curriculum: Object,
     learning_objective_categories: Object,

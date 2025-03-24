@@ -26,4 +26,9 @@ class LearningObjectiveCategory extends Model
     {
         return $this->belongsTo(LearningObjectiveCategory::class, 'parent_id');
     }
+
+    public function objectives()
+    {
+        return $this->hasMany(LearningObjective::class, 'category_id');
+    }
 }
