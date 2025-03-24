@@ -2068,14 +2068,6 @@ INSERT INTO `employees` (`id`, `uuid`, `profile_id`, `identity_number`, `start_d
 (117, 'bdffca42-f594-11ef-b247-0200a013a61c', 119, '06.085.050824', '2024-08-05', '2027-06-20', 'CONTRACT', '2025-02-28 05:27:46', '2025-02-28 05:27:46', NULL),
 (118, '412425e0-f7bf-11ef-8bdb-0200a013a61c', 120, '000.000.000001', '2025-02-03', '2026-02-03', 'PROBATION', '2025-03-02 23:37:07', '2025-03-02 23:38:25', NULL);
 
-INSERT INTO `families` (`id`, `uuid`, `profile_id`, `name`, `avatar`, `relation`, `national_id`, `birth_place`, `birth_date`, `religion`, `languages`, `phone`, `address`, `education`, `occupation`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'd7e3b5b6-fe1a-11ef-8e9e-0200a013a61c', 121, '-', NULL, 'FATHER', '-', NULL, NULL, NULL, NULL, '-', NULL, NULL, '-', '2025-03-11 01:47:51', '2025-03-11 01:47:51', NULL),
-(2, 'd7e40386-fe1a-11ef-bf04-0200a013a61c', 121, '-', NULL, 'MOTHER', '-', NULL, NULL, NULL, NULL, '-', NULL, NULL, '-', '2025-03-11 01:47:51', '2025-03-11 01:47:51', NULL),
-(3, 'e10d7850-fee9-11ef-b700-0200a013a61c', 125, '-', NULL, 'FATHER', '-', NULL, NULL, NULL, NULL, '-', NULL, NULL, '-', '2025-03-12 02:29:52', '2025-03-12 02:29:52', NULL),
-(4, 'e10dcaa8-fee9-11ef-b8dd-0200a013a61c', 125, '-', NULL, 'MOTHER', '-', NULL, NULL, NULL, NULL, '-', NULL, NULL, '-', '2025-03-12 02:29:52', '2025-03-12 02:29:52', NULL),
-(5, 'e10eb4e0-fee9-11ef-b583-0200a013a61c', 126, '-', NULL, 'FATHER', '-', NULL, NULL, NULL, NULL, '-', NULL, NULL, '-', '2025-03-12 02:29:52', '2025-03-12 02:29:52', NULL),
-(6, 'e10ef4dc-fee9-11ef-9ee3-0200a013a61c', 126, '-', NULL, 'MOTHER', '-', NULL, NULL, NULL, NULL, '-', NULL, NULL, '-', '2025-03-12 02:29:52', '2025-03-12 02:29:52', NULL);
-
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '0001_01_01_000000_create_auth_tables', 1),
 (2, '0001_01_01_000001_create_cache_table', 1),
@@ -2392,10 +2384,7 @@ INSERT INTO `profiles` (`id`, `uuid`, `national_id`, `name`, `birth_place`, `bir
 (117, 'bdfc9f0c-f594-11ef-a59c-0200a013a61c', '6471032609020001', 'Jo Kevin Nathaniel', 'Balikpapan', '2002-09-26', 'MALE', 'O', 'CHRISTIAN', 'SINGLE', NULL, NULL, 'Jl Soekarno Hatta Km 1 No 15', NULL, NULL, '2025-02-28 05:27:46', '2025-02-28 05:27:46', NULL),
 (118, 'bdfdbba8-f594-11ef-9715-0200a013a61c', '6472036511880001', 'Ireyne Nopiana Sinaga', 'Padang Sidempuan', '1988-11-25', 'FEMALE', 'B', 'CHRISTIAN', 'MARRIED', 'ireyne.hb-primary@hbics.sch.id', NULL, 'Perum Batakan Mas Blok HH No 7', NULL, NULL, '2025-02-28 05:27:46', '2025-02-28 05:27:46', NULL),
 (119, 'bdff8848-f594-11ef-8970-0200a013a61c', '3275121209980003', 'Mario Septianto Nugroho', 'Jakarta', '1998-09-12', 'MALE', 'A', 'CHRISTIAN', 'SINGLE', 'marioseptianto.hb-seniorhigh@hbics.sch.id', NULL, 'Kampung Sawah Rt 005', NULL, NULL, '2025-02-28 05:27:46', '2025-02-28 05:27:46', NULL),
-(120, '4123dae0-f7bf-11ef-aabd-0200a013a61c', '6471026207060002', 'Lesyel Jovana', 'Balikpapan', '2006-07-22', 'FEMALE', NULL, 'ISLAM', 'SINGLE', 'lesyeljovana.edcon@hbics.sch.id', '+62 815-4922-7735', 'Jl. Gunung Empat  RT 46 no 49', NULL, NULL, '2025-03-02 23:37:07', '2025-03-02 23:38:25', NULL),
-(121, 'd7e2bc56-fe1a-11ef-84ea-0200a013a61c', NULL, 'Raina Erezia Sunaryo', 'Balikpapan', '2020-03-27', 'FEMALE', 'A', 'CHRISTIAN', NULL, 'rainaerezia.s.hhk@hbics.sch.id', '08115424819', 'Komp. Mediterania BB, Pos 11 Blok U1 No.36 Balikpapan', '17125', NULL, '2025-03-11 01:47:51', '2025-03-12 02:32:55', NULL),
-(125, 'e10cc608-fee9-11ef-a43b-0200a013a61c', NULL, 'Anak coba', 'Balikpapan', '2025-03-05', 'FEMALE', 'A', 'ISLAM', NULL, NULL, '085753328641', '-', '-', NULL, '2025-03-12 02:29:52', '2025-03-17 01:34:17', NULL),
-(126, 'e10e5da6-fee9-11ef-92c5-0200a013a61c', NULL, 'Nathan', 'Balikpapan', '2025-03-05', 'FEMALE', 'A', 'ISLAM', NULL, NULL, NULL, '-', '-', NULL, '2025-03-12 02:29:52', '2025-03-12 02:29:52', NULL);
+(120, '4123dae0-f7bf-11ef-aabd-0200a013a61c', '6471026207060002', 'Lesyel Jovana', 'Balikpapan', '2006-07-22', 'FEMALE', NULL, 'ISLAM', 'SINGLE', 'lesyeljovana.edcon@hbics.sch.id', '+62 815-4922-7735', 'Jl. Gunung Empat  RT 46 no 49', NULL, NULL, '2025-03-02 23:37:07', '2025-03-02 23:38:25', NULL);
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'System Admin', 'web', '2025-02-28 05:27:44', '2025-02-28 05:27:44'),
@@ -2561,11 +2550,6 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 ('z6eaeyLGQvdMn3PqMj8Y9OADwBRQ1ExSuQsBI96Q', NULL, '185.242.226.159', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiR2dNbFJ6NWEzWVY5c1hMYXZ4dEp1d01OSVVmcmZoMnVDSXhMOFVDeSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHBzOi8vMTYwLjE5LjE2Ni4yOCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1742566826),
 ('Zfyc3rN5JhNexWATrED4yh2EcnQtAhsx48wJ8FcS', NULL, '172.70.189.87', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQUlzdVhDQ1FRYUxGRWlCY0hrS0lzUTZaSHRHc1U0bWZoWDV0d2J4NSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjM6Imh0dHBzOi8vaGJpY3Muc2FmZml4LmlkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1742518123),
 ('Zto3EHs2nBMzEU3hACgXb6TD5yu9nrSXNnaLB5Ni', NULL, '104.23.190.146', 'Mozilla/5.0 (compatible)', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMUhHZm5EVTJLUms4WHdVRURqMzJtd05ldGl4UlFkSlY4U0JrQzRDcSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjM6Imh0dHBzOi8vaGJpY3Muc2FmZml4LmlkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1742550575);
-
-INSERT INTO `students` (`id`, `uuid`, `profile_id`, `school_id`, `school_grade_id`, `school_national_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'd7e3099a-fe1a-11ef-b127-0200a013a61c', 121, 1, 1, '183/PG/22', '2025-03-11 01:47:51', '2025-03-11 02:51:53', NULL),
-(2, 'e10cf5d8-fee9-11ef-9364-0200a013a61c', 125, 1, 1, '900/KB/HH/2025', '2025-03-12 02:29:52', '2025-03-17 01:34:17', NULL),
-(3, 'e10e7eee-fee9-11ef-9830-0200a013a61c', 126, 1, 1, '2', '2025-03-12 02:29:52', '2025-03-12 02:30:14', NULL);
 
 INSERT INTO `submission_groups` (`id`, `uuid`, `name`, `code`, `reference_code`, `reference_number`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'bcb6224e-f594-11ef-8317-0200a013a61c', 'Install & Repair', 'INSTALL_REPAIR', 'IRP', 1, '2025-02-28 05:27:44', '2025-02-28 05:27:44', NULL),

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Console\Commands\MigrateSchoolAction\MigrateSchoolEntity;
 use App\Console\Commands\MigrateSchoolAction\MigrateSchoolPerson;
+use App\Console\Commands\MigrateSchoolAction\MigrateSchoolTeachingProgramAcademic;
 use App\Models\School;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -54,6 +55,23 @@ class MigrateSchoolData extends Command
 
             $this->withProgressBar($schools, function ($school) {
                 MigrateSchoolPerson::execute($school);
+            });
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            throw $th;
+
+            $this->error("error to execute:$th->getMessage()");
+        }
+        $this->newLine();
+        $this->info('migrating school teaching program academic...');
+        try {
+            DB::beginTransaction();
+
+            $this->withProgressBar($schools, function ($school) {
+                MigrateSchoolTeachingProgramAcademic::execute($school);
             });
 
             DB::commit();

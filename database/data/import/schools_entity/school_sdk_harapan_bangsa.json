@@ -1,0 +1,159 @@
+{
+    "school_name": "SDK Harapan Bangsa",
+    "school_level": "elementary",
+    "entities": {
+        "school_years": [
+            {
+                "title": "2023 - 2024",
+                "start_year": 2023,
+                "end_year": 2024
+            },
+            {
+                "title": "2024 - 2025",
+                "start_year": 2024,
+                "end_year": 2025
+            }
+        ],
+        "school_majors": [],
+        "school_subjects": [
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Matematika",
+                "alternative_name": "Mathematics",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Bahasa Inggris",
+                "alternative_name": "English",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Ilmu Pengetahuan Alam dan Sosial",
+                "alternative_name": "Natural and Social Science",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Bahasa Indonesia",
+                "alternative_name": "Indonesian Language",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Pendidikan Kewarganegaraan",
+                "alternative_name": "Civics and Moral Education",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Seni Tari",
+                "alternative_name": "Traditional Dance",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Seni Rupa",
+                "alternative_name": "Fine Art",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Seni Musik",
+                "alternative_name": "Music",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Pendidikan Jasmani, Olahraga dan Kesehatan",
+                "alternative_name": "Physical Education",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Muatan Lokal",
+                "group_description": null,
+                "name": "Pendidikan Kebersihan dan Lingkungan Hidup",
+                "alternative_name": "Environmental Education",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Muatan Lokal",
+                "group_description": null,
+                "name": "Teknologi Informasi dan Komunikasi",
+                "alternative_name": "ICT Education",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Muatan Lokal",
+                "group_description": null,
+                "name": "Mandarin",
+                "alternative_name": "Chinese",
+                "majors": []
+            },
+            {
+                "group_name": "Mata Pelajaran Wajib",
+                "group_description": null,
+                "name": "Pendidikan Agama Kristen",
+                "alternative_name": "Religion",
+                "majors": []
+            }
+        ],
+        "school_classrooms": [
+            {
+                "grade_name": "1",
+                "major_name": null,
+                "name": "KELAS 1A",
+                "capacity": 27
+            },
+            {
+                "grade_name": "1",
+                "major_name": null,
+                "name": "KELAS 1B",
+                "capacity": 27
+            },
+            {
+                "grade_name": "1",
+                "major_name": null,
+                "name": "KELAS 1C",
+                "capacity": 27
+            },
+            {
+                "grade_name": "2",
+                "major_name": null,
+                "name": "KELAS 2A",
+                "capacity": 27
+            },
+            {
+                "grade_name": "2",
+                "major_name": null,
+                "name": "KELAS 2B",
+                "capacity": 27
+            }
+        ],
+        "school_extracurriculars": [
+            {
+                "name": "English kelas 1-3"
+            },
+            {
+                "name": "English kelas 2-3"
+            },
+            {
+                "name": "Dance"
+            },
+            {
+                "name": "English kelas 4-6"
+            }
+        ],
+        "school_clubs": []
+    }
+}

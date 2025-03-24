@@ -1,0 +1,133 @@
+{
+    "school_name": "SMPK Harapan Bangsa",
+    "school_level": "junior-high",
+    "entities": {
+        "school_years": [
+            {
+                "title": "2023 - 2024",
+                "start_year": 2023,
+                "end_year": 2024
+            },
+            {
+                "title": "2024 - 2025",
+                "start_year": 2024,
+                "end_year": 2025
+            }
+        ],
+        "school_majors": [],
+        "school_subjects": [
+            {
+                "group_name": "Kurikulum Merdeka",
+                "group_description": null,
+                "name": "IPS",
+                "alternative_name": "Social",
+                "majors": []
+            },
+            {
+                "group_name": "Kurikulum Merdeka",
+                "group_description": null,
+                "name": "PKn",
+                "alternative_name": "Kewarganegaraan",
+                "majors": []
+            },
+            {
+                "group_name": "Check Point",
+                "group_description": null,
+                "name": "Matematika",
+                "alternative_name": "Mathematics",
+                "majors": []
+            },
+            {
+                "group_name": "Check Point",
+                "group_description": null,
+                "name": "Science",
+                "alternative_name": "IPA",
+                "majors": []
+            },
+            {
+                "group_name": "Kurikulum Merdeka",
+                "group_description": null,
+                "name": "PJOK",
+                "alternative_name": "Olahraga",
+                "majors": []
+            },
+            {
+                "group_name": "Kurikulum Merdeka",
+                "group_description": null,
+                "name": "Seni Musik",
+                "alternative_name": "Seni Budaya",
+                "majors": []
+            },
+            {
+                "group_name": "Kurikulum Merdeka",
+                "group_description": null,
+                "name": "Agama",
+                "alternative_name": "Religion",
+                "majors": []
+            },
+            {
+                "group_name": "Check Point",
+                "group_description": null,
+                "name": "English as a Second Language",
+                "alternative_name": "Bahasa Inggris",
+                "majors": []
+            },
+            {
+                "group_name": "Kurikulum Merdeka",
+                "group_description": null,
+                "name": "ICT",
+                "alternative_name": "Komputer",
+                "majors": []
+            },
+            {
+                "group_name": "Kurikulum Merdeka",
+                "group_description": null,
+                "name": "P5",
+                "alternative_name": "Life Skill",
+                "majors": []
+            }
+        ],
+        "school_classrooms": [
+            {
+                "grade_name": "7",
+                "major_name": null,
+                "name": "7A",
+                "capacity": 25
+            },
+            {
+                "grade_name": "7",
+                "major_name": null,
+                "name": "7B",
+                "capacity": 25
+            }
+        ],
+        "school_extracurriculars": [
+            {
+                "name": "Basket"
+            },
+            {
+                "name": "Band"
+            },
+            {
+                "name": "Badminton"
+            },
+            {
+                "name": "Archery"
+            }
+        ],
+        "school_clubs": [
+            {
+                "name": "Matematika (7,8)"
+            },
+            {
+                "name": "Science (7,8)"
+            },
+            {
+                "name": "Matematika (9)"
+            },
+            {
+                "name": "Matematika (9)"
+            }
+        ]
+    }
+}

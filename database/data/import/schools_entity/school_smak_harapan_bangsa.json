@@ -1,0 +1,269 @@
+{
+    "school_name": "SMAK Harapan Bangsa",
+    "school_level": "senior-high",
+    "entities": {
+        "school_years": [
+            {
+                "title": "2023 - 2024",
+                "start_year": 2023,
+                "end_year": 2024
+            },
+            {
+                "title": "2024 - 2025",
+                "start_year": 2024,
+                "end_year": 2025
+            }
+        ],
+        "school_majors": [
+            {
+                "name": "IPA"
+            },
+            {
+                "name": "IPS"
+            },
+            {
+                "name": "NON JURUSAN"
+            }
+        ],
+        "school_subjects": [
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "IPS",
+                "alternative_name": "IPS",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "IPA",
+                "alternative_name": "IPA",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Bahasa Inggris",
+                "alternative_name": "ESL",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Bahasa Jerman",
+                "alternative_name": "Bahasa Jerman",
+                "majors": [
+                    "IPS"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Bahasa Indonesia",
+                "alternative_name": "BINDO",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Informatika",
+                "alternative_name": "Informatika",
+                "majors": [
+                    "IPA",
+                    "IPS"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Matematika",
+                "alternative_name": "Matematika",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Sastra Inggris",
+                "alternative_name": "English Literature",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "ICT",
+                "alternative_name": "ICT",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Sejarah Indonesia",
+                "alternative_name": "Sejarah Indonesia",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Pendidikan Pancasila",
+                "alternative_name": "Pendidikan Pancasila",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Biologi",
+                "alternative_name": "Biologi",
+                "majors": [
+                    "IPA"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Seni Budaya",
+                "alternative_name": "Seni Budaya",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Fisika",
+                "alternative_name": "Fisika",
+                "majors": [
+                    "IPA"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Matematika Lanjut",
+                "alternative_name": "Matematika Lanjut",
+                "majors": [
+                    "IPA"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Ekonomi",
+                "alternative_name": "Ekonomi",
+                "majors": [
+                    "IPS"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Pendidikan Agama Kristen",
+                "alternative_name": "Pendidikan Agama Kristen",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Sosiologi",
+                "alternative_name": "Sosiologi",
+                "majors": [
+                    "IPS"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Pendidikan Jasmani dan Kesehatan",
+                "alternative_name": "PJOK",
+                "majors": [
+                    "NON JURUSAN"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Geografi",
+                "alternative_name": "Geografi",
+                "majors": [
+                    "IPS"
+                ]
+            },
+            {
+                "group_name": "KURMER",
+                "group_description": null,
+                "name": "Kimia",
+                "alternative_name": "Chemistry",
+                "majors": [
+                    "IPA"
+                ]
+            }
+        ],
+        "school_classrooms": [
+            {
+                "grade_name": "10",
+                "major_name": "IPA",
+                "name": "10.1",
+                "capacity": 25
+            },
+            {
+                "grade_name": "10",
+                "major_name": "IPS",
+                "name": "10.1",
+                "capacity": 25
+            }
+        ],
+        "school_extracurriculars": [
+            {
+                "name": "Futsal"
+            },
+            {
+                "name": "Basket"
+            },
+            {
+                "name": "Cooking"
+            },
+            {
+                "name": "Band"
+            },
+            {
+                "name": "Archery"
+            },
+            {
+                "name": "Golf"
+            }
+        ],
+        "school_clubs": [
+            {
+                "name": "Matematika"
+            },
+            {
+                "name": "Fisika"
+            },
+            {
+                "name": "Biologi"
+            },
+            {
+                "name": "Astronomi"
+            }
+        ]
+    }
+}

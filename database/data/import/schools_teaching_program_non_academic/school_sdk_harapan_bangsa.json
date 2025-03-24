@@ -1,0 +1,100 @@
+{
+    "school_name": "SDK Harapan Bangsa",
+    "school_level": "elementary",
+    "teaching_programs": {
+        "school_extracurriculars": [
+            {
+                "name": "English kelas 1-3",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 70,
+                            "scales": [
+                                {
+                                    "value": 79,
+                                    "predicate": "C",
+                                    "narrative": "Cukup baik"
+                                }
+                            ],
+                            "lowest_narratives": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "English kelas 2-3",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 70,
+                            "scales": [
+                                {
+                                    "value": 79,
+                                    "predicate": "C",
+                                    "narrative": "Cukup baik"
+                                }
+                            ],
+                            "lowest_narratives": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Dance",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 70,
+                            "scales": [
+                                {
+                                    "value": 79,
+                                    "predicate": "C",
+                                    "narrative": "Cukup baik"
+                                }
+                            ],
+                            "lowest_narratives": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "English kelas 4-6",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 70,
+                            "scales": [
+                                {
+                                    "value": 79,
+                                    "predicate": "C",
+                                    "narrative": "Cukup baik"
+                                }
+                            ],
+                            "lowest_narratives": []
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

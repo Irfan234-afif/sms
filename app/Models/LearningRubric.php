@@ -6,11 +6,13 @@ use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubmissionApproval extends Model
+class LearningRubric extends Model
 {
     use GenerateUuid, SoftDeletes;
 
     protected $fillable = [
-        // 
+        'school_curriculum_id',
+        'title',
+        'code',
     ];
 }

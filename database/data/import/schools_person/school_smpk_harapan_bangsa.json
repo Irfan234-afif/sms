@@ -1,0 +1,10 @@
+{
+    "school_name": "SMPK Harapan Bangsa",
+    "school_level": "junior-high",
+    "persons": {
+        "students": [],
+        "school_classroom_members": [],
+        "school_extracurricular_members": [],
+        "school_club_members": []
+    }
+}

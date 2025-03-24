@@ -1,0 +1,48 @@
+{
+    "school_name": "SMPK Harapan Bangsa",
+    "school_level": "junior-high",
+    "teaching_programs": {
+        "school_extracurriculars": [
+            {
+                "name": "Basket",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": []
+                }
+            },
+            {
+                "name": "Band",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": []
+                }
+            },
+            {
+                "name": "Badminton",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": []
+                }
+            },
+            {
+                "name": "Archery",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": []
+                }
+            }
+        ]
+    }
+}

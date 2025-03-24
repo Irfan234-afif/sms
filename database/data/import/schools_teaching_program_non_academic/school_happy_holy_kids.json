@@ -1,0 +1,631 @@
+{
+    "school_name": "Happy Holy Kids",
+    "school_level": "kindergarten",
+    "teaching_programs": {
+        "school_extracurriculars": [
+            {
+                "name": "Art and Craft",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Drawing and Coloring",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Obatacles 1",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "English",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Dance",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Dance",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Vocal",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "English 2",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [
+                        {
+                            "name": "Komponen Coba",
+                            "code": "ENG",
+                            "childs": []
+                        },
+                        {
+                            "name": "Komponen Coba",
+                            "code": "ENG",
+                            "childs": []
+                        }
+                    ],
+                    "learning_objectives": [
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Feelings and Emotions",
+                            "code": "ENG1-SEM 2",
+                            "narrative": "Mengenal emosi marah, senang, sedih, takut, dll"
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "My World 1 (space)",
+                            "code": "ENG2-SEM 2",
+                            "narrative": "Membuat kalimat sederhana menggunakan kalimat \"I see\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "My World 2 (binatang air)",
+                            "code": "ENG3-SEM 2",
+                            "narrative": "Membuat kalimat sederhana menggunakan kalimat \"I see\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Weather",
+                            "code": "ENG4-SEM 2",
+                            "narrative": "Mengenal cuaca dalam bahasa Inggris"
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Clothes 1",
+                            "code": "ENG5-SEM 2",
+                            "narrative": "Mengenal kosakata pakaian dalam Bahasa Inggris"
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Clothes 2",
+                            "code": "ENG6-SEM 2",
+                            "narrative": "Membuat kalimat bahasa Inggris menggunakan \"I am wearing..\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Days of the week",
+                            "code": "ENG7-SEM 2",
+                            "narrative": "Mengenal dan mengurutkan nama-nama hari dalam Bahasa Inggris"
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Vehicles",
+                            "code": "ENG8-SEM 2",
+                            "narrative": "Menggunakan kata riding and driving"
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Vegestables 1 like \/ don't like",
+                            "code": "ENG9-SEM 2",
+                            "narrative": "Membuat kalimat sederhana menggunakan \"like or don't like\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Vegestables 2 like \/ don't like",
+                            "code": "ENG10-SEM 2",
+                            "narrative": "Membuat kalimat sederhana menggunakan \"like or don't like\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Action Verb : Can \/ Can't",
+                            "code": "ENG11-SEM 2",
+                            "narrative": "Membuat kalimat sederhana menggunakan \"can or can't\", seperti \"I can jump or I can not jump\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Shapes",
+                            "code": "ENG12-SEM 2",
+                            "narrative": "Mengenal bentuk-bentuk geometri dalam bahasa Inggris"
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "School supplies 1",
+                            "code": "ENG13-SEM 2",
+                            "narrative": "Mengenal penggunaan kata \"have\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "School supplies 2",
+                            "code": "ENG14-SEM 2",
+                            "narrative": "Mengenal penggunaan kata \"has\""
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "How do I feel (texture)",
+                            "code": "ENG15-SEM 2",
+                            "narrative": "Mengenal kosakata texture (soft, hard, rough)"
+                        },
+                        {
+                            "learning_component_title": "Komponen Coba",
+                            "school_year_title": 2024,
+                            "title": "Sight word",
+                            "code": "ENG16-SEM 2",
+                            "narrative": "Mengenal dan membaca kata sederhana seperti (to, the, find, get, dll)"
+                        }
+                    ],
+                    "rubrics": [
+                        {
+                            "title": "English",
+                            "code": "ENG",
+                            "scales": [
+                                {
+                                    "title": "A",
+                                    "narrative": "Sangat baik dalam",
+                                    "value": 100
+                                },
+                                {
+                                    "title": "B",
+                                    "narrative": "Baik dalam",
+                                    "value": 90
+                                },
+                                {
+                                    "title": "C",
+                                    "narrative": "Perlu bimbingan dalam",
+                                    "value": 79
+                                }
+                            ]
+                        }
+                    ],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Basket",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Robotic",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Obstacles 2",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [],
+                    "learning_objectives": [],
+                    "rubrics": [],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Obstacles 3",
+                "code": null,
+                "components": {
+                    "learning_objective_categories": [
+                        {
+                            "name": "Komponen coba",
+                            "code": "1",
+                            "childs": []
+                        }
+                    ],
+                    "learning_objectives": [
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Berjalan seimbang",
+                            "code": "OBT1-SEM 2",
+                            "narrative": "Berjalan di atas papan titian dengan membawa beban"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Memindahkan bola",
+                            "code": "OBT2-SEM 2",
+                            "narrative": "Memindahkan bola yang ada di atas cone dengan teknik melompat"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Memindahkan bola",
+                            "code": "OBT3-SEM 2",
+                            "narrative": "Memindahkan bola dengan melewati lego dan dan balok yang tersusun"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Melempar balon dan bola",
+                            "code": "OBT4-SEM 2",
+                            "narrative": "Melempar balon ke udara dan melempar bola ke dalam keranjang dengan cepat"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Melompati rintangan",
+                            "code": "OBT5-SEM 2",
+                            "narrative": "Melompati rintangan dan Menyusun gelas seperti menara"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Melompat dan meniup",
+                            "code": "OBT6-SEM 2",
+                            "narrative": "Melompati rintangan dan meniup gelas dengan cepat"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Menjepit bola pada kedua kaki",
+                            "code": "OBT7-SEM 2",
+                            "narrative": "Melompat dengan menjepit bola pada kedua kaki"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Bekerjasama memindahkan bola",
+                            "code": "OBT8-SEM 2",
+                            "narrative": "Memindahkan bola dengan cara duduk dan menjepit bola pada kaki"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Menirukan gerakan",
+                            "code": "OBT9-SEM 2",
+                            "narrative": "Menirukan gerakan sesuai dengan gambar"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Melempar dan menangkap bola",
+                            "code": "OBT10-SEM 2",
+                            "narrative": "Melempar dan menangkap bola"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Melempar dan menangkap bola",
+                            "code": "OBT11-SEM 2",
+                            "narrative": "Melempar menangkap bola dan melompati rintangan secara bersamaan"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Menangkap bola",
+                            "code": "OBT12-SEM 2",
+                            "narrative": "Menangkap bola dengan menggunakan cone kerucut"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Melakukan gerakan badan berguling",
+                            "code": "OBT13-SEM 2",
+                            "narrative": "Melakukan permainan memindahkan bola dengan cara menggulingkan badan"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Melompat 1 kaki",
+                            "code": "OBT14-SEM 2",
+                            "narrative": "Melompat 1 kaki dan memasukkan bola ke dalam gelas"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Review (Memindahkan bola)",
+                            "code": "OBT15-SEM 2",
+                            "narrative": "Melakukan permainan berguling memindahkan bola dan melompat memindahkan bola di atas cone"
+                        },
+                        {
+                            "learning_component_title": "Komponen coba",
+                            "school_year_title": 2024,
+                            "title": "Review (Melempar dan menangkap bola)",
+                            "code": "OBT16-SEM 2",
+                            "narrative": "Melakukan permainan lempar tangkap bola dan melompat secara bersamaan"
+                        }
+                    ],
+                    "rubrics": [
+                        {
+                            "title": "Obstacle",
+                            "code": "OBT",
+                            "scales": [
+                                {
+                                    "title": "A",
+                                    "narrative": "Sangat baik dalam",
+                                    "value": 100
+                                },
+                                {
+                                    "title": "B",
+                                    "narrative": "Baik dalam",
+                                    "value": 90
+                                },
+                                {
+                                    "title": "C",
+                                    "narrative": "Perlu bimbingan dalam",
+                                    "value": 79
+                                }
+                            ]
+                        }
+                    ],
+                    "predicates": [
+                        {
+                            "school_year_title": 2024,
+                            "minimum_value": 0,
+                            "scales": [
+                                {
+                                    "value": 24,
+                                    "predicate": "B-",
+                                    "narrative": "Siswa masih sangat bergantung pada arahan, bimbingan, dan sering muncul ketidakminatan dalam berpartisipasi dalam kegaitan Ekstrakurikuler ini."
+                                }
+                            ],
+                            "lowest_narratives": [
+                                {
+                                    "value": 0,
+                                    "narrative": "Siswa diharapkan dapat lebih aktif berpartisipasi dan hadir dalam setiap pertemuan Ekstrakurikuler"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
