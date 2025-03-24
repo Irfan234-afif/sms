@@ -70,7 +70,7 @@ export default {
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <dl>
-                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Wali Ekstrakurikuler</dt>
+                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Pembimbing</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
                     {{ school_extracurricular.data.mentor?.profile?.name ?? '-' }}
                   </dd>

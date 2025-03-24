@@ -21,4 +21,9 @@ class LearningObjectiveCategory extends Model
     protected $casts = [
         'options' => 'json',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(LearningObjectiveCategory::class, 'parent_id');
+    }
 }

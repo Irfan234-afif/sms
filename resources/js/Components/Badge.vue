@@ -26,7 +26,7 @@ export default {
         pink: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300',
       };
 
-      return `rounded-sm whitespace-nowrap px-2.5 py-0.5 text-xs font-medium ${typeClass[this.type] || typeClass.default}`;
+      return `rounded-sm whitespace-nowrap px-2 py-0.5 text-xs font-medium ${typeClass[this.type] || typeClass.default}`;
     },
   },
 };

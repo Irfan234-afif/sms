@@ -17,4 +17,9 @@ class SchoolCurriculum extends Model
         'title',
         'code',
     ];
+
+    public function learning_objective_categories()
+    {
+        return $this->hasMany(LearningObjectiveCategory::class, 'school_curriculum_id');
+    }
 }

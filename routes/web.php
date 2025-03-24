@@ -39,10 +39,12 @@ use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
+use App\Http\Controllers\School\Management\Entity\LearningObjectiveCategoryController;
 use App\Http\Controllers\School\SchoolController;
 use App\Http\Controllers\School\StudentController;
 use App\Http\Controllers\School\Management\SchoolClassroomController;
 use App\Http\Controllers\School\Management\SchoolClubController;
+use App\Http\Controllers\School\Management\SchoolCurriculumController;
 use App\Http\Controllers\School\Management\SchoolExtracurricularController;
 use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
@@ -382,6 +384,22 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
         Route::prefix('management')
             ->name('.management')
             ->group(function () {
+                // school curriculum
+                Route::prefix('school-curriculum')
+                    ->name('.schoolCurriculum')
+                    ->group(function () {
+                        Route::get('/', [SchoolCurriculumController::class, 'index']);
+                        Route::get('{school_curriculum_id}/detail', [SchoolCurriculumController::class, 'detail'])->name('.detail');
+                        Route::post('save', [SchoolCurriculumController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolCurriculumController::class, 'delete'])->name('.delete');
+                        Route::prefix('learning-objective-category')
+                            ->name('.learningObjectiveCategory')
+                            ->group(function () {
+                                Route::get('option-parent', [LearningObjectiveCategoryController::class, 'optionParent'])->name('.optionParent');
+                                Route::post('save', [LearningObjectiveCategoryController::class, 'save'])->name('.save');
+                                Route::delete('delete', [LearningObjectiveCategoryController::class, 'delete'])->name('.delete');
+                            });
+                    });
                 // school subject group routes
                 Route::prefix('school-subject-group')
                     ->name('.schoolSubjectGroup')
