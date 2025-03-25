@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('school_id')->constrained('schools');
             $table->foreignId('school_year_id')->constrained('school_years');
             $table->foreignId('school_curriculum_id')->constrained('school_curriculums');
+            $table->string('name');
             $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->softDeletes();

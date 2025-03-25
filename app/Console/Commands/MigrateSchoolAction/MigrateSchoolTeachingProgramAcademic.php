@@ -58,6 +58,7 @@ class MigrateSchoolTeachingProgramAcademic
                 'school_year_id' => $school_year->id,
                 'school_curriculum_id' => $school_curriculum->id,
             ], [
+                'name' => 'Program Ajaran ' . $school_year->name,
                 'is_active' => $school_academic_program->is_active,
             ]);
         }

@@ -14,6 +14,7 @@ class SchoolAcademicProgram extends Model
         'school_id',
         'school_year_id',
         'school_curriculum_id',
+        'name',
         'is_active',
     ];
 

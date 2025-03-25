@@ -348,7 +348,7 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-setting" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('school.setting.profile')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Sekolah</Link
               >

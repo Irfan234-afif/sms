@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Employee;
+use App\Models\School;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -50,7 +51,9 @@ class HandleInertiaRequests extends Middleware
                 $active_school = Session::get('active_school');
 
                 if (!$active_school) {
-                    $active_school = $available_schools->with('academic_program_active.year')
+                    $active_school = School::where('id', $available_schools->first()->id)
+                        ->with('area')
+                        ->with('academic_program_active.year')
                         ->with('academic_program_active.curriculum')
                         ->first();
                     Session::put('active_school', $active_school);

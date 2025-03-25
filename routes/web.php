@@ -50,6 +50,8 @@ use App\Http\Controllers\School\Management\SchoolExtracurricularController;
 use App\Http\Controllers\School\Management\SchoolMajorController;
 use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
+use App\Http\Controllers\School\Setting\Entity\SchoolAcademicProgramController;
+use App\Http\Controllers\School\Setting\SchoolController as SettingSchoolController;
 use App\Http\Controllers\School\TeachingProgram\LearningObjectiveController;
 use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
@@ -502,6 +504,27 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('option-member', [SchoolClubController::class, 'optionMember'])->name('.optionMember');
                         Route::post('assign-member', [SchoolClubController::class, 'assignMember'])->name('.assignMember');
                         Route::post('remove-member', [SchoolClubController::class, 'removeMember'])->name('.removeMember');
+                    });
+            });
+        // setting routes
+        Route::prefix('setting')
+            ->name('.setting')
+            ->group(function () {
+                // profile routes
+                Route::prefix('profile')
+                    ->name('.profile')
+                    ->group(function () {
+                        Route::get('/', [SettingSchoolController::class, 'index']);
+                        Route::get('option-headmaster', [SettingSchoolController::class, 'optionHeadmaster'])->name('.optionHeadmaster');
+                        Route::post('save', [SettingSchoolController::class, 'save'])->name('.save');
+                        Route::prefix('academic-program')
+                            ->name('.academicProgram')
+                            ->group(function () {
+                                Route::post('save', [SchoolAcademicProgramController::class, 'save'])->name('.save');
+                                Route::get('option-school-year', [SchoolAcademicProgramController::class, 'optionSchoolYear'])->name('.optionSchoolYear');
+                                Route::get('option-school-curriculum', [SchoolAcademicProgramController::class, 'optionSchoolCurriculum'])->name('.optionSchoolCurriculum');
+                                Route::delete('delete', [SchoolAcademicProgramController::class, 'delete'])->name('.delete');
+                            });
                     });
             });
     });
