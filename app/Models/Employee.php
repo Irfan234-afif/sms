@@ -81,7 +81,8 @@ class Employee extends Model
         }
 
         if ($user->hasRole('System Admin') || $user->hasRole('Site Admin')) {
-            return Office::with('area')->get();
+            return Office::with('area')->pluck('name')
+                ->toArray();;
         }
 
         $employee = optional($user->profile)->employee ?? null;
@@ -101,7 +102,8 @@ class Employee extends Model
 
         $offices = Office::whereIn('id', $office_ids)
             ->with('area')
-            ->get();
+            ->pluck('name')
+            ->toArray();;
 
         if ($offices->isEmpty()) {
             abort(404, 'Sekolah tidak ditemukan');
