@@ -113,29 +113,29 @@ class DefaultSystemSeeder extends Seeder
                 $this->command->getOutput()->progressAdvance();
             }
             $this->command->getOutput()->progressFinish();
-        }
-        // create page
-        $this->command->warn('Create page');
-        $this->command->getOutput()->progressStart(count($pages));
-        foreach ($pages as $page) {
-            DB::beginTransaction();
+            // create page
+            $this->command->warn('Create page');
+            $this->command->getOutput()->progressStart(count($pages));
+            foreach ($pages as $page) {
+                DB::beginTransaction();
 
-            try {
+                try {
 
-                Page::firstOrCreate([
-                    'type' => $page->type,
-                ], [
-                    'title' => $page->title,
-                    'content' => $page->content,
-                ]);
+                    Page::firstOrCreate([
+                        'type' => $page->type,
+                    ], [
+                        'title' => $page->title,
+                        'content' => $page->content,
+                    ]);
 
-                DB::commit();
-            } catch (\Throwable $th) {
-                DB::rollBack();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    DB::rollBack();
 
-                throw $th;
+                    throw $th;
+                }
+                $this->command->getOutput()->progressAdvance();
             }
-            $this->command->getOutput()->progressAdvance();
         }
     }
 }
