@@ -54,7 +54,7 @@ class SubjectThresholdController extends Controller
     {
         $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
         // todo:modified by school
-        $school_year = SchoolYear::first();
+        $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
         $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->firstOrFail();
         $subject_threshold = SubjectThreshold::where('school_subject_id', $school_subject->id)
             ->where('school_year_id', $school_year->id)
@@ -78,7 +78,7 @@ class SubjectThresholdController extends Controller
         try {
             $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
             // todo:modified by school
-            $school_year = SchoolYear::first();
+            $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
             $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->firstOrFail();
 
             $subject_threshold_created = SubjectThreshold::updateOrCreate(

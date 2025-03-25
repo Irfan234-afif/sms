@@ -21,7 +21,11 @@ class SchoolController extends Controller
 
     public function switchActiveSchool($active_school_id)
     {
-        $active_school = School::where('uuid', $active_school_id)->with('area')->firstOrFail();
+        $active_school = School::where('uuid', $active_school_id)
+            ->with('area')
+            ->with('academic_program_active.year')
+            ->with('academic_program_active.curriculum')
+            ->firstOrFail();
         $user = User::where('uuid', Auth::user()->uuid)->firstOrFail();
 
         if ($user->hasRole('System Admin') || $user->hasRole('Site Admin')) {

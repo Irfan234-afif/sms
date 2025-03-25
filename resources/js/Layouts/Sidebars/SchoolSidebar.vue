@@ -61,13 +61,13 @@ import { Link } from '@inertiajs/vue3';
             </ul>
           </div>
         </li>
-        <li>
+        <li v-if="$page.props.auth.active_school.academic_program_active">
           <div
             class="group flex items-center rounded-lg bg-purple-700 px-4 py-3 text-xs font-medium text-white dark:bg-purple-800 dark:text-white"
           >
             <span class="flex-1 whitespace-nowrap"
-              >Tahun Ajaran 2025-2026
-              <p>Kurikulum Merdeka</p></span
+              >Tahun Ajaran {{ $page.props.auth.active_school.academic_program_active.year.name }}
+              <p>{{ $page.props.auth.active_school.academic_program_active.curriculum.title }}</p></span
             >
           </div>
         </li>
@@ -144,7 +144,7 @@ import { Link } from '@inertiajs/vue3';
             </li>
           </ul>
         </li>
-        <li>
+        <li v-if="$page.props.auth.active_school.academic_program_active">
           <button
             type="button"
             class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -204,7 +204,7 @@ import { Link } from '@inertiajs/vue3';
             </li>
             <li>
               <Link
-                :href="route('school.activity.admissionStudent')"
+                href="#"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Modul Penilaian</Link
               >

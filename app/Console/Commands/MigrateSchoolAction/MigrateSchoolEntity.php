@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\MigrateSchoolAction;
 
+use App\Models\Employee;
 use App\Models\SchoolClassroom;
 use App\Models\SchoolClub;
 use App\Models\SchoolExtracurricular;
@@ -80,12 +81,16 @@ class MigrateSchoolEntity
                 ->where('title', $school_classroom->major_name)
                 ->first();
 
+            $homeroom_teacher = Employee::where('identity_number', $school_classroom->homeroom_teacher_identity_number)
+                ->first();
+
             SchoolClassroom::firstOrCreate([
                 'school_id' => $school->id,
                 'title' => $school_classroom->name,
             ], [
                 'school_grade_id' => $school_grade->id,
                 'school_major_id' => $school_major ? $school_major->id : null,
+                'homeroom_teacher_id' => $homeroom_teacher ? $homeroom_teacher->id : null,
                 'capacity' => $school_classroom->capacity,
             ]);
         }
@@ -94,10 +99,14 @@ class MigrateSchoolEntity
     private static function parseSchoolExtracurricular($school, $school_extracurriculars)
     {
         foreach ($school_extracurriculars as $school_extracurricular) {
+            $mentor = Employee::where('identity_number', $school_extracurricular->mentor_identity_number)
+                ->first();
+
             SchoolExtracurricular::firstOrCreate([
                 'school_id' => $school->id,
                 'title' => $school_extracurricular->name,
             ], [
+                'mentor_id' => $mentor ? $mentor->id : null,
                 'title' => $school_extracurricular->name,
             ]);
         }
@@ -106,10 +115,14 @@ class MigrateSchoolEntity
     private static function parseSchoolClub($school, $school_clubs)
     {
         foreach ($school_clubs as $school_club) {
+            $mentor = Employee::where('identity_number', $school_club->mentor_identity_number)
+                ->first();
+
             SchoolClub::firstOrCreate([
                 'school_id' => $school->id,
                 'title' => $school_club->name,
             ], [
+                'mentor_id' => $mentor ? $mentor->id : null,
                 'title' => $school_club->name,
             ]);
         }

@@ -50,7 +50,9 @@ class HandleInertiaRequests extends Middleware
                 $active_school = Session::get('active_school');
 
                 if (!$active_school) {
-                    $active_school = $available_schools->first();
+                    $active_school = $available_schools->with('academic_program_active.year')
+                        ->with('academic_program_active.curriculum')
+                        ->first();
                     Session::put('active_school', $active_school);
                 }
             }

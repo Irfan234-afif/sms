@@ -7,6 +7,7 @@ use App\Models\LearningObjectiveCategory;
 use App\Models\LearningRubric;
 use App\Models\LearningRubricScale;
 use App\Models\School;
+use App\Models\SchoolAcademicProgram;
 use App\Models\SchoolCurriculum;
 use App\Models\SchoolGrade;
 use App\Models\SchoolPhase;
@@ -25,6 +26,7 @@ class MigrateSchoolTeachingProgramAcademic
 
         self::parseSchoolCurriculum($school, $school_data->teaching_programs->school_curriculums);
         self::parseSchoolSubjectTreshold($school, $school_data->teaching_programs->school_subject_predicates);
+        self::parseSchoolAcademicProgram($school, $school_data->teaching_programs->school_academic_programs);
     }
 
     private static function parseSchoolCurriculum($school, $school_curriculums)
@@ -40,6 +42,24 @@ class MigrateSchoolTeachingProgramAcademic
             self::parseLearningObjectiveCategories($school_curriculum_created, $school_curriculum->components->learning_objective_categories);
             self::parseLearningObjectives($school, $school_curriculum_created, $school_curriculum->components->learning_objectives);
             self::parseLearningRubrics($school_curriculum_created, $school_curriculum->components->rubrics);
+        }
+    }
+
+    private static function parseSchoolAcademicProgram($school, $school_academic_programs)
+    {
+        foreach ($school_academic_programs as $school_academic_program) {
+            $school_year = SchoolYear::where('start_year', $school_academic_program->school_year_title)->firstOrFail();
+            $school_curriculum = SchoolCurriculum::where('school_id', $school->id)
+                ->where('title', $school_academic_program->school_curriculum_title)
+                ->firstOrFail();
+
+            SchoolAcademicProgram::firstOrCreate([
+                'school_id' => $school->id,
+                'school_year_id' => $school_year->id,
+                'school_curriculum_id' => $school_curriculum->id,
+            ], [
+                'is_active' => $school_academic_program->is_active,
+            ]);
         }
     }
 

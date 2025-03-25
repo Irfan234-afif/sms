@@ -55,7 +55,7 @@ class LearningObjectiveController extends Controller
             ->with('grades')
             ->get();
         // todo:modified by school
-        $school_curriculum = SchoolCurriculum::where('school_id', $this->school->id)
+        $school_curriculum = SchoolCurriculum::where('id', $this->school->academic_program_active->school_curriculum_id)
             ->orderBy('id', 'DESC')->first();
         $learning_objective_category = LearningObjectiveCategory::where('uuid', $learning_objective_category_id)
             ->with('parent')
@@ -114,6 +114,7 @@ class LearningObjectiveController extends Controller
 
     public function optionLearningObjective()
     {
+        $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
         $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->first();
         $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->first();
         $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
@@ -122,6 +123,10 @@ class LearningObjectiveController extends Controller
 
         $learning_objectives = $learning_objective_category->parent->objectives()
             ->with('parent');
+
+        if ($school_year) {
+            $learning_objectives->where('school_year_id', $school_year->id);
+        }
 
         if ($school_phase) {
             $learning_objectives->where('school_phase_id', $school_phase->id);
@@ -144,6 +149,7 @@ class LearningObjectiveController extends Controller
 
     public function getLearningObjective()
     {
+        $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
         $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->first();
         $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->first();
         $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
@@ -152,6 +158,10 @@ class LearningObjectiveController extends Controller
 
         $learning_objectives = $learning_objective_category->objectives()
             ->with('parent');
+
+        if ($school_year) {
+            $learning_objectives->where('school_year_id', $school_year->id);
+        }
 
         if ($school_phase) {
             $learning_objectives->where('school_phase_id', $school_phase->id);
@@ -181,7 +191,7 @@ class LearningObjectiveController extends Controller
             $learning_objective = LearningObjective::where('uuid', request('learning_objective_id'))->first();
             $parent = LearningObjective::where('uuid', request('parent_id'))->first();
             // todo:modified by school
-            $school_year = SchoolYear::first();
+            $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
             $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->firstOrFail();
             $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->firstOrFail();
             $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
