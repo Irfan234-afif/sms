@@ -95,8 +95,10 @@ class AdmissionStudentPriceController extends Controller
 
         try {
             $product = Product::where('uuid', request('product_id'))->firstOrFail();
+            $area = Area::where('uuid', request('area_id'))->firstOrFail();
 
             $product->update([
+                'area_id' => $area->id,
                 'name' => request('name'),
                 'price' => request('price'),
                 'is_active' => request('is_active'),
