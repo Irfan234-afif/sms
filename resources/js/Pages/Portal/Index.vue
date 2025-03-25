@@ -10,7 +10,11 @@ import { Head, Link } from '@inertiajs/vue3';
     <div class="flex">
       <div class="mx-auto my-auto w-full max-w-7xl sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-6 overflow-hidden md:grid-cols-2">
-          <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <!-- school -->
+          <div
+            v-if="$authHasRoles($page.props.auth, ['System Admin', 'Site Admin', 'Employee'])"
+            class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          >
             <Link :href="route('school')">
               <h5 class="mb-2 text-base font-medium tracking-tight text-gray-900 dark:text-white">Sekolah</h5>
             </Link>
@@ -37,7 +41,11 @@ import { Head, Link } from '@inertiajs/vue3';
               </svg>
             </Link>
           </div>
-          <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <!-- office -->
+          <div
+            v-if="$authHasRoles($page.props.auth, ['System Admin', 'Site Admin', 'Employee'])"
+            class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          >
             <Link :href="route('office')">
               <h5 class="mb-2 text-base font-medium tracking-tight text-gray-900 dark:text-white">Yayasan</h5>
             </Link>
@@ -64,7 +72,11 @@ import { Head, Link } from '@inertiajs/vue3';
               </svg>
             </Link>
           </div>
-          <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <!-- student -->
+          <div
+            v-if="$authHasRoles($page.props.auth, ['Student'])"
+            class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          >
             <Link href="#">
               <h5 class="mb-2 text-base font-medium tracking-tight text-gray-900 dark:text-white">Siswa</h5>
             </Link>
@@ -91,7 +103,11 @@ import { Head, Link } from '@inertiajs/vue3';
               </svg>
             </Link>
           </div>
-          <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <!-- guardian -->
+          <div
+            v-if="$authHasRoles($page.props.auth, ['System Admin', 'Site Admin', 'Guardian'])"
+            class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          >
             <Link :href="route('guardian')">
               <h5 class="mb-2 text-base font-medium tracking-tight text-gray-900 dark:text-white">Wali</h5>
             </Link>

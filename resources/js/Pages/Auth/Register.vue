@@ -24,7 +24,7 @@ const submit = () => {
     <Head title="Daftar" />
 
     <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-      <h1 class="text-base font-medium leading-tight tracking-tight text-gray-900 dark:text-white md:text-xl">
+      <h1 class="text-base font-medium leading-tight tracking-tight text-gray-900 dark:text-white md:text-lg">
         Buat akun
       </h1>
       <form @submit.prevent="submit" class="space-y-4 md:space-y-6">

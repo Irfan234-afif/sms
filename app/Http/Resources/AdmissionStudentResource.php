@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\GetLabel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -73,8 +74,10 @@ class AdmissionStudentResource extends JsonResource
             'birth_place' => $this->birth_place,
             'birth_date' => $this->birth_date,
             'gender' => $this->gender,
+            'gender_label' => GetLabel::gender($this->gender),
             'blood_type' => $this->blood_type,
             'religion' => $this->religion,
+            'religion_label' => GetLabel::religion($this->religion),
             'languages' => $this->languages,
             'phone' => $this->phone,
             'address' => $this->address,
@@ -86,6 +89,7 @@ class AdmissionStudentResource extends JsonResource
             'father_birth_place' => $this->father_birth_place,
             'father_birth_date' => $this->father_birth_date,
             'father_religion' => $this->father_religion,
+            'father_religion_label' => GetLabel::religion($this->father_religion),
             'father_languages' => $this->father_languages,
             'father_phone' => $this->father_phone,
             'father_email' => $this->father_email,
@@ -100,6 +104,7 @@ class AdmissionStudentResource extends JsonResource
             'mother_birth_place' => $this->mother_birth_place,
             'mother_birth_date' => $this->mother_birth_date,
             'mother_religion' => $this->mother_religion,
+            'mother_religion_label' => GetLabel::religion($this->mother_religion),
             'mother_languages' => $this->mother_languages,
             'mother_phone' => $this->mother_phone,
             'mother_email' => $this->mother_email,

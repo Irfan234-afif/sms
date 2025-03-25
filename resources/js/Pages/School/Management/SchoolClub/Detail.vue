@@ -61,10 +61,8 @@ export default {
       <SchoolSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">
         <div class="px-4 2xl:px-0">
-          <!--  -->
           <h1 class="text-base font-medium text-gray-900 dark:text-white md:pb-2">
             {{ school_club.data.title }}
           </h1>
@@ -72,7 +70,7 @@ export default {
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <dl>
-                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Wali Klub</dt>
+                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Pembimbing</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
                     {{ school_club.data.mentor?.profile?.name ?? '-' }}
                   </dd>
@@ -159,7 +157,7 @@ export default {
           </div>
         </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
           <AssignMemberForm

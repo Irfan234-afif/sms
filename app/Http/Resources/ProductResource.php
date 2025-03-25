@@ -14,6 +14,15 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'area' => $this->whenLoaded('area', fn() => AreaResource::make($this->area)),
+            'name' => $this->name,
+            'code' => $this->code,
+            'type' => $this->type,
+            'price' => $this->price,
+            'price_label' => 'Rp ' . number_format($this->price, 0, ',', '.'),
+            'is_active' => (bool) $this->is_active,
+        ];
     }
 }

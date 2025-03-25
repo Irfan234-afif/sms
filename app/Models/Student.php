@@ -36,4 +36,9 @@ class Student extends Model
     {
         return $this->belongsToMany(SchoolClassroom::class, 'school_classroom_members', 'student_id', 'school_classroom_id');
     }
+
+    public function admission()
+    {
+        return $this->hasOne(AdmissionStudent::class, 'student_id');
+    }
 }

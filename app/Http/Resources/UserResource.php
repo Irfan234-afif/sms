@@ -14,6 +14,18 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $default_avatar = '/assets/icons/user-circle.png';
+
+        $avatar_path = $this->profile->avatar ? asset('storage/avatars/' . $this->profile->avatar)
+            : $default_avatar;
+
+        return [
+            'uuid' => $this->uuid,
+            'profile' => $this->whenLoaded('profile', fn() => ProfileResource::make($this->profile)),
+            'name' => $this->name,
+            'avatar_path' => $avatar_path,
+            'email' => $this->email,
+            'phone' => $this->phone,
+        ];
     }
 }

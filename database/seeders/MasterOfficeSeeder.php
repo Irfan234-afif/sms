@@ -28,13 +28,17 @@ class MasterOfficeSeeder extends Seeder
                 DB::beginTransaction();
 
                 try {
-                    Product::firstOrCreate([
-                        'name' => $product->name,
-                        'code' => $product->code,
-                    ], [
-                        'type' => $product->type,
-                        'price' => $product->price,
-                    ]);
+                    foreach (School::get() as $school) {
+                        Product::firstOrCreate([
+                            'area_id' => $school->area->id,
+                            'name' => $product->name . ' ' . $school->area->name,
+                            'code' => $product->code,
+                        ], [
+                            'type' => $product->type,
+                            'price' => $product->price,
+                            'is_active' => $product->is_active,
+                        ]);
+                    }
 
                     DB::commit();
                 } catch (\Throwable $th) {

@@ -1,0 +1,43 @@
+{
+    "school_name": "SMAK Harapan Bangsa",
+    "school_level": "senior-high",
+    "persons": {
+        "students": [
+            {
+                "grade_name": "4",
+                "name": "Alyssia Renata Kanaeila Susanto",
+                "birth_place": "Samarinda",
+                "birth_date": "2009-03-25",
+                "gender": "female",
+                "blood_type": null,
+                "religion": "protestant",
+                "phone_number": "00000",
+                "address": "Balikpapan Baru Cluster Den Haag V2\/23",
+                "email": "alyssia.renata@hbics.sch.id",
+                "password": "$2y$10$0dFXs9zSNtDY\/tsiBpWZz.IB31\/plMvDMcX0IvfD.a4HUAgydP\/7y",
+                "postal_code": "76115",
+                "province_name": "KALIMANTAN TIMUR",
+                "regency_name": "KOTA BALIKPAPAN",
+                "district_name": "BALIKPAPAN SELATAN",
+                "village_name": null,
+                "national_identity_number": "0098585615",
+                "international_identity_number": "279\/HIGHHBICS\/24",
+                "father_name": "Andrias Susanto Nugroho",
+                "father_nationality_id": "6471032803780004",
+                "father_phone": "082276197999",
+                "father_email": null,
+                "father_occupation": "POLRI",
+                "father_company": null,
+                "mother_name": "Simatupang, Hamaria Mendrofa",
+                "mother_nationality_id": "6471034503810003",
+                "mother_phone": "08115808880",
+                "mother_email": "mariamendrofa99@gmail.com",
+                "mother_occupation": "Wiraswasta",
+                "mother_company": null
+            }
+        ],
+        "school_classroom_members": [],
+        "school_extracurricular_members": [],
+        "school_club_members": []
+    }
+}

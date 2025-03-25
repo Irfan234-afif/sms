@@ -101,7 +101,7 @@ export default {
       <DefaultButton
         v-if="mode == 'verified-form'"
         type="purple"
-        class="w-full md:w-1/3"
+        class="w-full md:w-1/2"
         @click="submit()"
         :disabled="process"
       >
@@ -110,7 +110,7 @@ export default {
       <DefaultButton
         v-if="mode == 'unverified-form'"
         type="red"
-        class="w-full md:w-1/3"
+        class="w-full md:w-1/2"
         @click="submit()"
         :disabled="process"
       >

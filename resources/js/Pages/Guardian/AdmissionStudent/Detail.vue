@@ -4,6 +4,7 @@ import GuardianLayout from '@/Layouts/GuardianLayout.vue';
 import GuardianSidebar from '@/Layouts/Sidebars/GuardianSidebar.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import AdmissionStatusAlert from './AdmissionStatusAlert.vue';
 import Modal from '@/Components/Modal.vue';
 import SubmitForm from './SubmitForm.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
@@ -61,275 +62,11 @@ export default {
       <GuardianSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">
         <div class="px-4 2xl:px-0">
-          <!-- alert -->
-          <div>
-            <!-- PENDING -->
-            <div
-              v-if="admission_student.data.status == 'PENDING'"
-              id="alert-verified"
-              class="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-yellow-800 dark:border-yellow-800 dark:bg-gray-800 dark:text-yellow-400"
-              role="alert"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="me-2 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-                  />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-base font-medium">Pendaftaran sedang diproses</h3>
-              </div>
-              <div class="mb-4 mt-2 text-xs">
-                Pendaftaran Anda sedang diproses. Harap tunggu, kami akan menginformasikan hasilnya segera.
-              </div>
-              <div class="flex">
-                <button
-                  type="button"
-                  class="rounded-lg border border-yellow-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-yellow-800 hover:bg-yellow-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-yellow-200 dark:border-yellow-600 dark:text-yellow-400 dark:hover:bg-yellow-600 dark:hover:text-white dark:focus:ring-yellow-800"
-                  data-dismiss-target="#alert-verified"
-                  aria-label="Close"
-                >
-                  tutup
-                </button>
-              </div>
-            </div>
-            <!-- VERIFIED -->
-            <div
-              v-if="admission_student.data.status == 'VERIFIED'"
-              id="alert-verified"
-              class="mb-4 rounded-lg border border-purple-300 bg-purple-50 p-4 text-purple-800 dark:border-purple-800 dark:bg-gray-800 dark:text-purple-400"
-              role="alert"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="me-2 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-                  />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-base font-medium">Pendaftaran telah diverifikasi</h3>
-              </div>
-              <div class="mb-4 mt-2 text-xs">
-                Selamat! Pendaftaran Anda telah berhasil diverifikasi. Silakan atur jadwal pertemuan atau interview
-                sesuai ketersediaan Anda dan konfirmasi segera. Kami menantikan kehadiran Anda!
-              </div>
-              <div class="flex">
-                <button
-                  type="button"
-                  class="rounded-lg border border-purple-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-purple-800 hover:bg-purple-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-purple-200 dark:border-purple-600 dark:text-purple-400 dark:hover:bg-purple-600 dark:hover:text-white dark:focus:ring-purple-800"
-                  data-dismiss-target="#alert-verified"
-                  aria-label="Close"
-                >
-                  tutup
-                </button>
-              </div>
-            </div>
-            <!-- UNVERIFIED -->
-            <div
-              v-if="admission_student.data.status == 'UNVERIFIED'"
-              id="alert-unverified"
-              class="mb-4 rounded-lg border border-red-300 bg-red-50 p-4 text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
-              role="alert"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="me-2 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-                  />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-base font-medium">Pendaftaran telah ditolak</h3>
-              </div>
-              <div class="mb-4 mt-2 text-xs">
-                Maaf, pendaftaran Anda tidak dapat diproses karena data tidak valid. Pastikan formulir terisi lengkap
-                dan berkas sesuai ketentuan. Silakan periksa kembali, coba lagi, atau hubungi kami untuk bantuan.
-              </div>
-              <div class="flex">
-                <button
-                  type="button"
-                  class="rounded-lg border border-red-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-red-800 hover:bg-red-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-200 dark:border-red-600 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-800"
-                  data-dismiss-target="#alert-unverified"
-                  aria-label="Close"
-                >
-                  tutup
-                </button>
-              </div>
-            </div>
-            <!-- ACCEPTED -->
-            <div
-              v-if="admission_student.data.status == 'ACCEPTED'"
-              id="alert-accepted"
-              class="mb-4 rounded-lg border border-green-300 bg-green-50 p-4 text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
-              role="alert"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="me-2 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-                  />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-base font-medium">
-                  Selamat, {{ admission_student.data.name ?? '-' }} diterima sebagai Siswa
-                </h3>
-              </div>
-              <div class="mb-4 mt-2 text-xs">
-                Selamat! Pendaftaran Anda telah berhasil diterima. Silakan lanjutkan proses pembayaran sekolah untuk
-                menyelesaikan tahap berikutnya. Jika membutuhkan bantuan, jangan ragu untuk menghubungi kami.
-              </div>
-              <div class="flex">
-                <button
-                  type="button"
-                  class="rounded-lg border border-green-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-green-800 hover:bg-green-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-200 dark:border-green-600 dark:text-green-400 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-800"
-                  data-dismiss-target="#alert-accepted"
-                  aria-label="Close"
-                >
-                  tutup
-                </button>
-              </div>
-            </div>
-            <!-- REJECTED -->
-            <div
-              v-if="admission_student.data.status == 'REJECTED'"
-              id="alert-rejected"
-              class="mb-4 rounded-lg border border-red-300 bg-red-50 p-4 text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
-              role="alert"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="me-2 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-                  />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-base font-medium">
-                  Mohon maaf, {{ admission_student.data.name ?? '-' }} tidak diterima sebagai Siswa
-                </h3>
-              </div>
-              <div class="mb-4 mt-2 text-xs">
-                Kami menghargai usaha Anda dalam mengikuti proses pendaftaran. Sayangnya, pendaftaran Anda belum dapat
-                kami terima untuk saat ini. Jangan berkecil hati, Anda dapat mencoba kembali di kesempatan berikutnya.
-                Jika memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami.
-              </div>
-              <div class="flex">
-                <button
-                  type="button"
-                  class="rounded-lg border border-red-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-red-800 hover:bg-red-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-200 dark:border-red-600 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-800"
-                  data-dismiss-target="#alert-rejected"
-                  aria-label="Close"
-                >
-                  Tutup
-                </button>
-              </div>
-            </div>
-            <!-- ENROLLED -->
-            <div
-              v-if="admission_student.data.status == 'ENROLLED'"
-              id="alert-accepted"
-              class="mb-4 rounded-lg border border-green-300 bg-green-50 p-4 text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
-              role="alert"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="me-2 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-                  />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-base font-medium">Pendaftaran telah selesai</h3>
-              </div>
-              <div class="mb-4 mt-2 text-xs">
-                Terima kasih telah mendaftar! Jika diperlukan, silakan hubungi kami untuk informasi lebih lanjut.
-              </div>
-              <div class="flex">
-                <button
-                  type="button"
-                  class="rounded-lg border border-green-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-green-800 hover:bg-green-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-200 dark:border-green-600 dark:text-green-400 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-800"
-                  data-dismiss-target="#alert-accepted"
-                  aria-label="Close"
-                >
-                  tutup
-                </button>
-              </div>
-            </div>
-            <!-- CANCELED -->
-            <div
-              v-if="admission_student.data.status == 'CANCELED'"
-              id="alert-accepted"
-              class="mb-4 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-800 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-400"
-              role="alert"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="me-2 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-                  />
-                </svg>
-                <span class="sr-only">Info</span>
-                <h3 class="text-base font-medium">Pendaftaran dibatalkan</h3>
-              </div>
-              <div class="mb-4 mt-2 text-xs">
-                Anda telah membatalkan pendaftaran. Jika ingin mendaftar kembali, silakan lakukan proses pendaftaran
-                ulang.
-              </div>
-              <div class="flex">
-                <button
-                  type="button"
-                  class="rounded-lg border border-gray-800 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-gray-800 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-800"
-                  data-dismiss-target="#alert-accepted"
-                  aria-label="Close"
-                >
-                  tutup
-                </button>
-              </div>
-            </div>
-          </div>
+          <AdmissionStatusAlert :status="admission_student.data.status" />
           <div class="grid gap-4 pb-2 sm:gap-8 md:grid-cols-2 md:pb-4">
+            <!-- personal data -->
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <div class="flex items-center space-x-4">
@@ -360,9 +97,13 @@ export default {
                     <p class="text-xs text-gray-500 dark:text-gray-400">
                       ID: {{ admission_student.data.registration_number ?? '-' }}
                     </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ admission_student.data.school.area.name }} > {{ admission_student.data.school_year.name }} >
+                      Kelas
+                      {{ admission_student.data.school_grade.title }}
+                    </p>
                   </div>
                 </div>
-
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -373,17 +114,27 @@ export default {
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Jenis Kelamin</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ admission_student.data.gender ?? '-' }}
+                    {{ admission_student.data.gender_label ?? '-' }}
                   </dd>
                 </dl>
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ admission_student.data.religion ?? '-' }}
+                    {{ admission_student.data.religion_label ?? '-' }}
+                  </dd>
+                </dl>
+                <dl>
+                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan</dt>
+                  <dd class="text-xs text-gray-500 dark:text-gray-400">
+                    <span v-if="admission_student.data.languages && admission_student.data.languages.length">
+                      <span v-for="(language, index) in admission_student.data.languages" :key="index">
+                        {{ language }}<span v-if="index < admission_student.data.languages.length - 1">,</span>
+                      </span>
+                    </span>
+                    <span v-else>Tidak diketahui</span>
                   </dd>
                 </dl>
               </div>
-
               <div class="space-y-4">
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon</dt>
@@ -411,6 +162,7 @@ export default {
                 </dl>
               </div>
             </div>
+            <!-- parent information -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Informasi Orang Tua</h2>
               <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
@@ -421,14 +173,12 @@ export default {
                       {{ admission_student.data.father_name ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Kependudukan Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.father_national_id ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -438,28 +188,37 @@ export default {
                       }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ admission_student.data.father_religion ?? '-' }}
+                      {{ admission_student.data.father_religion_label ?? '-' }}
                     </dd>
                   </dl>
-
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan Ayah</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      <span
+                        v-if="admission_student.data.father_languages && admission_student.data.father_languages.length"
+                      >
+                        <span v-for="(language, index) in admission_student.data.father_languages" :key="index">
+                          {{ language }}<span v-if="index < admission_student.data.father_languages.length - 1">,</span>
+                        </span>
+                      </span>
+                      <span v-else>Tidak diketahui</span>
+                    </dd>
+                  </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.father_phone ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.father_address ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Pekerjaan Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -467,7 +226,6 @@ export default {
                     </dd>
                   </dl>
                 </div>
-
                 <div class="space-y-4">
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Ibu</dt>
@@ -475,14 +233,12 @@ export default {
                       {{ admission_student.data.mother_name ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Kependudukan Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.mother_national_id ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -492,28 +248,37 @@ export default {
                       }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ admission_student.data.mother_religion ?? '-' }}
+                      {{ admission_student.data.mother_religion_label ?? '-' }}
                     </dd>
                   </dl>
-
+                  <dl>
+                    <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan Ibu</dt>
+                    <dd class="text-xs text-gray-500 dark:text-gray-400">
+                      <span
+                        v-if="admission_student.data.father_languages && admission_student.data.mother_languages.length"
+                      >
+                        <span v-for="(language, index) in admission_student.data.mother_languages" :key="index">
+                          {{ language }}<span v-if="index < admission_student.data.mother_languages.length - 1">,</span>
+                        </span>
+                      </span>
+                      <span v-else>Tidak diketahui</span>
+                    </dd>
+                  </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.mother_phone ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.mother_address ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Pekerjaan Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -523,9 +288,9 @@ export default {
                 </div>
               </div>
             </div>
+            <!-- health information -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Riwayat Kesehatan</h2>
-
               <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
                 <div class="space-y-4">
                   <dl>
@@ -534,14 +299,12 @@ export default {
                       {{ admission_student.data.health_info_remark ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Riwayat Kesehatan Keluarga</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
                       {{ admission_student.data.health_relate_family ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Menggunakan Asuransi?</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -571,7 +334,6 @@ export default {
                       {{ admission_student.data.recomended_hospital ?? '-' }}
                     </dd>
                   </dl>
-
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Dokter</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
@@ -581,9 +343,9 @@ export default {
                 </div>
               </div>
             </div>
+            <!-- support information -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Informasi Dukungan</h2>
-
               <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
                 <div class="space-y-4">
                   <dl>
@@ -645,19 +407,21 @@ export default {
                 </div>
               </div>
             </div>
+            <!-- attachment -->
             <div class="space-y-4">
               <h2 class="text-base font-medium text-gray-900 dark:text-white">Lampiran</h2>
-
               <div
                 class="max-w-lg rounded-lg border border-gray-200 bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               >
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center rounded-t-lg border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.family_card_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.family_card_attachment_path,
                   }"
+                  :disabled="!admission_student.data.family_card_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -687,11 +451,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.father_id_card_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.father_id_card_attachment_path,
                   }"
+                  :disabled="!admission_student.data.father_id_card_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -721,11 +487,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.mother_id_card_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.mother_id_card_attachment_path,
                   }"
+                  :disabled="!admission_student.data.mother_id_card_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -755,11 +523,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.birth_certificate_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.birth_certificate_attachment_path,
                   }"
+                  :disabled="!admission_student.data.birth_certificate_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -789,11 +559,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.last_report_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.last_report_attachment_path,
                   }"
+                  :disabled="!admission_student.data.last_report_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -823,11 +595,13 @@ export default {
                 </button>
                 <button
                   type="button"
-                  class="relative inline-flex w-full items-center border-b border-gray-200 bg-red-50 px-4 py-3 text-xs font-medium"
+                  class="relative inline-flex w-full items-center rounded-b-lg border-b border-gray-200 bg-gray-100 px-4 py-3 text-xs font-medium"
                   :class="{
                     'bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500':
                       admission_student.data.previous_school_letter_attachment_path,
+                    'cursor-not-allowed opacity-50': !admission_student.data.previous_school_letter_attachment_path,
                   }"
+                  :disabled="!admission_student.data.previous_school_letter_attachment_path"
                   @click="
                     openModal({
                       mode: 'file-preview',
@@ -977,7 +751,7 @@ export default {
           </div>
         </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
           <SubmitForm

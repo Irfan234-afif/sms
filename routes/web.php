@@ -14,39 +14,77 @@ use App\Http\Controllers\Office\HCM\Placement\PlacementController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
+use App\Http\Controllers\Office\ICC\Management\AdmissionStudentDiscountController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentPriceController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentQuotaController;
 use App\Http\Controllers\Office\ICC\Management\SchoolYearController;
+use App\Http\Controllers\Office\ICC\Publication\AchievementController;
+use App\Http\Controllers\Office\ICC\Publication\AdmissionInformationController;
+use App\Http\Controllers\Office\ICC\Publication\ArticleController;
+use App\Http\Controllers\Office\ICC\Publication\BannerController;
+use App\Http\Controllers\Office\ICC\Publication\CareerController;
+use App\Http\Controllers\Office\ICC\Publication\EventController;
+use App\Http\Controllers\Office\ICC\Publication\FaqController;
+use App\Http\Controllers\Office\ICC\Publication\GalleryController;
+use App\Http\Controllers\Office\ICC\Publication\NewsController;
+use App\Http\Controllers\Office\ICC\Publication\OperationalAreaController;
+use App\Http\Controllers\Office\ICC\Publication\OperationalHourController;
+use App\Http\Controllers\Office\ICC\Publication\PageController;
+use App\Http\Controllers\Office\ICC\Publication\PostCategoryController;
+use App\Http\Controllers\Office\ICC\Publication\PublicFeedbackController;
+use App\Http\Controllers\Office\ICC\Publication\TestimonialController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
+use App\Http\Controllers\School\Management\Entity\LearningObjectiveCategoryController;
+use App\Http\Controllers\School\Management\Entity\LearningRubricController;
 use App\Http\Controllers\School\SchoolController;
 use App\Http\Controllers\School\StudentController;
 use App\Http\Controllers\School\Management\SchoolClassroomController;
 use App\Http\Controllers\School\Management\SchoolClubController;
+use App\Http\Controllers\School\Management\SchoolCurriculumController;
 use App\Http\Controllers\School\Management\SchoolExtracurricularController;
+use App\Http\Controllers\School\Management\SchoolMajorController;
 use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
+use App\Http\Controllers\School\Setting\Entity\SchoolAcademicProgramController;
+use App\Http\Controllers\School\Setting\SchoolController as SettingSchoolController;
+use App\Http\Controllers\School\TeachingProgram\LearningObjectiveController;
+use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 // public routes
-Route::get('/', function () {
-    return Inertia::render('Public/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::prefix('/')->group(function () {
+    Route::get('/', [PublicController::class, 'index']);
+    Route::get('history', [PublicController::class, 'history'])->name('history');
+    Route::get('vision-mission', [PublicController::class, 'visionMission'])->name('visionMission');
+    Route::get('operational-hour', [PublicController::class, 'operationalHour'])->name('operationalHour');
+    Route::get('admission-information', [PublicController::class, 'admissionInformation'])->name('admissionInformation');
+    Route::get('{slug}/admission-information', [PublicController::class, 'admissionInformationDetail'])->name('admissionInformation.detail');
+    Route::get('news', [PublicController::class, 'news'])->name('news');
+    Route::get('{slug}/news', [PublicController::class, 'newsDetail'])->name('news.detail');
+    Route::get('article', [PublicController::class, 'article'])->name('article');
+    Route::get('{slug}/article', [PublicController::class, 'articleDetail'])->name('article.detail');
+    Route::get('gallery', [PublicController::class, 'gallery'])->name('gallery');
+    Route::get('event', [PublicController::class, 'event'])->name('event');
+    Route::get('{event_id}/event', [PublicController::class, 'eventDetail'])->name('event.detail');
+    Route::get('teacher-achievement', [PublicController::class, 'teacherAchievement'])->name('teacherAchievement');
+    Route::get('student-achievement', [PublicController::class, 'studentAchievement'])->name('studentAchievement');
+    Route::get('public-feedback', [PublicController::class, 'publicFeedback'])->name('publicFeedback');
+    Route::get('career', [PublicController::class, 'career'])->name('career');
+    Route::get('faq', [PublicController::class, 'faq'])->name('faq');
 });
 // portal routes
 Route::get('portal', function () {
     return Inertia::render('Portal/Index');
 })->middleware(['auth', 'verified'])->name('portal');
 // office routes
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
     ->prefix('office')
     ->name('office')
     ->group(function () {
@@ -77,6 +115,133 @@ Route::middleware(['auth', 'verified'])
                         Route::get('/', [ActivityAdmissionStudentController::class, 'index']);
                         Route::get('{registration_number}/detail', [ActivityAdmissionStudentController::class, 'detail'])->name('.detail');
                         Route::post('update-verification', [ActivityAdmissionStudentController::class, 'updateVerification'])->name('.updateVerification');
+                    });
+                // publication routes
+                Route::prefix('publication')
+                    ->name('.publication')
+                    ->group(function () {
+                        // operational area routes
+                        Route::prefix('operational-area')
+                            ->name('.operationalArea')
+                            ->group(function () {
+                                Route::get('/', [OperationalAreaController::class, 'index']);
+                                Route::post('save', [OperationalAreaController::class, 'save'])->name('.save');
+                                Route::delete('delete', [OperationalAreaController::class, 'delete'])->name('.delete');
+                            });
+                        // operational hour routes
+                        Route::prefix('operational-hour')
+                            ->name('.operationalHour')
+                            ->group(function () {
+                                Route::get('/', [OperationalHourController::class, 'index']);
+                                Route::get('option-operational-area', [OperationalHourController::class, 'optionOperationalArea'])->name('.optionOperationalArea');
+                                Route::post('save', [OperationalHourController::class, 'save'])->name('.save');
+                                Route::delete('delete', [OperationalHourController::class, 'delete'])->name('.delete');
+                            });
+                        // post category routes
+                        Route::prefix('post-category')
+                            ->name('.postCategory')
+                            ->group(function () {
+                                Route::get('/', [PostCategoryController::class, 'index']);
+                                Route::post('save', [PostCategoryController::class, 'save'])->name('.save');
+                                Route::delete('delete', [PostCategoryController::class, 'delete'])->name('.delete');
+                            });
+                        // page routes
+                        Route::prefix('page')
+                            ->name('.page')
+                            ->group(function () {
+                                Route::get('/', [PageController::class, 'index']);
+                                Route::post('save', [PageController::class, 'save'])->name('.save');
+                            });
+                        // article routes
+                        Route::prefix('article')
+                            ->name('.article')
+                            ->group(function () {
+                                Route::get('/', [ArticleController::class, 'index']);
+                                Route::get('option-post-category', [ArticleController::class, 'optionPostCategory'])->name('.optionPostCategory');
+                                Route::post('save', [ArticleController::class, 'save'])->name('.save');
+                                Route::delete('delete', [ArticleController::class, 'delete'])->name('.delete');
+                            });
+                        // news routes
+                        Route::prefix('news')
+                            ->name('.news')
+                            ->group(function () {
+                                Route::get('/', [NewsController::class, 'index']);
+                                Route::get('option-post-category', [NewsController::class, 'optionPostCategory'])->name('.optionPostCategory');
+                                Route::post('save', [NewsController::class, 'save'])->name('.save');
+                                Route::delete('delete', [NewsController::class, 'delete'])->name('.delete');
+                            });
+                        // admission information routes
+                        Route::prefix('admission-information')
+                            ->name('.admissionInformation')
+                            ->group(function () {
+                                Route::get('/', [AdmissionInformationController::class, 'index']);
+                                Route::get('option-post-category', [AdmissionInformationController::class, 'optionPostCategory'])->name('.optionPostCategory');
+                                Route::post('save', [AdmissionInformationController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AdmissionInformationController::class, 'delete'])->name('.delete');
+                            });
+                        // achievement routes
+                        Route::prefix('achievement')
+                            ->name('.achievement')
+                            ->group(function () {
+                                Route::get('/', [AchievementController::class, 'index']);
+                                Route::post('save', [AchievementController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AchievementController::class, 'delete'])->name('.delete');
+                            });
+                        // banner routes
+                        Route::prefix('banner')
+                            ->name('.banner')
+                            ->group(function () {
+                                Route::get('/', [BannerController::class, 'index']);
+                                Route::post('save', [BannerController::class, 'save'])->name('.save');
+                                Route::delete('delete', [BannerController::class, 'delete'])->name('.delete');
+                            });
+                        // career routes
+                        Route::prefix('career')
+                            ->name('.career')
+                            ->group(function () {
+                                Route::get('/', [CareerController::class, 'index']);
+                                Route::post('save', [CareerController::class, 'save'])->name('.save');
+                                Route::delete('delete', [CareerController::class, 'delete'])->name('.delete');
+                            });
+                        // event routes
+                        Route::prefix('event')
+                            ->name('.event')
+                            ->group(function () {
+                                Route::get('/', [EventController::class, 'index']);
+                                Route::post('save', [EventController::class, 'save'])->name('.save');
+                                Route::delete('delete', [EventController::class, 'delete'])->name('.delete');
+                            });
+                        // faq routes
+                        Route::prefix('faq')
+                            ->name('.faq')
+                            ->group(function () {
+                                Route::get('/', [FaqController::class, 'index']);
+                                Route::post('save', [FaqController::class, 'save'])->name('.save');
+                                Route::delete('delete', [FaqController::class, 'delete'])->name('.delete');
+                            });
+                        // gallery routes
+                        Route::prefix('gallery')
+                            ->name('.gallery')
+                            ->group(function () {
+                                Route::get('/', [GalleryController::class, 'index']);
+                                Route::post('save', [GalleryController::class, 'save'])->name('.save');
+                                Route::delete('delete', [GalleryController::class, 'delete'])->name('.delete');
+                            });
+                        // public feedback routes
+                        Route::prefix('public-feedback')
+                            ->name('.publicFeedback')
+                            ->group(function () {
+                                Route::get('/', [PublicFeedbackController::class, 'index']);
+                                Route::delete('delete', [PublicFeedbackController::class, 'delete'])->name('.delete');
+                            });
+                        // testimonial routes
+                        Route::prefix('testimonial')
+                            ->name('.testimonial')
+                            ->group(function () {
+                                Route::get('/', [TestimonialController::class, 'index']);
+                                Route::post('save', [TestimonialController::class, 'save'])->name('.save');
+                                Route::delete('delete', [TestimonialController::class, 'delete'])->name('.delete');
+                            });
                     });
                 // management routes
                 Route::prefix('management')
@@ -110,7 +275,20 @@ Route::middleware(['auth', 'verified'])
                             ->name('.admissionStudentPrice')
                             ->group(function () {
                                 Route::get('/', [AdmissionStudentPriceController::class, 'index']);
-                                Route::post('save', [AdmissionStudentPriceController::class, 'save'])->name('.save');
+                                Route::get('option-area', [AdmissionStudentPriceController::class, 'optionArea'])->name('.optionArea');
+                                Route::post('store', [AdmissionStudentPriceController::class, 'store'])->name('.store');
+                                Route::post('update', [AdmissionStudentPriceController::class, 'update'])->name('.update');
+                                Route::delete('delete', [AdmissionStudentPriceController::class, 'delete'])->name('.delete');
+                            });
+                        // admission student discount routes
+                        Route::prefix('admission-student-discount')
+                            ->name('.admissionStudentDiscount')
+                            ->group(function () {
+                                Route::get('/', [AdmissionStudentDiscountController::class, 'index']);
+                                Route::get('option-area', [AdmissionStudentDiscountController::class, 'optionArea'])->name('.optionArea');
+                                Route::post('store', [AdmissionStudentDiscountController::class, 'store'])->name('.store');
+                                Route::post('update', [AdmissionStudentDiscountController::class, 'update'])->name('.update');
+                                Route::delete('delete', [AdmissionStudentDiscountController::class, 'delete'])->name('.delete');
                             });
                     });
             });
@@ -179,7 +357,7 @@ Route::middleware(['auth', 'verified'])
             });
     });
 // school routes
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
     ->prefix('school')
     ->name('school')
     ->group(function () {
@@ -192,7 +370,9 @@ Route::middleware(['auth', 'verified'])
                 Route::get('/', [StudentController::class, 'index']);
                 Route::get('download-import-template', [StudentController::class, 'downloadImportTemplate'])
                     ->name('.downloadImportTemplate');
-                Route::get('{school_national_id}/detail', [StudentController::class, 'detail'])->name('.detail');
+                Route::get('{student_id}/detail', [StudentController::class, 'detail'])->name('.detail');
+                Route::get('option-school-grade', [StudentController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
+                Route::post('store', [StudentController::class, 'store'])->name('.store');
                 Route::post('update', [StudentController::class, 'update'])->name('.update');
                 Route::post('import', [StudentController::class, 'import'])->name('.import');
             });
@@ -202,13 +382,63 @@ Route::middleware(['auth', 'verified'])
             ->group(function () {
                 Route::get('/', [SchoolActivityAdmissionStudentController::class, 'index']);
                 Route::get('{registration_number}/detail', [SchoolActivityAdmissionStudentController::class, 'detail'])->name('.detail');
+                Route::get('export', [SchoolActivityAdmissionStudentController::class, 'export'])->name('.export');
                 Route::post('update-stage', [SchoolActivityAdmissionStudentController::class, 'updateStage'])->name('.updateStage');
                 Route::post('update-status', [SchoolActivityAdmissionStudentController::class, 'updateStatus'])->name('.updateStatus');
+            });
+        // teaching program routes
+        Route::prefix('teaching-program')
+            ->name('.teachingProgram')
+            ->group(function () {
+                // subject threshold routes
+                Route::prefix('subject-threshold')
+                    ->name('.subjectThreshold')
+                    ->group(function () {
+                        Route::get('/', [SubjectThresholdController::class, 'index']);
+                        Route::get('get-subject-threshold', [SubjectThresholdController::class, 'getSubjectThreshold'])->name('.getSubjectThreshold');
+                        Route::post('save', [SubjectThresholdController::class, 'save'])->name('.save');
+                    });
+                // learning objective routes
+                Route::prefix('learning-objective')
+                    ->name('.learningObjective')
+                    ->group(function () {
+                        Route::get('/', [LearningObjectiveController::class, 'index']);
+                        Route::get('{learning_objective_category_id}/detail', [LearningObjectiveController::class, 'detail'])->name('.detail');
+                        Route::get('option-school-phase', [LearningObjectiveController::class, 'optionSchoolPhase'])->name('.optionSchoolPhase');
+                        Route::get('option-school-grade', [LearningObjectiveController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
+                        Route::get('option-school-subject', [LearningObjectiveController::class, 'optionSchoolSubject'])->name('.optionSchoolSubject');
+                        Route::get('option-learning-objective', [LearningObjectiveController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
+                        Route::get('get-learning-objective', [LearningObjectiveController::class, 'getLearningObjective'])->name('.getLearningObjective');
+                        Route::post('save', [LearningObjectiveController::class, 'save'])->name('.save');
+                        Route::delete('delete', [LearningObjectiveController::class, 'delete'])->name('.delete');
+                    });
             });
         // management routes
         Route::prefix('management')
             ->name('.management')
             ->group(function () {
+                // school curriculum routes
+                Route::prefix('school-curriculum')
+                    ->name('.schoolCurriculum')
+                    ->group(function () {
+                        Route::get('/', [SchoolCurriculumController::class, 'index']);
+                        Route::get('{school_curriculum_id}/detail', [SchoolCurriculumController::class, 'detail'])->name('.detail');
+                        Route::post('save', [SchoolCurriculumController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolCurriculumController::class, 'delete'])->name('.delete');
+                        Route::prefix('learning-objective-category')
+                            ->name('.learningObjectiveCategory')
+                            ->group(function () {
+                                Route::get('option-parent', [LearningObjectiveCategoryController::class, 'optionParent'])->name('.optionParent');
+                                Route::post('save', [LearningObjectiveCategoryController::class, 'save'])->name('.save');
+                                Route::delete('delete', [LearningObjectiveCategoryController::class, 'delete'])->name('.delete');
+                            });
+                        Route::prefix('learning-rubric')
+                            ->name('.learningRubric')
+                            ->group(function () {
+                                Route::post('save', [LearningRubricController::class, 'save'])->name('.save');
+                                Route::delete('delete', [LearningRubricController::class, 'delete'])->name('.delete');
+                            });
+                    });
                 // school subject group routes
                 Route::prefix('school-subject-group')
                     ->name('.schoolSubjectGroup')
@@ -225,6 +455,14 @@ Route::middleware(['auth', 'verified'])
                         Route::get('option-school-subject-group', [SchoolSubjectController::class, 'optionSchoolSubjectGroup'])->name('.optionSchoolSubjectGroup');
                         Route::post('save', [SchoolSubjectController::class, 'save'])->name('.save');
                         Route::delete('delete', [SchoolSubjectController::class, 'delete'])->name('.delete');
+                    });
+                // school major routes
+                Route::prefix('school-major')
+                    ->name('.schoolMajor')
+                    ->group(function () {
+                        Route::get('/', [SchoolMajorController::class, 'index']);
+                        Route::post('save', [SchoolMajorController::class, 'save'])->name('.save');
+                        Route::delete('delete', [SchoolMajorController::class, 'delete'])->name('.delete');
                     });
                 // school classroom routes
                 Route::prefix('school-classroom')
@@ -268,10 +506,31 @@ Route::middleware(['auth', 'verified'])
                         Route::post('remove-member', [SchoolClubController::class, 'removeMember'])->name('.removeMember');
                     });
             });
+        // setting routes
+        Route::prefix('setting')
+            ->name('.setting')
+            ->group(function () {
+                // profile routes
+                Route::prefix('profile')
+                    ->name('.profile')
+                    ->group(function () {
+                        Route::get('/', [SettingSchoolController::class, 'index']);
+                        Route::get('option-headmaster', [SettingSchoolController::class, 'optionHeadmaster'])->name('.optionHeadmaster');
+                        Route::post('save', [SettingSchoolController::class, 'save'])->name('.save');
+                        Route::prefix('academic-program')
+                            ->name('.academicProgram')
+                            ->group(function () {
+                                Route::post('save', [SchoolAcademicProgramController::class, 'save'])->name('.save');
+                                Route::get('option-school-year', [SchoolAcademicProgramController::class, 'optionSchoolYear'])->name('.optionSchoolYear');
+                                Route::get('option-school-curriculum', [SchoolAcademicProgramController::class, 'optionSchoolCurriculum'])->name('.optionSchoolCurriculum');
+                                Route::delete('delete', [SchoolAcademicProgramController::class, 'delete'])->name('.delete');
+                            });
+                    });
+            });
     });
 
 // guardian routes
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Guardian'])
     ->prefix('guardian')
     ->name('guardian')
     ->group(function () {
@@ -284,7 +543,8 @@ Route::middleware(['auth', 'verified'])
                 Route::post('checkout', [AdmissionStudentController::class, 'checkout'])->name('.checkout');
                 Route::get('option-school', [AdmissionStudentController::class, 'optionSchool'])->name('.optionSchool');
                 Route::get('option-school-year', [AdmissionStudentController::class, 'optionSchoolYear'])->name('.optionSchoolYear');
-                Route::get('get-student-quota', [AdmissionStudentController::class, 'getStudentQuota'])->name('.getStudentQuota');
+                Route::get('get-admission-component', [AdmissionStudentController::class, 'getAdmissionComponent'])->name('.getAdmissionComponent');
+                Route::get('get-admission-discount', [AdmissionStudentController::class, 'getAdmissionDiscount'])->name('.getAdmissionDiscount');
                 Route::get('{registration_number}/form', [AdmissionStudentController::class, 'form'])->name('.form');
                 Route::get('{registration_number}/detail', [AdmissionStudentController::class, 'detail'])->name('.detail');
                 Route::post('submit', [AdmissionStudentController::class, 'submit'])->name('.submit');
@@ -300,7 +560,7 @@ Route::middleware(['auth', 'verified'])
                 Route::post('process-payment', [TransactionPaymentController::class, 'processPayment'])->name('.processPayment');
             });
     });
-
+// auth
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

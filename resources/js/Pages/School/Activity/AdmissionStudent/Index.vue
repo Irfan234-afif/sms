@@ -7,6 +7,7 @@ import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Sekolah', href: route('school') },
   { label: 'Pendaftaran Siswa Baru', href: route('school.activity.admissionStudent') },
@@ -43,10 +44,12 @@ export default {
       <SchoolSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
-          <!-- Table List -->
+        <div
+          v-if="admission_students.data.length > 0"
+          class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800"
+        >
+          <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
               <thead class="bg-gray-50 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -169,18 +172,50 @@ export default {
                           </div>
                         </OutlineButton>
                       </Link>
+                      <a
+                        :href="
+                          route('school.activity.admissionStudent.export', {
+                            admission_student_id: admission_student.uuid,
+                          })
+                        "
+                      >
+                        <OutlineButton type="green">
+                          <div class="flex items-center space-x-1 text-xs">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="h-4"
+                            >
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                              <path d="M9 15h6" />
+                              <path d="M12.5 17.5l2.5 -2.5l-2.5 -2.5" />
+                            </svg>
+                            <div>Ekspor Data</div>
+                          </div>
+                        </OutlineButton>
+                      </a>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
+          <!-- pagination -->
           <Pagination
             :search_params="search_params"
             :meta="admission_students.meta"
             :links="admission_students.links"
           />
+        </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
         </div>
       </section>
     </template>

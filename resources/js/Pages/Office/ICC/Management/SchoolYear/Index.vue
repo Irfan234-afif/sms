@@ -11,6 +11,7 @@ import SchoolYearForm from './Form.vue';
 import Badge from '@/Components/Badge.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
+import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
@@ -104,10 +105,9 @@ export default {
       <ICCSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
-          <!-- Table List -->
+        <div v-if="school_years.data.length > 0" class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
+          <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
               <thead class="bg-gray-50 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -231,11 +231,14 @@ export default {
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
+          <!-- pagination -->
           <Pagination :search_params="search_params" :meta="school_years.meta" :links="school_years.links" />
         </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
+        </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
           <SchoolYearForm

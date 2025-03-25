@@ -112,73 +112,115 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-publication" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.page')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Halaman</Link
               >
+                Halaman
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.banner')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Spanduk</Link
               >
+                Spanduk
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.admissionInformation')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Berita</Link
               >
+                Informasi Pendaftaran
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.news')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Artikel</Link
               >
+                Berita
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.article')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Acara</Link
               >
+                Artikel
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.event')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Galeri</Link
               >
+                Acara
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.gallery')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Pencapaian</Link
               >
+                Galeri
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.achievement')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Testimoni</Link
               >
+                Pencapaian
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.testimonial')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >FAQ</Link
               >
+                Testimoni
+              </Link>
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.publication.faq')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Umpan Balik</Link
               >
+                FAQ
+              </Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.publication.publicFeedback')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Umpan Balik
+              </Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.publication.operationalArea')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Area Operasional
+              </Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.publication.operationalHour')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Jam Operasional
+              </Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.publication.postCategory')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >
+                Kategori Postingan
+              </Link>
             </li>
           </ul>
         </li>
@@ -246,6 +288,13 @@ import { Link } from '@inertiajs/vue3';
                 :href="route('office.icc.management.admissionStudentPrice')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Harga Formulir Pendaftaran</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.icc.management.admissionStudentDiscount')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Diskon Formulir Pendaftaran</Link
               >
             </li>
           </ul>
@@ -422,6 +471,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['ICC'])"
             :href="route('office.icc')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -462,6 +512,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['HCM'])"
             :href="route('office.hcm')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -512,6 +563,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['GA'])"
             :href="route('office.ga')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -550,6 +602,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['QRD'])"
             :href="route('office.qrd')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >
@@ -590,6 +643,7 @@ import { Link } from '@inertiajs/vue3';
         </li>
         <li>
           <Link
+            v-if="$authHasAreaOffices($page.props.auth, ['FA'])"
             :href="route('office.finance')"
             class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           >

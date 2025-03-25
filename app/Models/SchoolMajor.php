@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SchoolMajor extends Model
 {
     use GenerateUuid, SoftDeletes;
+
+    protected $fillable = [
+        'school_id',
+        'title',
+    ];
 }

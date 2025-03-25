@@ -11,9 +11,10 @@ import { Head, Link } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import AdmissionCancellationForm from './AdmissionCancellationForm.vue';
+import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Wali', href: route('guardian') },
-  { label: 'Tagihan & Pembayaran', href: route('guardian.transactionPayment') },
+  { label: 'Pendaftaran Siswa Baru', href: route('guardian.admissionStudent') },
 ];
 </script>
 
@@ -21,7 +22,6 @@ const breadcrumbs = [
 export default {
   props: {
     search_params: Object,
-    product: Object,
     admission_students: Object,
   },
   data() {
@@ -75,9 +75,7 @@ export default {
                 title: 'Beli Formulir',
                 mode: 'purchase-form',
                 maxWidth: 'md',
-                data: {
-                  product: product.data,
-                },
+                data: {},
               })
             "
           >
@@ -108,10 +106,12 @@ export default {
       <GuardianSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
-          <!-- Table List -->
+        <div
+          v-if="admission_students.data.length > 0"
+          class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800"
+        >
+          <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
               <thead class="bg-gray-50 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -313,15 +313,18 @@ export default {
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
+          <!-- pagination -->
           <Pagination
             :search_params="search_params"
             :meta="admission_students.meta"
             :links="admission_students.links"
           />
         </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
+        </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
           <CheckoutForm

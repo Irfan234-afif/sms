@@ -22,7 +22,7 @@ const submit = () => {
     <div
       class="w-full rounded-lg bg-white p-6 shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md sm:p-8 md:mt-0"
     >
-      <h1 class="mb-1 text-base font-medium leading-tight tracking-tight text-gray-900 dark:text-white md:text-xl">
+      <h1 class="mb-1 text-base font-medium leading-tight tracking-tight text-gray-900 dark:text-white md:text-lg">
         Konfirmasi kata sandi Anda
       </h1>
       <p class="font-light text-gray-500 dark:text-gray-400">

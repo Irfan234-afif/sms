@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SubmissionApprovalDelegate extends Model
 {
     use GenerateUuid, SoftDeletes;
+
+    protected $fillable = [
+        // 
+    ];
 }

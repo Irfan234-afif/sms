@@ -13,7 +13,9 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+  <div
+    class="min-h-screen bg-gray-100 bg-[url('/assets/patterns/education-pattern.png')] bg-custom bg-repeat dark:bg-gray-900"
+  >
     <!-- navbar -->
 
     <nav
@@ -106,7 +108,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png"
                     alt="Bonnie Green avatar"
                   />
@@ -144,7 +146,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
                     alt="Jese Leos avatar"
                   />
@@ -180,7 +182,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
                     alt="Joseph McFall avatar"
                   />
@@ -218,7 +220,7 @@ import { Link } from '@inertiajs/vue3';
               >
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
                     alt="Roberta Casas image"
                   />
@@ -253,7 +255,7 @@ import { Link } from '@inertiajs/vue3';
               <Link href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600">
                 <div class="flex-shrink-0">
                   <img
-                    class="h-7 w-7 rounded-full"
+                    class="h-7 w-7 rounded-full bg-white"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/robert-brown.png"
                     alt="Robert image"
                   />
@@ -359,6 +361,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">My Profile</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['ICC'])"
                 :href="route('office.icc')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -383,6 +386,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">ICC</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['HCM'])"
                 :href="route('office.hcm')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -419,6 +423,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">HCM</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['GA'])"
                 :href="route('office.ga')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -441,6 +446,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">GA</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['QRD'])"
                 :href="route('office.qrd')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -465,6 +471,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="text-xs text-gray-900 dark:text-white">QRD</div>
               </Link>
               <Link
+                v-if="$authHasAreaOffices($page.props.auth, ['FA'])"
                 :href="route('office.finance')"
                 class="group block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
               >
@@ -499,7 +506,7 @@ import { Link } from '@inertiajs/vue3';
             data-dropdown-toggle="dropdown"
           >
             <span class="sr-only">Open user menu</span>
-            <img class="h-7 w-7 rounded-full" src="/assets/icons/user-circle.png" alt="user photo" />
+            <img class="h-7 w-7 rounded-full bg-white" src="/assets/icons/user-circle.png" alt="user photo" />
           </button>
           <!-- Dropdown menu -->
           <div

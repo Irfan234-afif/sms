@@ -15,13 +15,6 @@ const breadcrumbs = [
   <OfficeLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
-      <div
-        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
-      >
-        <div class="w-full md:w-1/3">
-          <Search :search_params="search_params" />
-        </div>
-      </div>
     </template>
     <template #sidebar>
       <ICCSidebar />

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\School\Activity;
 
+use App\Exports\AdmissionStudentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdmissionStudentResource;
 use App\Models\AdmissionStageStatus;
 use App\Models\AdmissionStudent;
 use App\Models\AdmissionStudentStage;
-use App\Models\Employee;
 use App\Models\Profile;
 use App\Models\School;
 use App\Models\Student;
@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 use Ramsey\Uuid\Uuid;
 
 class AdmissionStudentController extends Controller
@@ -33,8 +34,10 @@ class AdmissionStudentController extends Controller
         $admission_students = AdmissionStudent::where('school_id', $this->school->id)->whereNotIn('status', ['NEW', 'DRAFT', 'PENDING', 'UNVERIFIED']);
 
         if (request()->has('search')) {
-            $admission_students->where('name', 'like', '%' . request('search') . '%')
-                ->orWhere('registration_number', 'like', '%' . request('search') . '%');
+            $admission_students->where(function ($self) {
+                $self->where('name', 'like', '%' . request('search') . '%')
+                    ->orWhere('registration_number', 'like', '%' . request('search') . '%');
+            });
         }
 
         $admission_students = $admission_students->with('school.area')
@@ -106,10 +109,6 @@ class AdmissionStudentController extends Controller
         try {
             $admission_student = AdmissionStudent::where('registration_number', request('registration_number'))->firstOrFail();
 
-            $admission_student->update([
-                'status' => request('status'),
-            ]);
-
             $message = request('status') == 'ACCEPTED' ? 'Berhasil menerima sebagai Siswa' : 'Berhasil menolak calon Siswa';
 
             if (request('status') == 'ENROLLED') {
@@ -172,7 +171,17 @@ class AdmissionStudentController extends Controller
                     'student_id' => $student_created->id,
                     'guardian_id' => $admission_student->transaction->customer_id,
                 ]);
+
+                $admission_student->update([
+                    'student_id' => $student_created->id,
+                    'status' => request('status'),
+                ]);
+            } else {
+                $admission_student->update([
+                    'status' => request('status'),
+                ]);
             }
+
 
             DB::commit();
 
@@ -188,5 +197,15 @@ class AdmissionStudentController extends Controller
                 'message' => $th->getMessage(),
             ], 500);
         }
+    }
+
+    public function export()
+    {
+        $admission_student = AdmissionStudent::where('uuid', request('admission_student_id'))->firstOrFail();
+
+        $filename = $admission_student->registration_number . '-' . $admission_student->name . '.xlsx';
+        return Excel::download(new AdmissionStudentExport([[
+            'uuid' => request('admission_student_id'),
+        ]]), $filename);
     }
 }

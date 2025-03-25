@@ -1,0 +1,343 @@
+{
+  "school_name": "SDK Harapan Bangsa",
+  "school_level": "elementary",
+  "teaching_programs": {
+    "school_curriculums": [
+      {
+        "name": "KURIKULUM SDK HARAPAN BANGSA",
+        "code": "K-SDK-HB",
+        "components": {
+          "learning_objective_categories": [
+            {
+              "name": "CAPAIAN PEMBELAJARAN",
+              "code": "CP",
+              "options": {
+                "scope_school_year": true,
+                "scope_school_grade": true,
+                "scope_school_phase": true,
+                "scope_school_subject": true
+              },
+              "childs": [
+                {
+                  "name": "TUJUAN PEMBELAJARAN - 1",
+                  "code": "TP-1",
+                  "options": {
+                    "scope_school_year": true,
+                    "scope_school_grade": true,
+                    "scope_school_phase": true,
+                    "scope_school_subject": true
+                  }
+                }
+              ]
+            }
+          ],
+          "learning_objectives": [
+            {
+              "learning_component_title": "CAPAIAN PEMBELAJARAN",
+              "school_year_title": 2023,
+              "school_phase_title": "Fase A",
+              "school_grade_title": "1",
+              "school_subject_title": "Matematika",
+              "title": "Bilangan",
+              "code": "BIL",
+              "narrative": "Pada akhir fase A, peserta didik menunjukkan pemahaman dan memiliki intuisi bilangan (number sense) pada bilangan cacah sampai 100, mereka dapat membaca, menulis, menentukan nilai tempat, membandingkan, mengurutkan, serta melakukan komposisi (menyusun) dan dekomposisi (mengurai) bilangan. Peserta didik dapat melakukan operasi penjumlahan dan pengurangan menggunakan benda-benda konkret yang banyaknya sampai 20. Peserta didik menunjukkan pemahaman pecahan sebagai bagian dari keseluruhan melalui konteks membagi sebuah benda atau kumpulan benda sama banyak pecahan yang diperkenalkan adalah setengah dan seperempat.",
+              "childs": [
+                {
+                  "learning_component_title": "TUJUAN PEMBELAJARAN - 1",
+                  "school_year_title": 2023,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Matematika",
+                  "title": "TP Bilangan 001",
+                  "code": "TP BIL 001",
+                  "narrative": "Menghitung perjumlahan 1 sampai dengan 10"
+                },
+                {
+                  "learning_component_title": "TUJUAN PEMBELAJARAN - 1",
+                  "school_year_title": 2023,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Matematika",
+                  "title": "TP Bilangan 002",
+                  "code": "TP BIL 002",
+                  "narrative": "Menjelaskan penjumlahan"
+                },
+                {
+                  "learning_component_title": "_UNKNOWN",
+                  "school_year_title": 2023,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Matematika",
+                  "title": "RL Bilangan 001",
+                  "code": "RL BIL 001",
+                  "narrative": "Benda-benda di sekitarnya"
+                }
+              ]
+            },
+            {
+              "learning_component_title": "CAPAIAN PEMBELAJARAN",
+              "school_year_title": 2023,
+              "school_phase_title": "Fase A",
+              "school_grade_title": "1",
+              "school_subject_title": "Matematika",
+              "title": "Aljabar",
+              "code": "AL",
+              "narrative": "Pada akhir Fase A, peserta didik dapat menunjukan pemahaman makna simbol matematika \"=\" dalam suatu kalimat matematika yang terkait dengan penjumlahan dan pengurangan bilangan cacah sampai 20 menggunakan gambar. Contoh:   Peserta didik dapat mengenali, meniru, dan melanjutkan pola bukan bilangan (misalnya, gambar, warna, suara).",
+              "childs": []
+            },
+            {
+              "learning_component_title": "CAPAIAN PEMBELAJARAN",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase A",
+              "school_grade_title": "1",
+              "school_subject_title": "Pendidikan Agama Kristen",
+              "title": "ALLAH BERKARYA",
+              "code": "A-PAK-ELEMEN 1",
+              "narrative": "Allah Pencipta:\nMemahami Allah menciptakan dirinya sebagai pribadi yang istimewa dalam hubungannya dengan keluarga, teman, guru sebagai orang- orang terdekat dan membangun interaksi yang baik melalui tindakan sederhana.\nAllah Pemelihara:\nMemahami pemeliharaan Allah pada dirinya melalui kehadiran orang tua, keluarga, teman, dan guru serta melakukan tindakan nyata sebagai wujud syukur.\nAllah Penyelamat:-\nAllah Pemersatu: -\nNilai-nilai Kristiani:\nBergaul dengan semua orang, menghargai perbedaan, menjaga kerukunan di rumah dan di sekolah.\nMasyarakat Majemuk:\nMensyukuri keragaman suku, budaya, bangsa, dan agama sebagai anugerah Allah.\nTanggung Jawab Manusia Terhadap Alam:\nMelakukan tindakan sederhana dalam upaya tanggung jawab terhadap alam dan lingkungan sekitarnya.",
+              "childs": [
+                {
+                  "learning_component_title": "TUJUAN PEMBELAJARAN - 1",
+                  "school_year_title": 2024,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Pendidikan Agama Kristen",
+                  "title": "Menjelaskan arti keluarga.",
+                  "code": "1.1",
+                  "narrative": "Menjelaskan arti keluarga."
+                },
+                {
+                  "learning_component_title": "TUJUAN PEMBELAJARAN - 1",
+                  "school_year_title": 2024,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Pendidikan Agama Kristen",
+                  "title": "Menjelaskan bahwa keluarga adalah anugerah Tuhan.",
+                  "code": "1.2",
+                  "narrative": "Menjelaskan bahwa keluarga adalah anugerah Tuhan."
+                },
+                {
+                  "learning_component_title": "TUJUAN PEMBELAJARAN - 1",
+                  "school_year_title": 2024,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Pendidikan Agama Kristen",
+                  "title": "Menjelaskan pentingnya saling menghormati di dalam keluarga.",
+                  "code": "1.3",
+                  "narrative": "Menjelaskan pentingnya saling menghormati di dalam keluarga."
+                }
+              ]
+            },
+            {
+              "learning_component_title": "CAPAIAN PEMBELAJARAN",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase A",
+              "school_grade_title": "1",
+              "school_subject_title": "Pendidikan Agama Kristen",
+              "title": "MANUSIA DAN NILAI-NILAI KRISTIANI",
+              "code": "A-PAK-ELEMEN 2",
+              "narrative": "Hakikat Manusia:\nMemahami dirinya yang memiliki berbagai anggota tubuh dan bermanfaat untuk tujuan mulia, serta bersyukur pada Allah melalui tindakan nyata memelihara tubuhnya.",
+              "childs": [
+                {
+                  "learning_component_title": "TUJUAN PEMBELAJARAN - 1",
+                  "school_year_title": 2024,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Pendidikan Agama Kristen",
+                  "title": "Menjelaskan pentingnya menghormati guru.",
+                  "code": "2.1",
+                  "narrative": "Menjelaskan pentingnya menghormati guru"
+                },
+                {
+                  "learning_component_title": "TUJUAN PEMBELAJARAN - 1",
+                  "school_year_title": 2024,
+                  "school_phase_title": "Fase A",
+                  "school_grade_title": "1",
+                  "school_subject_title": "Pendidikan Agama Kristen",
+                  "title": "Menyebutkan cara Allah memelihara melalui guru.",
+                  "code": "2.2",
+                  "narrative": "Menyebutkan cara Allah memelihara melalui guru."
+                }
+              ]
+            },
+            {
+              "learning_component_title": "CAPAIAN PEMBELAJARAN",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase A",
+              "school_grade_title": "1",
+              "school_subject_title": "Pendidikan Agama Kristen",
+              "title": "GEREJA DAN MASYARAKAT MAJEMUK",
+              "code": "A-PAK-ELEMEN 3",
+              "narrative": "Tugas Panggilan Gereja:\nMenerima tugas panggilan gereja untuk bersekutu, bersaksi, dan melayani.",
+              "childs": []
+            },
+            {
+              "learning_component_title": "CAPAIAN PEMBELAJARAN",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase A",
+              "school_grade_title": "1",
+              "school_subject_title": "Pendidikan Agama Kristen",
+              "title": "ALAM DAN LINGKUNGAN HIDUP",
+              "code": "A-PAK-ELEMEN 4",
+              "narrative": "Alam Ciptaan Allah:\nMensyukuri Allah hadir dalam seluruh alam ciptaan",
+              "childs": []
+            }
+          ],
+          "rubrics": []
+        }
+      }
+    ],
+    "school_subject_predicates": [
+      {
+        "school_year_title": 2023,
+        "school_grade_title": "1",
+        "school_subject_title": "Matematika",
+        "minimum_value": 60,
+        "scales": [
+          {
+            "value": 80,
+            "predicate": "BSB",
+            "narrative": "Siswa berkembang sangat baik dalam"
+          },
+          {
+            "value": 70,
+            "predicate": "SB",
+            "narrative": "Siswa sangat berkembang dalam"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 60,
+            "narrative": "Siswa perlu bimbingan lebih dalam untuk"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2023,
+        "school_grade_title": "2",
+        "school_subject_title": "Matematika",
+        "minimum_value": 60,
+        "scales": [
+          {
+            "value": 80,
+            "predicate": "BSB",
+            "narrative": "Siswa berkembang sangat baik dalam"
+          },
+          {
+            "value": 70,
+            "predicate": "SB",
+            "narrative": "Siswa sangat berkembang dalam"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 60,
+            "narrative": "Siswa perlu bimbingan lebih dalam untuk"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2023,
+        "school_grade_title": "3",
+        "school_subject_title": "Matematika",
+        "minimum_value": 60,
+        "scales": [
+          {
+            "value": 80,
+            "predicate": "BSB",
+            "narrative": "Siswa berkembang sangat baik dalam"
+          },
+          {
+            "value": 70,
+            "predicate": "SB",
+            "narrative": "Siswa sangat berkembang dalam"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 60,
+            "narrative": "Siswa perlu bimbingan lebih dalam untuk"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2023,
+        "school_grade_title": "4",
+        "school_subject_title": "Matematika",
+        "minimum_value": 60,
+        "scales": [
+          {
+            "value": 80,
+            "predicate": "BSB",
+            "narrative": "Siswa berkembang sangat baik dalam"
+          },
+          {
+            "value": 70,
+            "predicate": "SB",
+            "narrative": "Siswa sangat berkembang dalam"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 60,
+            "narrative": "Siswa perlu bimbingan lebih dalam untuk"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2023,
+        "school_grade_title": "5",
+        "school_subject_title": "Matematika",
+        "minimum_value": 60,
+        "scales": [
+          {
+            "value": 80,
+            "predicate": "BSB",
+            "narrative": "Siswa berkembang sangat baik dalam"
+          },
+          {
+            "value": 70,
+            "predicate": "SB",
+            "narrative": "Siswa sangat berkembang dalam"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 60,
+            "narrative": "Siswa perlu bimbingan lebih dalam untuk"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2023,
+        "school_grade_title": "6",
+        "school_subject_title": "Matematika",
+        "minimum_value": 60,
+        "scales": [
+          {
+            "value": 80,
+            "predicate": "BSB",
+            "narrative": "Siswa berkembang sangat baik dalam"
+          },
+          {
+            "value": 70,
+            "predicate": "SB",
+            "narrative": "Siswa sangat berkembang dalam"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 60,
+            "narrative": "Siswa perlu bimbingan lebih dalam untuk"
+          }
+        ]
+      }
+    ],
+    "school_academic_programs": [
+      {
+        "school_year_title": 2024,
+        "school_curriculum_title": "KURIKULUM SDK HARAPAN BANGSA",
+        "is_active": true
+      }
+    ]
+  }
+}

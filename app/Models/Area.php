@@ -35,4 +35,9 @@ class Area extends Model
     {
         return $this->hasMany(EmployeeAssignment::class, 'area_id');
     }
+
+    public function product_usages()
+    {
+        return $this->belongsToMany(Product::class, 'product_usages');
+    }
 }

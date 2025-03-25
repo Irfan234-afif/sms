@@ -1,7 +1,7 @@
 <script setup>
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
-import { schoolInformationSources } from '@/Helpers/options';
+import { bloodTypes, genders, religions, responsibleFee, schoolInformationSources } from '@/Helpers/options';
 import questionnaires from '@/Helpers/questionnaires';
 import CenterLayout from '@/Layouts/CenterLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
@@ -169,36 +169,19 @@ export default {
           label: 'Jenis Kelamin',
           rules: [fieldValidation.isRequired('Jenis Kelamin')],
           error: null,
-          options: [
-            {
-              value: 'MALE',
-              label: 'Laki-laki',
-            },
-            {
-              value: 'FEMALE',
-              label: 'Perempuan',
-            },
-          ],
+          options: genders,
         },
         blood_type: {
           label: 'Golongan Darah',
           rules: [],
           error: null,
-          options: ['A', 'B', 'AB', 'O'],
+          options: bloodTypes,
         },
         religion: {
           label: 'Agama',
           rules: [fieldValidation.isRequired('Agama')],
           error: null,
-          options: [
-            { value: 'ISLAM', label: 'Islam' },
-            { value: 'CHRISTIAN', label: 'Kristen' },
-            { value: 'CATHOLIC', label: 'Katolik' },
-            { value: 'HINDU', label: 'Hindu' },
-            { value: 'BUDDHIST', label: 'Buddha' },
-            { value: 'CONFUCIAN', label: 'Konghucu' },
-            { value: 'OTHER', label: 'Lainnya' },
-          ],
+          options: religions,
         },
         languages: {
           label: 'Bahasa yang Dikuasai',
@@ -250,15 +233,7 @@ export default {
           label: 'Agama',
           rules: [],
           error: null,
-          options: [
-            { value: 'ISLAM', label: 'Islam' },
-            { value: 'CHRISTIAN', label: 'Kristen' },
-            { value: 'CATHOLIC', label: 'Katolik' },
-            { value: 'HINDU', label: 'Hindu' },
-            { value: 'BUDDHIST', label: 'Buddha' },
-            { value: 'CONFUCIAN', label: 'Konghucu' },
-            { value: 'OTHER', label: 'Lainnya' },
-          ],
+          options: religions,
         },
         father_languages: {
           label: 'Bahasa yang Dikuasai',
@@ -325,15 +300,7 @@ export default {
           label: 'Agama',
           rules: [],
           error: null,
-          options: [
-            { value: 'ISLAM', label: 'Islam' },
-            { value: 'CHRISTIAN', label: 'Kristen' },
-            { value: 'CATHOLIC', label: 'Katolik' },
-            { value: 'HINDU', label: 'Hindu' },
-            { value: 'BUDDHIST', label: 'Buddha' },
-            { value: 'CONFUCIAN', label: 'Konghucu' },
-            { value: 'OTHER', label: 'Lainnya' },
-          ],
+          options: religions,
         },
         mother_languages: {
           label: 'Bahasa yang Dikuasai',
@@ -406,11 +373,7 @@ export default {
           label: 'Penanggung Biaya',
           rules: [fieldValidation.isRequired('Penanggung Biaya')],
           error: null,
-          options: [
-            { value: 'FATHER', label: 'Ayah' },
-            { value: 'MOTHER', label: 'Ibu' },
-            { value: 'OTHER', label: 'Lainnya' },
-          ],
+          options: responsibleFee,
         },
         payer_name: {
           label: 'Nama',
@@ -894,7 +857,6 @@ export default {
 
   <CenterLayout>
     <template #content>
-      <!-- Data -->
       <section class="bg-white antialiased shadow-md dark:bg-gray-900 sm:rounded-lg">
         <div class="flex flex-col justify-center space-y-3 p-4 md:flex-row md:items-center md:space-x-4 md:space-y-0">
           <div class="flex items-center justify-center space-x-2">
@@ -1386,7 +1348,6 @@ export default {
                   >
                     <el-input v-model="parentForm.father_name" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_national_id.label"
@@ -1396,7 +1357,6 @@ export default {
                   >
                     <el-input v-model="parentForm.father_national_id" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_birth_place.label"
@@ -1406,7 +1366,6 @@ export default {
                   >
                     <el-input v-model="parentForm.father_birth_place" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_birth_date.label"
@@ -1421,7 +1380,6 @@ export default {
                       value-format="YYYY-MM-DD"
                     />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_religion.label"
@@ -1442,7 +1400,6 @@ export default {
                       />
                     </el-select>
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_languages.label"
@@ -1467,7 +1424,6 @@ export default {
                       />
                     </el-select>
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_phone.label"
@@ -1477,7 +1433,6 @@ export default {
                   >
                     <el-input v-model="parentForm.father_phone" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_email.label"
@@ -1487,7 +1442,6 @@ export default {
                   >
                     <el-input v-model="parentForm.father_email" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_address.label"
@@ -1497,7 +1451,6 @@ export default {
                   >
                     <el-input type="textarea" v-model="parentForm.father_address" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_occupation.label"
@@ -1507,7 +1460,6 @@ export default {
                   >
                     <el-input v-model="parentForm.father_occupation" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_company.label"
@@ -1517,7 +1469,6 @@ export default {
                   >
                     <el-input v-model="parentForm.father_company" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.father_position.label"
@@ -1579,7 +1530,6 @@ export default {
                   >
                     <el-input v-model="parentForm.mother_name" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_national_id.label"
@@ -1589,7 +1539,6 @@ export default {
                   >
                     <el-input v-model="parentForm.mother_national_id" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_birth_place.label"
@@ -1599,7 +1548,6 @@ export default {
                   >
                     <el-input v-model="parentForm.mother_birth_place" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_birth_date.label"
@@ -1614,7 +1562,6 @@ export default {
                       value-format="YYYY-MM-DD"
                     />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_religion.label"
@@ -1635,7 +1582,6 @@ export default {
                       />
                     </el-select>
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_languages.label"
@@ -1660,7 +1606,6 @@ export default {
                       />
                     </el-select>
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_phone.label"
@@ -1670,7 +1615,6 @@ export default {
                   >
                     <el-input v-model="parentForm.mother_phone" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_email.label"
@@ -1680,7 +1624,6 @@ export default {
                   >
                     <el-input v-model="parentForm.mother_email" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_address.label"
@@ -1690,7 +1633,6 @@ export default {
                   >
                     <el-input type="textarea" v-model="parentForm.mother_address" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_occupation.label"
@@ -1700,7 +1642,6 @@ export default {
                   >
                     <el-input v-model="parentForm.mother_occupation" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_company.label"
@@ -1710,7 +1651,6 @@ export default {
                   >
                     <el-input v-model="parentForm.mother_company" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.mother_position.label"
@@ -1744,7 +1684,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.emergency_name" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.emergency_phone.label"
@@ -1754,7 +1693,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.emergency_phone" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.emergency_home_phone.label"
@@ -1764,7 +1702,7 @@ export default {
                   >
                     <el-input v-model="additionalForm.emergency_home_phone" autocomplete="off" />
                   </el-form-item>
-
+                  <!-- todo: use input select  -->
                   <el-form-item
                     class="font-medium"
                     :label="field.emergency_relation.label"
@@ -1807,7 +1745,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.payer_name" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="additionalForm.responsible_fee == 'OTHER'"
                     class="font-medium"
@@ -1818,7 +1755,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.payer_home_phone" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="additionalForm.responsible_fee == 'OTHER'"
                     class="font-medium"
@@ -1829,7 +1765,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.payer_phone" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="additionalForm.responsible_fee == 'OTHER'"
                     class="font-medium"
@@ -1840,7 +1775,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.payer_email" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="additionalForm.responsible_fee == 'OTHER'"
                     class="font-medium"
@@ -1851,7 +1785,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.payer_relation" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="additionalForm.responsible_fee == 'OTHER'"
                     class="font-medium"
@@ -1862,7 +1795,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.payer_address" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="additionalForm.responsible_fee == 'OTHER'"
                     class="font-medium"
@@ -1873,7 +1805,6 @@ export default {
                   >
                     <el-input v-model="additionalForm.payer_company" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="additionalForm.responsible_fee == 'OTHER'"
                     class="font-medium"
@@ -1919,7 +1850,6 @@ export default {
                   >
                     <el-input v-model="healthForm.health_info_remark" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.health_relate_family.label"
@@ -1929,7 +1859,6 @@ export default {
                   >
                     <el-input v-model="healthForm.health_relate_family" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.recomended_hospital.label"
@@ -1939,7 +1868,6 @@ export default {
                   >
                     <el-input v-model="healthForm.recomended_hospital" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.doctor_name.label"
@@ -1949,7 +1877,6 @@ export default {
                   >
                     <el-input v-model="healthForm.doctor_name" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     class="font-medium"
                     :label="field.use_insurance.label"
@@ -1976,7 +1903,6 @@ export default {
                   >
                     <el-input v-model="healthForm.insurance_name" autocomplete="off" />
                   </el-form-item>
-
                   <el-form-item
                     v-if="healthForm.use_insurance"
                     class="font-medium"

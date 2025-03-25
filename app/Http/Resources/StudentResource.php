@@ -14,6 +14,13 @@ class StudentResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'profile' => $this->whenLoaded('profile', fn() => ProfileResource::make($this->profile)),
+            'school' => $this->whenLoaded('school', fn() => SchoolResource::make($this->school)),
+            'school_grade' => $this->whenLoaded('school_grade', fn() => SchoolGradeResource::make($this->school_grade)),
+            'school_national_id' => $this->school_national_id,
+            'admission' => $this->whenLoaded('admission', fn() => AdmissionStudentResource::make($this->admission)),
+        ];
     }
 }

@@ -7,6 +7,10 @@ import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import AdmissionStudentPriceForm from './Form.vue';
+import DefaultButton from '@/Components/DefaultButton.vue';
+import Badge from '@/Components/Badge.vue';
+import Search from '@/Components/Search.vue';
+import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'ICC', href: route('office.icc') },
@@ -55,15 +59,54 @@ export default {
   <OfficeLayout>
     <template #header>
       <Breadcrumb :breadcrumbs="breadcrumbs" />
+      <div
+        class="mx-4 flex flex-col items-stretch justify-between space-y-3 py-3 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
+      >
+        <div class="w-full md:w-1/3">
+          <Search :search_params="search_params" />
+        </div>
+        <div
+          class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0"
+        >
+          <DefaultButton
+            type="default"
+            @click="
+              openModal({
+                title: 'Tambah Harga Formulir Baru',
+                mode: 'admission-student-price-create-form',
+                maxWidth: 'md',
+                data: {},
+              })
+            "
+          >
+            <div class="flex items-center space-x-1 text-xs">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 5l0 14" />
+                <path d="M5 12l14 0" />
+              </svg>
+              <div>Harga Formulir Baru</div>
+            </div>
+          </DefaultButton>
+        </div>
+      </div>
     </template>
     <template #sidebar>
       <ICCSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
-          <!-- Table List -->
+        <div v-if="products.data.length > 0" class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
+          <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
               <thead class="bg-gray-50 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -79,7 +122,9 @@ export default {
                     </div>
                   </th>
                   <th scope="col" class="p-4">Formulir</th>
+                  <th scope="col" class="p-4">Area</th>
                   <th scope="col" class="p-4">Harga</th>
+                  <th scope="col" class="p-4">Status</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -105,7 +150,16 @@ export default {
                       {{ product.name }}
                     </div>
                   </th>
-                  <td class="whitespace-nowrap px-4 py-3">IDR {{ product.price }}</td>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ product.area.name }}
+                    </div>
+                  </th>
+                  <td class="whitespace-nowrap px-4 py-3">{{ product.price_label }}</td>
+                  <td class="whitespace-nowrap px-4 py-3">
+                    <Badge v-if="product.is_active" type="green">Aktif</Badge>
+                    <Badge v-else type="dark">Tidak Aktif</Badge>
+                  </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
@@ -146,15 +200,21 @@ export default {
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
+          <!-- pagination -->
           <Pagination :search_params="search_params" :meta="products.meta" :links="products.links" />
         </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
+        </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
           <AdmissionStudentPriceForm
-            v-if="propertyModal?.mode == 'admission-student-price-edit-form'"
+            v-if="
+              propertyModal?.mode == 'admission-student-price-create-form' ||
+              propertyModal?.mode == 'admission-student-price-edit-form'
+            "
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

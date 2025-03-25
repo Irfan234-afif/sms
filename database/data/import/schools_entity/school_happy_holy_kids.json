@@ -1,0 +1,263 @@
+{
+    "school_name": "Happy Holy Kids",
+    "school_level": "kindergarten",
+    "entities": {
+        "school_years": [
+            {
+                "title": "2024 - 2025",
+                "start_year": 2024,
+                "end_year": 2025
+            },
+            {
+                "title": "2025 - 2026",
+                "start_year": 2025,
+                "end_year": 2026
+            }
+        ],
+        "school_majors": [],
+        "school_subjects": [
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Sentra Imtak",
+                "alternative_name": "Religious Centre",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Sentra Bahan Alam",
+                "alternative_name": "Messy Play Centre",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Sentra Bermain Peran",
+                "alternative_name": "House Play Centre",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Pilihan",
+                "group_description": null,
+                "name": "Kelas Klasikal",
+                "alternative_name": "Classical Class",
+                "majors": []
+            },
+            {
+                "group_name": "Muatan Lokal",
+                "group_description": null,
+                "name": "Mulok Bahasa Inggris",
+                "alternative_name": "English Class",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Sentra Persiapan",
+                "alternative_name": "Preparatory Centre",
+                "majors": []
+            },
+            {
+                "group_name": "Muatan Lokal",
+                "group_description": null,
+                "name": "Mulok Bahasa Mandarin",
+                "alternative_name": "Mandarin Class",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Sentra Seni",
+                "alternative_name": "Art and Craft Centre",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Kegiatan Khusus",
+                "alternative_name": "Special Activity",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Kegiatan Kunjungan",
+                "alternative_name": "Field Trip",
+                "majors": []
+            },
+            {
+                "group_name": "Sentra Wajib",
+                "group_description": null,
+                "name": "Kegiatan Pembelajaran Eksperimen",
+                "alternative_name": "Experiential Learning Activity",
+                "majors": []
+            },
+            {
+                "group_name": "P5",
+                "group_description": null,
+                "name": "Proyek Penguatan Profil Pelajar Pancasila",
+                "alternative_name": "Pre-K Fun Week",
+                "majors": []
+            }
+        ],
+        "school_classrooms": [
+            {
+                "grade_name": "3",
+                "major_name": null,
+                "name": "Ezrah 2 - TK A",
+                "homeroom_teacher_identity_number": "04.050.210923",
+                "capacity": 15
+            },
+            {
+                "grade_name": "3",
+                "major_name": null,
+                "name": "Ezrah 3 - TK A",
+                "homeroom_teacher_identity_number": "03.10.010712",
+                "capacity": 15
+            },
+            {
+                "grade_name": "3",
+                "major_name": null,
+                "name": "Ezrah 4 - TK A",
+                "homeroom_teacher_identity_number": "04.02.1220615",
+                "capacity": 15
+            },
+            {
+                "grade_name": "3",
+                "major_name": null,
+                "name": "Ezrah 5 - TK A",
+                "homeroom_teacher_identity_number": "04.043.180618",
+                "capacity": 15
+            },
+            {
+                "grade_name": "2",
+                "major_name": null,
+                "name": "Tirza 1 - PG B",
+                "homeroom_teacher_identity_number": "03.004.010411",
+                "capacity": 13
+            },
+            {
+                "grade_name": "2",
+                "major_name": null,
+                "name": "Tirza 2 - PG B",
+                "homeroom_teacher_identity_number": "03.004.010411",
+                "capacity": 13
+            },
+            {
+                "grade_name": "2",
+                "major_name": null,
+                "name": "Tirza 3 - PG B",
+                "homeroom_teacher_identity_number": "03.07.241112",
+                "capacity": 13
+            },
+            {
+                "grade_name": "2",
+                "major_name": null,
+                "name": "Tirza 4 - PG B",
+                "homeroom_teacher_identity_number": "03.07.241112",
+                "capacity": 13
+            },
+            {
+                "grade_name": "1",
+                "major_name": null,
+                "name": "Erez 1 - PG A",
+                "homeroom_teacher_identity_number": "04.044.240619",
+                "capacity": 10
+            },
+            {
+                "grade_name": "1",
+                "major_name": null,
+                "name": "Erez 2 - PG A",
+                "homeroom_teacher_identity_number": "04.051.300819",
+                "capacity": 10
+            },
+            {
+                "grade_name": "3",
+                "major_name": null,
+                "name": "Ezrah 1 - TK A",
+                "homeroom_teacher_identity_number": "04.029.070714",
+                "capacity": 13
+            },
+            {
+                "grade_name": "4",
+                "major_name": null,
+                "name": "Teenah 1 - TK B",
+                "homeroom_teacher_identity_number": "04.046.230622",
+                "capacity": 15
+            },
+            {
+                "grade_name": "4",
+                "major_name": null,
+                "name": "Teenah 2 - TK B",
+                "homeroom_teacher_identity_number": "04.026.160514",
+                "capacity": 15
+            },
+            {
+                "grade_name": "4",
+                "major_name": null,
+                "name": "Teenah 3 - TK B",
+                "homeroom_teacher_identity_number": "04.052.210624",
+                "capacity": 15
+            },
+            {
+                "grade_name": "4",
+                "major_name": null,
+                "name": "Teenah 4 - TK B",
+                "homeroom_teacher_identity_number": "X000000",
+                "capacity": 15
+            }
+        ],
+        "school_extracurriculars": [
+            {
+                "name": "Art and Craft",
+                "mentor_identity_number": "03.07.241112"
+            },
+            {
+                "name": "Drawing and Coloring",
+                "mentor_identity_number": null
+            },
+            {
+                "name": "Obatacles 1",
+                "mentor_identity_number": "04.026.160514"
+            },
+            {
+                "name": "English",
+                "mentor_identity_number": "04.043.180618"
+            },
+            {
+                "name": "Dance",
+                "mentor_identity_number": null
+            },
+            {
+                "name": "Dance",
+                "mentor_identity_number": null
+            },
+            {
+                "name": "Vocal",
+                "mentor_identity_number": "06.078.101123"
+            },
+            {
+                "name": "English 2",
+                "mentor_identity_number": "04.048.010822"
+            },
+            {
+                "name": "Basket",
+                "mentor_identity_number": null
+            },
+            {
+                "name": "Robotic",
+                "mentor_identity_number": null
+            },
+            {
+                "name": "Obstacles 2",
+                "mentor_identity_number": "04.026.160514"
+            },
+            {
+                "name": "Obstacles 3",
+                "mentor_identity_number": "04.02.1220615"
+            }
+        ],
+        "school_clubs": []
+    }
+}

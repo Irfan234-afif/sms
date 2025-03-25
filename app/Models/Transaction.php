@@ -37,4 +37,9 @@ class Transaction extends Model
     {
         return $this->hasMany(TransactionItem::class, 'transaction_id');
     }
+
+    public function discounts()
+    {
+        return $this->hasMany(TransactionDiscount::class, 'transaction_id');
+    }
 }

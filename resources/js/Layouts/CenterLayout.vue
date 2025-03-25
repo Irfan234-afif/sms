@@ -13,7 +13,9 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+  <div
+    class="min-h-screen bg-gray-100 bg-[url('/assets/patterns/education-pattern.png')] bg-custom bg-repeat dark:bg-gray-900"
+  >
     <!-- navbar -->
 
     <nav
@@ -111,7 +113,7 @@ import { Link } from '@inertiajs/vue3';
             data-dropdown-toggle="dropdown"
           >
             <span class="sr-only">Open user menu</span>
-            <img class="h-7 w-7 rounded-full" src="/assets/icons/user-circle.png" alt="user photo" />
+            <img class="h-7 w-7 rounded-full bg-white" src="/assets/icons/user-circle.png" alt="user photo" />
           </button>
           <!-- Dropdown menu -->
           <div

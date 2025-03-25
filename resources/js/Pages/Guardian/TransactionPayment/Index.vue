@@ -9,6 +9,7 @@ import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import PaymentForm from '../TransactionPayment/PaymentForm.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import NoDataAlert from '@/Components/NoDataAlert.vue';
 const breadcrumbs = [
   { label: 'Wali', href: route('guardian') },
   { label: 'Tagihan & Pembayaran', href: route('guardian.transactionPayment') },
@@ -68,10 +69,9 @@ export default {
       <GuardianSidebar />
     </template>
     <template #content>
-      <!-- Data -->
       <section>
-        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
-          <!-- Table List -->
+        <div v-if="transactions.data.length > 0" class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800">
+          <!-- table list -->
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
               <thead class="bg-gray-50 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -127,7 +127,7 @@ export default {
                     <div
                       class="bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300 rounded py-0.5 font-medium"
                     >
-                      IDR {{ transaction.bill_amount }}
+                      Rp. {{ transaction.bill_amount }}
                     </div>
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
@@ -181,11 +181,14 @@ export default {
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
+          <!-- pagination -->
           <Pagination :search_params="search_params" :meta="transactions.meta" :links="transactions.links" />
         </div>
+        <div v-else class="relative overflow-hidden border-t bg-white p-3 shadow-md dark:bg-gray-800">
+          <NoDataAlert />
+        </div>
       </section>
-      <!-- Modal -->
+      <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
           <PaymentForm

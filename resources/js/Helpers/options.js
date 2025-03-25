@@ -64,6 +64,12 @@ const employeeStatus = [
   { label: 'Paruh Waktu', value: 'PART_TIME' },
 ];
 
+const responsibleFee = [
+  { value: 'FATHER', label: 'Ayah' },
+  { value: 'MOTHER', label: 'Ibu' },
+  { value: 'OTHER', label: 'Lainnya' },
+];
+
 const genders = [
   {
     value: 'MALE',
@@ -81,14 +87,43 @@ const maritalStatuses = [
   { value: 'WIDOWED', label: 'Duda/Janda' },
 ];
 
+const days = [
+  { label: 'Minggu', value: 'SUNDAY' },
+  { label: 'Senin', value: 'MONDAY' },
+  { label: 'Selasa', value: 'TUESDAY' },
+  { label: 'Rabu', value: 'WEDNESDAY' },
+  { label: 'Kamis', value: 'THURSDAY' },
+  { label: 'Jumat', value: 'FRIDAY' },
+  { label: 'Sabtu', value: 'SATURDAY' },
+];
+
+const testimonialTypes = [
+  { label: 'Orang Tua', value: 'PARENT' },
+  { label: 'Siswa', value: 'STUDENT' },
+  { label: 'Guru', value: 'TEACHER' },
+];
+const achievementTypes = [
+  { label: 'Siswa', value: 'STUDENT' },
+  { label: 'Guru', value: 'TEACHER' },
+];
+const discountTypes = [
+  { label: 'Persen', value: 'PERCENTAGE' },
+  { label: 'Tetap', value: 'FIXED' },
+];
+
 export {
+  achievementTypes,
   admissionStagePostStatuses,
   admissionStagePreStatuses,
   bloodTypes,
+  days,
+  discountTypes,
   employeeStatus,
   genders,
   maritalStatuses,
   religions,
+  responsibleFee,
   schoolInformationSources,
+  testimonialTypes,
   units,
 };

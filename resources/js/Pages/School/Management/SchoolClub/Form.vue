@@ -102,20 +102,27 @@ export default {
               }
             })
             .catch((error) => {
-              ElNotification({
-                title: 'Error',
-                message: 'Terjadi kesalahan.',
-                type: 'error',
-              });
+              let message = 'Terjadi kesalahan';
               if (error.response?.data?.errors) {
                 for (let field in error.response.data.errors) {
-                  this.field[field].error = error.response.data.errors[field];
+                  this.field[field].error = error.response.data.errors[field][0];
                   this.$refs['schoolClubForm'].validateField(field);
+                  message = error.response.data.errors[field][0];
                 }
               }
+
+              ElNotification({
+                title: 'Error',
+                message: message,
+                type: 'error',
+              });
             })
             .finally(() => {
               this.process = false;
+              this.loaded = false;
+              this.$nextTick(() => {
+                this.loaded = true;
+              });
             });
         }
       });

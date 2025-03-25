@@ -11,9 +11,16 @@ class Product extends Model
     use GenerateUuid, SoftDeletes;
 
     protected $fillable = [
+        'area_id',
         'name',
         'code',
         'type',
         'price',
+        'is_active',
     ];
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id')->withTrashed();
+    }
 }

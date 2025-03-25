@@ -1,0 +1,608 @@
+{
+  "school_name": "SMPK Harapan Bangsa",
+  "school_level": "junior-high",
+  "teaching_programs": {
+    "school_curriculums": [
+      {
+        "name": "Kurikulum Merdeka",
+        "code": "KM",
+        "components": {
+          "learning_objective_categories": [
+            {
+              "name": "Capaian Pembelajaran",
+              "code": "CP",
+              "options": {
+                "scope_school_year": true,
+                "scope_school_grade": true,
+                "scope_school_phase": true,
+                "scope_school_subject": true
+              },
+              "childs": [
+                {
+                  "name": "Tujuan Pembelajaran",
+                  "code": "TP",
+                  "options": {
+                    "scope_school_year": true,
+                    "scope_school_grade": true,
+                    "scope_school_phase": true,
+                    "scope_school_subject": true
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Ruang Lingkup Pembelajaran",
+              "code": "RLP",
+              "options": {
+                "scope_school_year": true,
+                "scope_school_grade": true,
+                "scope_school_phase": true,
+                "scope_school_subject": true
+              },
+              "childs": []
+            }
+          ],
+          "learning_objectives": [],
+          "rubrics": [
+            {
+              "title": "Cognitive",
+              "code": "learning-rubric-1",
+              "scales": [
+                {
+                  "title": "A",
+                  "narrative": "A",
+                  "value": 5
+                },
+                {
+                  "title": "B",
+                  "narrative": "B",
+                  "value": 4
+                },
+                {
+                  "title": "C",
+                  "narrative": "C",
+                  "value": 3
+                },
+                {
+                  "title": "D",
+                  "narrative": "D",
+                  "value": 2
+                },
+                {
+                  "title": "E",
+                  "narrative": "E",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "title": "Confident",
+              "code": "learning-rubric-2",
+              "scales": [
+                {
+                  "title": "Perfect",
+                  "narrative": "Perfect",
+                  "value": 5
+                },
+                {
+                  "title": "Excellent",
+                  "narrative": "Excellent",
+                  "value": 4
+                },
+                {
+                  "title": "Good",
+                  "narrative": "Good",
+                  "value": 3
+                },
+                {
+                  "title": "Not Bad",
+                  "narrative": "Not Bad",
+                  "value": 2
+                },
+                {
+                  "title": "Foolish",
+                  "narrative": "Foolish",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "title": "Spiritual",
+              "code": "learning-rubric-3",
+              "scales": [
+                {
+                  "title": "A",
+                  "narrative": "A",
+                  "value": 5
+                },
+                {
+                  "title": "B",
+                  "narrative": "B",
+                  "value": 4
+                },
+                {
+                  "title": "C",
+                  "narrative": "C",
+                  "value": 3
+                },
+                {
+                  "title": "D",
+                  "narrative": "D",
+                  "value": 2
+                },
+                {
+                  "title": "E",
+                  "narrative": "E",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "Kurikulum Karya",
+        "code": "Karya.01",
+        "components": {
+          "learning_objective_categories": [
+            {
+              "name": "Capaian Pembelajaran",
+              "code": "CP",
+              "options": {
+                "scope_school_year": true,
+                "scope_school_grade": true,
+                "scope_school_phase": true,
+                "scope_school_subject": true
+              },
+              "childs": [
+                {
+                  "name": "Tujuan Pembelajaran",
+                  "code": "TP",
+                  "options": {
+                    "scope_school_year": true,
+                    "scope_school_grade": true,
+                    "scope_school_phase": true,
+                    "scope_school_subject": true
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Learning Objective",
+              "code": "LO",
+              "options": {
+                "scope_school_year": true,
+                "scope_school_grade": true,
+                "scope_school_phase": false,
+                "scope_school_subject": true
+              },
+              "childs": []
+            },
+            {
+              "name": "Tujuan Pembelajaran P5",
+              "code": "P5",
+              "options": {
+                "scope_school_year": true,
+                "scope_school_grade": true,
+                "scope_school_phase": false,
+                "scope_school_subject": true
+              },
+              "childs": []
+            }
+          ],
+          "learning_objectives": [
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "IPS",
+              "title": "Pemahaman Konsep",
+              "code": "PK.01",
+              "narrative": "Pada akhir fase ini, peserta didik mampu memahami dan memiliki kesadaran akan keberadaan diri serta mampu berinteraksi dengan lingkungan terdekatnya. Ia  mampu menganalisis hubungan antara kondisi geografis daerah dengan karakteristik masyarakat dan memahami potensi sumber daya alam serta kaitannya dengan mitigasi kebencanaan. Ia juga mampu menganalisis hubungan antara keragaman kondisi geografis nusantara terhadap pembentukan kemajemukan budaya. Ia mampu memahami bagaimana masyarakat saling berupaya untuk dapat memenuhi kebutuhan hidupnya. Ia mampu menganalisis peran pemerintah dan masyarakat dalam mendorong pertumbuhan perekonomian.",
+              "childs": []
+            },
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "IPS",
+              "title": "Pemahaman Konsep",
+              "code": "PK.02",
+              "narrative": "Peserta didik juga mampu memahami dan memiliki kesadaran terhadap perubahan sosial yang sedang terjadi di era kontemporer. Ia dapat menganalisis perkembangan ekonomi di era digital. Peserta didik memahami tantangan pembangunan dan potensi Indonesia menjadi negara maju. Ia menyadari perannya sebagai bagian dari masyarakat Indonesia dan dunia di tengah isu-isu regional dan global yang sedang terjadi dan ikut memberikan kontribusi yang positif.",
+              "childs": [
+                {
+                  "learning_component_title": "Tujuan Pembelajaran",
+                  "school_year_title": 2024,
+                  "school_phase_title": "Fase D",
+                  "school_grade_title": "7",
+                  "school_subject_title": "IPS",
+                  "title": "Tujuan Pembelajaran Bab 1",
+                  "code": "TP.1",
+                  "narrative": "Peserta didik mendeskripsikan"
+                },
+                {
+                  "learning_component_title": "Tujuan Pembelajaran",
+                  "school_year_title": 2024,
+                  "school_phase_title": "Fase D",
+                  "school_grade_title": "7",
+                  "school_subject_title": "IPS",
+                  "title": "Tujuan Pembelajaran Bab 1",
+                  "code": "TP.2",
+                  "narrative": "Peserta didik menjelaskan"
+                }
+              ]
+            },
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "IPS",
+              "title": "Keterampilan Proses",
+              "code": "KP.01",
+              "narrative": "Pada akhir fase ini, Peserta didik mampu memahami dan menerapkan materi pembelajaran melalui pendekatan keterampilan proses dalam belajarnya, yaitu mengamati, menanya dengan rumus 5W 1H. Kemudian mampu memperkirakan apa yang akan terjadi berdasarkan jawaban-jawaban yang ditemukan. Peserta didik juga mampu mengumpulkan informasi melalui studi pustaka, studi dokumen, lapangan, wawancara, observasi, kuesioner, dan teknik pengumpulan informasi lainnya. merencanakan dan mengembangkan penyelidikan. Peserta didik mengorganisasikan informasi dengan memilih, mengolah dan menganalisis informasi yang diperoleh. Proses analisis informasi dilakukan dengan cara verifikasi, interpretasi, dan triangulasi informasi.",
+              "childs": []
+            },
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "IPS",
+              "title": "Keterampilan Proses",
+              "code": "KP.02",
+              "narrative": "Peserta didik menarik kesimpulan, menjawab, mengukur dan mendeskripsikan serta menjelaskan permasalahan yang ada dengan memenuhi prosedur dan tahapan yang ditetapkan. Peserta didik mengungkapkan seluruh hasil tahapan di atas secara lisan dan tulisan dalam bentuk media digital dan non-digital. Peserta didik lalu mengomunikasikan hasil temuannya dengan mempublikasikan hasil laporan dalam bentuk presentasi digital dan atau non digital, dan sebagainya. Selain itu peserta didik mampu mengevaluasi pengalaman belajar yang telah dilalui dan diharapkan dapat merencanakan proyek lanjutan dengan melibatkan lintas mata pelajaran secara kolaboratif.",
+              "childs": []
+            },
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "Science",
+              "title": "Pemahaman IPA",
+              "code": "PI.01",
+              "narrative": "Pada akhir fase D, peserta didik mampu melakukan klasifikasi makhluk hidup dan benda berdasarkan karakteristik yang diamati, mengidentifikasi sifat dan karakteristik zat, membedakan perubahan fisik dan kimia serta memisahkan campuran sederhana.",
+              "childs": []
+            },
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "Science",
+              "title": "Pemahaman IPA",
+              "code": "PI.02",
+              "narrative": "Peserta didik dapat mendeskripsikan atom dan senyawa sebagai unit terkecil penyusun materi serta sel sebagai unit terkecil penyusun makhluk hidup, mengidentifikasi sistem organisasi kehidupan serta melakukan analisis untuk menemukan keterkaitan sistem organ dengan fungsinya serta kelainan atau gangguan yang muncul pada sistem organ tertentu (sistem pencernaan, sistem peredaran darah, sistem pernafasan dan sistem reproduksi). Peserta didik mengidentifikasi interaksi antar makhluk hidup dan lingkungannya, serta dapat merancang upaya-upaya mencegah dan mengatasi pencemaran dan perubahan iklim. Peserta didik mengidentifikasi pewarisan sifat dan penerapan bioteknologi dalam kehidupan sehari-hari.",
+              "childs": []
+            },
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "Science",
+              "title": "Pemahaman IPA",
+              "code": "PI.03",
+              "narrative": "Peserta didik mampu melakukan pengukuran terhadap aspek fisis yang mereka temui dan memanfaatkan ragam gerak dan gaya (force), memahami hubungan konsep usaha dan energi, mengukur besaran suhu yang diakibatkan oleh energi kalor yang diberikan, sekaligus dapat membedakan isolator dan konduktor kalor.",
+              "childs": []
+            },
+            {
+              "learning_component_title": "Capaian Pembelajaran",
+              "school_year_title": 2024,
+              "school_phase_title": "Fase D",
+              "school_grade_title": "7",
+              "school_subject_title": "Science",
+              "title": "Pemahaman IPA",
+              "code": "PI.04",
+              "narrative": "Peserta didik memahami gerak, gaya dan tekanan, termasuk pesawat sederhana. Peserta didik memahami getaran dan gelombang, pemantulan dan pembiasan cahaya termasuk alat- alat optik sederhana yang sering dimanfaatkan dalam kehidupan sehari-hari.",
+              "childs": []
+            }
+          ],
+          "rubrics": []
+        }
+      }
+    ],
+    "school_subject_predicates": [
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "IPS",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "PKn",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "Matematika",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "Science",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "PJOK",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "Seni Musik",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "Agama",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "English as a Second Language",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "ICT",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      },
+      {
+        "school_year_title": 2024,
+        "school_grade_title": "7",
+        "school_subject_title": "P5",
+        "minimum_value": 75,
+        "scales": [
+          {
+            "value": 92,
+            "predicate": "A",
+            "narrative": "Siswa sangat baik dalam"
+          },
+          {
+            "value": 82,
+            "predicate": "B",
+            "narrative": "Siswa dengan baik"
+          },
+          {
+            "value": 75,
+            "predicate": "C",
+            "narrative": "Siswa cukup baik"
+          }
+        ],
+        "lowest_narratives": [
+          {
+            "value": 70,
+            "narrative": "Siswa menunjukan"
+          }
+        ]
+      }
+    ],
+    "school_academic_programs": [
+      {
+        "school_year_title": 2024,
+        "school_curriculum_title": "Kurikulum Karya",
+        "is_active": true
+      }
+    ]
+  }
+}

@@ -22,6 +22,16 @@ class School extends Model
         return $this->morphOne(Area::class, 'model');
     }
 
+    public function academic_program_active()
+    {
+        return $this->hasOne(SchoolAcademicProgram::class, 'school_id')->where('is_active', true);
+    }
+
+    public function academic_programs()
+    {
+        return $this->hasMany(SchoolAcademicProgram::class, 'school_id');
+    }
+
     public function level()
     {
         return $this->belongsTo(SchoolLevel::class, 'school_level_id');

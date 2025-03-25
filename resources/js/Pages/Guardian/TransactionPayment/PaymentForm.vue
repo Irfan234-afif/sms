@@ -166,19 +166,9 @@ export default {
         <div
           class="space-y-4 rounded-lg border border-gray-100 bg-gray-50 p-6 text-xs dark:border-gray-700 dark:bg-gray-800"
         >
-          <dl class="flex items-center justify-between gap-4">
-            <dt class="font-normal text-gray-500 dark:text-gray-400">Harga</dt>
-            <dd class="font-medium text-gray-900 dark:text-white">IDR {{ transaction.total_amount }}</dd>
-          </dl>
-          <dl class="flex items-center justify-between gap-4">
-            <dt class="font-normal text-gray-500 dark:text-gray-400">Diskon</dt>
-            <dd class="font-medium text-green-500 dark:text-white">-</dd>
-          </dl>
-          <dl
-            class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 text-base dark:border-gray-700"
-          >
+          <dl class="flex items-center justify-between gap-4 border-gray-200 text-base dark:border-gray-700">
             <dt class="font-medium text-gray-900 dark:text-white">Total</dt>
-            <dd class="font-medium text-gray-900 dark:text-white">IDR {{ transaction.bill_amount }}</dd>
+            <dd class="font-medium text-gray-900 dark:text-white">Rp. {{ transaction.bill_amount }}</dd>
           </dl>
         </div>
       </div>
