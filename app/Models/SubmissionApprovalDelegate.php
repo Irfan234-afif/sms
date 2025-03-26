@@ -11,6 +11,12 @@ class SubmissionApprovalDelegate extends Model
     use GenerateUuid, SoftDeletes;
 
     protected $fillable = [
-        // 
+        'submission_approver_id',
+        'delegate_id',
     ];
+
+    public function delegate()
+    {
+        return $this->belongsTo(Employee::class, 'delegate_id');
+    }
 }

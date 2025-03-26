@@ -7,6 +7,7 @@ use App\Http\Controllers\Office\Finance\Activity\AdmissionStudentController as F
 use App\Http\Controllers\Office\Finance\FinanceController;
 use App\Http\Controllers\Office\GA\Activity\AdmissionStudentController as GAActivityAdmissionStudentController;
 use App\Http\Controllers\Office\GA\GAController;
+use App\Http\Controllers\Office\GA\Setting\SubmissionApproverController;
 use App\Http\Controllers\Office\HCM\Employee\EmployeeController;
 use App\Http\Controllers\Office\HCM\HCMController;
 use App\Http\Controllers\Office\HCM\Placement\EmployeeController as PlacementEmployeeController;
@@ -334,6 +335,15 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                     ->group(function () {
                         Route::get('/', [GAActivityAdmissionStudentController::class, 'index']);
                         Route::get('{registration_number}/detail', [GAActivityAdmissionStudentController::class, 'detail'])->name('.detail');
+                    });
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [SubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [SubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [SubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [SubmissionApproverController::class, 'save'])->name('.save');
                     });
             });
         // qrd routes

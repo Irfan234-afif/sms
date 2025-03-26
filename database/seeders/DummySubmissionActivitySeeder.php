@@ -41,9 +41,9 @@ class DummySubmissionActivitySeeder extends Seeder
                         foreach (range(1, rand(3, 6)) as $approver_index) {
                             $approver = Employee::whereHas('profile.user')->inRandomOrder()->first();
                             $submission_approver_created = $submission_group->approvers()->updateOrCreate([
+                                'area_id' => $area->id,
                                 'sort_number' => $approver_index,
                             ], [
-                                'area_id' => $area->id,
                                 'approver_id' => $approver->id,
                             ]);
 
