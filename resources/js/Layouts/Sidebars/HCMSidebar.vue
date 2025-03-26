@@ -172,7 +172,7 @@ import { Link } from '@inertiajs/vue3';
               <Link
                 href="#"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Dinas Luar</Link
+                >Perjalanan Dinas</Link
               >
             </li>
             <li>

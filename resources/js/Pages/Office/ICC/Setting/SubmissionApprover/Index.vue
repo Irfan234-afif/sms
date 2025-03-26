@@ -1,6 +1,6 @@
 <script setup>
 import OfficeLayout from '@/Layouts/OfficeLayout.vue';
-import HCMSidebar from '@/Layouts/Sidebars/HCMSidebar.vue';
+import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
@@ -9,8 +9,8 @@ import OutlineButton from '@/Components/OutlineButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
-  { label: 'HCM', href: route('office.hcm') },
-  { label: 'Petugas Persetujuan', href: route('office.hcm.setting.submissionApprover') },
+  { label: 'ICC', href: route('office.icc') },
+  { label: 'Petugas Persetujuan', href: route('office.icc.setting.submissionApprover') },
 ];
 </script>
 
@@ -57,7 +57,7 @@ export default {
       <Breadcrumb :breadcrumbs="breadcrumbs" />
     </template>
     <template #sidebar>
-      <HCMSidebar />
+      <ICCSidebar />
     </template>
     <template #content>
       <section class="bg-white p-4 antialiased dark:bg-gray-900 md:p-6">

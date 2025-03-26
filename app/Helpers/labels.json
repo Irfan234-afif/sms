@@ -98,7 +98,7 @@
     { "label": "Instalasi & Perbaikan", "value": "INSTALL_REPAIR" },
     { "label": "Desain", "value": "DESIGN" },
     { "label": "Dokumentasi", "value": "DOCUMENTATION" },
-    { "label": "Siaran", "value": "BROADCAST" },
+    { "label": "Pesan Informasi", "value": "BROADCAST" },
     { "label": "Posting Media", "value": "MEDIA_POST" },
     { "label": "Kartu", "value": "CARD" },
     { "label": "Kendaraan", "value": "VEHICLE" },

@@ -35,6 +35,7 @@ use App\Http\Controllers\Office\ICC\Publication\PageController;
 use App\Http\Controllers\Office\ICC\Publication\PostCategoryController;
 use App\Http\Controllers\Office\ICC\Publication\PublicFeedbackController;
 use App\Http\Controllers\Office\ICC\Publication\TestimonialController;
+use App\Http\Controllers\Office\ICC\Setting\SubmissionApproverController as ICCSettingSubmissionApproverController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
@@ -292,6 +293,15 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::post('update', [AdmissionStudentDiscountController::class, 'update'])->name('.update');
                                 Route::delete('delete', [AdmissionStudentDiscountController::class, 'delete'])->name('.delete');
                             });
+                    });
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [ICCSettingSubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [ICCSettingSubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [ICCSettingSubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [ICCSettingSubmissionApproverController::class, 'save'])->name('.save');
                     });
             });
         // hcm routes
