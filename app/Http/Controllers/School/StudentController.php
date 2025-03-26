@@ -201,6 +201,36 @@ class StudentController extends Controller
 
     public function import()
     {
+        request()->validate([
+            'students' => 'required|array',
+            'students.*.school_national_id' => 'required|string|max:50|unique:students,school_national_id',
+            'students.*.name' => 'required|string|max:255',
+            'students.*.birth_place' => 'nullable|string|max:255',
+            'students.*.birth_date' => ['required', 'date_format:Y-m-d'],
+            'students.*.gender' => 'required|in:MALE,FEMALE',
+            'students.*.blood_type' => 'nullable|in:A,B,AB,O',
+            'students.*.religion' => 'required|in:ISLAM,CHRISTIAN,CATHOLIC,HINDU,BUDDHIST,CONFUCIAN,OTHER',
+            'students.*.address' => 'nullable|string|max:255',
+            'students.*.postal_code' => 'nullable|string|max:10',
+            'students.*.school_grade' => 'required|string|max:50',
+
+            // father's validation
+            'students.*.father_name' => 'nullable|string|max:255',
+            'students.*.father_national_id' => 'nullable|string|max:50',
+            'students.*.father_phone' => 'nullable|string|max:20',
+            // todo: validate email
+            'students.*.father_email' => 'nullable|max:255',
+            'students.*.father_occupation' => 'nullable|string|max:100',
+
+            // mother's validation
+            'students.*.mother_name' => 'nullable|string|max:255',
+            'students.*.mother_national_id' => 'nullable|string|max:50',
+            'students.*.mother_phone' => 'nullable|string|max:20',
+            // todo: validate email
+            'students.*.mother_email' => 'nullable|max:255',
+            'students.*.mother_occupation' => 'nullable|string|max:100',
+        ]);
+
         DB::beginTransaction();
 
         try {
@@ -302,6 +332,7 @@ class StudentController extends Controller
             ], 500);
         }
     }
+
 
     public function downloadImportTemplate()
     {
