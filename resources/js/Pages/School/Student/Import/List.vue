@@ -51,11 +51,18 @@ export default {
           }
         })
         .catch((error) => {
-          console.error(error);
+          let message = 'Terjadi kesalahan.';
+
+          if (error.response?.data?.errors) {
+            let errorMessages = Object.values(error.response.data.errors).flat();
+            if (errorMessages.length) {
+              message += ' ' + errorMessages.join(', ');
+            }
+          }
 
           ElNotification({
             title: 'Error',
-            message: 'Terjadi kesalahan.',
+            message: message,
             type: 'error',
           });
         })

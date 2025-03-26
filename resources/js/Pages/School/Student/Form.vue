@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     optionSchoolGrade(search) {
-      this.field.school_grade.loading = true;
+      this.field.school_grade_id.loading = true;
       axios
         .get(
           route('school.student.optionSchoolGrade', {
@@ -141,12 +141,12 @@ export default {
           }),
         )
         .then((response) => {
-          this.field.school_grade.options = response.data;
-          this.field.school_grade.loading = false;
+          this.field.school_grade_id.options = response.data;
+          this.field.school_grade_id.loading = false;
         })
         .catch((error) => {
           console.log(error);
-          this.field.school_grade.loading = false;
+          this.field.school_grade_id.loading = false;
         });
     },
     submit() {
@@ -154,7 +154,7 @@ export default {
         if (valid) {
           this.process = true;
           let requestPayload = JSON.parse(JSON.stringify(this.form));
-          requestPayload.school_grade_id = requestPayload.school_grade?.uuid;
+          requestPayload.school_grade_id = requestPayload.school_grade_id?.uuid;
 
           axios
             .post(this.actionRoute, requestPayload, {
