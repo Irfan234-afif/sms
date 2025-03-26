@@ -36,6 +36,16 @@ use App\Http\Controllers\Office\ICC\Publication\PostCategoryController;
 use App\Http\Controllers\Office\ICC\Publication\PublicFeedbackController;
 use App\Http\Controllers\Office\ICC\Publication\TestimonialController;
 use App\Http\Controllers\Office\ICC\Setting\SubmissionApproverController as ICCSettingSubmissionApproverController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\AcademicController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\AttachmentController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\CertificationController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\CommunityInvolvementController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\ExperienceController;
+ use App\Http\Controllers\Office\MyProfile\Qualitification\FamilyController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\HonorPrizeController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\LanguageSkillController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\SpecializationController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\TrainingController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
@@ -105,6 +115,100 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::post('save', [MaterialController::class, 'save'])->name('.save');
                         Route::delete('delete', [MaterialController::class, 'delete'])->name('.delete');
                     });
+                Route::prefix('qualification')
+                    ->name('.qualification.')
+                    ->group(function () {
+                        // attachment
+                        Route::prefix('attachment')
+                            ->name('attachment')
+                            ->group(function () {
+                                Route::post('save', [AttachmentController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [AttachmentController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // academic
+                        Route::prefix('academic')
+                            ->name('academic')
+                            ->group(function () {
+                                Route::post('save', [AcademicController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [AcademicController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // certification
+                        Route::prefix('certification')
+                            ->name('certification')
+                            ->group(function () {
+                                Route::post('save', [CertificationController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [CertificationController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // training
+                        Route::prefix('training')
+                            ->name('training')
+                            ->group(function () {
+                                Route::post('save', [TrainingController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [TrainingController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // experience
+                        Route::prefix('experience')
+                            ->name('experience')
+                            ->group(function () {
+                                Route::post('save', [ExperienceController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [ExperienceController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // speacialization
+                        Route::prefix('specialization')
+                            ->name('specialization')
+                            ->group(function () {
+                                Route::post('save', [SpecializationController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [SpecializationController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // family
+                        Route::prefix('family')
+                            ->name('family')
+                            ->group(function () {
+                                Route::post('save', [FamilyController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [FamilyController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // language skill
+                        Route::prefix('language-skill')
+                            ->name('languageSkill')
+                            ->group(function () {
+                                Route::post('save', [LanguageSkillController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [LanguageSkillController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // honor prize
+                        Route::prefix('honor-prize')
+                            ->name('honorPrize')
+                            ->group(function () {
+                                Route::post('save', [HonorPrizeController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [HonorPrizeController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                        // community involvement
+                        Route::prefix('community-involvement')
+                            ->name('communityInvolvement')
+                            ->group(function () {
+                                Route::post('save', [CommunityInvolvementController::class, 'save'])
+                                    ->name('.save');
+                                Route::delete('delete', [CommunityInvolvementController::class, 'delete'])
+                                    ->name('.delete');
+                            });
+                });
             });
         // icc routes
         Route::prefix('icc')

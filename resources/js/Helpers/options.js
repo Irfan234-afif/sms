@@ -111,6 +111,27 @@ const discountTypes = [
   { label: 'Tetap', value: 'FIXED' },
 ];
 
+const languageSkillLevel = [
+  {
+    label: 'Native', value: 'NATIVE',
+  },
+  {
+    label: 'Intermediate', value: 'INTERMEDIATE',
+  },
+  {
+    label: 'Beginner', value: 'BEGINNER',
+  },
+];
+
+const familyRelationTypes = [
+  { label: 'Suami', value: 'HUSBAND' },
+  { label: 'Istri', value: 'WIFE' },
+  { label: 'Anak', value: 'CHILD' },
+  { label: 'Ayah', value: 'FATHER' },
+  { label: 'Ibu', value: 'MOTHER' },
+  { label: 'Saudara', value: 'SIBLING' },
+];
+
 export {
   achievementTypes,
   admissionStagePostStatuses,
@@ -126,4 +147,6 @@ export {
   schoolInformationSources,
   testimonialTypes,
   units,
+  languageSkillLevel,
+  familyRelationTypes
 };
