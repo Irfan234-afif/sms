@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\School;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FamilyResource;
 use App\Http\Resources\SchoolGradeResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Profile;
@@ -64,8 +65,14 @@ class StudentController extends Controller
             ->with('school_grade')
             ->firstOrFail();
 
+        $student_father = $student->profile->families()->where('relation', 'FATHER')->first();
+        $student_mother = $student->profile->families()->where('relation', 'MOTHER')->first();
+
+
         $data = [
             'student' => StudentResource::make($student),
+            'student_father' => FamilyResource::make($student_father),
+            'student_mother' => FamilyResource::make($student_mother),
         ];
 
         return Inertia::render('School/Student/Detail', $data);

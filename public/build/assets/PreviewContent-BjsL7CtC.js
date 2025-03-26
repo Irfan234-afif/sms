@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{g as e,o}from"./app-q1aFTuaS.js";const r={props:{content:String}},c=["innerHTML"];function s(i,_,n,a,p,f){return o(),e("div",{innerHTML:n.content},null,8,c)}const l=t(r,[["render",s]]);export{l as P};
