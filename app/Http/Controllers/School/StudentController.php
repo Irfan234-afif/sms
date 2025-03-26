@@ -203,7 +203,7 @@ class StudentController extends Controller
     {
         request()->validate([
             'students' => 'required|array',
-            'students.*.school_national_id' => 'required|string|max:50|unique:students,school_national_id',
+            'students.*.school_national_id' => 'required|string|max:50',
             'students.*.name' => 'required|string|max:255',
             'students.*.birth_place' => 'nullable|string|max:255',
             'students.*.birth_date' => ['required', 'date_format:Y-m-d'],
