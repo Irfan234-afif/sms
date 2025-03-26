@@ -12,6 +12,7 @@ use App\Http\Controllers\Office\HCM\Employee\EmployeeController;
 use App\Http\Controllers\Office\HCM\HCMController;
 use App\Http\Controllers\Office\HCM\Placement\EmployeeController as PlacementEmployeeController;
 use App\Http\Controllers\Office\HCM\Placement\PlacementController;
+use App\Http\Controllers\Office\HCM\Setting\SubmissionApproverController as SettingSubmissionApproverController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
@@ -322,6 +323,15 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::post('assign', [PlacementEmployeeController::class, 'assign'])->name('.assign');
                                 Route::delete('remove', [PlacementEmployeeController::class, 'remove'])->name('.remove');
                             });
+                    });
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [SettingSubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [SettingSubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [SettingSubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [SettingSubmissionApproverController::class, 'save'])->name('.save');
                     });
             });
         // ga routes
