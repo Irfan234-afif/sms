@@ -93,5 +93,22 @@
   "discountTypes": [
     { "label": "Persen", "value": "PERCENTAGE" },
     { "label": "Tetap", "value": "FIXED" }
+  ],
+  "submissionGroups": [
+    { "label": "Instalasi & Perbaikan", "value": "INSTALL_REPAIR" },
+    { "label": "Desain", "value": "DESIGN" },
+    { "label": "Dokumentasi", "value": "DOCUMENTATION" },
+    { "label": "Pesan Informasi", "value": "BROADCAST" },
+    { "label": "Posting Media", "value": "MEDIA_POST" },
+    { "label": "Kartu", "value": "CARD" },
+    { "label": "Kendaraan", "value": "VEHICLE" },
+    { "label": "Material", "value": "MATERIAL" },
+    { "label": "Acara", "value": "EVENT" },
+    { "label": "Kehadiran", "value": "ATTENDANCE" },
+    { "label": "Peralatan & Pemeliharaan", "value": "EQUIPMENT" },
+    { "label": "Perjalanan Dinas", "value": "OUTSTATION" },
+    { "label": "Cuti", "value": "LEAVE" },
+    { "label": "Pelatihan", "value": "TRAINING" },
+    { "label": "Pengunduran Diri", "value": "RESIGNATION" }
   ]
 }

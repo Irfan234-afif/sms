@@ -64,4 +64,9 @@ class GetLabel
     {
         return self::get('maritalStatuses', $value);
     }
+
+    public static function submissionGroup($value)
+    {
+        return self::get('submissionGroups', $value);
+    }
 }

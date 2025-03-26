@@ -172,7 +172,7 @@ import { Link } from '@inertiajs/vue3';
               <Link
                 href="#"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Dinas Luar</Link
+                >Perjalanan Dinas</Link
               >
             </li>
             <li>
@@ -245,7 +245,7 @@ import { Link } from '@inertiajs/vue3';
             </li>
           </ul>
         </li>
-        <li v-if="false">
+        <li>
           <button
             type="button"
             class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -293,7 +293,7 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-setting" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.hcm.setting.submissionApprover')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Petugas Persetujuan</Link
               >

@@ -10,6 +10,13 @@ class SubmissionApprover extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $fillable = [
+        'submission_group_id',
+        'area_id',
+        'approver_id',
+        'sort_number',
+    ];
+
     public function approver()
     {
         return $this->belongsTo(Employee::class, 'approver_id');

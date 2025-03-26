@@ -7,10 +7,12 @@ use App\Http\Controllers\Office\Finance\Activity\AdmissionStudentController as F
 use App\Http\Controllers\Office\Finance\FinanceController;
 use App\Http\Controllers\Office\GA\Activity\AdmissionStudentController as GAActivityAdmissionStudentController;
 use App\Http\Controllers\Office\GA\GAController;
+use App\Http\Controllers\Office\GA\Setting\SubmissionApproverController;
 use App\Http\Controllers\Office\HCM\Employee\EmployeeController;
 use App\Http\Controllers\Office\HCM\HCMController;
 use App\Http\Controllers\Office\HCM\Placement\EmployeeController as PlacementEmployeeController;
 use App\Http\Controllers\Office\HCM\Placement\PlacementController;
+use App\Http\Controllers\Office\HCM\Setting\SubmissionApproverController as SettingSubmissionApproverController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
@@ -33,6 +35,7 @@ use App\Http\Controllers\Office\ICC\Publication\PageController;
 use App\Http\Controllers\Office\ICC\Publication\PostCategoryController;
 use App\Http\Controllers\Office\ICC\Publication\PublicFeedbackController;
 use App\Http\Controllers\Office\ICC\Publication\TestimonialController;
+use App\Http\Controllers\Office\ICC\Setting\SubmissionApproverController as ICCSettingSubmissionApproverController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
@@ -291,6 +294,15 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::delete('delete', [AdmissionStudentDiscountController::class, 'delete'])->name('.delete');
                             });
                     });
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [ICCSettingSubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [ICCSettingSubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [ICCSettingSubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [ICCSettingSubmissionApproverController::class, 'save'])->name('.save');
+                    });
             });
         // hcm routes
         Route::prefix('hcm')
@@ -322,6 +334,15 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::delete('remove', [PlacementEmployeeController::class, 'remove'])->name('.remove');
                             });
                     });
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [SettingSubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [SettingSubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [SettingSubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [SettingSubmissionApproverController::class, 'save'])->name('.save');
+                    });
             });
         // ga routes
         Route::prefix('ga')
@@ -334,6 +355,15 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                     ->group(function () {
                         Route::get('/', [GAActivityAdmissionStudentController::class, 'index']);
                         Route::get('{registration_number}/detail', [GAActivityAdmissionStudentController::class, 'detail'])->name('.detail');
+                    });
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [SubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [SubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [SubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [SubmissionApproverController::class, 'save'])->name('.save');
                     });
             });
         // qrd routes
