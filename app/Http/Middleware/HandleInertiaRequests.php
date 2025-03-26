@@ -34,6 +34,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // todo: session
         $user = User::where('uuid', $request->user()?->uuid)
             ->with('profile')
             ->first();

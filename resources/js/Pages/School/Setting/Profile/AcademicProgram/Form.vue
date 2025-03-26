@@ -67,11 +67,11 @@ export default {
     }
   },
   methods: {
-    optionSchoolGrade(search) {
+    optionSchoolYear(search) {
       this.field.school_year_id.loading = true;
       axios
         .get(
-          route('school.management.schoolClassroom.optionSchoolGrade', {
+          route('school.setting.profile.academicProgram.optionSchoolYear', {
             search: search,
           }),
         )
@@ -84,11 +84,11 @@ export default {
           this.field.school_year_id.loading = false;
         });
     },
-    optionHomeroomTeacher(search) {
+    optionSchoolCurriculum(search) {
       this.field.school_curriculum_id.loading = true;
       axios
         .get(
-          route('school.management.schoolClassroom.optionHomeroomTeacher', {
+          route('school.setting.profile.academicProgram.optionSchoolCurriculum', {
             search: search,
           }),
         )
@@ -197,7 +197,7 @@ export default {
             no-match-text="Data tidak ditemukan"
             no-data-text="Tidak ada data"
             :disabled="field.school_year_id.disabled"
-            :remote-method="optionSchoolGrade"
+            :remote-method="optionSchoolYear"
             value-key="uuid"
             remote
             filterable
@@ -227,7 +227,7 @@ export default {
             no-match-text="Data tidak ditemukan"
             no-data-text="Tidak ada data"
             :disabled="field.school_curriculum_id.disabled"
-            :remote-method="optionHomeroomTeacher"
+            :remote-method="optionSchoolCurriculum"
             value-key="uuid"
             remote
             filterable

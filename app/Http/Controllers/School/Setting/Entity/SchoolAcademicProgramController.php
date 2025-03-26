@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\School\Setting\Entity;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SchoolCurriculumResource;
+use App\Http\Resources\SchoolYearResource;
 use App\Models\School;
 use App\Models\SchoolAcademicProgram;
 use App\Models\SchoolCurriculum;
@@ -22,6 +24,28 @@ class SchoolAcademicProgramController extends Controller
         $this->school = School::where('uuid', $active_school?->uuid)->firstOrFail();
     }
 
+    public function optionSchoolYear()
+    {
+        $school_years = SchoolYear::query();
+
+        if (request()->has('search')) {
+            $school_years->where('name', 'like', '%' . request('search') . '%');
+        }
+
+        return response()->json(SchoolYearResource::collection($school_years->latest()->get()), 200);
+    }
+
+    public function optionSchoolCurriculum()
+    {
+        $school_curriculums = SchoolCurriculum::where('school_id', $this->school->id);
+
+        if (request()->has('search')) {
+            $school_curriculums->where('title', 'like', '%' . request('search') . '%');
+        }
+
+        return response()->json(SchoolCurriculumResource::collection($school_curriculums->latest()->get()), 200);
+    }
+
     public function save()
     {
         DB::beginTransaction();
@@ -29,7 +53,7 @@ class SchoolAcademicProgramController extends Controller
         try {
             $school_year = SchoolYear::where('uuid', request('school_year_id'))->firstOrFail();
             $school_curriculum = SchoolCurriculum::where('uuid', request('school_curriculum_id'))->firstOrFail();
-            $school_academic_program = SchoolAcademicProgram::where('uuid', request('school_academic_program_id'))->firstOrFail();
+            $school_academic_program = SchoolAcademicProgram::where('uuid', request('school_academic_program_id'))->first();
 
             $school_academic_program_created = SchoolAcademicProgram::updateOrCreate(
                 [
