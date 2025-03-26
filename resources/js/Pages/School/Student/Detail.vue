@@ -15,6 +15,8 @@ const breadcrumbs = [
 export default {
   props: {
     student: Object,
+    student_father: Object,
+    student_mother: Object,
   },
   data() {
     return {
@@ -119,17 +121,6 @@ export default {
                     {{ student.data.profile.religion_label ?? '-' }}
                   </dd>
                 </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">
-                    <span v-if="student.data.admission.languages && student.data.admission.languages.length">
-                      <span v-for="(language, index) in student.data.admission.languages" :key="index">
-                        {{ language }}<span v-if="index < student.data.admission.languages.length - 1">,</span>
-                      </span>
-                    </span>
-                    <span v-else>Tidak diketahui</span>
-                  </dd>
-                </dl>
               </div>
               <div class="space-y-4">
                 <dl>
@@ -160,38 +151,33 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.father_name ?? '-' }}
+                      {{ student_father.data.name ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Kependudukan Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.father_national_id ?? '-' }}
+                      {{ student_father.data.national_id ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{
-                        student.data.admission.father_birth_place ??
-                        '-' + ', ' + student.data.admission.father_birth_date
-                      }}
+                      {{ student_father.data.birth_place ?? '-' + ', ' + student_father.data.birth_date }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.father_religion_label ?? '-' }}
+                      {{ student_father.data.religion_label ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      <span
-                        v-if="student.data.admission.father_languages && student.data.admission.father_languages.length"
-                      >
-                        <span v-for="(language, index) in student.data.admission.father_languages" :key="index">
-                          {{ language }}<span v-if="index < student.data.admission.father_languages.length - 1">,</span>
+                      <span v-if="student_father.data.languages && student_father.data.languages.length">
+                        <span v-for="(language, index) in student_father.data.languages" :key="index">
+                          {{ language }}<span v-if="index < student_father.data.languages.length - 1">,</span>
                         </span>
                       </span>
                       <span v-else>Tidak diketahui</span>
@@ -200,19 +186,19 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.father_phone ?? '-' }}
+                      {{ student_father.data.phone ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.father_address ?? '-' }}
+                      {{ student_father.data.address ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Pekerjaan Ayah</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.father_occupation ?? '-' }}
+                      {{ student_father.data.occupation ?? '-' }}
                     </dd>
                   </dl>
                 </div>
@@ -220,38 +206,33 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.mother_name ?? '-' }}
+                      {{ student_mother.data.name ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Kependudukan Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.mother_national_id ?? '-' }}
+                      {{ student_mother.data.national_id ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Tempat, Tanggal Lahir Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{
-                        student.data.admission.mother_birth_place ??
-                        '-' + ', ' + student.data.admission.mother_birth_date
-                      }}
+                      {{ student_mother.data.birth_place ?? '-' + ', ' + student_mother.data.birth_date }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Agama Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.mother_religion_label ?? '-' }}
+                      {{ student_mother.data.religion_label ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Bahasa Yang Digunakan Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      <span
-                        v-if="student.data.admission.father_languages && student.data.admission.mother_languages.length"
-                      >
-                        <span v-for="(language, index) in student.data.admission.mother_languages" :key="index">
-                          {{ language }}<span v-if="index < student.data.admission.mother_languages.length - 1">,</span>
+                      <span v-if="student_mother.data.languages && student_mother.data.languages.length">
+                        <span v-for="(language, index) in student_mother.data.languages" :key="index">
+                          {{ language }}<span v-if="index < student_mother.data.languages.length - 1">,</span>
                         </span>
                       </span>
                       <span v-else>Tidak diketahui</span>
@@ -260,19 +241,19 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nomor Telepon Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.mother_phone ?? '-' }}
+                      {{ student_mother.data.phone ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.mother_address ?? '-' }}
+                      {{ student_mother.data.address ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Pekerjaan Ibu</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.mother_occupation ?? '-' }}
+                      {{ student_mother.data.occupation ?? '-' }}
                     </dd>
                   </dl>
                 </div>
@@ -286,34 +267,34 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Catatan Kesehatan</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.health_info_remark ?? '-' }}
+                      {{ student.data.admission?.health_info_remark ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Riwayat Kesehatan Keluarga</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.health_relate_family ?? '-' }}
+                      {{ student.data.admission?.health_relate_family ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Menggunakan Asuransi?</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.use_insurance_label ?? '-' }}
+                      {{ student.data.admission?.use_insurance_label ?? '-' }}
                     </dd>
                   </dl>
 
-                  <template v-if="student.data.admission.use_insurance">
+                  <template v-if="student.data.admission?.use_insurance">
                     <dl>
                       <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Asuransi</dt>
                       <dd class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ student.data.admission.insurance_name ?? '-' }}
+                        {{ student.data.admission?.insurance_name ?? '-' }}
                       </dd>
                     </dl>
 
                     <dl>
                       <dt class="text-xs font-medium text-gray-800 dark:text-white">Jaringan Asuransi</dt>
                       <dd class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ student.data.admission.insurance_network ?? '-' }}
+                        {{ student.data.admission?.insurance_network ?? '-' }}
                       </dd>
                     </dl>
                   </template>
@@ -321,13 +302,13 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Rumah Sakit Rekomendasi</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.recomended_hospital ?? '-' }}
+                      {{ student.data.admission?.recomended_hospital ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Dokter</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.doctor_name ?? '-' }}
+                      {{ student.data.admission?.doctor_name ?? '-' }}
                     </dd>
                   </dl>
                 </div>
@@ -341,19 +322,19 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Kontak Darurat</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.emergency_name ?? '-' }}
+                      {{ student.data.admission?.emergency_name ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Telepon Darurat</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.emergency_phone ?? '-' }}
+                      {{ student.data.admission?.emergency_phone ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Hubungan</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.emergency_relation ?? '-' }}
+                      {{ student.data.admission?.emergency_relation ?? '-' }}
                     </dd>
                   </dl>
                 </div>
@@ -365,19 +346,19 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Nama Penanggung</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.payer_name ?? '-' }}
+                      {{ student.data.admission?.payer_name ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Telepon</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.payer_phone ?? '-' }}
+                      {{ student.data.admission?.payer_phone ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Email</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.payer_email ?? '-' }}
+                      {{ student.data.admission?.payer_email ?? '-' }}
                     </dd>
                   </dl>
                 </div>
@@ -385,13 +366,13 @@ export default {
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Hubungan</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.payer_relation ?? '-' }}
+                      {{ student.data.admission?.payer_relation ?? '-' }}
                     </dd>
                   </dl>
                   <dl>
                     <dt class="text-xs font-medium text-gray-800 dark:text-white">Alamat</dt>
                     <dd class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ student.data.admission.payer_address ?? '-' }}
+                      {{ student.data.admission?.payer_address ?? '-' }}
                     </dd>
                   </dl>
                 </div>
