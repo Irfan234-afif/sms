@@ -418,6 +418,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                     ->name('.employee')
                     ->group(function () {
                         Route::get('/', [EmployeeController::class, 'index']);
+                        Route::get('detail/{uuid}', [EmployeeController::class, 'detail'])->name('.detail');
                         Route::post('store', [EmployeeController::class, 'store'])->name('.store');
                         Route::post('update', [EmployeeController::class, 'update'])->name('.update');
                         Route::post('reset-password', [EmployeeController::class, 'resetPassword'])->name('.resetPassword');
