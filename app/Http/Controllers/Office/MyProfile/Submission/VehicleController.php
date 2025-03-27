@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
 use App\Models\Submission;
+use App\Models\SubVehicle;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
 use Exception;
@@ -31,7 +32,7 @@ class VehicleController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('vehicle')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +61,14 @@ class VehicleController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            SubVehicle::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'name' => request('name'),
+                'description' => request('description'),
+                'use_date' => request('date_range')[0],
+                'return_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 
@@ -87,7 +95,12 @@ class VehicleController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $submission->vehicle->update([
+                'name' => request('name'),
+                'description' => request('description'),
+                'use_date' => request('date_range')[0],
+                'return_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 
