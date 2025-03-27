@@ -69,4 +69,14 @@ class GetLabel
     {
         return self::get('submissionGroups', $value);
     }
+
+    public static function approvalStatus($value)
+    {
+        return self::get('approvalStatuses', $value);
+    }
+
+    public static function submissionStatus($value)
+    {
+        return self::get('submissionStatuses', $value);
+    }
 }

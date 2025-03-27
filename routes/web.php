@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ajax\ChatController;
 use App\Http\Controllers\Guardian\AdmissionStudentController;
 use App\Http\Controllers\Guardian\GuardianController;
 use App\Http\Controllers\Guardian\TransactionPaymentController;
@@ -98,12 +99,18 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
             ->group(function () {
                 Route::get('/', [ICCController::class, 'index']);
                 // submission routes
-                Route::prefix('submission/material')
-                    ->name('.submission.material')
+                Route::prefix('submission')
+                    ->name('.submission')
                     ->group(function () {
-                        Route::get('/', [MaterialController::class, 'index']);
-                        Route::post('save', [MaterialController::class, 'save'])->name('.save');
-                        Route::delete('delete', [MaterialController::class, 'delete'])->name('.delete');
+                        // material area routes
+                        Route::prefix('material')
+                            ->name('.material')
+                            ->group(function () {
+                                Route::get('/', [MaterialController::class, 'index']);
+                                Route::post('store', [MaterialController::class, 'store'])->name('.store');
+                                Route::post('update', [MaterialController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MaterialController::class, 'delete'])->name('.delete');
+                            });
                     });
             });
         // icc routes
@@ -596,5 +603,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// ajax routes
+Route::middleware(['auth'])
+    ->prefix('ajax')
+    ->name('ajax')
+    ->group(function () {
+        // chat
+        Route::prefix('chat')
+            ->name('.chat')
+            ->group(function () {
+                Route::get('get-chats', [ChatController::class, 'getChats'])->name('.getChats');
+                Route::post('send-chat', [ChatController::class, 'sendChat'])->name('.sendChat');
+            });
+    });
 
 require __DIR__ . '/auth.php';

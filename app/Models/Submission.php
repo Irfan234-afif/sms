@@ -38,4 +38,9 @@ class Submission extends Model
     {
         return $this->hasMany(SubmissionApproval::class, 'submission_id');
     }
+
+    public function chats()
+    {
+        return $this->morphMany(Chat::class, 'model');
+    }
 }

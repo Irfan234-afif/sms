@@ -15,6 +15,11 @@ class ProfileResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $default_avatar = '/assets/icons/user-circle.png';
+
+        $avatar_path = $this->avatar ? asset('storage/avatars/' . $this->avatar)
+            : $default_avatar;
+
         return [
             'national_id' => $this->national_id,
             'name' => $this->name,
@@ -29,7 +34,7 @@ class ProfileResource extends JsonResource
             'address' => $this->address,
             'postal_code' => $this->postal_code,
             'avatar' => $this->avatar,
-            'avatar_path' => $this->avatar ? '/storage/avatars/' . $this->avatar : null,
+            'avatar_path' => $avatar_path,
             'user' => $this->whenLoaded('user', fn() => UserResource::make($this->user)),
             'employee' => $this->whenLoaded('employee', fn() => EmployeeResource::make($this->employee)),
             'families' => $this->whenLoaded('families', fn() => FamilyResource::collection($this->families)),

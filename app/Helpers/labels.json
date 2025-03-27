@@ -110,5 +110,16 @@
     { "label": "Cuti", "value": "LEAVE" },
     { "label": "Pelatihan", "value": "TRAINING" },
     { "label": "Pengunduran Diri", "value": "RESIGNATION" }
+  ],
+  "approvalStatuses": [
+    { "label": "Menunggu", "value": "PENDING" },
+    { "label": "Disetujui", "value": "APPROVED" },
+    { "label": "Ditolak", "value": "REJECTED" }
+  ],
+  "submissionStatuses": [
+    { "label": "Draf", "value": "DRAFT" },
+    { "label": "Menunggu", "value": "PENDING" },
+    { "label": "Disetujui", "value": "APPROVED" },
+    { "label": "Ditolak", "value": "REJECTED" }
   ]
 }

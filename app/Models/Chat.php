@@ -9,6 +9,14 @@ class Chat extends Model
 {
     use GenerateUuid;
 
+    protected $fillable = [
+        'model_id',
+        'model_type',
+        'sender_id',
+        'message',
+        'sent_at',
+    ];
+
     public function model()
     {
         return $this->morphTo();
@@ -17,5 +25,10 @@ class Chat extends Model
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
+    }
+
+    public function reads()
+    {
+        return $this->belongsTo(ChatRead::class, 'chat_id');
     }
 }

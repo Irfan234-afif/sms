@@ -7,7 +7,8 @@ import MyProfileSidebar from '@/Layouts/Sidebars/MyProfileSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import AdmissionStageForm from './Form.vue';
+import ApprovalDetail from '../../../../../Components/ApprovalDetail.vue';
+import SubmissionForm from './Form.vue';
 import ChatForm from '@/Components/ChatForm.vue';
 import Badge from '@/Components/Badge.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
@@ -124,11 +125,11 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Nomor Permintaan</th>
                   <th scope="col" class="p-4">Tanggal</th>
+                  <th scope="col" class="p-4">Status Persetujuan</th>
                   <th scope="col" class="p-4">Barang</th>
                   <th scope="col" class="p-4">Kode Barang</th>
                   <th scope="col" class="p-4">Jumlah</th>
                   <th scope="col" class="p-4">Keterangan</th>
-                  <th scope="col" class="p-4">Status Persetujuan</th>
                   <th scope="col" class="p-4">Status Barang</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
@@ -157,9 +158,15 @@ export default {
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.datetime }}
+                      {{ submission.datetime_label }}
                     </div>
                   </th>
+                  <td class="whitespace-nowrap px-4 py-3">
+                    <Badge v-if="submission.status == 'DRAFT'" type="dark">Draf</Badge>
+                    <Badge v-else-if="submission.status == 'PENDING'" type="yellow">Menunggu</Badge>
+                    <Badge v-else-if="submission.status == 'REJECTED'" type="red">Ditolak</Badge>
+                    <Badge v-else-if="submission.status == 'APPROVED'" type="green">Disetujui</Badge>
+                  </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
                       {{ submission.material.items[0].name }}
@@ -180,63 +187,25 @@ export default {
                       {{ submission.material.items[0].description }}
                     </div>
                   </th>
-                  <td class="whitespace-nowrap px-4 py-3">
-                    <Badge v-if="submission.status == 'DRAFT'" type="dark">Draf</Badge>
-                    <Badge v-else-if="submission.status == 'PENDING'" type="yellow">Menunggu</Badge>
-                    <Badge v-else-if="submission.status == 'REJECTED'" type="red">Ditolak</Badge>
-                    <Badge v-else-if="submission.status == 'APPROVED'" type="green">Disetujui</Badge>
-                  </td>
+
                   <td class="whitespace-nowrap px-4 py-3">
                     <Badge v-if="submission.material.items[0].status == 'DRAFT'" type="dark">Draf</Badge>
                     <Badge v-else-if="submission.material.items[0].status == 'PENDING'" type="yellow">Menunggu</Badge>
                     <Badge v-else-if="submission.material.items[0].status == 'REJECTED'" type="red">Ditolak</Badge>
                     <Badge v-else-if="submission.material.items[0].status == 'ORDERED'" type="default">Dipesan</Badge>
                     <Badge v-else-if="submission.material.items[0].status == 'DELIVERED'" type="purple">Dikirim</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'RECEIVED'" type="dark">Diterima</Badge>
+                    <Badge v-else-if="submission.material.items[0].status == 'RECEIVED'" type="green">Diterima</Badge>
                     <Badge v-else-if="submission.material.items[0].status == 'CANCELED'" type="gray">Dibatalkan</Badge>
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
-                        type="purple"
-                        @click="
-                          openModal({
-                            title: 'Percakapan',
-                            mode: 'chat-form',
-                            maxWidth: '3xl',
-                            data: {
-                              user: $page.props.auth.user,
-                              model_id: submission.material.items[0].id,
-                              model_type: 'App\Models\SubMaterialItem',
-                              chats: submission.material.items[0].chats,
-                            },
-                          })
-                        "
-                      >
-                        <div class="flex items-center space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="h-4"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-                            <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-                          </svg>
-                          <div>Percakapan</div>
-                        </div>
-                      </OutlineButton>
-                      <OutlineButton
+                        v-if="submission.status != 'APPROVED' && submission.status != 'PENDING'"
                         type="default"
                         @click="
                           openModal({
                             title: 'Sunting Permintaan',
-                            mode: 'school-year-edit-form',
+                            mode: 'submission-edit-form',
                             maxWidth: 'md',
                             data: {
                               submission: submission,
@@ -264,17 +233,18 @@ export default {
                         </div>
                       </OutlineButton>
                       <OutlineButton
+                        v-if="submission.status != 'APPROVED' && submission.status != 'PENDING'"
                         type="red"
                         @click="
                           openModal({
                             title: 'Hapus Permintaan',
-                            mode: 'school-year-delete-confirm',
+                            mode: 'submission-delete-confirm',
                             maxWidth: 'md',
                             data: {
-                              actionUrl: route('office.icc.management.schoolYear.delete', {
+                              actionUrl: route('office.myProfile.submission.material.delete', {
                                 submission: submission,
                               }),
-                              redirectUrl: route('office.icc.management.schoolYear'),
+                              redirectUrl: route('office.myProfile.submission.material'),
                               message: 'Ingin menghapus Permintaan?',
                             },
                           })
@@ -301,6 +271,77 @@ export default {
                           <div>Hapus</div>
                         </div>
                       </OutlineButton>
+                      <OutlineButton
+                        type="purple"
+                        @click="
+                          openModal({
+                            title: `Permintaan Material ${submission.reference_number}`,
+                            mode: 'chat-form',
+                            maxWidth: '3xl',
+                            data: {
+                              user: $page.props.auth.user,
+                              model_id: submission.id,
+                              model_type: `App\\Models\\Submission`,
+                            },
+                          })
+                        "
+                      >
+                        <div class="flex items-center space-x-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="h-4"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+                            <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+                          </svg>
+                          <div>Chat</div>
+                        </div>
+                      </OutlineButton>
+                      <OutlineButton
+                        type="yellow"
+                        @click="
+                          openModal({
+                            title: 'Log Status',
+                            mode: 'approval-detail',
+                            maxWidth: 'xl',
+                            data: {
+                              approvals: submission.approvals,
+                            },
+                          })
+                        "
+                      >
+                        <div class="flex items-center space-x-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="h-4"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 12h.01" />
+                            <path d="M4 6h.01" />
+                            <path d="M4 18h.01" />
+                            <path d="M8 18h2" />
+                            <path d="M8 12h2" />
+                            <path d="M8 6h2" />
+                            <path d="M14 6h6" />
+                            <path d="M14 12h6" />
+                            <path d="M14 18h6" />
+                          </svg>
+                          <div>Log</div>
+                        </div>
+                      </OutlineButton>
                     </div>
                   </td>
                 </tr>
@@ -314,8 +355,13 @@ export default {
       <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
-          <AdmissionStageForm
-            v-if="propertyModal?.mode == 'school-year-edit-form' || propertyModal?.mode == 'submission-create-form'"
+          <SubmissionForm
+            v-if="propertyModal?.mode == 'submission-edit-form' || propertyModal?.mode == 'submission-create-form'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
+          <ApprovalDetail
+            v-if="propertyModal?.mode == 'approval-detail'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

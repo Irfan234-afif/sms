@@ -2,6 +2,7 @@
 import DefaultButton from '@/Components/DefaultButton.vue';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
+import moment from 'moment';
 </script>
 <script>
 export default {
@@ -16,12 +17,13 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      chats: this.propertyModal.data.chats,
+      chats: [],
       user: this.propertyModal.data.user,
       form: {
         model_id: this.propertyModal.data.model_id,
         model_type: this.propertyModal.data.model_type,
         message: null,
+        sent_at: null,
       },
       field: {
         message: {
@@ -32,63 +34,67 @@ export default {
       },
     };
   },
+  created() {
+    this.getChats();
+  },
   methods: {
+    getChats() {
+      axios
+        .get(
+          route('ajax.chat.getChats', {
+            model_id: this.form.model_id,
+            model_type: this.form.model_type,
+          }),
+        )
+        .then((response) => {
+          this.chats = [];
+          let chats = response.data;
+          if (chats && chats.length > 0) {
+            this.chats = chats;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     submit() {
-      this.$refs['chatForm'].validate((valid) => {
-        if (valid) {
-          this.process = true;
-          let requestPayload = JSON.parse(JSON.stringify(this.form));
+      if (this.form.message != null && this.form.message !== '') {
+        this.process = true;
+        let requestPayload = JSON.parse(JSON.stringify(this.form));
 
-          axios
-            .post(route('office.myProfile.submission.material.save'), requestPayload, {
-              headers: { 'Content-Type': 'application/json' },
-            })
-            .then((response) => {
-              if (response.data.status === 'success') {
-                ElNotification({
-                  title: 'Berhasil',
-                  message: response.data.message,
-                  type: 'success',
-                });
+        requestPayload.sent_at = moment().format('YYYY-MM-DD HH:mm:ss');
 
-                setTimeout(() => {
-                  this.close();
-                  this.$inertia.reload();
-                }, 2000);
-              } else {
-                ElNotification({
-                  title: 'Error',
-                  message: response.data.message,
-                  type: 'error',
-                });
-              }
-            })
-            .catch((error) => {
-              let message = 'Terjadi kesalahan';
-
-              if (error.response?.data?.errors) {
-                for (let field in error.response.data.errors) {
-                  this.field[field].error = error.response.data.errors[field][0];
-                  this.$refs['chatForm'].validateField(field);
-                  message = error.response.data.errors[field][0];
-                }
-              }
-
+        axios
+          .post(route('ajax.chat.sendChat'), requestPayload, {
+            headers: { 'Content-Type': 'application/json' },
+          })
+          .then((response) => {
+            if (response.data.status === 'success') {
+              this.form.message = null;
+              this.getChats();
+            } else {
               ElNotification({
                 title: 'Error',
-                message: message,
+                message: response.data.message,
                 type: 'error',
               });
-            })
-            .finally(() => {
-              this.process = false;
-              this.loaded = false;
-              this.$nextTick(() => {
-                this.loaded = true;
-              });
+            }
+          })
+          .catch(() => {
+            ElNotification({
+              title: 'Error',
+              message: 'Terjadi kesalahan',
+              type: 'error',
             });
-        }
-      });
+          })
+          .finally(() => {
+            this.process = false;
+            this.loaded = false;
+            this.$nextTick(() => {
+              this.loaded = true;
+            });
+          });
+      }
     },
     close() {
       this.$emit('close');
@@ -101,64 +107,54 @@ export default {
     <h2 class="border-b pb-4 text-base font-medium text-gray-900">
       {{ propertyModal?.title }}
     </h2>
-    <div class="px-2">
-      <form>
-        <div class="mb-2 w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700">
-          <div class="m-4 space-y-3">
-            <template v-for="(chat, index) in chats" :key="index">
-              <div v-if="chat.sender_id == user.id" class="flex items-start justify-end gap-2.5">
-                <div
-                  class="leading-1.5 flex max-w-[320px] flex-col rounded-s-xl rounded-ee-xl border-gray-200 bg-blue-100 p-4 dark:bg-blue-700"
-                >
-                  <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white">Anda</span>
-                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ chat.created_at }}</span>
-                  </div>
-                  <p class="py-2.5 text-xs font-normal text-gray-900 dark:text-white">
-                    {{ chat.message }}
-                  </p>
+    <form>
+      <div class="w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700">
+        <div class="m-4 space-y-3">
+          <template v-for="(chat, index) in chats" :key="index">
+            <div v-if="chat.sender_id == user.id" class="flex items-start justify-end gap-2.5">
+              <div
+                class="leading-1.5 flex max-w-[420px] flex-col rounded-s-xl rounded-ee-xl border-gray-200 bg-blue-100 p-4 dark:bg-blue-700"
+              >
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                  <span class="text-sm font-semibold text-gray-900 dark:text-white">Anda</span>
+                  <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ chat.sent_at ?? '-' }}</span>
                 </div>
-                <img
-                  class="h-12 w-12 rounded-full"
-                  src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
-                  alt="You image"
-                />
+                <p class="py-2.5 text-xs font-normal text-gray-900 dark:text-white">
+                  {{ chat.message }}
+                </p>
               </div>
-              <div v-else class="flex items-start gap-2.5">
-                <img
-                  class="h-12 w-12 rounded-full"
-                  src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
-                  alt="Jese image"
-                />
-                <div
-                  class="leading-1.5 flex max-w-[320px] flex-col rounded-e-xl rounded-es-xl border-gray-200 bg-gray-100 p-4 dark:bg-gray-700"
-                >
-                  <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white"> {{ chat.sender.name }} </span>
-                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ chat.created_at }}</span>
-                  </div>
-                  <p class="py-2.5 text-xs font-normal text-gray-900 dark:text-white">
-                    {{ chat.message }}
-                  </p>
+              <img class="h-10 w-10 rounded-full" src="/assets/icons/user-circle.png" alt="avatar" />
+            </div>
+            <div v-else class="flex items-start gap-2.5">
+              <img class="h-10 w-10 rounded-full" src="/assets/icons/user-circle.png" alt="avatar" />
+              <div
+                class="leading-1.5 flex max-w-[420px] flex-col rounded-e-xl rounded-es-xl border-yellow-200 bg-yellow-100 p-4 dark:bg-yellow-700"
+              >
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                  <span class="text-sm font-semibold text-gray-900 dark:text-white"> {{ chat.sender.name }} </span>
+                  <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ chat.sent_at ?? '-' }}</span>
                 </div>
+                <p class="py-2.5 text-xs font-normal text-gray-900 dark:text-white">
+                  {{ chat.message }}
+                </p>
               </div>
-            </template>
-          </div>
-          <div class="bg-white px-4 py-2 dark:bg-gray-800">
-            <label for="message" class="sr-only">Pesanmu</label>
-            <textarea
-              id="message"
-              rows="3"
-              class="w-full border-0 bg-white px-0 text-sm text-gray-900 focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
-              placeholder="Tulis pesan..."
-              required
-            ></textarea>
-          </div>
-          <div class="flex items-center justify-between border-t border-gray-200 px-3 py-2 dark:border-gray-600">
-            <DefaultButton type="default" @click="submit" :disabled="process"> Kirim Pesan </DefaultButton>
-          </div>
+            </div>
+          </template>
         </div>
-      </form>
-    </div>
+        <div class="bg-white p-1 dark:bg-gray-800">
+          <el-input
+            v-on:keyup.enter="submit"
+            :rows="5"
+            placeholder="Tulis pesan disini..."
+            type="textarea"
+            v-model="form.message"
+          ></el-input>
+        </div>
+        <div class="flex items-center justify-end space-x-3 border-t border-gray-200 px-3 py-2 dark:border-gray-600">
+          <DefaultButton type="light" @click="close" :disabled="process"> Batal </DefaultButton>
+          <DefaultButton type="default" @click="submit" :disabled="process"> Kirim Pesan </DefaultButton>
+        </div>
+      </div>
+    </form>
   </div>
 </template>

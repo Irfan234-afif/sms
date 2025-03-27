@@ -7,7 +7,9 @@ use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
 use App\Models\SubMaterial;
 use App\Models\Submission;
-use App\Models\SubmissionGroup;
+use App\Services\SubmissionStoreService;
+use App\Services\SubmissionUpdateService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,8 +30,10 @@ class MaterialController extends Controller
             $submissions->where('reference_number', 'like', '%' . request('search') . '%');
         }
 
-        $submissions = $submissions->latest()
-            ->with('material.items.chats.sender')
+        $submissions = $submissions->with('approvals.approver.profile')
+            ->with('approvals.delegate.profile')
+            ->with('material.items')
+            ->latest()
             ->paginate(15);
 
         $data = [
@@ -42,40 +46,67 @@ class MaterialController extends Controller
         return Inertia::render('Office/MyProfile/Submission/Material/Index', $data);
     }
 
-    public function save()
+    public function store()
     {
         DB::beginTransaction();
 
         try {
-            $submission_group = SubmissionGroup::where('code', 'MATERIAL')->firstOrFail();
-            $submitter = Employee::where('profile_id', Auth::user()->profile_id)->first();
-            $area = $submitter->assignments()->first()?->area;
-            $reference_number = sprintf("SUB/%s/%011d", $submission_group->reference_code, $submission_group->reference_number);
-            if ($area) {
-                $submission_created = Submission::create([
-                    'submission_group_id' => $submission_group->id,
-                    'submitter_id' => $submitter->id,
-                    'area_id' => $area->id,
-                    'reference_number' => $reference_number,
-                    'datetime' => request('datetime'),
-                    'status' => 'DRAFT',
-                ]);
+            $submitter = Employee::where('profile_id', Auth::user()->profile_id)->firstOrFail();
 
-                $sub_material_created = SubMaterial::updateOrCreate([
-                    'submission_id' => $submission_created->id,
-                ]);
+            $submissionService = new SubmissionStoreService('MATERIAL', $submitter);
 
-                $sub_material_created->items()->create([
-                    'reference_number' =>  'ITEM-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6)),
-                    'name' => request('name'),
-                    'quantity' => request('quantity'),
-                    'unit' => request('unit'),
-                    'description' => request('unit'),
-                    'status' => 'DRAFT',
-                ]);
-                // approvers
-                $submission_group->increment('reference_number', 1);
+            if (!$submissionService->hasSubmitterAssignmentArea()) {
+                throw new Exception('Anda belum ditempatkan di area manapun.', 400);
             }
+
+            $submission_created = $submissionService->createSubmission();
+
+            $sub_material_created = SubMaterial::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ]);
+
+            $sub_material_created->items()->create([
+                'reference_number' =>  'ITEM-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6)),
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'unit' => request('unit'),
+                'description' => request('description'),
+                'status' => 'DRAFT',
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Permintaan berhasil disimpan.',
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function update()
+    {
+        DB::beginTransaction();
+
+        try {
+            $submissionService = new SubmissionUpdateService(request('submission_id'));
+
+            $submission = $submissionService->updateSubmission();
+
+            // $submission->material->update();
+
+            $submission->material->items()->first()->update([
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'unit' => request('unit'),
+                'description' => request('description'),
+            ]);
 
             DB::commit();
 
@@ -98,7 +129,7 @@ class MaterialController extends Controller
         DB::beginTransaction();
 
         try {
-            $submission = Submission::where('uuid', request('submission'))->firstOrFail();
+            $submission = Submission::where('uuid', request('submission_id'))->firstOrFail();
 
             $submission->delete();
 

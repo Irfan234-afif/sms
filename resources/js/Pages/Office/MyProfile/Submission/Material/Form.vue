@@ -4,6 +4,7 @@ import fieldValidation from '@/Helpers/fieldValidation';
 import { units } from '@/Helpers/options';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
+import moment from 'moment';
 </script>
 <script>
 export default {
@@ -18,9 +19,10 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
+      actionRoute: route('office.myProfile.submission.material.store'),
       form: {
-        submission: null,
-        datetime: null,
+        submission_id: null,
+        datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
         name: null,
         unit: null,
         quantity: 1,
@@ -31,6 +33,7 @@ export default {
           label: 'Tanggal',
           rules: [fieldValidation.isRequired('Tanggal')],
           error: null,
+          disabled: true,
         },
         name: {
           label: 'Barang',
@@ -56,15 +59,29 @@ export default {
       },
     };
   },
+  created() {
+    if (this.propertyModal.mode == 'submission-edit-form') {
+      let submission = this.propertyModal.data.submission;
+      this.actionRoute = route('office.myProfile.submission.material.update');
+
+      this.form.submission_id = submission.uuid;
+      this.form.datetime = submission.datetime;
+      this.form.name = submission.material.items[0].name;
+      this.form.unit = submission.material.items[0].unit;
+      this.form.quantity = submission.material.items[0].quantity;
+      this.form.description = submission.material.items[0].description;
+    }
+  },
   methods: {
-    submit() {
+    submit(status) {
       this.$refs['submissionForm'].validate((valid) => {
         if (valid) {
           this.process = true;
           let requestPayload = JSON.parse(JSON.stringify(this.form));
+          requestPayload.status = status;
 
           axios
-            .post(route('office.myProfile.submission.material.save'), requestPayload, {
+            .post(this.actionRoute, requestPayload, {
               headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
@@ -134,7 +151,13 @@ export default {
           :error="field.datetime.error"
           prop="datetime"
         >
-          <el-date-picker v-model="form.datetime" type="date" format="DD-MM-YYYY" value-format="YYYY-MM-DD" />
+          <el-date-picker
+            :disabled="field.datetime.disabled"
+            v-model="form.datetime"
+            type="date"
+            format="DD-MM-YYYY"
+            value-format="YYYY-MM-DD"
+          />
         </el-form-item>
         <el-form-item
           class="font-medium"
@@ -192,8 +215,8 @@ export default {
     </div>
     <div class="flex justify-end space-x-3">
       <DefaultButton type="light" @click="close" :disabled="process"> Batal </DefaultButton>
-
-      <DefaultButton type="default" @click="submit" :disabled="process"> Simpan </DefaultButton>
+      <DefaultButton type="light" @click="submit('DRAFT')" :disabled="process"> Simpan Draft </DefaultButton>
+      <DefaultButton type="default" @click="submit('PENDING')" :disabled="process"> Kirim </DefaultButton>
     </div>
   </div>
 </template>
