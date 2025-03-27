@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
 use App\Models\Submission;
+use App\Models\SubResignation;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
 use Exception;
@@ -31,7 +32,7 @@ class ResignationController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('resignation')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +61,12 @@ class ResignationController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            SubResignation::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'entry_date' => request('date_range')[0],
+                'out_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 
@@ -87,7 +93,10 @@ class ResignationController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $submission->resignation->update([
+                'entry_date' => request('date_range')[0],
+                'out_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 

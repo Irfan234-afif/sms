@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Office\MyProfile\Submission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
+use App\Models\SubLeave;
 use App\Models\Submission;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
@@ -31,7 +32,7 @@ class LeaveController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('leave')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +61,13 @@ class LeaveController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            SubLeave::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'description' => request('description'),
+                'start_date' => request('date_range')[0],
+                'end_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 
@@ -87,7 +94,12 @@ class LeaveController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $submission->leave->update([
+                'title' => request('title'),
+                'description' => request('description'),
+                'start_date' => request('date_range')[0],
+                'end_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 
