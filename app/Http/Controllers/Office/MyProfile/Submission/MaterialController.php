@@ -99,8 +99,6 @@ class MaterialController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // $submission->material->update();
-
             $submission->material->items()->first()->update([
                 'name' => request('name'),
                 'quantity' => request('quantity'),

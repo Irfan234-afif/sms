@@ -1,7 +1,6 @@
 <script setup>
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
-import { units } from '@/Helpers/options';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
 import moment from 'moment';
@@ -19,14 +18,14 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      actionRoute: route('office.myProfile.submission.installRepair.store'),
+      attachmentPreview: null,
+      attachmentFile: null,
+      actionRoute: route('office.myProfile.submission.design.store'),
       form: {
         submission_id: null,
         datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-        assigned_id: null,
-        name: null,
-        unit: null,
-        quantity: 1,
+        title: null,
+        attachment: null,
         due_date: moment().format('YYYY-MM-DD HH:mm:ss'),
         description: null,
       },
@@ -37,28 +36,15 @@ export default {
           error: null,
           disabled: true,
         },
-        assigned_id: {
-          label: 'Petugas',
-          rules: [fieldValidation.isRequired('Petugas')],
-          error: null,
-          loading: null,
-          options: [],
-        },
-        name: {
-          label: 'Instalasi & Perbaikan',
-          rules: [fieldValidation.isRequired('Instalasi & Perbaikan')],
+        title: {
+          label: 'Desain',
+          rules: [fieldValidation.isRequired('Desain')],
           error: null,
         },
-        quantity: {
-          label: 'Jumlah',
-          rules: [fieldValidation.isRequired('Jumlah')],
+        attachment: {
+          label: 'Lampiran',
+          rules: [],
           error: null,
-        },
-        unit: {
-          label: 'Satuan',
-          rules: [fieldValidation.isRequired('Satuan')],
-          error: null,
-          options: units,
         },
         due_date: {
           label: 'Batas Waktu',
@@ -76,49 +62,48 @@ export default {
   created() {
     if (this.propertyModal.mode == 'submission-edit-form') {
       let submission = this.propertyModal.data.submission;
-      this.actionRoute = route('office.myProfile.submission.installRepair.update');
+      this.actionRoute = route('office.myProfile.submission.design.update');
 
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
-      this.form.assigned_id = submission.install_repair.assigned?.uuid;
-      if (submission.install_repair.assigned) {
-        this.field.assigned_id.options = [submission.install_repair.assigned];
+      if (submission.design.items[0].attachment) {
+        this.attachmentPreview = submission.design.items[0].attachment_path;
       }
-      this.form.name = submission.install_repair.items[0].name;
-      this.form.quantity = submission.install_repair.items[0].quantity;
-      this.form.unit = submission.install_repair.items[0].unit;
-      this.form.due_date = submission.install_repair.items[0].due_date;
-      this.form.description = submission.install_repair.items[0].description;
+      this.form.title = submission.design.items[0].title;
+      this.form.due_date = submission.design.items[0].due_date;
+      this.form.description = submission.design.items[0].description;
     }
   },
   methods: {
-    optionAssigned(search) {
-      this.field.assigned_id.loading = true;
-      axios
-        .get(
-          route('office.myProfile.submission.installRepair.optionAssigned', {
-            search: search,
-          }),
-        )
-        .then((response) => {
-          this.field.assigned_id.options = response.data;
-          this.field.assigned_id.loading = false;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.field.assigned_id.loading = false;
-        });
+    handleAttachmentFileChange(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.attachmentPreview = e.target.result;
+      };
+      reader.readAsDataURL(file.raw);
+
+      this.form.attachment = null;
+      this.attachmentFile = file.raw;
     },
     submit(status) {
       this.$refs['submissionForm'].validate((valid) => {
         if (valid) {
           this.process = true;
           let requestPayload = JSON.parse(JSON.stringify(this.form));
-          requestPayload.status = status;
+
+          const formData = new FormData();
+          formData.append('submission_id', requestPayload.submission_id);
+          formData.append('datetime', requestPayload.datetime);
+          formData.append('title', requestPayload.title);
+          formData.append('attachment', requestPayload.attachment);
+          formData.append('due_date', requestPayload.due_date);
+          formData.append('description', requestPayload.description);
+          formData.append('attachment_file', this.attachmentFile);
+          formData.append('status', status);
 
           axios
-            .post(this.actionRoute, requestPayload, {
-              headers: { 'Content-Type': 'application/json' },
+            .post(this.actionRoute, formData, {
+              headers: { 'Content-Type': 'multipart/form-data' },
             })
             .then((response) => {
               if (response.data.status === 'success') {
@@ -197,74 +182,42 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.assigned_id.label"
-          :rules="field.assigned_id.rules"
-          :error="field.assigned_id.error"
-          prop="assigned_id"
+          :label="field.title.label"
+          :rules="field.title.rules"
+          :error="field.title.error"
+          prop="title"
         >
-          <el-select
-            v-model="form.assigned_id"
-            :placeholder="`Pilih ${field.assigned_id.label}`"
-            loading-text="..."
-            no-match-text="Data tidak ditemukan"
-            no-data-text="Tidak ada data"
-            :remote-method="optionAssigned"
-            remote
-            filterable
-            reserve-keyword
-            clearable
-            autocomplete="off"
-          >
-            <el-option
-              v-for="option in field.assigned_id.options"
-              :key="option.uuid"
-              :label="option.profile.name"
-              :value="option.uuid"
-            />
-          </el-select>
+          <el-input v-model="form.title" autocomplete="off" />
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.name.label"
-          :rules="field.name.rules"
-          :error="field.name.error"
-          prop="name"
+          :label="field.attachment.label"
+          :rules="field.attachment.rules"
+          :error="field.attachment.error"
+          prop="attachment"
+          style="width: 100%"
         >
-          <el-input v-model="form.name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item
-          class="font-medium"
-          :label="field.quantity.label"
-          :rules="field.quantity.rules"
-          :error="field.quantity.error"
-          prop="quantity"
-        >
-          <el-input-number v-model="form.quantity" autocomplete="off" />
-        </el-form-item>
-        <el-form-item
-          class="font-medium"
-          :label="field.unit.label"
-          :rules="field.unit.rules"
-          :error="field.unit.error"
-          prop="unit"
-        >
-          <el-select
-            v-model="form.unit"
-            :placeholder="`Pilih ${field.unit.label}`"
-            loading-text="..."
-            no-match-text="Data tidak ditemukan"
-            no-data-text="Tidak ada data"
-            :disabled="field.unit.disabled"
-            clearable
-            autocomplete="off"
-          >
-            <el-option
-              v-for="option in field.unit.options"
-              :key="option.value"
-              :label="option.label"
-              :value="option.value"
-            />
-          </el-select>
+          <el-upload action="#" :auto-upload="false" :show-file-list="false" :on-change="handleAttachmentFileChange">
+            <img v-if="attachmentPreview" :src="attachmentPreview" class="h-36 rounded-lg object-cover" />
+            <div v-else class="mx-auto flex h-36 w-64 items-center justify-center rounded-lg bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-14 w-14 text-gray-500"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M15 8h.01" />
+                <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+                <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+              </svg>
+            </div>
+          </el-upload>
         </el-form-item>
         <el-form-item
           class="font-medium"
