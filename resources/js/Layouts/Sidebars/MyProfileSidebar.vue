@@ -92,9 +92,107 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-submission" class="hidden space-y-2 py-2">
             <li>
               <Link
-                :href="route('office.myProfile.submission.material')"
+                :href="route('office.myProfile.submission.installRepair')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Instalasi & Perbaikan</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.design')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Desain</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.documentation')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Dokumentasi</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.broadcast')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Pesan Informasi</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.mediaPost')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Posting Media</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.card')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Kartu</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.vehicle')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Kendaraan</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.material')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Material</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.event')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Acara</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.attendance')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Absensi</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.equipment')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Peralatan & Pemeliharaan</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.outstation')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Perjalanan Dinas</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.leave')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Cuti</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.training')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Pelatihan</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.submission.resignation')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Pengunduran Diri</Link
               >
             </li>
           </ul>

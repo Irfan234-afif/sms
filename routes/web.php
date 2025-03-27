@@ -37,7 +37,21 @@ use App\Http\Controllers\Office\ICC\Publication\PostCategoryController;
 use App\Http\Controllers\Office\ICC\Publication\PublicFeedbackController;
 use App\Http\Controllers\Office\ICC\Publication\TestimonialController;
 use App\Http\Controllers\Office\ICC\Setting\SubmissionApproverController as ICCSettingSubmissionApproverController;
+use App\Http\Controllers\Office\MyProfile\Submission\AttendanceController;
+use App\Http\Controllers\Office\MyProfile\Submission\BroadcastController;
+use App\Http\Controllers\Office\MyProfile\Submission\CardController;
+use App\Http\Controllers\Office\MyProfile\Submission\DesignController;
+use App\Http\Controllers\Office\MyProfile\Submission\DocumentationController;
+use App\Http\Controllers\Office\MyProfile\Submission\EquipmentController;
+use App\Http\Controllers\Office\MyProfile\Submission\EventController as SubmissionEventController;
+use App\Http\Controllers\Office\MyProfile\Submission\InstallRepairController;
+use App\Http\Controllers\Office\MyProfile\Submission\LeaveController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
+use App\Http\Controllers\Office\MyProfile\Submission\MediaPostController;
+use App\Http\Controllers\Office\MyProfile\Submission\OutstationController;
+use App\Http\Controllers\Office\MyProfile\Submission\ResignationController;
+use App\Http\Controllers\Office\MyProfile\Submission\TrainingController;
+use App\Http\Controllers\Office\MyProfile\Submission\VehicleController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
@@ -110,6 +124,146 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::post('store', [MaterialController::class, 'store'])->name('.store');
                                 Route::post('update', [MaterialController::class, 'update'])->name('.update');
                                 Route::delete('delete', [MaterialController::class, 'delete'])->name('.delete');
+                            });
+
+                        // install & repair routes
+                        Route::prefix('install-repair')
+                            ->name('.installRepair')
+                            ->group(function () {
+                                Route::get('/', [InstallRepairController::class, 'index']);
+                                Route::post('store', [InstallRepairController::class, 'store'])->name('.store');
+                                Route::post('update', [InstallRepairController::class, 'update'])->name('.update');
+                                Route::delete('delete', [InstallRepairController::class, 'delete'])->name('.delete');
+                            });
+
+                        // design routes
+                        Route::prefix('design')
+                            ->name('.design')
+                            ->group(function () {
+                                Route::get('/', [DesignController::class, 'index']);
+                                Route::post('store', [DesignController::class, 'store'])->name('.store');
+                                Route::post('update', [DesignController::class, 'update'])->name('.update');
+                                Route::delete('delete', [DesignController::class, 'delete'])->name('.delete');
+                            });
+
+                        // documentation routes
+                        Route::prefix('documentation')
+                            ->name('.documentation')
+                            ->group(function () {
+                                Route::get('/', [DocumentationController::class, 'index']);
+                                Route::post('store', [DocumentationController::class, 'store'])->name('.store');
+                                Route::post('update', [DocumentationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [DocumentationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // droadcast routes
+                        Route::prefix('broadcast')
+                            ->name('.broadcast')
+                            ->group(function () {
+                                Route::get('/', [BroadcastController::class, 'index']);
+                                Route::post('store', [BroadcastController::class, 'store'])->name('.store');
+                                Route::post('update', [BroadcastController::class, 'update'])->name('.update');
+                                Route::delete('delete', [BroadcastController::class, 'delete'])->name('.delete');
+                            });
+
+                        // media post routes
+                        Route::prefix('media-post')
+                            ->name('.mediaPost')
+                            ->group(function () {
+                                Route::get('/', [MediaPostController::class, 'index']);
+                                Route::post('store', [MediaPostController::class, 'store'])->name('.store');
+                                Route::post('update', [MediaPostController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MediaPostController::class, 'delete'])->name('.delete');
+                            });
+
+                        // card routes
+                        Route::prefix('card')
+                            ->name('.card')
+                            ->group(function () {
+                                Route::get('/', [CardController::class, 'index']);
+                                Route::post('store', [CardController::class, 'store'])->name('.store');
+                                Route::post('update', [CardController::class, 'update'])->name('.update');
+                                Route::delete('delete', [CardController::class, 'delete'])->name('.delete');
+                            });
+
+                        // vehicle routes
+                        Route::prefix('vehicle')
+                            ->name('.vehicle')
+                            ->group(function () {
+                                Route::get('/', [VehicleController::class, 'index']);
+                                Route::post('store', [VehicleController::class, 'store'])->name('.store');
+                                Route::post('update', [VehicleController::class, 'update'])->name('.update');
+                                Route::delete('delete', [VehicleController::class, 'delete'])->name('.delete');
+                            });
+
+                        // event routes
+                        Route::prefix('event')
+                            ->name('.event')
+                            ->group(function () {
+                                Route::get('/', [SubmissionEventController::class, 'index']);
+                                Route::post('store', [SubmissionEventController::class, 'store'])->name('.store');
+                                Route::post('update', [SubmissionEventController::class, 'update'])->name('.update');
+                                Route::delete('delete', [SubmissionEventController::class, 'delete'])->name('.delete');
+                            });
+
+                        // attendance routes
+                        Route::prefix('attendance')
+                            ->name('.attendance')
+                            ->group(function () {
+                                Route::get('/', [AttendanceController::class, 'index']);
+                                Route::post('store', [AttendanceController::class, 'store'])->name('.store');
+                                Route::post('update', [AttendanceController::class, 'update'])->name('.update');
+                                Route::delete('delete', [AttendanceController::class, 'delete'])->name('.delete');
+                            });
+
+                        // equipment routes
+                        Route::prefix('equipment')
+                            ->name('.equipment')
+                            ->group(function () {
+                                Route::get('/', [EquipmentController::class, 'index']);
+                                Route::post('store', [EquipmentController::class, 'store'])->name('.store');
+                                Route::post('update', [EquipmentController::class, 'update'])->name('.update');
+                                Route::delete('delete', [EquipmentController::class, 'delete'])->name('.delete');
+                            });
+
+                        // outstation routes
+                        Route::prefix('outstation')
+                            ->name('.outstation')
+                            ->group(function () {
+                                Route::get('/', [OutstationController::class, 'index']);
+                                Route::post('store', [OutstationController::class, 'store'])->name('.store');
+                                Route::post('update', [OutstationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [OutstationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // leave routes
+                        Route::prefix('leave')
+                            ->name('.leave')
+                            ->group(function () {
+                                Route::get('/', [LeaveController::class, 'index']);
+                                Route::post('store', [LeaveController::class, 'store'])->name('.store');
+                                Route::post('update', [LeaveController::class, 'update'])->name('.update');
+                                Route::delete('delete', [LeaveController::class, 'delete'])->name('.delete');
+                            });
+
+                        // training routes
+                        Route::prefix('training')
+                            ->name('.training')
+                            ->group(function () {
+                                Route::get('/', [TrainingController::class, 'index']);
+                                Route::post('store', [TrainingController::class, 'store'])->name('.store');
+                                Route::post('update', [TrainingController::class, 'update'])->name('.update');
+                                Route::delete('delete', [TrainingController::class, 'delete'])->name('.delete');
+                            });
+
+                        // resignation routes
+                        Route::prefix('resignation')
+                            ->name('.resignation')
+                            ->group(function () {
+                                Route::get('/', [ResignationController::class, 'index']);
+                                Route::post('store', [ResignationController::class, 'store'])->name('.store');
+                                Route::post('update', [ResignationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ResignationController::class, 'delete'])->name('.delete');
                             });
                     });
             });
