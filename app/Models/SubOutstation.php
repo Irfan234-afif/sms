@@ -12,6 +12,7 @@ class SubOutstation extends Model
 
     protected $fillable = [
         'submission_id',
+        'title',
         'start_date',
         'end_date',
         'description',

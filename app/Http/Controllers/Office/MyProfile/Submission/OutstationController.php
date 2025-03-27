@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
 use App\Models\Submission;
+use App\Models\SubOutstation;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
 use Exception;
@@ -31,7 +32,7 @@ class OutstationController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('outstation')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +61,14 @@ class OutstationController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            SubOutstation::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'title' => request('title'),
+                'description' => request('description'),
+                'start_date' => request('date_range')[0],
+                'end_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 
@@ -87,7 +95,12 @@ class OutstationController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $submission->outstation->update([
+                'title' => request('title'),
+                'description' => request('description'),
+                'start_date' => request('date_range')[0],
+                'end_date' => request('date_range')[1],
+            ]);
 
             DB::commit();
 
