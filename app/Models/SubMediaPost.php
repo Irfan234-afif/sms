@@ -2,9 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubMediaPost extends Model
 {
-    //
+    use GenerateUuid, SoftDeletes;
+
+    protected $fillable = [
+        'submission_id',
+        'title',
+        'description',
+    ];
 }
