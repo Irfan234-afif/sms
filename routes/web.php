@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ajax\ApprovalController;
 use App\Http\Controllers\Ajax\ChatController;
 use App\Http\Controllers\Guardian\AdmissionStudentController;
 use App\Http\Controllers\Guardian\GuardianController;
@@ -7,14 +8,28 @@ use App\Http\Controllers\Guardian\TransactionPaymentController;
 use App\Http\Controllers\Office\Finance\Activity\AdmissionStudentController as FinanceActivityAdmissionStudentController;
 use App\Http\Controllers\Office\Finance\FinanceController;
 use App\Http\Controllers\Office\GA\Activity\AdmissionStudentController as GAActivityAdmissionStudentController;
+use App\Http\Controllers\Office\GA\Approval\EquipmentController as ApprovalEquipmentController;
+use App\Http\Controllers\Office\GA\Approval\EventController as ApprovalEventController;
+use App\Http\Controllers\Office\GA\Approval\InstallRepairController as ApprovalInstallRepairController;
+use App\Http\Controllers\Office\GA\Approval\MaterialController as ApprovalMaterialController;
+use App\Http\Controllers\Office\GA\Approval\VehicleController as ApprovalVehicleController;
 use App\Http\Controllers\Office\GA\GAController;
 use App\Http\Controllers\Office\GA\Setting\SubmissionApproverController;
+use App\Http\Controllers\Office\HCM\Approval\AttendanceController as ApprovalAttendanceController;
+use App\Http\Controllers\Office\HCM\Approval\LeaveController as ApprovalLeaveController;
+use App\Http\Controllers\Office\HCM\Approval\OutstationController as ApprovalOutstationController;
+use App\Http\Controllers\Office\HCM\Approval\ResignationController as ApprovalResignationController;
 use App\Http\Controllers\Office\HCM\Employee\EmployeeController;
 use App\Http\Controllers\Office\HCM\HCMController;
 use App\Http\Controllers\Office\HCM\Placement\EmployeeController as PlacementEmployeeController;
 use App\Http\Controllers\Office\HCM\Placement\PlacementController;
 use App\Http\Controllers\Office\HCM\Setting\SubmissionApproverController as SettingSubmissionApproverController;
 use App\Http\Controllers\Office\ICC\Activity\AdmissionStudentController as ActivityAdmissionStudentController;
+use App\Http\Controllers\Office\ICC\Approval\BroadcastController as ApprovalBroadcastController;
+use App\Http\Controllers\Office\ICC\Approval\CardController as ApprovalCardController;
+use App\Http\Controllers\Office\ICC\Approval\DesignController as ApprovalDesignController;
+use App\Http\Controllers\Office\ICC\Approval\DocumentationController as ApprovalDocumentationController;
+use App\Http\Controllers\Office\ICC\Approval\MediaPostController as ApprovalMediaPostController;
 use App\Http\Controllers\Office\ICC\ICCController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStageController;
 use App\Http\Controllers\Office\ICC\Management\AdmissionStudentDiscountController;
@@ -167,7 +182,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::delete('delete', [DocumentationController::class, 'delete'])->name('.delete');
                             });
 
-                        // droadcast routes
+                        // broadcast routes
                         Route::prefix('broadcast')
                             ->name('.broadcast')
                             ->group(function () {
@@ -512,6 +527,60 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::delete('delete', [TestimonialController::class, 'delete'])->name('.delete');
                             });
                     });
+                // approval routes
+                Route::prefix('approval')
+                    ->name('.approval')
+                    ->group(function () {
+                        // design routes
+                        Route::prefix('design')
+                            ->name('.design')
+                            ->group(function () {
+                                Route::get('/', [ApprovalDesignController::class, 'index']);
+                                Route::post('store', [ApprovalDesignController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalDesignController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalDesignController::class, 'delete'])->name('.delete');
+                            });
+
+                        // documentation routes
+                        Route::prefix('documentation')
+                            ->name('.documentation')
+                            ->group(function () {
+                                Route::get('/', [ApprovalDocumentationController::class, 'index']);
+                                Route::post('store', [ApprovalDocumentationController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalDocumentationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalDocumentationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // broadcast routes
+                        Route::prefix('broadcast')
+                            ->name('.broadcast')
+                            ->group(function () {
+                                Route::get('/', [ApprovalBroadcastController::class, 'index']);
+                                Route::post('store', [ApprovalBroadcastController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalBroadcastController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalBroadcastController::class, 'delete'])->name('.delete');
+                            });
+
+                        // media post routes
+                        Route::prefix('media-post')
+                            ->name('.mediaPost')
+                            ->group(function () {
+                                Route::get('/', [ApprovalMediaPostController::class, 'index']);
+                                Route::post('store', [ApprovalMediaPostController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalMediaPostController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalMediaPostController::class, 'delete'])->name('.delete');
+                            });
+
+                        // card routes
+                        Route::prefix('card')
+                            ->name('.card')
+                            ->group(function () {
+                                Route::get('/', [ApprovalCardController::class, 'index']);
+                                Route::post('store', [ApprovalCardController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalCardController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalCardController::class, 'delete'])->name('.delete');
+                            });
+                    });
                 // management routes
                 Route::prefix('management')
                     ->name('.management')
@@ -601,6 +670,50 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::delete('remove', [PlacementEmployeeController::class, 'remove'])->name('.remove');
                             });
                     });
+                // approval routes
+                Route::prefix('approval')
+                    ->name('.approval')
+                    ->group(function () {
+                        // attendance routes
+                        Route::prefix('attendance')
+                            ->name('.attendance')
+                            ->group(function () {
+                                Route::get('/', [ApprovalAttendanceController::class, 'index']);
+                                Route::post('store', [ApprovalAttendanceController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalAttendanceController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalAttendanceController::class, 'delete'])->name('.delete');
+                            });
+
+                        // outstation routes
+                        Route::prefix('outstation')
+                            ->name('.outstation')
+                            ->group(function () {
+                                Route::get('/', [ApprovalOutstationController::class, 'index']);
+                                Route::post('store', [ApprovalOutstationController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalOutstationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalOutstationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // leave routes
+                        Route::prefix('leave')
+                            ->name('.leave')
+                            ->group(function () {
+                                Route::get('/', [ApprovalLeaveController::class, 'index']);
+                                Route::post('store', [ApprovalLeaveController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalLeaveController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalLeaveController::class, 'delete'])->name('.delete');
+                            });
+
+                        // resignation routes
+                        Route::prefix('resignation')
+                            ->name('.resignation')
+                            ->group(function () {
+                                Route::get('/', [ApprovalResignationController::class, 'index']);
+                                Route::post('store', [ApprovalResignationController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalResignationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalResignationController::class, 'delete'])->name('.delete');
+                            });
+                    });
                 // setting routes
                 Route::prefix('setting')
                     ->name('.setting.submissionApprover')
@@ -622,6 +735,61 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                     ->group(function () {
                         Route::get('/', [GAActivityAdmissionStudentController::class, 'index']);
                         Route::get('{registration_number}/detail', [GAActivityAdmissionStudentController::class, 'detail'])->name('.detail');
+                    });
+                // approval routes
+                Route::prefix('approval')
+                    ->name('.approval')
+                    ->group(function () {
+                        // material area routes
+                        Route::prefix('material')
+                            ->name('.material')
+                            ->group(function () {
+                                Route::get('/', [ApprovalMaterialController::class, 'index']);
+                                Route::post('store', [ApprovalMaterialController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalMaterialController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalMaterialController::class, 'delete'])->name('.delete');
+                            });
+
+                        // install & repair routes
+                        Route::prefix('install-repair')
+                            ->name('.installRepair')
+                            ->group(function () {
+                                Route::get('/', [ApprovalInstallRepairController::class, 'index']);
+                                Route::get('option-assigned', [ApprovalInstallRepairController::class, 'optionAssigned'])->name('.optionAssigned');
+                                Route::post('store', [ApprovalInstallRepairController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalInstallRepairController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalInstallRepairController::class, 'delete'])->name('.delete');
+                            });
+
+                        // vehicle routes
+                        Route::prefix('vehicle')
+                            ->name('.vehicle')
+                            ->group(function () {
+                                Route::get('/', [ApprovalVehicleController::class, 'index']);
+                                Route::post('store', [ApprovalVehicleController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalVehicleController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalVehicleController::class, 'delete'])->name('.delete');
+                            });
+
+                        // event routes
+                        Route::prefix('event')
+                            ->name('.event')
+                            ->group(function () {
+                                Route::get('/', [ApprovalEventController::class, 'index']);
+                                Route::post('store', [ApprovalEventController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalEventController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalEventController::class, 'delete'])->name('.delete');
+                            });
+
+                        // equipment routes
+                        Route::prefix('equipment')
+                            ->name('.equipment')
+                            ->group(function () {
+                                Route::get('/', [ApprovalEquipmentController::class, 'index']);
+                                Route::post('store', [ApprovalEquipmentController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalEquipmentController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalEquipmentController::class, 'delete'])->name('.delete');
+                            });
                     });
                 // setting routes
                 Route::prefix('setting')
@@ -874,6 +1042,12 @@ Route::middleware(['auth'])
             ->group(function () {
                 Route::get('get-chats', [ChatController::class, 'getChats'])->name('.getChats');
                 Route::post('send-chat', [ChatController::class, 'sendChat'])->name('.sendChat');
+            });
+        // approval
+        Route::prefix('approval')
+            ->name('.approval')
+            ->group(function () {
+                Route::post('update-status', [ApprovalController::class, 'updateStatus'])->name('.updateStatus');
             });
     });
 

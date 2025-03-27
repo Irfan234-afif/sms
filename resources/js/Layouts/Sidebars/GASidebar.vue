@@ -112,35 +112,35 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-approval" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.ga.approval.equipment')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Peralatan & Pemeliharaan</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.ga.approval.event')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Acara</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.ga.approval.installRepair')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Instalasi & Perbaikan</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.ga.approval.material')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Material</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.ga.approval.vehicle')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Kendaraan</Link
               >

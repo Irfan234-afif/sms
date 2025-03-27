@@ -163,28 +163,28 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-approval" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.hcm.approval.attendance')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Kehadiran</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.hcm.approval.outstation')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Perjalanan Dinas</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.hcm.approval.leave')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Cuti</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.hcm.approval.resignation')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Pengunduran diri</Link
               >

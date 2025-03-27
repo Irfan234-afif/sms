@@ -7,7 +7,7 @@ import MyProfileSidebar from '@/Layouts/Sidebars/MyProfileSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import ApprovalDetail from '../../../../../Components/ApprovalDetail.vue';
+import ApprovalDetail from '@/Components/ApprovalDetail.vue';
 import SubmissionForm from './Form.vue';
 import ChatForm from '@/Components/ChatForm.vue';
 import Badge from '@/Components/Badge.vue';
@@ -258,7 +258,7 @@ export default {
                         type="purple"
                         @click="
                           openModal({
-                            title: `Permintaan Instalasi & Perbaikin ${submission.reference_number}`,
+                            title: `Permintaan Instalasi & Perbaikan ${submission.reference_number}`,
                             mode: 'chat-form',
                             maxWidth: '3xl',
                             data: {
