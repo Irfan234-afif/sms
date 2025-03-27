@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ajax\ChatController;
 use App\Http\Controllers\Guardian\AdmissionStudentController;
 use App\Http\Controllers\Guardian\GuardianController;
 use App\Http\Controllers\Guardian\TransactionPaymentController;
@@ -41,12 +42,26 @@ use App\Http\Controllers\Office\MyProfile\Qualitification\AttachmentController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\CertificationController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\CommunityInvolvementController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\ExperienceController;
- use App\Http\Controllers\Office\MyProfile\Qualitification\FamilyController;
+use App\Http\Controllers\Office\MyProfile\Qualitification\FamilyController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\HonorPrizeController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\LanguageSkillController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\SpecializationController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\TrainingController;
+use App\Http\Controllers\Office\MyProfile\Submission\AttendanceController;
+use App\Http\Controllers\Office\MyProfile\Submission\BroadcastController;
+use App\Http\Controllers\Office\MyProfile\Submission\CardController;
+use App\Http\Controllers\Office\MyProfile\Submission\DesignController;
+use App\Http\Controllers\Office\MyProfile\Submission\DocumentationController;
+use App\Http\Controllers\Office\MyProfile\Submission\EquipmentController;
+use App\Http\Controllers\Office\MyProfile\Submission\EventController as SubmissionEventController;
+use App\Http\Controllers\Office\MyProfile\Submission\InstallRepairController;
+use App\Http\Controllers\Office\MyProfile\Submission\LeaveController;
 use App\Http\Controllers\Office\MyProfile\Submission\MaterialController;
+use App\Http\Controllers\Office\MyProfile\Submission\MediaPostController;
+use App\Http\Controllers\Office\MyProfile\Submission\OutstationController;
+use App\Http\Controllers\Office\MyProfile\Submission\ResignationController;
+use App\Http\Controllers\Office\MyProfile\Submission\TrainingController as SubmissionTrainingController;
+use App\Http\Controllers\Office\MyProfile\Submission\VehicleController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
@@ -108,12 +123,158 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
             ->group(function () {
                 Route::get('/', [ICCController::class, 'index']);
                 // submission routes
-                Route::prefix('submission/material')
-                    ->name('.submission.material')
+                Route::prefix('submission')
+                    ->name('.submission')
                     ->group(function () {
-                        Route::get('/', [MaterialController::class, 'index']);
-                        Route::post('save', [MaterialController::class, 'save'])->name('.save');
-                        Route::delete('delete', [MaterialController::class, 'delete'])->name('.delete');
+                        // material area routes
+                        Route::prefix('material')
+                            ->name('.material')
+                            ->group(function () {
+                                Route::get('/', [MaterialController::class, 'index']);
+                                Route::post('store', [MaterialController::class, 'store'])->name('.store');
+                                Route::post('update', [MaterialController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MaterialController::class, 'delete'])->name('.delete');
+                            });
+
+                        // install & repair routes
+                        Route::prefix('install-repair')
+                            ->name('.installRepair')
+                            ->group(function () {
+                                Route::get('/', [InstallRepairController::class, 'index']);
+                                Route::post('store', [InstallRepairController::class, 'store'])->name('.store');
+                                Route::post('update', [InstallRepairController::class, 'update'])->name('.update');
+                                Route::delete('delete', [InstallRepairController::class, 'delete'])->name('.delete');
+                            });
+
+                        // design routes
+                        Route::prefix('design')
+                            ->name('.design')
+                            ->group(function () {
+                                Route::get('/', [DesignController::class, 'index']);
+                                Route::post('store', [DesignController::class, 'store'])->name('.store');
+                                Route::post('update', [DesignController::class, 'update'])->name('.update');
+                                Route::delete('delete', [DesignController::class, 'delete'])->name('.delete');
+                            });
+
+                        // documentation routes
+                        Route::prefix('documentation')
+                            ->name('.documentation')
+                            ->group(function () {
+                                Route::get('/', [DocumentationController::class, 'index']);
+                                Route::post('store', [DocumentationController::class, 'store'])->name('.store');
+                                Route::post('update', [DocumentationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [DocumentationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // droadcast routes
+                        Route::prefix('broadcast')
+                            ->name('.broadcast')
+                            ->group(function () {
+                                Route::get('/', [BroadcastController::class, 'index']);
+                                Route::post('store', [BroadcastController::class, 'store'])->name('.store');
+                                Route::post('update', [BroadcastController::class, 'update'])->name('.update');
+                                Route::delete('delete', [BroadcastController::class, 'delete'])->name('.delete');
+                            });
+
+                        // media post routes
+                        Route::prefix('media-post')
+                            ->name('.mediaPost')
+                            ->group(function () {
+                                Route::get('/', [MediaPostController::class, 'index']);
+                                Route::post('store', [MediaPostController::class, 'store'])->name('.store');
+                                Route::post('update', [MediaPostController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MediaPostController::class, 'delete'])->name('.delete');
+                            });
+
+                        // card routes
+                        Route::prefix('card')
+                            ->name('.card')
+                            ->group(function () {
+                                Route::get('/', [CardController::class, 'index']);
+                                Route::post('store', [CardController::class, 'store'])->name('.store');
+                                Route::post('update', [CardController::class, 'update'])->name('.update');
+                                Route::delete('delete', [CardController::class, 'delete'])->name('.delete');
+                            });
+
+                        // vehicle routes
+                        Route::prefix('vehicle')
+                            ->name('.vehicle')
+                            ->group(function () {
+                                Route::get('/', [VehicleController::class, 'index']);
+                                Route::post('store', [VehicleController::class, 'store'])->name('.store');
+                                Route::post('update', [VehicleController::class, 'update'])->name('.update');
+                                Route::delete('delete', [VehicleController::class, 'delete'])->name('.delete');
+                            });
+
+                        // event routes
+                        Route::prefix('event')
+                            ->name('.event')
+                            ->group(function () {
+                                Route::get('/', [SubmissionEventController::class, 'index']);
+                                Route::post('store', [SubmissionEventController::class, 'store'])->name('.store');
+                                Route::post('update', [SubmissionEventController::class, 'update'])->name('.update');
+                                Route::delete('delete', [SubmissionEventController::class, 'delete'])->name('.delete');
+                            });
+
+                        // attendance routes
+                        Route::prefix('attendance')
+                            ->name('.attendance')
+                            ->group(function () {
+                                Route::get('/', [AttendanceController::class, 'index']);
+                                Route::post('store', [AttendanceController::class, 'store'])->name('.store');
+                                Route::post('update', [AttendanceController::class, 'update'])->name('.update');
+                                Route::delete('delete', [AttendanceController::class, 'delete'])->name('.delete');
+                            });
+
+                        // equipment routes
+                        Route::prefix('equipment')
+                            ->name('.equipment')
+                            ->group(function () {
+                                Route::get('/', [EquipmentController::class, 'index']);
+                                Route::post('store', [EquipmentController::class, 'store'])->name('.store');
+                                Route::post('update', [EquipmentController::class, 'update'])->name('.update');
+                                Route::delete('delete', [EquipmentController::class, 'delete'])->name('.delete');
+                            });
+
+                        // outstation routes
+                        Route::prefix('outstation')
+                            ->name('.outstation')
+                            ->group(function () {
+                                Route::get('/', [OutstationController::class, 'index']);
+                                Route::post('store', [OutstationController::class, 'store'])->name('.store');
+                                Route::post('update', [OutstationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [OutstationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // leave routes
+                        Route::prefix('leave')
+                            ->name('.leave')
+                            ->group(function () {
+                                Route::get('/', [LeaveController::class, 'index']);
+                                Route::post('store', [LeaveController::class, 'store'])->name('.store');
+                                Route::post('update', [LeaveController::class, 'update'])->name('.update');
+                                Route::delete('delete', [LeaveController::class, 'delete'])->name('.delete');
+                            });
+
+                        // training routes
+                        Route::prefix('training')
+                            ->name('.training')
+                            ->group(function () {
+                                Route::get('/', [SubmissionTrainingController::class, 'index']);
+                                Route::post('store', [SubmissionTrainingController::class, 'store'])->name('.store');
+                                Route::post('update', [SubmissionTrainingController::class, 'update'])->name('.update');
+                                Route::delete('delete', [SubmissionTrainingController::class, 'delete'])->name('.delete');
+                            });
+
+                        // resignation routes
+                        Route::prefix('resignation')
+                            ->name('.resignation')
+                            ->group(function () {
+                                Route::get('/', [ResignationController::class, 'index']);
+                                Route::post('store', [ResignationController::class, 'store'])->name('.store');
+                                Route::post('update', [ResignationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ResignationController::class, 'delete'])->name('.delete');
+                            });
                     });
                 Route::prefix('qualification')
                     ->name('.qualification.')
@@ -208,7 +369,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::delete('delete', [CommunityInvolvementController::class, 'delete'])
                                     ->name('.delete');
                             });
-                });
+                    });
             });
         // icc routes
         Route::prefix('icc')
@@ -701,5 +862,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// ajax routes
+Route::middleware(['auth'])
+    ->prefix('ajax')
+    ->name('ajax')
+    ->group(function () {
+        // chat
+        Route::prefix('chat')
+            ->name('.chat')
+            ->group(function () {
+                Route::get('get-chats', [ChatController::class, 'getChats'])->name('.getChats');
+                Route::post('send-chat', [ChatController::class, 'sendChat'])->name('.sendChat');
+            });
+    });
 
 require __DIR__ . '/auth.php';

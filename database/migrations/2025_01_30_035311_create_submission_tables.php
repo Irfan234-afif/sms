@@ -88,7 +88,7 @@ return new class extends Migration
             $table->string('unit')->nullable();
             $table->date('due_date')->nullable();
             $table->text('description')->nullable();
-            $table->string('status'); // APPROVED, REJECTED, PENDING
+            $table->string('status'); // 'UNKNOWN'
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,10 +19,11 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      actionRoute: route('office.myProfile.submission.material.store'),
+      actionRoute: route('office.myProfile.submission.installRepair.store'),
       form: {
         submission_id: null,
         datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
+        assigned_id: null,
         name: null,
         unit: null,
         quantity: 1,
@@ -35,9 +36,15 @@ export default {
           error: null,
           disabled: true,
         },
+        assigned_id: {
+          label: 'Petugas',
+          rules: [fieldValidation.isRequired('Petugas')],
+          error: null,
+          options: [],
+        },
         name: {
-          label: 'Barang',
-          rules: [fieldValidation.isRequired('Barang')],
+          label: 'Instalasi & Perbaikan',
+          rules: [fieldValidation.isRequired('Instalasi & Perbaikan')],
           error: null,
         },
         quantity: {
@@ -51,6 +58,11 @@ export default {
           error: null,
           options: units,
         },
+        due_date: {
+          label: 'Batas Waktu',
+          rules: [fieldValidation.isRequired('Batas Waktu')],
+          error: null,
+        },
         description: {
           label: 'Keterangan',
           rules: [],
@@ -62,14 +74,19 @@ export default {
   created() {
     if (this.propertyModal.mode == 'submission-edit-form') {
       let submission = this.propertyModal.data.submission;
-      this.actionRoute = route('office.myProfile.submission.material.update');
+      this.actionRoute = route('office.myProfile.submission.installRepair.update');
 
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
-      this.form.name = submission.material.items[0].name;
-      this.form.unit = submission.material.items[0].unit;
-      this.form.quantity = submission.material.items[0].quantity;
-      this.form.description = submission.material.items[0].description;
+      this.form.assigned_id = submission.assigned.uuid;
+      if (submission.assigned) {
+        this.field.assigned_id.options = [submission.assigned];
+      }
+      this.form.name = submission.install_repair.items[0].name;
+      this.form.quantity = submission.install_repair.items[0].quantity;
+      this.form.unit = submission.install_repair.items[0].unit;
+      this.form.due_date = submission.install_repair.items[0].due_date;
+      this.form.description = submission.install_repair.items[0].description;
     }
   },
   methods: {
@@ -201,6 +218,21 @@ export default {
               :value="option.value"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.due_date.label"
+          :rules="field.due_date.rules"
+          :error="field.due_date.error"
+          prop="due_date"
+        >
+          <el-date-picker
+            :disabled="field.due_date.disabled"
+            v-model="form.due_date"
+            type="date"
+            format="DD-MM-YYYY"
+            value-format="YYYY-MM-DD"
+          />
         </el-form-item>
         <el-form-item
           class="font-medium"

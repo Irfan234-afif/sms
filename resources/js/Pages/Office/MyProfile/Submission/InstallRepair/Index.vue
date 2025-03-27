@@ -16,7 +16,7 @@ import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'My Profile', href: route('office.myProfile') },
-  { label: 'Permintaan Material', href: route('office.myProfile.submission.material') },
+  { label: 'Permintaan Instalasi & Perbaikan', href: route('office.myProfile.submission.installRepair') },
 ];
 </script>
 
@@ -125,12 +125,11 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Nomor Permintaan</th>
                   <th scope="col" class="p-4">Tanggal</th>
-                  <th scope="col" class="p-4">Status Persetujuan</th>
-                  <th scope="col" class="p-4">Barang</th>
-                  <th scope="col" class="p-4">Kode Barang</th>
-                  <th scope="col" class="p-4">Jumlah</th>
+                  <th scope="col" class="p-4">Instalasi & Perbaikan</th>
+                  <th scope="col" class="p-4">Petugas</th>
                   <th scope="col" class="p-4">Keterangan</th>
-                  <th scope="col" class="p-4">Status Barang</th>
+                  <th scope="col" class="p-4">Batas Waktu</th>
+                  <th scope="col" class="p-4">Status Persetujuan</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -169,34 +168,19 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.material.items[0].name }}
+                      {{ submission.install_repair.items[0].name }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.material.items[0].reference_number }}
+                      {{ submission.install_repair.assigned.profile.name }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.material.items[0].quantity }} {{ submission.material.items[0].unit }}
+                      {{ submission.install_repair.items[0].description }}
                     </div>
                   </th>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ submission.material.items[0].description }}
-                    </div>
-                  </th>
-
-                  <td class="whitespace-nowrap px-4 py-3">
-                    <Badge v-if="submission.material.items[0].status == 'DRAFT'" type="dark">Draf</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'PENDING'" type="yellow">Menunggu</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'REJECTED'" type="red">Ditolak</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'ORDERED'" type="default">Dipesan</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'DELIVERED'" type="purple">Dikirim</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'RECEIVED'" type="green">Diterima</Badge>
-                    <Badge v-else-if="submission.material.items[0].status == 'CANCELED'" type="gray">Dibatalkan</Badge>
-                  </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
@@ -241,10 +225,10 @@ export default {
                             mode: 'submission-delete-confirm',
                             maxWidth: 'md',
                             data: {
-                              actionUrl: route('office.myProfile.submission.material.delete', {
+                              actionUrl: route('office.myProfile.submission.installRepair.delete', {
                                 submission: submission,
                               }),
-                              redirectUrl: route('office.myProfile.submission.material'),
+                              redirectUrl: route('office.myProfile.submission.installRepair'),
                               message: 'Ingin menghapus Permintaan?',
                             },
                           })
@@ -275,7 +259,7 @@ export default {
                         type="purple"
                         @click="
                           openModal({
-                            title: `Permintaan Material ${submission.reference_number}`,
+                            title: `Permintaan Instalasi & Perbaikin ${submission.reference_number}`,
                             mode: 'chat-form',
                             maxWidth: '3xl',
                             data: {

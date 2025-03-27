@@ -23,9 +23,4 @@ class SubMaterialItem extends Model
         'attachment',
         'status',
     ];
-
-    public function chats()
-    {
-        return $this->morphMany(Chat::class, 'model');
-    }
 }
