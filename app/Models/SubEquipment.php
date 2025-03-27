@@ -10,8 +10,15 @@ class SubEquipment extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $table = 'sub_equipments';
+
     protected $fillable = [
         'submission_id',
         'description',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(SubEquipmentItem::class, 'sub_equipment_id');
+    }
 }

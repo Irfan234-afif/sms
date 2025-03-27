@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Office\MyProfile\Submission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
+use App\Models\SubEquipment;
 use App\Models\Submission;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
@@ -31,7 +32,7 @@ class EquipmentController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('equipment.items')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +61,17 @@ class EquipmentController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            $sub_equipment_created = SubEquipment::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ]);
+
+            $sub_equipment_created->items()->create([
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'due_date' => request('due_date'),
+                'description' => request('description'),
+                'status' => 'UNKNOWN',
+            ]);
 
             DB::commit();
 
@@ -87,7 +98,13 @@ class EquipmentController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $submission->equipment->items()->first()->update([
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'due_date' => request('due_date'),
+                'description' => request('description'),
+                'status' => 'UNKNOWN',
+            ]);
 
             DB::commit();
 
