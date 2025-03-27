@@ -3,7 +3,16 @@ import OfficeLayout from '@/Layouts/OfficeLayout.vue';
 import MyProfileSidebar from '@/Layouts/Sidebars/MyProfileSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import ProfileInformation from '@/Components/ProfileInformation.vue';
 const breadcrumbs = [{ label: 'Yayasan', href: route('office') }];
+</script>
+
+<script>
+export default {
+  props: [
+    'profile',
+  ]
+}
 </script>
 
 <template>
@@ -231,6 +240,8 @@ const breadcrumbs = [{ label: 'Yayasan', href: route('office') }];
           </div>
         </div>
       </section>
+      <hr>
+      <ProfileInformation :profile="profile"/>
     </template>
   </OfficeLayout>
 </template>
