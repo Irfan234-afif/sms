@@ -12,6 +12,7 @@ class SubCard extends Model
 
     protected $fillable = [
         'submission_id',
+        'title',
         'due_date',
         'description',
     ];

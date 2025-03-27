@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Office\MyProfile\Submission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
+use App\Models\SubCard;
 use App\Models\Submission;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
@@ -31,7 +32,7 @@ class CardController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('card')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +61,13 @@ class CardController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            SubCard::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'title' => request('title'),
+                'due_date' => request('due_date'),
+                'description' => request('description'),
+            ]);
 
             DB::commit();
 
@@ -87,7 +94,11 @@ class CardController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $submission->card->update([
+                'title' => request('title'),
+                'due_date' => request('due_date'),
+                'description' => request('description'),
+            ]);
 
             DB::commit();
 

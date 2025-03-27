@@ -18,12 +18,13 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      actionRoute: route('office.myProfile.submission.mediaPost.store'),
+      actionRoute: route('office.myProfile.submission.card.store'),
       form: {
         submission_id: null,
         datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
         title: null,
-        description: '',
+        due_date: null,
+        description: null,
       },
       field: {
         datetime: {
@@ -33,8 +34,13 @@ export default {
           disabled: true,
         },
         title: {
-          label: 'Postingan Media',
-          rules: [fieldValidation.isRequired('Postingan Media')],
+          label: 'Kartu',
+          rules: [fieldValidation.isRequired('Kartu')],
+          error: null,
+        },
+        due_date: {
+          label: 'Batas Waktu',
+          rules: [fieldValidation.isRequired('Batas Waktu')],
           error: null,
         },
         description: {
@@ -48,12 +54,13 @@ export default {
   created() {
     if (this.propertyModal.mode == 'submission-edit-form') {
       let submission = this.propertyModal.data.submission;
-      this.actionRoute = route('office.myProfile.submission.mediaPost.update');
+      this.actionRoute = route('office.myProfile.submission.card.update');
 
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
-      this.form.title = submission.media_post.title;
-      this.form.description = submission.media_post.description;
+      this.form.title = submission.card.title;
+      this.form.due_date = submission.card.due_date;
+      this.form.description = submission.card.description;
     }
   },
   methods: {
@@ -151,6 +158,15 @@ export default {
           prop="title"
         >
           <el-input v-model="form.title" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.due_date.label"
+          :rules="field.due_date.rules"
+          :error="field.due_date.error"
+          prop="due_date"
+        >
+          <el-date-picker v-model="form.due_date" type="date" format="DD-MM-YYYY" value-format="YYYY-MM-DD" />
         </el-form-item>
         <el-form-item
           class="font-medium"
