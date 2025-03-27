@@ -19,13 +19,12 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      actionRoute: route('office.myProfile.submission.broadcast.store'),
+      actionRoute: route('office.myProfile.submission.mediaPost.store'),
       form: {
         submission_id: null,
         datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
         title: null,
-        date_schedule: null,
-        content: '',
+        description: '',
       },
       field: {
         datetime: {
@@ -35,17 +34,12 @@ export default {
           disabled: true,
         },
         title: {
-          label: 'Pesan Informasi',
-          rules: [fieldValidation.isRequired('Pesan Informasi')],
+          label: 'Postingan Media',
+          rules: [fieldValidation.isRequired('Postingan Media')],
           error: null,
         },
-        date_schedule: {
-          label: 'Jadwal',
-          rules: [fieldValidation.isRequired('Jadwal')],
-          error: null,
-        },
-        content: {
-          label: 'Konten',
+        description: {
+          label: 'Keterangan',
           rules: [],
           error: null,
         },
@@ -55,13 +49,12 @@ export default {
   created() {
     if (this.propertyModal.mode == 'submission-edit-form') {
       let submission = this.propertyModal.data.submission;
-      this.actionRoute = route('office.myProfile.submission.broadcast.update');
+      this.actionRoute = route('office.myProfile.submission.mediaPost.update');
 
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
-      this.form.title = submission.broadcast.title;
-      this.form.date_schedule = submission.broadcast.date_schedule;
-      this.form.content = submission.broadcast.content;
+      this.form.title = submission.media_post.title;
+      this.form.description = submission.media_post.description;
     }
   },
   methods: {
@@ -162,23 +155,12 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.date_schedule.label"
-          :rules="field.date_schedule.rules"
-          :error="field.date_schedule.error"
-          prop="date_schedule"
+          :label="field.description.label"
+          :rules="field.description.rules"
+          :error="field.description.error"
+          prop="description"
         >
-          <el-date-picker v-model="form.date_schedule" type="date" format="DD-MM-YYYY" value-format="YYYY-MM-DD" />
-        </el-form-item>
-        <el-form-item
-          class="font-medium"
-          :label="field.content.label"
-          :rules="field.content.rules"
-          :error="field.content.error"
-          prop="content"
-        >
-          <div style="width: 100%">
-            <CKEditor v-model="form.content" />
-          </div>
+          <el-input type="textarea" v-model="form.description" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

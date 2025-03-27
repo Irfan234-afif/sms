@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Office\MyProfile\Submission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
+use App\Models\SubMediaPost;
 use App\Models\Submission;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
@@ -31,7 +32,7 @@ class MediaPostController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('media_post')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +61,12 @@ class MediaPostController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            SubMediaPost::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'title' => request('title'),
+                'description' => request('description'),
+            ]);
 
             DB::commit();
 
@@ -87,7 +93,10 @@ class MediaPostController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $submission->media_post->update([
+                'title' => request('title'),
+                'description' => request('description'),
+            ]);
 
             DB::commit();
 
