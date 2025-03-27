@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Office\MyProfile\Submission;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
+use App\Models\SubInstallRepair;
 use App\Models\Submission;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
@@ -31,7 +33,8 @@ class InstallRepairController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('install_repair.assigned.profile')
+            ->with('install_repair.items')
             ->latest()
             ->paginate(15);
 
@@ -43,6 +46,19 @@ class InstallRepairController extends Controller
         ];
 
         return Inertia::render('Office/MyProfile/Submission/InstallRepair/Index', $data);
+    }
+
+    public function optionAssigned()
+    {
+        $employees = Employee::query();
+
+        if (request()->has('search')) {
+            $employees->whereHas('profile', function ($profile) {
+                $profile->where('name', 'like', '%' . request('search') . '%');
+            })->orWhere('identity_number', 'like', '%' . request('search') . '%');
+        }
+
+        return response()->json(EmployeeResource::collection($employees->with('profile')->latest()->get()), 200);
     }
 
     public function store()
@@ -60,7 +76,22 @@ class InstallRepairController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            $assigned = Employee::where('uuid', request('assigned_id'))->first();
+
+            $sub_install_repair_created = SubInstallRepair::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'assigned_id' => $assigned ? $assigned->id : null,
+            ]);
+
+            $sub_install_repair_created->items()->create([
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'unit' => request('unit'),
+                'due_date' => request('due_date'),
+                'description' => request('description'),
+                'status' => 'UNKNOWN',
+            ]);
 
             DB::commit();
 
@@ -87,7 +118,19 @@ class InstallRepairController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $assigned = Employee::where('uuid', request('assigned_id'))->first();
+
+            $submission->install_repair->update([
+                'assigned_id' => $assigned ? $assigned->id : null,
+            ]);
+
+            $submission->install_repair->items()->first()->update([
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'unit' => request('unit'),
+                'due_date' => request('due_date'),
+                'description' => request('description'),
+            ]);
 
             DB::commit();
 

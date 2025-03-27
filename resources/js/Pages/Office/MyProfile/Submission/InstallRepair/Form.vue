@@ -40,6 +40,7 @@ export default {
           label: 'Petugas',
           rules: [fieldValidation.isRequired('Petugas')],
           error: null,
+          loading: null,
           options: [],
         },
         name: {
@@ -78,9 +79,9 @@ export default {
 
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
-      this.form.assigned_id = submission.assigned.uuid;
-      if (submission.assigned) {
-        this.field.assigned_id.options = [submission.assigned];
+      this.form.assigned_id = submission.install_repair.assigned?.uuid;
+      if (submission.install_repair.assigned) {
+        this.field.assigned_id.options = [submission.install_repair.assigned];
       }
       this.form.name = submission.install_repair.items[0].name;
       this.form.quantity = submission.install_repair.items[0].quantity;
@@ -90,6 +91,23 @@ export default {
     }
   },
   methods: {
+    optionAssigned(search) {
+      this.field.assigned_id.loading = true;
+      axios
+        .get(
+          route('office.myProfile.submission.installRepair.optionAssigned', {
+            search: search,
+          }),
+        )
+        .then((response) => {
+          this.field.assigned_id.options = response.data;
+          this.field.assigned_id.loading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.field.assigned_id.loading = false;
+        });
+    },
     submit(status) {
       this.$refs['submissionForm'].validate((valid) => {
         if (valid) {
@@ -175,6 +193,34 @@ export default {
             format="DD-MM-YYYY"
             value-format="YYYY-MM-DD"
           />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.assigned_id.label"
+          :rules="field.assigned_id.rules"
+          :error="field.assigned_id.error"
+          prop="assigned_id"
+        >
+          <el-select
+            v-model="form.assigned_id"
+            :placeholder="`Pilih ${field.assigned_id.label}`"
+            loading-text="..."
+            no-match-text="Data tidak ditemukan"
+            no-data-text="Tidak ada data"
+            :remote-method="optionAssigned"
+            remote
+            filterable
+            reserve-keyword
+            clearable
+            autocomplete="off"
+          >
+            <el-option
+              v-for="option in field.assigned_id.options"
+              :key="option.uuid"
+              :label="option.profile.name"
+              :value="option.uuid"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item
           class="font-medium"

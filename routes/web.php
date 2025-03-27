@@ -141,6 +141,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->name('.installRepair')
                             ->group(function () {
                                 Route::get('/', [InstallRepairController::class, 'index']);
+                                Route::get('option-assigned', [InstallRepairController::class, 'optionAssigned'])->name('.optionAssigned');
                                 Route::post('store', [InstallRepairController::class, 'store'])->name('.store');
                                 Route::post('update', [InstallRepairController::class, 'update'])->name('.update');
                                 Route::delete('delete', [InstallRepairController::class, 'delete'])->name('.delete');

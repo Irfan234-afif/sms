@@ -125,8 +125,9 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Nomor Permintaan</th>
                   <th scope="col" class="p-4">Tanggal</th>
-                  <th scope="col" class="p-4">Instalasi & Perbaikan</th>
                   <th scope="col" class="p-4">Petugas</th>
+                  <th scope="col" class="p-4">Instalasi & Perbaikan</th>
+                  <th scope="col" class="p-4">Jumlah</th>
                   <th scope="col" class="p-4">Keterangan</th>
                   <th scope="col" class="p-4">Batas Waktu</th>
                   <th scope="col" class="p-4">Status Persetujuan</th>
@@ -160,17 +161,6 @@ export default {
                       {{ submission.datetime_label }}
                     </div>
                   </th>
-                  <td class="whitespace-nowrap px-4 py-3">
-                    <Badge v-if="submission.status == 'DRAFT'" type="dark">Draf</Badge>
-                    <Badge v-else-if="submission.status == 'PENDING'" type="yellow">Menunggu</Badge>
-                    <Badge v-else-if="submission.status == 'REJECTED'" type="red">Ditolak</Badge>
-                    <Badge v-else-if="submission.status == 'APPROVED'" type="green">Disetujui</Badge>
-                  </td>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ submission.install_repair.items[0].name }}
-                    </div>
-                  </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
                       {{ submission.install_repair.assigned.profile.name }}
@@ -178,9 +168,30 @@ export default {
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
+                      {{ submission.install_repair.items[0].name }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ submission.install_repair.items[0].quantity }} {{ submission.install_repair.items[0].unit }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
                       {{ submission.install_repair.items[0].description }}
                     </div>
                   </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ submission.install_repair.items[0].due_date }}
+                    </div>
+                  </th>
+                  <td class="whitespace-nowrap px-4 py-3">
+                    <Badge v-if="submission.status == 'DRAFT'" type="dark">Draf</Badge>
+                    <Badge v-else-if="submission.status == 'PENDING'" type="yellow">Menunggu</Badge>
+                    <Badge v-else-if="submission.status == 'REJECTED'" type="red">Ditolak</Badge>
+                    <Badge v-else-if="submission.status == 'APPROVED'" type="green">Disetujui</Badge>
+                  </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
