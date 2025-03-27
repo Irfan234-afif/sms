@@ -12,6 +12,7 @@ class SubBroadcast extends Model
 
     protected $fillable = [
         'submission_id',
+        'title',
         'date_schedule',
         'content',
     ];
