@@ -14,7 +14,29 @@ class SubEvent extends Model
         'submission_id',
         'title',
         'place',
-        'use_date',
+        'start_datetime',
+        'end_datetime',
+        'description',
         'bill_amount',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(SubEventItem::class, 'sub_event_id');
+    }
+
+    public function objectives()
+    {
+        return $this->hasMany(SubEventObjective::class, 'sub_event_id');
+    }
+
+    public function participants()
+    {
+        return $this->hasMany(SubEventParticipant::class, 'sub_event_id');
+    }
+
+    public function transportations()
+    {
+        return $this->hasMany(SubEventTransportation::class, 'sub_event_id');
+    }
 }
