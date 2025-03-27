@@ -15,5 +15,6 @@ class SubAttendance extends Model
         'type',
         'date',
         'description',
+        'attachment',
     ];
 }

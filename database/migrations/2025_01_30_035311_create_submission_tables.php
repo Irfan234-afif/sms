@@ -225,7 +225,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('submission_id')->constrained('submissions');
-            $table->string('type'); // LATE, HOME
+            $table->string('type'); // LATE, HOME, 'SICK', 'PERMIT'
             $table->date('date');
             $table->text('description')->nullable();
             $table->timestamps();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Office\MyProfile\Submission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
+use App\Models\SubAttendance;
 use App\Models\Submission;
 use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
@@ -12,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -31,7 +33,7 @@ class AttendanceController extends Controller
 
         $submissions = $submissions->with('approvals.approver.profile')
             ->with('approvals.delegate.profile')
-            // ->with('relations')
+            ->with('attendance')
             ->latest()
             ->paginate(15);
 
@@ -60,7 +62,29 @@ class AttendanceController extends Controller
 
             $submission_created = $submissionService->createSubmission();
 
-            // create relation  
+            $sub_attendance_created = SubAttendance::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ], [
+                'date' => request('date'),
+                'type' => request('type'),
+                'description' => request('description'),
+            ]);
+
+            if (request()->hasFile('attachment_file')) {
+                $file = request()->file('attachment_file');
+
+                $filename = 'attachment' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $file->storeAs('attachments', $filename, 'public');
+
+                if ($sub_attendance_created->attachment) {
+                    Storage::disk('public')->delete('attachments/' . $sub_attendance_created->attachment);
+                }
+
+                $sub_attendance_created->attachment = $filename;
+
+                $sub_attendance_created->save();
+            }
 
             DB::commit();
 
@@ -87,7 +111,28 @@ class AttendanceController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
-            // update relation  
+            $sub_attendance_created = $submission->attendance;
+
+            if ($sub_attendance_created) {
+                $sub_attendance_created->update([
+                    'date' => request('date'),
+                    'type' => request('type'),
+                    'description' => request('description'),
+                ]);
+
+                if (request()->hasFile('attachment_file')) {
+                    $file = request()->file('attachment_file');
+                    $filename = 'attachment' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    if ($sub_attendance_created->attachment) {
+                        Storage::disk('public')->delete('attachments/' . $sub_attendance_created->attachment);
+                    }
+
+                    $file->storeAs('attachments', $filename, 'public');
+
+                    $sub_attendance_created->update(['attachment' => $filename]);
+                }
+            }
 
             DB::commit();
 

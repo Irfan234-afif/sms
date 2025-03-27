@@ -113,13 +113,16 @@ const discountTypes = [
 
 const languageSkillLevel = [
   {
-    label: 'Native', value: 'NATIVE',
+    label: 'Native',
+    value: 'NATIVE',
   },
   {
-    label: 'Intermediate', value: 'INTERMEDIATE',
+    label: 'Intermediate',
+    value: 'INTERMEDIATE',
   },
   {
-    label: 'Beginner', value: 'BEGINNER',
+    label: 'Beginner',
+    value: 'BEGINNER',
   },
 ];
 
@@ -132,21 +135,29 @@ const familyRelationTypes = [
   { label: 'Saudara', value: 'SIBLING' },
 ];
 
+const attendanceTypes = [
+  { label: 'Terlambat', value: 'LATE' },
+  { label: 'Pulang', value: 'HOME' },
+  { label: 'Sakit', value: 'SICK' },
+  { label: 'Izin', value: 'PERMIT' },
+];
+
 export {
   achievementTypes,
   admissionStagePostStatuses,
   admissionStagePreStatuses,
+  attendanceTypes,
   bloodTypes,
   days,
   discountTypes,
   employeeStatus,
+  familyRelationTypes,
   genders,
+  languageSkillLevel,
   maritalStatuses,
   religions,
   responsibleFee,
   schoolInformationSources,
   testimonialTypes,
   units,
-  languageSkillLevel,
-  familyRelationTypes
 };

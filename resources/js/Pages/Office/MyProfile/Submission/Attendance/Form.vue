@@ -1,6 +1,8 @@
 <script setup>
+import CKEditor from '@/Components/CKEditor.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
+import { attendanceTypes } from '@/Helpers/options';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
 import moment from 'moment';
@@ -20,14 +22,14 @@ export default {
       isValid: false,
       attachmentPreview: null,
       attachmentFile: null,
-      actionRoute: route('office.myProfile.submission.design.store'),
+      actionRoute: route('office.myProfile.submission.attendance.store'),
       form: {
         submission_id: null,
         datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-        title: null,
+        type: null,
+        date: moment().format('YYYY-MM-DD HH:mm:ss'),
         attachment: null,
-        due_date: moment().format('YYYY-MM-DD HH:mm:ss'),
-        description: null,
+        description: '',
       },
       field: {
         datetime: {
@@ -36,19 +38,20 @@ export default {
           error: null,
           disabled: true,
         },
-        title: {
-          label: 'Desain',
-          rules: [fieldValidation.isRequired('Desain')],
+        type: {
+          label: 'Absensi',
+          rules: [fieldValidation.isRequired('Absensi')],
+          error: null,
+          options: attendanceTypes,
+        },
+        date: {
+          label: 'Tanggal',
+          rules: [fieldValidation.isRequired('Tanggal')],
           error: null,
         },
         attachment: {
           label: 'Lampiran',
           rules: [],
-          error: null,
-        },
-        due_date: {
-          label: 'Batas Waktu',
-          rules: [fieldValidation.isRequired('Batas Waktu')],
           error: null,
         },
         description: {
@@ -62,16 +65,17 @@ export default {
   created() {
     if (this.propertyModal.mode == 'submission-edit-form') {
       let submission = this.propertyModal.data.submission;
-      this.actionRoute = route('office.myProfile.submission.design.update');
+      this.actionRoute = route('office.myProfile.submission.attendance.update');
 
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
-      if (submission.design.items[0].attachment) {
-        this.attachmentPreview = submission.design.items[0].attachment_path;
+      this.form.type = submission.attendance.type;
+      this.form.date = submission.attendance.date;
+      this.form.attachment = submission.attendance.attachment;
+      if (submission.attendance.attachment) {
+        this.attachmentPreview = submission.attendance.attachment_path;
       }
-      this.form.title = submission.design.items[0].title;
-      this.form.due_date = submission.design.items[0].due_date;
-      this.form.description = submission.design.items[0].description;
+      this.form.description = submission.attendance.description;
     }
   },
   methods: {
@@ -94,8 +98,8 @@ export default {
           const formData = new FormData();
           formData.append('submission_id', requestPayload.submission_id);
           formData.append('datetime', requestPayload.datetime);
-          formData.append('title', requestPayload.title);
-          formData.append('due_date', requestPayload.due_date);
+          formData.append('type', requestPayload.type);
+          formData.append('date', requestPayload.date);
           formData.append('description', requestPayload.description);
           formData.append('attachment_file', this.attachmentFile);
           formData.append('status', status);
@@ -181,12 +185,28 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
+          :label="field.type.label"
+          :rules="field.type.rules"
+          :error="field.type.error"
+          prop="type"
         >
-          <el-input v-model="form.title" autocomplete="off" />
+          <el-select
+            v-model="form.type"
+            :placeholder="`Pilih ${field.type.label}`"
+            loading-text="..."
+            no-match-text="Data tidak ditemukan"
+            no-data-text="Tidak ada data"
+            :disabled="field.type.disabled"
+            clearable
+            autocomplete="off"
+          >
+            <el-option
+              v-for="option in field.type.options"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item
           class="font-medium"
@@ -196,42 +216,17 @@ export default {
           prop="attachment"
           style="width: 100%"
         >
-          <el-upload action="#" :auto-upload="false" :show-file-list="false" :on-change="handleAttachmentFileChange">
-            <img v-if="attachmentPreview" :src="attachmentPreview" class="h-36 rounded-lg object-cover" />
-            <div v-else class="mx-auto flex h-36 w-64 items-center justify-center rounded-lg bg-gray-100">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-14 w-14 text-gray-500"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M15 8h.01" />
-                <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
-                <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
-                <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
-              </svg>
-            </div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item
-          class="font-medium"
-          :label="field.due_date.label"
-          :rules="field.due_date.rules"
-          :error="field.due_date.error"
-          prop="due_date"
-        >
-          <el-date-picker
-            :disabled="field.due_date.disabled"
-            v-model="form.due_date"
-            type="date"
-            format="DD-MM-YYYY"
-            value-format="YYYY-MM-DD"
-          />
+          <div>
+            <el-upload action="#" :auto-upload="false" :show-file-list="false" :on-change="handleAttachmentFileChange">
+              <div v-if="attachmentFile || attachmentPreview">
+                <DefaultButton type="default"> {{ attachmentFile?.name ?? form.attachment }}</DefaultButton>
+              </div>
+              <div v-else>
+                <DefaultButton type="alternative"> Pilih File </DefaultButton>
+              </div>
+            </el-upload>
+            <div class="mt-1 text-xs text-gray-500 dark:text-gray-300">PNG, JPG atau PDF (maks. 1mb).</div>
+          </div>
         </el-form-item>
         <el-form-item
           class="font-medium"
@@ -240,7 +235,9 @@ export default {
           :error="field.description.error"
           prop="description"
         >
-          <el-input type="textarea" v-model="form.description" autocomplete="off" />
+          <div style="width: 100%">
+            <CKEditor v-model="form.description" />
+          </div>
         </el-form-item>
       </el-form>
     </div>
