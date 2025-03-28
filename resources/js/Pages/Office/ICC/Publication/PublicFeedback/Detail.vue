@@ -18,26 +18,10 @@ export default {
       process: false,
       loaded: true,
       isValid: false,
-      form: {
-        public_feedback_id: null,
-        title: null,
-      },
-      field: {
-        title: {
-          label: 'Masukan/Saran',
-          rules: [fieldValidation.isRequired('Masukan/Saran')],
-          error: null,
-        },
-      },
+      public_feedback: this.propertyModal.data.public_feedback,
     };
   },
-  created() {
-    let mode = this.propertyModal.mode;
-    if (mode == 'public-feedback-edit-form') {
-      this.form.public_feedback_id = this.propertyModal.data.public_feedback?.uuid;
-      this.form.title = this.propertyModal.data.public_feedback?.title;
-    }
-  },
+  created() {},
   methods: {
     submit() {
       this.$refs['publicFeedbackForm'].validate((valid) => {
@@ -108,21 +92,43 @@ export default {
       {{ propertyModal?.title }}
     </h2>
     <div class="px-2">
-      <el-form v-if="loaded" ref="publicFeedbackForm" label-position="top" :model="form" :disabled="process">
-        <el-form-item
-          class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
-        >
-          <el-input v-model="form.title" autocomplete="off" />
-        </el-form-item>
-      </el-form>
+      <div class="space-y-4">
+        <h2 class="text-base font-medium text-gray-900 dark:text-white">{{ public_feedback.name }}</h2>
+        <div class="grid gap-4 sm:grid-cols-1 sm:gap-8 lg:gap-12">
+          <div class="space-y-4">
+            <dl>
+              <dt class="text-sm font-medium text-gray-800 dark:text-white">Email</dt>
+              <dd class="text-sm text-gray-500 dark:text-gray-400">
+                {{ public_feedback.email ?? '-' }}
+              </dd>
+            </dl>
+
+            <dl>
+              <dt class="text-sm font-medium text-gray-800 dark:text-white">Nomor Telepon</dt>
+              <dd class="text-sm text-gray-500 dark:text-gray-400">
+                {{ public_feedback.phone ?? '-' }}
+              </dd>
+            </dl>
+
+            <dl>
+              <dt class="text-sm font-medium text-gray-800 dark:text-white">Subjek</dt>
+              <dd class="text-sm text-gray-500 dark:text-gray-400">
+                {{ public_feedback.subject ?? '-' }}
+              </dd>
+            </dl>
+
+            <dl>
+              <dt class="text-sm font-medium text-gray-800 dark:text-white">Pesan</dt>
+              <dd class="text-sm text-gray-500 dark:text-gray-400">
+                {{ public_feedback.message ?? '-' }}
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="flex justify-end space-x-3">
-      <DefaultButton type="light" @click="close" :disabled="process"> Batal </DefaultButton>
-      <DefaultButton type="default" @click="submit" :disabled="process"> Simpan </DefaultButton>
+      <DefaultButton type="light" @click="close" :disabled="process"> Tutup </DefaultButton>
     </div>
   </div>
 </template>

@@ -10,6 +10,8 @@ class PublicFeedback extends Model
 {
     use GenerateUuid, SoftDeletes;
 
+    protected $table = 'public_feedbacks';
+
     protected $fillable = [
         'name',
         'email',
