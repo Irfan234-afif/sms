@@ -19,4 +19,9 @@ class SubEventItem extends Model
         'bill_amount',
         'description',
     ];
+
+    public function event()
+    {
+        return $this->belongsTo(SubEvent::class, 'sub_event_id');
+    }
 }

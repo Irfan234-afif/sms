@@ -1,6 +1,5 @@
 <script setup>
 import DefaultButton from '@/Components/DefaultButton.vue';
-import OutlineButton from '@/Components/OutlineButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
 import { participantTypes, transportationTypes, units } from '@/Helpers/options';
 import axios from 'axios';
@@ -71,6 +70,7 @@ export default {
 
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
+      this.form.status = submission.status;
       this.form.title = submission.event.title;
       this.form.place = submission.event.place;
       this.form.datetime_range = [submission.event.start_datetime, submission.event.end_datetime];
@@ -145,12 +145,11 @@ export default {
     removeItem(index) {
       this.form.items.splice(index, 1);
     },
-    submit(status) {
+    submit() {
       this.$refs['submissionForm'].validate((valid) => {
         if (valid) {
           this.process = true;
           let requestPayload = JSON.parse(JSON.stringify(this.form));
-          requestPayload.status = status;
 
           axios
             .post(this.actionRoute, requestPayload, {
@@ -296,30 +295,7 @@ export default {
               <el-form-item class="font-medium" label="Catatan">
                 <el-input v-model="objective.remark" autocomplete="off" />
               </el-form-item>
-              <div class="flex items-center justify-end">
-                <OutlineButton class="my-auto flex space-x-1" type="red" @click="removeObjective(index)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 7l16 0" />
-                    <path d="M10 11l0 6" />
-                    <path d="M14 11l0 6" />
-                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                  </svg>
-                  <div>Hapus Tujuan Acara</div>
-                </OutlineButton>
-              </div>
             </div>
-            <DefaultButton type="light" @click="addNewObjective(index)" class="mt-2">Tambah Tujuan Acara</DefaultButton>
           </div>
           <div>
             <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Peserta</h2>
@@ -345,30 +321,7 @@ export default {
               <el-form-item class="font-medium" label="Jumlah Peserta">
                 <el-input-number v-model="participant.quantity" autocomplete="off" />
               </el-form-item>
-              <div class="flex items-center justify-end">
-                <OutlineButton class="my-auto flex space-x-1" type="red" @click="removeParticipant(index)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 7l16 0" />
-                    <path d="M10 11l0 6" />
-                    <path d="M14 11l0 6" />
-                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                  </svg>
-                  <div>Hapus Peserta</div>
-                </OutlineButton>
-              </div>
             </div>
-            <DefaultButton type="light" @click="addNewParticipant(index)" class="mt-2">Tambah Peserta</DefaultButton>
           </div>
           <div>
             <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Transportasi</h2>
@@ -397,32 +350,7 @@ export default {
               <el-form-item class="font-medium" label="Biaya Per Unit">
                 <el-input type="number" v-model.number="transportation.unit_cost" autocomplete="off" />
               </el-form-item>
-              <div class="flex items-center justify-end">
-                <OutlineButton class="my-auto flex space-x-1" type="red" @click="removeTransportation(index)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 7l16 0" />
-                    <path d="M10 11l0 6" />
-                    <path d="M14 11l0 6" />
-                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                  </svg>
-                  <div>Hapus Transportasi</div>
-                </OutlineButton>
-              </div>
             </div>
-            <DefaultButton type="light" @click="addNewTransportation(index)" class="mt-2"
-              >Tambah Transportasi</DefaultButton
-            >
           </div>
           <div>
             <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Item</h2>
@@ -450,28 +378,6 @@ export default {
                   <el-option v-for="option in units" :key="option.value" :label="option.label" :value="option.value" />
                 </el-select>
               </el-form-item>
-              <div class="flex items-center justify-end">
-                <OutlineButton class="my-auto flex space-x-1" type="red" @click="removeItem(index)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 7l16 0" />
-                    <path d="M10 11l0 6" />
-                    <path d="M14 11l0 6" />
-                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                  </svg>
-                  <div>Hapus Item</div>
-                </OutlineButton>
-              </div>
               <el-form-item class="font-medium" label="Biaya Satuan">
                 <el-input
                   type="number"
@@ -487,17 +393,20 @@ export default {
                 <el-input type="textarea" v-model="item.description" autocomplete="off" />
               </el-form-item>
             </div>
-            <DefaultButton type="light" @click="addNewItem(index)" class="mt-2">Tambah Item</DefaultButton>
           </div>
         </div>
       </el-form>
     </div>
     <div class="flex justify-end space-x-3">
       <DefaultButton type="light" @click="close" :disabled="process"> Batal </DefaultButton>
-      <DefaultButton v-if="false" type="light" @click="submit('DRAFT')" :disabled="process">
-        Simpan Draft
+      <DefaultButton
+        v-if="propertyModal.data.submission.status != 'APPROVED'"
+        type="default"
+        @click="submit()"
+        :disabled="process"
+      >
+        Simpan
       </DefaultButton>
-      <DefaultButton v-if="false" type="default" @click="submit('PENDING')" :disabled="process"> Kirim </DefaultButton>
     </div>
   </div>
 </template>

@@ -20,6 +20,11 @@ class SubEvent extends Model
         'bill_amount',
     ];
 
+    public function submission()
+    {
+        return $this->belongsTo(Submission::class, 'submission_id');
+    }
+
     public function items()
     {
         return $this->hasMany(SubEventItem::class, 'sub_event_id');
