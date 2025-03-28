@@ -340,35 +340,35 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-approval" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.approval.design')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Desain</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.approval.documentation')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Dokumentasi</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.approval.broadcast')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Pesan Informasi</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.approval.mediaPost')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Posting Media</Link
               >
             </li>
             <li>
               <Link
-                href="#"
+                :href="route('office.icc.approval.card')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Kartu</Link
               >

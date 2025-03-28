@@ -111,19 +111,88 @@ const discountTypes = [
   { label: 'Tetap', value: 'FIXED' },
 ];
 
+const languageSkillLevel = [
+  {
+    label: 'Native',
+    value: 'NATIVE',
+  },
+  {
+    label: 'Intermediate',
+    value: 'INTERMEDIATE',
+  },
+  {
+    label: 'Beginner',
+    value: 'BEGINNER',
+  },
+];
+
+const familyRelationTypes = [
+  { label: 'Suami', value: 'HUSBAND' },
+  { label: 'Istri', value: 'WIFE' },
+  { label: 'Anak', value: 'CHILD' },
+  { label: 'Ayah', value: 'FATHER' },
+  { label: 'Ibu', value: 'MOTHER' },
+  { label: 'Saudara', value: 'SIBLING' },
+];
+
+const attendanceTypes = [
+  { label: 'Terlambat', value: 'LATE' },
+  { label: 'Pulang', value: 'HOME' },
+  { label: 'Sakit', value: 'SICK' },
+  { label: 'Izin', value: 'PERMIT' },
+];
+
+const transportationTypes = [
+  { label: 'Mobil Sekolah', value: 'SCHOOL_BUS' },
+  { label: 'Bus Kecil', value: 'SMALL_BUS' },
+  { label: 'Bus Besar', value: 'LARGE_BUS' },
+  { label: 'Angkutan Umum (Kota)', value: 'CITY_PUBLIC_TRANSPORT' },
+  { label: 'Taksi Online', value: 'ONLINE_TAXI' },
+  { label: 'Kendaraan Pribadi', value: 'PRIVATE_VEHICLE' },
+  { label: 'Rental Mobil', value: 'CAR_RENTAL' },
+  { label: 'Sepeda Motor Online (Ojek Online)', value: 'ONLINE_MOTORCYCLE_TAXI' },
+  { label: 'Pesawat Terbang', value: 'AIRPLANE' },
+  { label: 'Kapal/Ferry', value: 'FERRY' },
+  { label: 'Kereta Api', value: 'TRAIN' },
+];
+
+const participantTypes = [
+  { label: 'Siswa', value: 'STUDENT' },
+  { label: 'Guru', value: 'TEACHER' },
+  { label: 'Asisten Guru', value: 'TEACHER_ASSISTANT' },
+  { label: 'Orangtua', value: 'PARENT' },
+  { label: 'Fotografer/Videografer', value: 'PHOTOGRAPHER_VIDEOGRAPHER' },
+  { label: 'Jurnalis/Reporter', value: 'JOURNALIST_REPORTER' },
+  { label: 'Pengemudi/Driver', value: 'DRIVER' },
+  { label: 'Petugas Keamanan', value: 'SECURITY_OFFICER' },
+  { label: 'Ahli Subjek', value: 'SUBJECT_EXPERT' },
+  { label: 'Pembicara Tamu', value: 'GUEST_SPEAKER' },
+  { label: 'Donatur/Sponsor', value: 'DONOR_SPONSOR' },
+  { label: 'Pengawas dari Eksternal', value: 'EXTERNAL_SUPERVISOR' },
+  { label: 'Administrator Sekolah', value: 'SCHOOL_ADMINISTRATOR' },
+  { label: 'Wakil Kepala Sekolah', value: 'VICE_PRINCIPAL' },
+  { label: 'Kepala Sekolah', value: 'PRINCIPAL' },
+  { label: 'Lainnya', value: 'OTHER' },
+];
+
 export {
   achievementTypes,
   admissionStagePostStatuses,
   admissionStagePreStatuses,
+  attendanceTypes,
   bloodTypes,
   days,
   discountTypes,
   employeeStatus,
+  familyRelationTypes,
   genders,
+  languageSkillLevel,
   maritalStatuses,
+  participantTypes,
   religions,
   responsibleFee,
   schoolInformationSources,
   testimonialTypes,
+  transportationTypes,
   units,
 };

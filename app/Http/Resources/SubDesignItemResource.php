@@ -14,6 +14,13 @@ class SubDesignItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'title' => $this->title,
+            'due_date' => $this->due_date,
+            'description' => $this->description,
+            'attachment' => $this->attachment,
+            'attachment_path' => $this->attachment ? '/storage/attachments/' . $this->attachment : 'https://salonlfc.com/wp-content/uploads/2018/01/attachment-not-found-scaled.png',
+        ];
     }
 }

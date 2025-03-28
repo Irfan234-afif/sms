@@ -3,9 +3,10 @@ export default {
   props: {
     content: String,
   },
+  computed: {},
 };
 </script>
 
 <template>
-  <div v-html="content" />
+  <div class="ck-content" v-html="content" />
 </template>

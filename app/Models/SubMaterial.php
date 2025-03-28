@@ -15,6 +15,11 @@ class SubMaterial extends Model
         'bill_amount',
     ];
 
+    public function submission()
+    {
+        return $this->belongsTo(Submission::class, 'submission_id');
+    }
+
     public function items()
     {
         return $this->hasMany(SubMaterialItem::class, 'sub_material_id');

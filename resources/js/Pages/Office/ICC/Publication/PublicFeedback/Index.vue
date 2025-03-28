@@ -7,8 +7,7 @@ import ICCSidebar from '@/Layouts/Sidebars/ICCSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
-import SchoolSubjectForm from './Form.vue';
-import DefaultButton from '@/Components/DefaultButton.vue';
+import SchoolSubjectForm from './Detail.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
@@ -66,37 +65,7 @@ export default {
         </div>
         <div
           class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0"
-        >
-          <DefaultButton
-            type="default"
-            @click="
-              openModal({
-                title: 'Masukan/Saran Baru',
-                mode: 'public-feedback-create-form',
-                maxWidth: 'md',
-                data: {},
-              })
-            "
-          >
-            <div class="flex items-center space-x-1 text-xs">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-4"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 5l0 14" />
-                <path d="M5 12l14 0" />
-              </svg>
-              <div>Masukan/Saran Baru</div>
-            </div>
-          </DefaultButton>
-        </div>
+        ></div>
       </div>
     </template>
     <template #sidebar>
@@ -120,7 +89,10 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Masukan/Saran</th>
+                  <th scope="col" class="p-4">Nama</th>
+                  <th scope="col" class="p-4">Email</th>
+                  <th scope="col" class="p-4">No Telepon</th>
+                  <th scope="col" class="p-4">Subjek</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -143,18 +115,33 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ public_feedback.title }}
+                      {{ public_feedback.name }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ public_feedback.email }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ public_feedback.phone }}
+                    </div>
+                  </th>
+                  <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ public_feedback.subject }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
-                        type="default"
+                        type="yellow"
                         @click="
                           openModal({
-                            title: 'Sunting Masukan/Saran',
-                            mode: 'public-feedback-edit-form',
-                            maxWidth: 'md',
+                            title: 'Masukan/Saran',
+                            mode: 'public-feedback-detail',
+                            maxWidth: 'xl',
                             data: {
                               public_feedback: public_feedback,
                             },
@@ -173,11 +160,10 @@ export default {
                             class="h-4"
                           >
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                            <path d="M16 5l3 3" />
+                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                            <path d="M21 21l-6 -6" />
                           </svg>
-                          <div>Sunting</div>
+                          <div>Lihat</div>
                         </div>
                       </OutlineButton>
                       <OutlineButton
@@ -233,7 +219,7 @@ export default {
         <template v-slot="{ propertyModal }">
           <SchoolSubjectForm
             v-if="
-              propertyModal?.mode == 'public-feedback-edit-form' || propertyModal?.mode == 'public-feedback-create-form'
+              propertyModal?.mode == 'public-feedback-detail' || propertyModal?.mode == 'public-feedback-create-form'
             "
             :propertyModal="propertyModal"
             @close="closeModal()"

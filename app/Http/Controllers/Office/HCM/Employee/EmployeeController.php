@@ -39,6 +39,28 @@ class EmployeeController extends Controller
         return Inertia::render('Office/HCM/Employee/Index', $data);
     }
 
+    public function detail($uuid)
+    {
+        $employee = Employee::with([
+            'profile.families',
+            'profile.academic_records',
+            'profile.training_records',
+            'profile.specializations',
+            'profile.experiences',
+            'profile.certifications',
+            'profile.community_involvements',
+            'profile.honor_prizes',
+            'profile.language_skills',
+            'profile.attachments',
+        ])->where('uuid', $uuid)->first();
+
+        $data = [
+            'employee' => $employee,
+        ];
+
+        return Inertia::render('Office/HCM/Employee/Detail', $data);
+    }
+
     public function store()
     {
         DB::beginTransaction();

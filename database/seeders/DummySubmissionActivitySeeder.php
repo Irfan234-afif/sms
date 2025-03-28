@@ -38,7 +38,7 @@ class DummySubmissionActivitySeeder extends Seeder
 
                 try {
                     foreach ($submission_groups as $submission_group) {
-                        foreach (range(1, rand(3, 6)) as $approver_index) {
+                        foreach (range(1, rand(4, 6)) as $approver_index) {
                             $approver = Employee::whereHas('profile.user')->inRandomOrder()->first();
                             $submission_approver_created = $submission_group->approvers()->updateOrCreate([
                                 'area_id' => $area->id,
@@ -47,7 +47,7 @@ class DummySubmissionActivitySeeder extends Seeder
                                 'approver_id' => $approver->id,
                             ]);
 
-                            foreach (range(1, rand(1, 3)) as $delegate_index) {
+                            foreach (range(1, rand(2, 3)) as $delegate_index) {
                                 $delegate = Employee::whereHas('profile.user')->inRandomOrder()->first();
                                 $submission_approver_created->delegates()->updateOrCreate([
                                     'delegate_id' => $delegate->id,
@@ -104,20 +104,25 @@ class DummySubmissionActivitySeeder extends Seeder
                                     'bill_amount' => rand(1000, 5000) / 100,
                                     'due_date' => Carbon::now()->addDays(rand(1, 30)),
                                     'description' => $this->faker->word,
-                                    'status' => Arr::random(['REJECTED', 'ORDERED', 'DELIVERED', 'RECEIVED', 'CANCELED', 'PENDING', 'DRAFT']),
+                                    'status' => Arr::random(['REJECTED', 'ORDERED', 'DELIVERED', 'RECEIVED', 'CANCELED', 'PENDING']),
                                 ]);
 
                                 // chat logs
                                 foreach (range(1, rand(3, 5)) as $index) {
-                                    $sub_material_item_created->chats()->create([
-                                        'sender_id' => Arr::random([
-                                            $submitter->profile->user->id,
-                                            $submission_approvers->inRandomOrder()->first()?->approver?->profile?->user?->id
-                                                ?? $submitter->profile->user->id
-                                        ]),
-                                        'message' => $this->faker->paragraph,
-                                        'is_read' => rand(0, 1),
-                                    ]);
+                                    $approver_id = $submission_approvers->clone()->inRandomOrder()->first()?->approver?->profile?->user?->id;
+
+                                    $sender_id = Arr::random(array_filter([
+                                        $submitter->profile->user->id,
+                                        $approver_id
+                                    ]));
+
+                                    if ($sender_id) {
+                                        $submission_created->chats()->create([
+                                            'sender_id' => $sender_id,
+                                            'message' => $this->faker->paragraph,
+                                            'sent_at' => now(),
+                                        ]);
+                                    }
                                 }
                                 // approvers
                                 foreach ($submission_approvers->get() as $submission_approver) {

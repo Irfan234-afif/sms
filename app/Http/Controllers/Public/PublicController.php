@@ -21,8 +21,10 @@ use App\Models\Gallery;
 use App\Models\OperationalHour;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\PublicFeedback;
 use App\Models\Testimonial;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -272,11 +274,39 @@ class PublicController extends Controller
 
     public function publicFeedback()
     {
-        abort(500);
         return Inertia::render('Public/PublicFeedback/Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
         ]);
+    }
+
+    public function savePublicFeedback()
+    {
+        DB::beginTransaction();
+
+        try {
+            PublicFeedback::create([
+                'name' => request('name'),
+                'email' => request('email'),
+                'phone' => request('phone'),
+                'subject' => request('subject'),
+                'message' => request('message'),
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Masukan Saran berhasil disimpan.',
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     public function career()

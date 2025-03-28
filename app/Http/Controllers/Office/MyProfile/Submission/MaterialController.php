@@ -7,8 +7,11 @@ use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
 use App\Models\SubMaterial;
 use App\Models\Submission;
-use App\Models\SubmissionGroup;
+use App\Services\SubmissionStoreService;
+use App\Services\SubmissionUpdateService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -24,17 +27,58 @@ class MaterialController extends Controller
             $group->where('code', 'MATERIAL');
         });
 
+        if (request()->has('status')) {
+            $submissions->where('status', request('status'));
+        }
+
+        if (request()->has('from_date') && request()->has('to_date')) {
+            $submissions->whereBetween('datetime', [request('from_date'), request('to_date')]);
+        }
+
         if (request()->has('search')) {
             $submissions->where('reference_number', 'like', '%' . request('search') . '%');
         }
 
-        $submissions = $submissions->latest()
-            ->with('material.items.chats.sender')
-            ->paginate(15);
+        $take = request('take');
+        $page = request('page', 1);
+
+        if ($take) {
+            $total = $submissions->count();
+
+            $submissions = $submissions->with([
+                'approvals.approver.profile',
+                'approvals.delegate.profile',
+                'material.items',
+            ])
+                ->latest()
+                ->offset(($page - 1) * $take)
+                ->limit($take)
+                ->get();
+
+            $submissions = new LengthAwarePaginator(
+                $submissions,
+                min($total, $take * $page),
+                $take,
+                $page,
+                ['path' => request()->url(), 'query' => request()->query()]
+            );
+        } else {
+            $submissions = $submissions->with([
+                'approvals.approver.profile',
+                'approvals.delegate.profile',
+                'material.items',
+            ])
+                ->latest()
+                ->paginate(15);
+        }
 
         $data = [
             'search_params' => [
                 'search' => request('search'),
+                'from_date' => request('from_date'),
+                'to_date' => request('to_date'),
+                'status' => request('status'),
+                'take' => request('take'),
             ],
             'submissions' => SubmissionResource::collection($submissions),
         ];
@@ -42,40 +86,65 @@ class MaterialController extends Controller
         return Inertia::render('Office/MyProfile/Submission/Material/Index', $data);
     }
 
-    public function save()
+    public function store()
     {
         DB::beginTransaction();
 
         try {
-            $submission_group = SubmissionGroup::where('code', 'MATERIAL')->firstOrFail();
-            $submitter = Employee::where('profile_id', Auth::user()->profile_id)->first();
-            $area = $submitter->assignments()->first()?->area;
-            $reference_number = sprintf("SUB/%s/%011d", $submission_group->reference_code, $submission_group->reference_number);
-            if ($area) {
-                $submission_created = Submission::create([
-                    'submission_group_id' => $submission_group->id,
-                    'submitter_id' => $submitter->id,
-                    'area_id' => $area->id,
-                    'reference_number' => $reference_number,
-                    'datetime' => request('datetime'),
-                    'status' => 'DRAFT',
-                ]);
+            $submitter = Employee::where('profile_id', Auth::user()->profile_id)->firstOrFail();
 
-                $sub_material_created = SubMaterial::updateOrCreate([
-                    'submission_id' => $submission_created->id,
-                ]);
+            $submissionService = new SubmissionStoreService('MATERIAL', $submitter);
 
-                $sub_material_created->items()->create([
-                    'reference_number' =>  'ITEM-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6)),
-                    'name' => request('name'),
-                    'quantity' => request('quantity'),
-                    'unit' => request('unit'),
-                    'description' => request('unit'),
-                    'status' => 'DRAFT',
-                ]);
-                // approvers
-                $submission_group->increment('reference_number', 1);
+            if (!$submissionService->hasSubmitterAssignmentArea()) {
+                throw new Exception('Anda belum ditempatkan di area manapun.', 400);
             }
+
+            $submission_created = $submissionService->createSubmission();
+
+            $sub_material_created = SubMaterial::updateOrCreate([
+                'submission_id' => $submission_created->id,
+            ]);
+
+            $sub_material_created->items()->create([
+                'reference_number' =>  'ITEM-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6)),
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'unit' => request('unit'),
+                'description' => request('description'),
+                'status' => 'DRAFT',
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Permintaan berhasil disimpan.',
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function update()
+    {
+        DB::beginTransaction();
+
+        try {
+            $submissionService = new SubmissionUpdateService(request('submission_id'));
+
+            $submission = $submissionService->updateSubmission();
+
+            $submission->material->items()->first()->update([
+                'name' => request('name'),
+                'quantity' => request('quantity'),
+                'unit' => request('unit'),
+                'description' => request('description'),
+            ]);
 
             DB::commit();
 
@@ -98,7 +167,7 @@ class MaterialController extends Controller
         DB::beginTransaction();
 
         try {
-            $submission = Submission::where('uuid', request('submission'))->firstOrFail();
+            $submission = Submission::where('uuid', request('submission_id'))->firstOrFail();
 
             $submission->delete();
 

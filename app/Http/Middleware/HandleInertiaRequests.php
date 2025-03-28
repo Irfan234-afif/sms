@@ -36,7 +36,7 @@ class HandleInertiaRequests extends Middleware
     {
         // todo: session
         $user = User::where('uuid', $request->user()?->uuid)
-            ->with('profile')
+            ->with('profile.employee')
             ->first();
 
         $available_schools = collect();

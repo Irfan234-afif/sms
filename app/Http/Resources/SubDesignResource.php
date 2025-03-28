@@ -14,6 +14,9 @@ class SubDesignResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'items' => $this->whenLoaded('items', fn() => SubDesignItemResource::collection($this->items)),
+        ];
     }
 }

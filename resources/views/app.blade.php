@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.3.0/ckeditor5.css" />
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('/assets/icons/favicon-small.png') }}" sizes="32x32">
     <link rel="icon" href="{{ asset('/assets/icons/favicon-medium.png') }}" sizes="192x192">

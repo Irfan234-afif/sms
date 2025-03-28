@@ -88,7 +88,7 @@ return new class extends Migration
             $table->string('unit')->nullable();
             $table->date('due_date')->nullable();
             $table->text('description')->nullable();
-            $table->string('status'); // APPROVED, REJECTED, PENDING
+            $table->string('status'); // 'UNKNOWN'
             $table->timestamps();
             $table->softDeletes();
         });
@@ -225,7 +225,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('submission_id')->constrained('submissions');
-            $table->string('type'); // LATE, HOME
+            $table->string('type'); // LATE, HOME, 'SICK', 'PERMIT'
             $table->date('date');
             $table->text('description')->nullable();
             $table->timestamps();

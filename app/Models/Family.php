@@ -13,15 +13,10 @@ class Family extends Model
     protected $fillable = [
         'profile_id',
         'name',
-        'avatar',
         'relation',
         'national_id',
         'birth_place',
         'birth_date',
-        'religion',
-        'languages',
-        'phone',
-        'address',
         'education',
         'occupation',
     ];

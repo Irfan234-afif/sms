@@ -11,6 +11,7 @@ use App\Models\OperationalArea;
 use App\Models\OperationalHour;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Models\PublicFeedback;
 use App\Models\Testimonial;
 use App\Models\User;
 use Faker\Factory;
@@ -295,6 +296,33 @@ class DummyPublicationActivitySeeder extends Seeder
                         'name' => $this->faker->name,
                         'relation' => $this->faker->jobTitle,
                         'message' => $this->faker->text,
+                    ]);
+
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    DB::rollBack();
+
+                    throw $th;
+                }
+                $this->command->getOutput()->progressAdvance();
+            }
+            $this->command->getOutput()->progressFinish();
+        }
+        // Create public feedback
+        if (App::environment(['local', 'testing'])) {
+            $this->command->warn('Create public feedback');
+            $this->command->getOutput()->progressStart(100);
+            foreach (range(1, 100) as $index) {
+                DB::beginTransaction();
+
+                try {
+                    PublicFeedback::create([
+                        'name' => $this->faker->name,
+                        'email' => $this->faker->email,
+                        'phone' => $this->faker->phoneNumber,
+                        'subject' => $this->faker->text,
+                        'message' => $this->faker->text,
+                        'readed_at' => rand(0, 1) ? now() : null,
                     ]);
 
                     DB::commit();
