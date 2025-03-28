@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Office\GA\Approval;
 
+use App\Exports\SubEventFullExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubmissionResource;
 use App\Models\Employee;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EventController extends Controller
 {
@@ -45,6 +47,12 @@ class EventController extends Controller
         ];
 
         return Inertia::render('Office/GA/Approval/Event/Index', $data);
+    }
+
+    public function export()
+    {
+        Submission::where('uuid', request('submission_id'))->firstOrFail();
+        return Excel::download(new SubEventFullExport(), 'event.xlsx');
     }
 
     public function store()

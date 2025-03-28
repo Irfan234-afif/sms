@@ -778,6 +778,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->name('.event')
                             ->group(function () {
                                 Route::get('/', [ApprovalEventController::class, 'index']);
+                                Route::get('export', [ApprovalEventController::class, 'export'])->name('.export');
                                 Route::post('store', [ApprovalEventController::class, 'store'])->name('.store');
                                 Route::post('update', [ApprovalEventController::class, 'update'])->name('.update');
                                 Route::delete('delete', [ApprovalEventController::class, 'delete'])->name('.delete');

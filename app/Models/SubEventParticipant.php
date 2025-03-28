@@ -15,4 +15,9 @@ class SubEventParticipant extends Model
         'type',
         'quantity',
     ];
+
+    public function event()
+    {
+        return $this->belongsTo(SubEvent::class, 'sub_event_id');
+    }
 }

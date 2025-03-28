@@ -215,10 +215,14 @@ export default {
     </div>
     <div class="flex justify-end space-x-3">
       <DefaultButton type="light" @click="close" :disabled="process"> Batal </DefaultButton>
-      <DefaultButton v-if="false" type="light" @click="submit('DRAFT')" :disabled="process">
-        Simpan Draft
+      <DefaultButton
+        v-if="propertyModal.data.submission.status != 'APPROVED'"
+        type="default"
+        @click="submit('PENDING')"
+        :disabled="process"
+      >
+        Simpan
       </DefaultButton>
-      <DefaultButton v-if="false" type="default" @click="submit('PENDING')" :disabled="process"> Kirim </DefaultButton>
     </div>
   </div>
 </template>

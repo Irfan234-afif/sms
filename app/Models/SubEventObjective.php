@@ -16,4 +16,9 @@ class SubEventObjective extends Model
         'description',
         'remark',
     ];
+
+    public function event()
+    {
+        return $this->belongsTo(SubEvent::class, 'sub_event_id');
+    }
 }

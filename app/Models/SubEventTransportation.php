@@ -16,4 +16,9 @@ class SubEventTransportation extends Model
         'quantity',
         'unit_cost',
     ];
+
+    public function event()
+    {
+        return $this->belongsTo(SubEvent::class, 'sub_event_id');
+    }
 }
