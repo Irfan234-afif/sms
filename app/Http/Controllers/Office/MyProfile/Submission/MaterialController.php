@@ -11,6 +11,7 @@ use App\Services\SubmissionStoreService;
 use App\Services\SubmissionUpdateService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -26,19 +27,58 @@ class MaterialController extends Controller
             $group->where('code', 'MATERIAL');
         });
 
+        if (request()->has('status')) {
+            $submissions->where('status', request('status'));
+        }
+
+        if (request()->has('from_date') && request()->has('to_date')) {
+            $submissions->whereBetween('datetime', [request('from_date'), request('to_date')]);
+        }
+
         if (request()->has('search')) {
             $submissions->where('reference_number', 'like', '%' . request('search') . '%');
         }
 
-        $submissions = $submissions->with('approvals.approver.profile')
-            ->with('approvals.delegate.profile')
-            ->with('material.items')
-            ->latest()
-            ->paginate(15);
+        $take = request('take');
+        $page = request('page', 1);
+
+        if ($take) {
+            $total = $submissions->count();
+
+            $submissions = $submissions->with([
+                'approvals.approver.profile',
+                'approvals.delegate.profile',
+                'material.items',
+            ])
+                ->latest()
+                ->offset(($page - 1) * $take)
+                ->limit($take)
+                ->get();
+
+            $submissions = new LengthAwarePaginator(
+                $submissions,
+                min($total, $take * $page),
+                $take,
+                $page,
+                ['path' => request()->url(), 'query' => request()->query()]
+            );
+        } else {
+            $submissions = $submissions->with([
+                'approvals.approver.profile',
+                'approvals.delegate.profile',
+                'material.items',
+            ])
+                ->latest()
+                ->paginate(15);
+        }
 
         $data = [
             'search_params' => [
                 'search' => request('search'),
+                'from_date' => request('from_date'),
+                'to_date' => request('to_date'),
+                'status' => request('status'),
+                'take' => request('take'),
             ],
             'submissions' => SubmissionResource::collection($submissions),
         ];

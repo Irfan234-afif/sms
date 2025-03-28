@@ -9,6 +9,7 @@ import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import ApprovalForm from '@/Components/ApprovalForm.vue';
 import SubmissionForm from './Form.vue';
+import SubmissionFilter from '@/Components/SubmissionFilter.vue';
 import ChatForm from '@/Components/ChatForm.vue';
 import Badge from '@/Components/Badge.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
@@ -292,6 +293,11 @@ export default {
       <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
+          <SubmissionFilter
+            v-if="propertyModal?.mode == 'submission-filter'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
           <SubmissionForm
             v-if="propertyModal?.mode == 'submission-edit-form' || propertyModal?.mode == 'submission-create-form'"
             :propertyModal="propertyModal"

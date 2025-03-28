@@ -9,6 +9,7 @@ import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import ApprovalForm from '@/Components/ApprovalForm.vue';
 import SubmissionForm from './Form.vue';
+import SubmissionFilter from '@/Components/SubmissionFilter.vue';
 import ChatForm from '@/Components/ChatForm.vue';
 import Badge from '@/Components/Badge.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
@@ -70,6 +71,61 @@ export default {
         <div
           class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0"
         >
+          <a v-if="search_params.take" :href="route('office.ga.approval.material.export')">
+            <DefaultButton type="green">
+              <div class="flex items-center space-x-1 text-xs">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                  <path d="M9 15h6" />
+                  <path d="M12.5 17.5l2.5 -2.5l-2.5 -2.5" />
+                </svg>
+                <div>Ekspor Data</div>
+              </div>
+            </DefaultButton>
+          </a>
+          <DefaultButton
+            type="light"
+            @click="
+              openModal({
+                title: 'Saring',
+                mode: 'submission-filter',
+                maxWidth: 'md',
+                data: {
+                  searchParams: search_params,
+                },
+              })
+            "
+          >
+            <div class="flex items-center space-x-1 text-xs">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z"
+                />
+              </svg>
+              <div>Saring</div>
+            </div>
+          </DefaultButton>
           <DefaultButton
             type="default"
             @click="
@@ -315,6 +371,11 @@ export default {
       <!-- modal -->
       <Modal :show="showModal" :property="propertyModal" :maxWidth="propertyModal?.maxWidth" @close="closeModal">
         <template v-slot="{ propertyModal }">
+          <SubmissionFilter
+            v-if="propertyModal?.mode == 'submission-filter'"
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
           <SubmissionForm
             v-if="propertyModal?.mode == 'submission-edit-form' || propertyModal?.mode == 'submission-create-form'"
             :propertyModal="propertyModal"

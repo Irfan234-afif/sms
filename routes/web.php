@@ -745,6 +745,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->name('.material')
                             ->group(function () {
                                 Route::get('/', [ApprovalMaterialController::class, 'index']);
+                                Route::get('export', [ApprovalMaterialController::class, 'export'])->name('.export');
                                 Route::post('store', [ApprovalMaterialController::class, 'store'])->name('.store');
                                 Route::post('update', [ApprovalMaterialController::class, 'update'])->name('.update');
                                 Route::delete('delete', [ApprovalMaterialController::class, 'delete'])->name('.delete');
