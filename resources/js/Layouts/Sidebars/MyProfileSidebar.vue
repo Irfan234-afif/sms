@@ -198,9 +198,11 @@ import { Link } from '@inertiajs/vue3';
           </ul>
         </li>
         <li>
-          <Link
-            href="#"
-            class="group flex items-center rounded-lg p-2 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          <button
+            type="button"
+            class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            aria-controls="dropdown-approval"
+            data-collapse-toggle="dropdown-approval"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -218,13 +220,128 @@ import { Link } from '@inertiajs/vue3';
               <path d="M9 17h6" />
               <path d="M9 13h6" />
             </svg>
-            <span class="ml-3 flex-1 whitespace-nowrap">Persetujuan</span>
-            <span
-              class="text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800 inline-flex h-5 w-5 items-center justify-center rounded-full text-xs font-medium"
+            <span class="ml-3 flex-1 whitespace-nowrap text-left">Persetujuan</span>
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              4
-            </span>
-          </Link>
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <ul id="dropdown-approval" class="hidden space-y-2 py-2">
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.installRepair')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Instalasi & Perbaikan</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.design')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Desain</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.documentation')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Dokumentasi</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.broadcast')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Pesan Informasi</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.mediaPost')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Posting Media</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.card')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Kartu</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.vehicle')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Kendaraan</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.material')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Material</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.event')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Acara</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.attendance')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Absensi</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.equipment')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Peralatan & Pemeliharaan</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.outstation')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Perjalanan Dinas</Link
+              >
+            </li>
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.leave')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Cuti</Link
+              >
+            </li>
+            <!-- <li>
+              <Link
+                :href="route('office.myProfile.approval.training')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Pelatihan</Link
+              >
+            </li> -->
+            <li>
+              <Link
+                :href="route('office.myProfile.approval.resignation')"
+                class="w/full group flex items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Pengunduran Diri</Link
+              >
+            </li>
+          </ul>
         </li>
       </ul>
       <ul class="mt-5 space-y-2 border-t border-gray-200 pt-5 dark:border-gray-700">
