@@ -119,6 +119,7 @@ Route::prefix('/')->group(function () {
     Route::get('teacher-achievement', [PublicController::class, 'teacherAchievement'])->name('teacherAchievement');
     Route::get('student-achievement', [PublicController::class, 'studentAchievement'])->name('studentAchievement');
     Route::get('public-feedback', [PublicController::class, 'publicFeedback'])->name('publicFeedback');
+    Route::post('save-public-feedback', [PublicController::class, 'savePublicFeedback'])->name('savePublicFeedback');
     Route::get('career', [PublicController::class, 'career'])->name('career');
     Route::get('faq', [PublicController::class, 'faq'])->name('faq');
 });
