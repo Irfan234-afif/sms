@@ -126,35 +126,6 @@ export default {
               <div>Saring</div>
             </div>
           </DefaultButton>
-          <DefaultButton
-            type="default"
-            @click="
-              openModal({
-                title: 'Permintaan Baru',
-                mode: 'submission-create-form',
-                maxWidth: 'md',
-                data: {},
-              })
-            "
-          >
-            <div class="flex items-center space-x-1 text-xs">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-4"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 5l0 14" />
-                <path d="M5 12l14 0" />
-              </svg>
-              <div>Permintaan Baru</div>
-            </div>
-          </DefaultButton>
         </div>
       </div>
     </template>

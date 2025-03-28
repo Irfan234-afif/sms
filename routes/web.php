@@ -52,6 +52,20 @@ use App\Http\Controllers\Office\ICC\Publication\PostCategoryController;
 use App\Http\Controllers\Office\ICC\Publication\PublicFeedbackController;
 use App\Http\Controllers\Office\ICC\Publication\TestimonialController;
 use App\Http\Controllers\Office\ICC\Setting\SubmissionApproverController as ICCSettingSubmissionApproverController;
+use App\Http\Controllers\Office\MyProfile\Approval\AttendanceController as MyProfileApprovalAttendanceController;
+use App\Http\Controllers\Office\MyProfile\Approval\BroadcastController as MyProfileApprovalBroadcastController;
+use App\Http\Controllers\Office\MyProfile\Approval\CardController as MyProfileApprovalCardController;
+use App\Http\Controllers\Office\MyProfile\Approval\DesignController as MyProfileApprovalDesignController;
+use App\Http\Controllers\Office\MyProfile\Approval\DocumentationController as MyProfileApprovalDocumentationController;
+use App\Http\Controllers\Office\MyProfile\Approval\EquipmentController as MyProfileApprovalEquipmentController;
+use App\Http\Controllers\Office\MyProfile\Approval\EventController as MyProfileApprovalEventController;
+use App\Http\Controllers\Office\MyProfile\Approval\InstallRepairController as MyProfileApprovalInstallRepairController;
+use App\Http\Controllers\Office\MyProfile\Approval\LeaveController as MyProfileApprovalLeaveController;
+use App\Http\Controllers\Office\MyProfile\Approval\MaterialController as MyProfileApprovalMaterialController;
+use App\Http\Controllers\Office\MyProfile\Approval\MediaPostController as MyProfileApprovalMediaPostController;
+use App\Http\Controllers\Office\MyProfile\Approval\OutstationController as MyProfileApprovalOutstationController;
+use App\Http\Controllers\Office\MyProfile\Approval\ResignationController as MyProfileApprovalResignationController;
+use App\Http\Controllers\Office\MyProfile\Approval\VehicleController as MyProfileApprovalVehicleController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\AcademicController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\AttachmentController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\CertificationController;
@@ -291,6 +305,161 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::post('store', [ResignationController::class, 'store'])->name('.store');
                                 Route::post('update', [ResignationController::class, 'update'])->name('.update');
                                 Route::delete('delete', [ResignationController::class, 'delete'])->name('.delete');
+                            });
+                    });
+                // approval routes
+                Route::prefix('approval')
+                    ->name('.approval')
+                    ->group(function () {
+                        // material area routes
+                        Route::prefix('material')
+                            ->name('.material')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalMaterialController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalMaterialController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalMaterialController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalMaterialController::class, 'delete'])->name('.delete');
+                            });
+
+                        // install & repair routes
+                        Route::prefix('install-repair')
+                            ->name('.installRepair')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalInstallRepairController::class, 'index']);
+                                Route::get('option-assigned', [MyProfileApprovalInstallRepairController::class, 'optionAssigned'])->name('.optionAssigned');
+                                Route::post('store', [MyProfileApprovalInstallRepairController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalInstallRepairController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalInstallRepairController::class, 'delete'])->name('.delete');
+                            });
+
+                        // design routes
+                        Route::prefix('design')
+                            ->name('.design')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalDesignController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalDesignController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalDesignController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalDesignController::class, 'delete'])->name('.delete');
+                            });
+
+                        // documentation routes
+                        Route::prefix('documentation')
+                            ->name('.documentation')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalDocumentationController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalDocumentationController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalDocumentationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalDocumentationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // broadcast routes
+                        Route::prefix('broadcast')
+                            ->name('.broadcast')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalBroadcastController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalBroadcastController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalBroadcastController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalBroadcastController::class, 'delete'])->name('.delete');
+                            });
+
+                        // media post routes
+                        Route::prefix('media-post')
+                            ->name('.mediaPost')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalMediaPostController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalMediaPostController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalMediaPostController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalMediaPostController::class, 'delete'])->name('.delete');
+                            });
+
+                        // card routes
+                        Route::prefix('card')
+                            ->name('.card')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalCardController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalCardController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalCardController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalCardController::class, 'delete'])->name('.delete');
+                            });
+
+                        // vehicle routes
+                        Route::prefix('vehicle')
+                            ->name('.vehicle')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalVehicleController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalVehicleController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalVehicleController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalVehicleController::class, 'delete'])->name('.delete');
+                            });
+
+                        // event routes
+                        Route::prefix('event')
+                            ->name('.event')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalEventController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalEventController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalEventController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalEventController::class, 'delete'])->name('.delete');
+                            });
+
+                        // attendance routes
+                        Route::prefix('attendance')
+                            ->name('.attendance')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalAttendanceController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalAttendanceController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalAttendanceController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalAttendanceController::class, 'delete'])->name('.delete');
+                            });
+
+                        // equipment routes
+                        Route::prefix('equipment')
+                            ->name('.equipment')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalEquipmentController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalEquipmentController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalEquipmentController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalEquipmentController::class, 'delete'])->name('.delete');
+                            });
+
+                        // outstation routes
+                        Route::prefix('outstation')
+                            ->name('.outstation')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalOutstationController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalOutstationController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalOutstationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalOutstationController::class, 'delete'])->name('.delete');
+                            });
+
+                        // leave routes
+                        Route::prefix('leave')
+                            ->name('.leave')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalLeaveController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalLeaveController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalLeaveController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalLeaveController::class, 'delete'])->name('.delete');
+                            });
+
+                        // training routes
+                        Route::prefix('training')
+                            ->name('.training')
+                            ->group(function () {
+                                Route::get('/', [SubmissionTrainingController::class, 'index']);
+                                Route::post('store', [SubmissionTrainingController::class, 'store'])->name('.store');
+                                Route::post('update', [SubmissionTrainingController::class, 'update'])->name('.update');
+                                Route::delete('delete', [SubmissionTrainingController::class, 'delete'])->name('.delete');
+                            });
+
+                        // resignation routes
+                        Route::prefix('resignation')
+                            ->name('.resignation')
+                            ->group(function () {
+                                Route::get('/', [MyProfileApprovalResignationController::class, 'index']);
+                                Route::post('store', [MyProfileApprovalResignationController::class, 'store'])->name('.store');
+                                Route::post('update', [MyProfileApprovalResignationController::class, 'update'])->name('.update');
+                                Route::delete('delete', [MyProfileApprovalResignationController::class, 'delete'])->name('.delete');
                             });
                     });
                 Route::prefix('qualification')
