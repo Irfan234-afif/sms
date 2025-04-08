@@ -133,7 +133,7 @@ export default {
           let requestPayload = JSON.parse(JSON.stringify(this.form));
 
           requestPayload.school_grade_id = requestPayload.school_grade_id.uuid;
-          requestPayload.school_major_id = requestPayload.school_major_id.uuid;
+          requestPayload.school_major_id = requestPayload.school_major_id?.uuid;
           requestPayload.homeroom_teacher_id = requestPayload.homeroom_teacher_id.uuid;
 
           axios

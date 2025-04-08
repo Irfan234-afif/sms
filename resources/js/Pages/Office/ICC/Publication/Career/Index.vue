@@ -143,7 +143,7 @@ export default {
                   </td>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ career.title }}
+                      {{ career.job_title }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
