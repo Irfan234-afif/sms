@@ -27,7 +27,7 @@ export default {
         thumbnail: null,
         datetime_range: [],
         location: null,
-        content: null,
+        content: '',
       },
       field: {
         title: {
@@ -214,6 +214,8 @@ export default {
             range-separator="to"
             start-placeholder="Mulai"
             end-placeholder="Selesai"
+            format="DD-MM-YYYY HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
           />
         </el-form-item>
 

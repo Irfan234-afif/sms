@@ -20,12 +20,18 @@ export default {
       isValid: false,
       form: {
         career_id: null,
-        title: null,
+        job_title: null,
+        job_description: null,
       },
       field: {
-        title: {
+        job_title: {
           label: 'Karir',
           rules: [fieldValidation.isRequired('Karir')],
+          error: null,
+        },
+        job_description: {
+          label: 'Deskripsi',
+          rules: [fieldValidation.isRequired('Deskripsi')],
           error: null,
         },
       },
@@ -35,7 +41,8 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'career-edit-form') {
       this.form.career_id = this.propertyModal.data.career?.uuid;
-      this.form.title = this.propertyModal.data.career?.title;
+      this.form.job_title = this.propertyModal.data.career?.job_title;
+      this.form.job_description = this.propertyModal.data.career?.job_description;
     }
   },
   methods: {
@@ -111,12 +118,21 @@ export default {
       <el-form v-if="loaded" ref="careerForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
+          :label="field.job_title.label"
+          :rules="field.job_title.rules"
+          :error="field.job_title.error"
+          prop="job_title"
         >
-          <el-input v-model="form.title" autocomplete="off" />
+          <el-input v-model="form.job_title" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.job_description.label"
+          :rules="field.job_description.rules"
+          :error="field.job_description.error"
+          prop="job_description"
+        >
+          <el-input type="textarea" v-model="form.job_description" autocomplete="off" />
         </el-form-item>
       </el-form>
     </div>

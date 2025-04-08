@@ -316,6 +316,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->name('.material')
                             ->group(function () {
                                 Route::get('/', [MyProfileApprovalMaterialController::class, 'index']);
+                                Route::get('export', [MyProfileApprovalMaterialController::class, 'export'])->name('.export');
                                 Route::post('store', [MyProfileApprovalMaterialController::class, 'store'])->name('.store');
                                 Route::post('update', [MyProfileApprovalMaterialController::class, 'update'])->name('.update');
                                 Route::delete('delete', [MyProfileApprovalMaterialController::class, 'delete'])->name('.delete');
@@ -397,6 +398,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->name('.event')
                             ->group(function () {
                                 Route::get('/', [MyProfileApprovalEventController::class, 'index']);
+                                Route::get('export', [MyProfileApprovalEventController::class, 'export'])->name('.export');
                                 Route::post('store', [MyProfileApprovalEventController::class, 'store'])->name('.store');
                                 Route::post('update', [MyProfileApprovalEventController::class, 'update'])->name('.update');
                                 Route::delete('delete', [MyProfileApprovalEventController::class, 'delete'])->name('.delete');

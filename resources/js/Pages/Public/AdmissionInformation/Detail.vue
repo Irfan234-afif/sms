@@ -11,7 +11,7 @@ export default {
 };
 </script>
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
   canLogin: {
@@ -72,7 +72,7 @@ defineProps({
             Dengan lebih dari 750 siswa dan didukung oleh lebih dari 50 guru terbaik, Sekolah Harapan Bangsa telah
             melahirkan lebih dari 500 lulusan terbaik.
           </p>
-          <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+          <div class="flex flex-col space-x-3 space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
             <Link
               :href="route('register')"
               class="inline-flex items-center justify-center rounded-lg bg-blue-700 px-4 py-3 text-center text-xs font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
@@ -94,6 +94,29 @@ defineProps({
                 />
               </svg>
             </Link>
+            <a
+              href="https://api.whatsapp.com/send?phone=081140001557&text=Halo%2C%20saya%20membutuhkan%20simulasi%20biaya%20sekolah%20untuk%20anak%20saya.%20Dapatkah%20Anda%20membantu%3F"
+              class="inline-flex items-center justify-center rounded-lg bg-yellow-400 px-4 py-3 text-center text-xs font-medium text-white hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900"
+            >
+              Cek Simulasi Biaya
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="ms-2 h-3.5 w-3.5 rtl:rotate-180"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2c-8.072 -.49 -14.51 -6.928 -15 -15a2 2 0 0 1 2 -2"
+                />
+                <path d="M15 5h6" />
+                <path d="M18.5 7.5l2.5 -2.5l-2.5 -2.5" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
