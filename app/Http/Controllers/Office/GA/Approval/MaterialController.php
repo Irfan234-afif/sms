@@ -117,8 +117,11 @@ class MaterialController extends Controller
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'purchase_reference' => request('purchase_reference'),
+                'due_date' => request('due_date'),
                 'description' => request('description'),
-                'status' => 'DRAFT',
+                'status' => request('item_status'),
+                'status' => request('item_status'),
             ]);
 
             DB::commit();
@@ -150,7 +153,10 @@ class MaterialController extends Controller
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'purchase_reference' => request('purchase_reference'),
+                'due_date' => request('due_date'),
                 'description' => request('description'),
+                'status' => request('item_status'),
             ]);
 
             DB::commit();

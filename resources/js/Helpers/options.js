@@ -175,6 +175,16 @@ const participantTypes = [
   { label: 'Lainnya', value: 'OTHER' },
 ];
 
+const materialStatuses = [
+  { label: 'Draf', value: 'DRAFT' },
+  { label: 'Menunggu', value: 'PENDING' },
+  { label: 'Ditolak', value: 'REJECTED' },
+  { label: 'Dipesan', value: 'ORDERED' },
+  { label: 'Dikirim', value: 'DELIVERED' },
+  { label: 'Diterima', value: 'RECEIVED' },
+  { label: 'Dibatalkan', value: 'CANCELED' },
+];
+
 export {
   achievementTypes,
   admissionStagePostStatuses,
@@ -188,6 +198,7 @@ export {
   genders,
   languageSkillLevel,
   maritalStatuses,
+  materialStatuses,
   participantTypes,
   religions,
   responsibleFee,

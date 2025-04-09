@@ -16,6 +16,7 @@ class SubMaterialItem extends Model
         'reference_number',
         'quantity',
         'unit',
+        'purchase_reference',
         'price',
         'bill_amount',
         'due_date',

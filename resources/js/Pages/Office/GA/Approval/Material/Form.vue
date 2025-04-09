@@ -1,7 +1,7 @@
 <script setup>
 import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
-import { units } from '@/Helpers/options';
+import { units, materialStatuses } from '@/Helpers/options';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
 import moment from 'moment';
@@ -26,7 +26,10 @@ export default {
         name: null,
         unit: null,
         quantity: 1,
+        purchase_reference: null,
+        due_date: null,
         description: null,
+        item_status: 'DRAFT',
       },
       field: {
         datetime: {
@@ -51,10 +54,26 @@ export default {
           error: null,
           options: units,
         },
+        purchase_reference: {
+          label: 'Referensi Pembelian',
+          rules: [],
+          error: null,
+        },
+        due_date: {
+          label: 'Tenggat Waktu',
+          rules: [fieldValidation.isRequired('Tenggat Waktu')],
+          error: null,
+        },
         description: {
           label: 'Keterangan',
           rules: [],
           error: null,
+        },
+        item_status: {
+          label: 'Status Barang',
+          rules: [fieldValidation.isRequired('Status Barang')],
+          error: null,
+          options: materialStatuses,
         },
       },
     };
@@ -69,7 +88,10 @@ export default {
       this.form.name = submission.material.items[0].name;
       this.form.unit = submission.material.items[0].unit;
       this.form.quantity = submission.material.items[0].quantity;
+      this.form.purchase_reference = submission.material.items[0].purchase_reference;
+      this.form.due_date = submission.material.items[0].due_date;
       this.form.description = submission.material.items[0].description;
+      this.form.item_status = submission.material.items[0].status;
     }
   },
   methods: {
@@ -143,7 +165,7 @@ export default {
       {{ propertyModal?.title }}
     </h2>
     <div class="px-2">
-      <el-form v-if="loaded" ref="submissionForm" label-position="top" :model="form" :disabled="true">
+      <el-form v-if="loaded" ref="submissionForm" label-position="top" :model="form" :disabled="false">
         <el-form-item
           class="font-medium"
           :label="field.datetime.label"
@@ -152,7 +174,7 @@ export default {
           prop="datetime"
         >
           <el-date-picker
-            :disabled="field.datetime.disabled"
+            :disabled="true"
             v-model="form.datetime"
             type="date"
             format="DD-MM-YYYY"
@@ -166,7 +188,7 @@ export default {
           :error="field.name.error"
           prop="name"
         >
-          <el-input v-model="form.name" autocomplete="off" />
+          <el-input :disabled="true" v-model="form.name" autocomplete="off" />
         </el-form-item>
         <el-form-item
           class="font-medium"
@@ -175,7 +197,7 @@ export default {
           :error="field.quantity.error"
           prop="quantity"
         >
-          <el-input-number v-model="form.quantity" autocomplete="off" />
+          <el-input-number :disabled="true" v-model="form.quantity" autocomplete="off" />
         </el-form-item>
         <el-form-item
           class="font-medium"
@@ -185,12 +207,12 @@ export default {
           prop="unit"
         >
           <el-select
+            :disabled="true"
             v-model="form.unit"
             :placeholder="`Pilih ${field.unit.label}`"
             loading-text="..."
             no-match-text="Data tidak ditemukan"
             no-data-text="Tidak ada data"
-            :disabled="field.unit.disabled"
             clearable
             autocomplete="off"
           >
@@ -204,23 +226,67 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
+          :label="field.purchase_reference.label"
+          :rules="field.purchase_reference.rules"
+          :error="field.purchase_reference.error"
+          prop="purchase_reference"
+        >
+          <el-input :disabled="true" type="textarea" v-model="form.purchase_reference" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.due_date.label"
+          :rules="field.due_date.rules"
+          :error="field.due_date.error"
+          prop="due_date"
+        >
+          <el-date-picker
+            :disabled="true"
+            v-model="form.due_date"
+            type="date"
+            format="DD-MM-YYYY"
+            value-format="YYYY-MM-DD"
+          />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
           :label="field.description.label"
           :rules="field.description.rules"
           :error="field.description.error"
           prop="description"
         >
-          <el-input type="textarea" v-model="form.description" autocomplete="off" />
+          <el-input :disabled="true" type="textarea" v-model="form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.item_status.label"
+          :rules="field.item_status.rules"
+          :error="field.item_status.error"
+          prop="item_status"
+        >
+          <el-select
+            v-model="form.item_status"
+            :placeholder="`Pilih ${field.item_status.label}`"
+            loading-text="..."
+            no-match-text="Data tidak ditemukan"
+            no-data-text="Tidak ada data"
+            :disabled="false"
+            clearable
+            autocomplete="off"
+          >
+            <el-option
+              v-for="option in field.item_status.options"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            />
+          </el-select>
         </el-form-item>
       </el-form>
     </div>
     <div class="flex justify-end space-x-3">
       <DefaultButton type="light" @click="close" :disabled="process"> Batal </DefaultButton>
-      <DefaultButton
-        v-if="propertyModal.data.submission.status != 'APPROVED'"
-        type="default"
-        @click="submit('PENDING')"
-        :disabled="process"
-      >
+      <DefaultButton type="default" @click="submit(propertyModal.data.submission.status)" :disabled="process">
         Simpan
       </DefaultButton>
     </div>
