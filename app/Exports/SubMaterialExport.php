@@ -40,8 +40,10 @@ class SubMaterialExport implements FromCollection, WithHeadings, WithMapping
             'Nomor Referensi Barang',
             'Kuantitas',
             'Satuan',
+            'Referensi Pembelian',
             'Harga',
             'Total Biaya',
+            'Tenggat Waktu',
             'Deskripsi',
             'Status Barang',
         ];
@@ -49,20 +51,24 @@ class SubMaterialExport implements FromCollection, WithHeadings, WithMapping
 
     public function map($submission): array
     {
+        $item = $submission->material->items()->first();
+
         return [
             $submission->submitter->profile->name,
             $submission->reference_number,
             $submission->datetime,
             $submission->status,
             $submission->registration_number,
-            $submission->material->items()->first()->name,
-            $submission->material->items()->first()->reference_number,
-            $submission->material->items()->first()->quantity,
-            $submission->material->items()->first()->unit,
-            $submission->material->items()->first()->price,
-            $submission->material->items()->first()->bill_amount,
-            $submission->material->items()->first()->description,
-            $submission->material->items()->first()->status,
+            $item?->name,
+            $item?->reference_number,
+            $item?->quantity,
+            $item?->unit,
+            $item?->purchase_reference,
+            $item?->price,
+            $item?->bill_amount,
+            $item?->due_date,
+            $item?->description,
+            $item?->status,
         ];
     }
 }

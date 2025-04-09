@@ -117,7 +117,7 @@ defineProps({
               </svg>
             </Link>
             <a
-              href="https://api.whatsapp.com/send?phone=081140001557&text=Halo%2C%20saya%20membutuhkan%20simulasi%20biaya%20sekolah%20untuk%20anak%20saya.%20Dapatkah%20Anda%20membantu%3F"
+              href="https://api.whatsapp.com/send?phone=6281140001557&text=Halo%2C%20saya%20membutuhkan%20simulasi%20biaya%20sekolah%20untuk%20anak%20saya.%20Dapatkah%20Anda%20membantu%3F"
               class="inline-flex items-center justify-center rounded-lg bg-yellow-400 px-4 py-3 text-center text-xs font-medium text-white hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900"
             >
               Cek Simulasi Biaya

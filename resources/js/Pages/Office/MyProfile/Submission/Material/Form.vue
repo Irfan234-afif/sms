@@ -26,6 +26,8 @@ export default {
         name: null,
         unit: null,
         quantity: 1,
+        purchase_reference: null,
+        due_date: null,
         description: null,
       },
       field: {
@@ -51,6 +53,16 @@ export default {
           error: null,
           options: units,
         },
+        purchase_reference: {
+          label: 'Referensi Pembelian',
+          rules: [],
+          error: null,
+        },
+        due_date: {
+          label: 'Tenggat Waktu',
+          rules: [fieldValidation.isRequired('Tenggat Waktu')],
+          error: null,
+        },
         description: {
           label: 'Keterangan',
           rules: [],
@@ -69,6 +81,8 @@ export default {
       this.form.name = submission.material.items[0].name;
       this.form.unit = submission.material.items[0].unit;
       this.form.quantity = submission.material.items[0].quantity;
+      this.form.purchase_reference = submission.material.items[0].purchase_reference;
+      this.form.due_date = submission.material.items[0].due_date;
       this.form.description = submission.material.items[0].description;
     }
   },
@@ -201,6 +215,30 @@ export default {
               :value="option.value"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.purchase_reference.label"
+          :rules="field.purchase_reference.rules"
+          :error="field.purchase_reference.error"
+          prop="purchase_reference"
+        >
+          <el-input type="textarea" v-model="form.purchase_reference" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.due_date.label"
+          :rules="field.due_date.rules"
+          :error="field.due_date.error"
+          prop="due_date"
+        >
+          <el-date-picker
+            :disabled="field.due_date.disabled"
+            v-model="form.due_date"
+            type="date"
+            format="DD-MM-YYYY"
+            value-format="YYYY-MM-DD"
+          />
         </el-form-item>
         <el-form-item
           class="font-medium"

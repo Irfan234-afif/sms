@@ -110,6 +110,8 @@ class MaterialController extends Controller
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'purchase_reference' => request('purchase_reference'),
+                'due_date' => request('due_date'),
                 'description' => request('description'),
                 'status' => 'DRAFT',
             ]);
@@ -143,6 +145,8 @@ class MaterialController extends Controller
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'purchase_reference' => request('purchase_reference'),
+                'due_date' => request('due_date'),
                 'description' => request('description'),
             ]);
 

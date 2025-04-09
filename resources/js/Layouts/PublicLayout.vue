@@ -184,7 +184,7 @@ defineProps({
                   </li>
                   <li>
                     <a
-                      href="https://api.whatsapp.com/send?phone=081140001557&text=Halo%2C%20saya%20membutuhkan%20simulasi%20biaya%20sekolah%20untuk%20anak%20saya.%20Dapatkah%20Anda%20membantu%3F"
+                      href="https://api.whatsapp.com/send?phone=6281140001557&text=Halo%2C%20saya%20membutuhkan%20simulasi%20biaya%20sekolah%20untuk%20anak%20saya.%20Dapatkah%20Anda%20membantu%3F"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >Cek Simulasi Harga</a
                     >
@@ -493,7 +493,7 @@ defineProps({
     <div data-dial-init class="group fixed bottom-6 end-6 z-30">
       <div id="speed-dial-menu-default" class="mb-4 hidden flex-col items-center space-y-2">
         <a
-          href="https://api.whatsapp.com/send?phone=081140001557"
+          href="https://api.whatsapp.com/send?phone=6281140001557"
           target="_blank"
           class="shadow-xs flex h-14 w-14 items-center justify-center rounded-full bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-600 dark:focus:ring-green-700"
         >
