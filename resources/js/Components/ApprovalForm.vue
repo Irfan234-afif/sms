@@ -2,7 +2,9 @@
 import DefaultButton from '@/Components/DefaultButton.vue';
 import OutlineButton from './OutlineButton.vue';
 import { ElNotification } from 'element-plus';
+import Badge from './Badge.vue';
 </script>
+
 <script>
 export default {
   props: {
@@ -67,9 +69,23 @@ export default {
           });
         });
     },
+    canTakeAction(index) {
+      const currentApproval = this.submission_approvals[index];
+
+      // User harus merupakan approver dari item ini
+      const isCurrentApprover = currentApproval.approver.uuid === this.approver.uuid;
+
+      // Semua langkah sebelum ini harus sudah APPROVED
+      const allPreviousApproved = this.submission_approvals
+        .filter((_, i) => i < index)
+        .every((approval) => approval.status === 'APPROVED');
+
+      return isCurrentApprover && allPreviousApproved;
+    },
   },
 };
 </script>
+
 <template>
   <div class="space-y-6 p-5">
     <h2 class="border-b pb-4 text-base font-medium text-gray-900">
@@ -81,9 +97,11 @@ export default {
           <span
             class="absolute -start-4 flex h-8 w-8 items-center justify-center rounded-full ring-4 ring-white dark:ring-gray-900"
             :class="{
-              'bg-green-200 dark:bg-green-900': submission_approval.status === 'APPROVED',
-              'bg-yellow-200 dark:bg-yellow-900': submission_approval.status === 'PENDING',
-              'bg-red-200 dark:bg-red-900': submission_approval.status === 'REJECTED',
+              'bg-green-200 text-green-500 dark:bg-green-900 dark:text-green-400':
+                submission_approval.status === 'APPROVED',
+              'bg-yellow-200 text-yellow-500 dark:bg-yellow-900 dark:text-yellow-400':
+                submission_approval.status === 'PENDING',
+              'bg-red-200 text-red-500 dark:bg-red-900 dark:text-red-400': submission_approval.status === 'REJECTED',
             }"
           >
             <svg
@@ -92,11 +110,6 @@ export default {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 16 12"
-              :class="{
-                'text-green-500 dark:text-green-400': submission_approval.status === 'APPROVED',
-                'text-yellow-500 dark:text-yellow-400': submission_approval.status === 'PENDING',
-                'text-red-500 dark:text-red-400': submission_approval.status === 'REJECTED',
-              }"
             >
               <path
                 stroke="currentColor"
@@ -111,7 +124,10 @@ export default {
             <figcaption class="m-2 flex items-center">
               <img class="mb-auto h-8 w-8 rounded-full" :src="submission_approval.approver.profile.avatar_path" />
               <div class="ms-3 space-y-0.5 text-left text-sm font-medium text-gray-800 dark:text-white rtl:text-right">
-                <div>{{ submission_approval.approver.profile.name }}</div>
+                <div>
+                  {{ submission_approval.approver.profile.name }}
+                  <Badge type="dark">Tahap {{ submission_approval.sort_number }}</Badge>
+                </div>
                 <div class="text-xs text-gray-700 dark:text-gray-400">
                   {{ submission_approval.approver.identity_number }}
                 </div>
@@ -131,8 +147,10 @@ export default {
                 >
                   {{ submission_approval.status_label }}
                 </div>
-                <div class="mt-4 space-x-2" v-if="submission_approval.status != 'APPROVED'">
-                  <OutlineButton type="green" @click="updateStatus(index, 'APPROVED')"> Setujui </OutlineButton>
+
+                <!-- Tombol Tindakan -->
+                <div class="mt-4 space-x-2" v-if="submission_approval.status != 'APPROVED' && canTakeAction(index)">
+                  <OutlineButton type="green" @click="updateStatus(index, 'APPROVED')">Setujui</OutlineButton>
                   <OutlineButton
                     v-if="submission_approval.status == 'PENDING'"
                     type="red"
@@ -148,7 +166,7 @@ export default {
       </ol>
     </div>
     <div class="flex justify-end space-x-3">
-      <DefaultButton type="light" @click="close"> Tutup </DefaultButton>
+      <DefaultButton type="light" @click="close">Tutup</DefaultButton>
     </div>
   </div>
 </template>

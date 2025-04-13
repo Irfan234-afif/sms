@@ -20,15 +20,33 @@ class ApprovalController extends Controller
                 'status' => request('status'),
             ]);
 
-            $submission_approval->submission->update([
-                'status' => request('status'),
-            ]);
+            $submission = $submission_approval->submission;
+
+            $approvals = $submission->approvals;
+
+            $total = $approvals->count();
+            $approved_count = $approvals->where('status', 'APPROVED')->count();
+            $rejected_count = $approvals->where('status', 'REJECTED')->count();
+
+            if ($rejected_count > 0) {
+                $submission->update([
+                    'status' => 'REJECTED',
+                ]);
+            } elseif ($approved_count === $total) {
+                $submission->update([
+                    'status' => 'APPROVED',
+                ]);
+            } else {
+                $submission->update([
+                    'status' => 'PENDING',
+                ]);
+            }
 
             DB::commit();
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Persetujuan Berhasil diperbarui.',
+                'message' => 'Persetujuan berhasil diperbarui.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
