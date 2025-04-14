@@ -263,25 +263,29 @@ class StudentController extends Controller
                     ]);
 
                     // father
-                    $existing_student->profile->families()->updateOrCreate([
-                        'relation' => 'FATHER'
-                    ], [
-                        'name' => $student['father_name'],
-                        'national_id' => $student['father_national_id'],
-                        'phone' => $student['father_phone'],
-                        'email' => $student['father_email'],
-                        'occupation' => $student['father_occupation'],
-                    ]);
+                    if ($student['father_name']) {
+                        $existing_student->profile->families()->updateOrCreate([
+                            'relation' => 'FATHER'
+                        ], [
+                            'name' => $student['father_name'],
+                            'national_id' => $student['father_national_id'],
+                            'phone' => $student['father_phone'],
+                            'email' => $student['father_email'],
+                            'occupation' => $student['father_occupation'],
+                        ]);
+                    }
                     // mother
-                    $existing_student->profile->families()->updateOrCreate([
-                        'relation' => 'MOTHER'
-                    ], [
-                        'name' => $student['mother_name'],
-                        'national_id' => $student['mother_national_id'],
-                        'phone' => $student['mother_phone'],
-                        'email' => $student['mother_email'],
-                        'occupation' => $student['mother_occupation'],
-                    ]);
+                    if ($student['mother_name']) {
+                        $existing_student->profile->families()->updateOrCreate([
+                            'relation' => 'MOTHER'
+                        ], [
+                            'name' => $student['mother_name'],
+                            'national_id' => $student['mother_national_id'],
+                            'phone' => $student['mother_phone'],
+                            'email' => $student['mother_email'],
+                            'occupation' => $student['mother_occupation'],
+                        ]);
+                    }
                 } else {
                     $new_profile = Profile::create([
                         'name' => $student['name'],
@@ -302,25 +306,29 @@ class StudentController extends Controller
                     ]);
 
                     // father
-                    $new_profile->families()->updateOrCreate([
-                        'relation' => 'FATHER'
-                    ], [
-                        'name' => $student['father_name'],
-                        'national_id' => $student['father_national_id'],
-                        'phone' => $student['father_phone'],
-                        'email' => $student['father_email'],
-                        'occupation' => $student['father_occupation'],
-                    ]);
+                    if ($student['father_name']) {
+                        $new_profile->families()->updateOrCreate([
+                            'relation' => 'FATHER'
+                        ], [
+                            'name' => $student['father_name'],
+                            'national_id' => $student['father_national_id'],
+                            'phone' => $student['father_phone'],
+                            'email' => $student['father_email'],
+                            'occupation' => $student['father_occupation'],
+                        ]);
+                    }
                     // mother
-                    $new_profile->families()->updateOrCreate([
-                        'relation' => 'MOTHER'
-                    ], [
-                        'name' => $student['mother_name'],
-                        'national_id' => $student['mother_national_id'],
-                        'phone' => $student['mother_phone'],
-                        'email' => $student['mother_email'],
-                        'occupation' => $student['mother_occupation'],
-                    ]);
+                    if ($student['mother_name']) {
+                        $new_profile->families()->updateOrCreate([
+                            'relation' => 'MOTHER'
+                        ], [
+                            'name' => $student['mother_name'],
+                            'national_id' => $student['mother_national_id'],
+                            'phone' => $student['mother_phone'],
+                            'email' => $student['mother_email'],
+                            'occupation' => $student['mother_occupation'],
+                        ]);
+                    }
                 }
             }
 
