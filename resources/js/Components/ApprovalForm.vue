@@ -73,7 +73,7 @@ export default {
       const currentApproval = this.submission_approvals[index];
 
       // User harus merupakan approver dari item ini
-      const isCurrentApprover = currentApproval.approver.uuid === this.approver.uuid;
+      const isCurrentApprover = currentApproval.approver.uuid === this.approver?.uuid;
 
       // Semua langkah sebelum ini harus sudah APPROVED
       const allPreviousApproved = this.submission_approvals

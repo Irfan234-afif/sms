@@ -3,7 +3,7 @@ import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import OfficeLayout from '@/Layouts/OfficeLayout.vue';
-import GASidebar from '@/Layouts/Sidebars/GASidebar.vue';
+import MyProfileSidebar from '@/Layouts/Sidebars/MyProfileSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
@@ -16,7 +16,7 @@ import DefaultButton from '@/Components/DefaultButton.vue';
 
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
-  { label: 'My Profile', href: route('office.ga') },
+  { label: 'GA', href: route('office.ga') },
   { label: 'Persetujuan Material', href: route('office.ga.approval.material') },
 ];
 </script>
@@ -130,7 +130,7 @@ export default {
       </div>
     </template>
     <template #sidebar>
-      <GASidebar />
+      <MyProfileSidebar />
     </template>
     <template #content>
       <section>
@@ -150,16 +150,20 @@ export default {
                       <label for="checkbox-all" class="sr-only">checkbox</label>
                     </div>
                   </th>
-                  <th scope="col" class="p-4">Nomor Permintaan</th>
-                  <th scope="col" class="p-4">Tanggal</th>
-                  <th scope="col" class="p-4">Barang</th>
-                  <th scope="col" class="p-4">Kode Barang</th>
-                  <th scope="col" class="p-4">Jumlah</th>
-                  <th scope="col" class="p-4">Referensi Pembelian</th>
-                  <th scope="col" class="p-4">Tenggat Waktu</th>
-                  <th scope="col" class="p-4">Status Persetujuan</th>
-                  <th scope="col" class="p-4">Status Barang</th>
-                  <th scope="col" class="p-4"></th>
+                  <th scope="col" class="whitespace-nowrap p-4">Nomor Permintaan</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Pengaju</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Area</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Tanggal</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Barang</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Kode Barang</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Jumlah</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Harga</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Total Harga</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Referensi Pembelian</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Tenggat Waktu</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Status Persetujuan</th>
+                  <th scope="col" class="whitespace-nowrap p-4">Status Barang</th>
+                  <th scope="col" class="whitespace-nowrap p-4"></th>
                 </tr>
               </thead>
               <tbody class="text-xs">
@@ -186,6 +190,16 @@ export default {
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
+                      {{ submission.submitter.profile.name }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ submission.area.name }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
                       {{ submission.datetime_label }}
                     </div>
                   </th>
@@ -201,7 +215,17 @@ export default {
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ submission.material.items[0].quantity }} {{ submission.material.items[0].unit }}
+                      {{ submission.material.items[0].quantity }} {{ submission.material.items[0].unit_label }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ submission.material.items[0].price_label }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ submission.material.items[0].bill_amount_label }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

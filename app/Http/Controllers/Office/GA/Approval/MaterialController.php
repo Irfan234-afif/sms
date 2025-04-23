@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Office\GA\Approval;
 
 use App\Exports\SubMaterialExport;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AreaResource;
 use App\Http\Resources\SubmissionResource;
+use App\Models\Area;
 use App\Models\Employee;
 use App\Models\SubMaterial;
 use App\Models\Submission;
@@ -27,6 +29,12 @@ class MaterialController extends Controller
             $group->where('code', 'MATERIAL');
         });
 
+        if (request()->has('area_id')) {
+            $submissions->whereHas('area', function ($area) {
+                $area->where('uuid', request('area_id'));
+            });
+        }
+
         if (request()->has('status')) {
             $submissions->where('status', request('status'));
         }
@@ -46,6 +54,8 @@ class MaterialController extends Controller
             $total = $submissions->count();
 
             $submissions = $submissions->with([
+                'submitter.profile',
+                'area',
                 'approvals.approver.profile',
                 'approvals.delegate.profile',
                 'material.items',
@@ -64,6 +74,8 @@ class MaterialController extends Controller
             );
         } else {
             $submissions = $submissions->with([
+                'submitter.profile',
+                'area',
                 'approvals.approver.profile',
                 'approvals.delegate.profile',
                 'material.items',
@@ -72,11 +84,14 @@ class MaterialController extends Controller
                 ->paginate(15);
         }
 
+        $area = Area::where('uuid', request('area_id'))->first();
+
         $data = [
             'search_params' => [
                 'search' => request('search'),
                 'from_date' => request('from_date'),
                 'to_date' => request('to_date'),
+                'area_id' => $area ? AreaResource::make($area) : null,
                 'status' => request('status'),
                 'take' => request('take'),
             ],
@@ -110,6 +125,8 @@ class MaterialController extends Controller
 
             $sub_material_created = SubMaterial::updateOrCreate([
                 'submission_id' => $submission_created->id,
+            ], [
+                'bill_amount' => request('bill_amount'),
             ]);
 
             $sub_material_created->items()->create([
@@ -117,10 +134,11 @@ class MaterialController extends Controller
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'price' => request('price'),
+                'bill_amount' => request('bill_amount'),
                 'purchase_reference' => request('purchase_reference'),
                 'due_date' => request('due_date'),
                 'description' => request('description'),
-                'status' => request('item_status'),
                 'status' => request('item_status'),
             ]);
 
@@ -149,10 +167,16 @@ class MaterialController extends Controller
 
             $submission = $submissionService->updateSubmission();
 
+            $submission->material->update([
+                'bill_amount' => request('bill_amount'),
+            ]);
+
             $submission->material->items()->first()->update([
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'price' => request('price'),
+                'bill_amount' => request('bill_amount'),
                 'purchase_reference' => request('purchase_reference'),
                 'due_date' => request('due_date'),
                 'description' => request('description'),
