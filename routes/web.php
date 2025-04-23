@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Ajax\ApprovalController;
 use App\Http\Controllers\Ajax\ChatController;
+use App\Http\Controllers\Ajax\OptionController;
 use App\Http\Controllers\Guardian\AdmissionStudentController;
 use App\Http\Controllers\Guardian\GuardianController;
 use App\Http\Controllers\Guardian\TransactionPaymentController;
@@ -1222,6 +1223,12 @@ Route::middleware(['auth'])
             ->name('.approval')
             ->group(function () {
                 Route::post('update-status', [ApprovalController::class, 'updateStatus'])->name('.updateStatus');
+            });
+        // option
+        Route::prefix('option')
+            ->name('.option')
+            ->group(function () {
+                Route::get('area', [OptionController::class, 'area'])->name('.area');
             });
     });
 

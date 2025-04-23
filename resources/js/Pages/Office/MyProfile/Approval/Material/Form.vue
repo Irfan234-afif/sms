@@ -24,8 +24,11 @@ export default {
         submission_id: null,
         datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
         name: null,
-        unit: null,
         quantity: 1,
+        unit: null,
+        price: 0,
+        bill_amount: 0,
+        purchase: 0,
         purchase_reference: null,
         due_date: null,
         description: null,
@@ -53,6 +56,16 @@ export default {
           rules: [fieldValidation.isRequired('Satuan')],
           error: null,
           options: units,
+        },
+        price: {
+          label: 'Harga',
+          rules: [fieldValidation.isRequired('Harga')],
+          error: null,
+        },
+        bill_amount: {
+          label: 'Total Bayar',
+          rules: [fieldValidation.isRequired('Total Bayar')],
+          error: null,
         },
         purchase_reference: {
           label: 'Referensi Pembelian',
@@ -86,8 +99,10 @@ export default {
       this.form.submission_id = submission.uuid;
       this.form.datetime = submission.datetime;
       this.form.name = submission.material.items[0].name;
-      this.form.unit = submission.material.items[0].unit;
       this.form.quantity = submission.material.items[0].quantity;
+      this.form.unit = submission.material.items[0].unit;
+      this.form.price = submission.material.items[0].price;
+      this.form.bill_amount = submission.material.items[0].bill_amount;
       this.form.purchase_reference = submission.material.items[0].purchase_reference;
       this.form.due_date = submission.material.items[0].due_date;
       this.form.description = submission.material.items[0].description;
@@ -223,6 +238,33 @@ export default {
               :value="option.value"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.price.label"
+          :rules="field.price.rules"
+          :error="field.price.error"
+          prop="price"
+        >
+          <el-input
+            type="number"
+            v-model.number="form.price"
+            autocomplete="off"
+            @input="form.bill_amount = form.quantity * form.price"
+          >
+            <template #prepend>Rp</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.bill_amount.label"
+          :rules="field.bill_amount.rules"
+          :error="field.bill_amount.error"
+          prop="bill_amount"
+        >
+          <el-input :disabled="true" type="number" v-model.number="form.bill_amount" autocomplete="off">
+            <template #prepend>Rp</template>
+          </el-input>
         </el-form-item>
         <el-form-item
           class="font-medium"

@@ -16,7 +16,7 @@ import DefaultButton from '@/Components/DefaultButton.vue';
 
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
-  { label: 'My Profile', href: route('office.ga') },
+  { label: 'GA', href: route('office.ga') },
   { label: 'Persetujuan Material', href: route('office.ga.approval.material') },
 ];
 </script>
@@ -151,6 +151,7 @@ export default {
                     </div>
                   </th>
                   <th scope="col" class="p-4">Nomor Permintaan</th>
+                  <th scope="col" class="p-4">Area</th>
                   <th scope="col" class="p-4">Tanggal</th>
                   <th scope="col" class="p-4">Barang</th>
                   <th scope="col" class="p-4">Kode Barang</th>
@@ -182,6 +183,11 @@ export default {
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
                       {{ submission.reference_number }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ submission.area.name }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

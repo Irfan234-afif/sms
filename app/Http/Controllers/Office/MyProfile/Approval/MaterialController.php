@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Office\MyProfile\Approval;
 
 use App\Exports\SubMaterialExport;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AreaResource;
 use App\Http\Resources\SubmissionResource;
+use App\Models\Area;
 use App\Models\Employee;
 use App\Models\SubMaterial;
 use App\Models\Submission;
@@ -27,6 +29,12 @@ class MaterialController extends Controller
             $group->where('code', 'MATERIAL');
         });
 
+        if (request()->has('area_id')) {
+            $submissions->whereHas('area', function ($area) {
+                $area->where('uuid', request('area_id'));
+            });
+        }
+
         if (request()->has('status')) {
             $submissions->where('status', request('status'));
         }
@@ -48,6 +56,7 @@ class MaterialController extends Controller
             $submissions = $submissions->with([
                 'approvals.approver.profile',
                 'approvals.delegate.profile',
+                'area',
                 'material.items',
             ])
                 ->latest()
@@ -66,17 +75,21 @@ class MaterialController extends Controller
             $submissions = $submissions->with([
                 'approvals.approver.profile',
                 'approvals.delegate.profile',
+                'area',
                 'material.items',
             ])
                 ->latest()
                 ->paginate(15);
         }
 
+        $area = Area::where('uuid', request('area_id'))->first();
+
         $data = [
             'search_params' => [
                 'search' => request('search'),
                 'from_date' => request('from_date'),
                 'to_date' => request('to_date'),
+                'area_id' => $area ? AreaResource::make($area) : null,
                 'status' => request('status'),
                 'take' => request('take'),
             ],
@@ -117,6 +130,8 @@ class MaterialController extends Controller
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'price' => request('price'),
+                'bill_amount' => request('bill_amount'),
                 'purchase_reference' => request('purchase_reference'),
                 'due_date' => request('due_date'),
                 'description' => request('description'),
@@ -153,6 +168,8 @@ class MaterialController extends Controller
                 'name' => request('name'),
                 'quantity' => request('quantity'),
                 'unit' => request('unit'),
+                'price' => request('price'),
+                'bill_amount' => request('bill_amount'),
                 'purchase_reference' => request('purchase_reference'),
                 'due_date' => request('due_date'),
                 'description' => request('description'),

@@ -16,6 +16,7 @@ export default {
       loaded: true,
       form: {
         date_range: null,
+        area_id: null,
         status: null,
         take: 15,
       },
@@ -24,6 +25,12 @@ export default {
           label: 'Rentang Tanggal',
           rules: [],
           error: null,
+        },
+        area_id: {
+          label: 'Area',
+          rules: [],
+          error: null,
+          options: [],
         },
         status: {
           label: 'Status',
@@ -66,14 +73,36 @@ export default {
         this.form.take = searchParams.take;
       }
 
+      if (searchParams.area) {
+        this.form.area_id = searchParams.area;
+      }
+
       if (searchParams.status) {
         this.form.status = searchParams.status;
       }
     }
   },
   methods: {
+    optionArea(search) {
+      this.field.area_id.loading = true;
+      axios
+        .get(
+          route('ajax.option.area', {
+            search: search,
+          }),
+        )
+        .then((response) => {
+          this.field.area_id.options = response.data;
+          this.field.area_id.loading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.field.area_id.loading = false;
+        });
+    },
     submit() {
       let params = this.form;
+      params.area_id = params.area_id?.uuid;
 
       if (params.date_range != null) {
         params.from_date = params.date_range[0];
@@ -127,6 +156,36 @@ export default {
             format="DD-MM-YYYY"
             value-format="YYYY-MM-DD"
           />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.area_id.label"
+          :rules="field.area_id.rules"
+          :error="field.area_id.error"
+          prop="area_id"
+        >
+          <el-select
+            v-model="form.area_id"
+            :placeholder="`Pilih ${field.area_id.label}`"
+            loading-text="..."
+            no-match-text="Data tidak ditemukan"
+            no-data-text="Tidak ada data"
+            :disabled="field.area_id.disabled"
+            :remote-method="optionArea"
+            value-key="uuid"
+            remote
+            filterable
+            reserve-keyword
+            clearable
+            autocomplete="off"
+          >
+            <el-option
+              v-for="option in field.area_id.options"
+              :key="option.uuid"
+              :label="option.name"
+              :value="option"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item
           class="font-medium"

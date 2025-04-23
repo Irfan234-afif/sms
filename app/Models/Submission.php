@@ -12,8 +12,8 @@ class Submission extends Model
 
     protected $fillable = [
         'submission_group_id',
-        'area_id',
         'submitter_id',
+        'area_id',
         'reference_number',
         'datetime',
         'status',
@@ -22,6 +22,11 @@ class Submission extends Model
     public function group()
     {
         return $this->belongsTo(SubmissionGroup::class, 'submission_group_id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id');
     }
 
     public function submitter()
