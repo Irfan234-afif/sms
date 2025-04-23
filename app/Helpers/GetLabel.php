@@ -79,4 +79,9 @@ class GetLabel
     {
         return self::get('submissionStatuses', $value);
     }
+
+    public static function unit($value)
+    {
+        return self::get('units', $value);
+    }
 }

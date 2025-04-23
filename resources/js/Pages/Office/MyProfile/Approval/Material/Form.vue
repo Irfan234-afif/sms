@@ -63,8 +63,8 @@ export default {
           error: null,
         },
         bill_amount: {
-          label: 'Total Bayar',
-          rules: [fieldValidation.isRequired('Total Bayar')],
+          label: 'Total Harga',
+          rules: [fieldValidation.isRequired('Total Harga')],
           error: null,
         },
         purchase_reference: {

@@ -14,6 +14,11 @@ class SubMaterialResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'submission' => $this->whenLoaded('submission', fn() => SubmissionResource::make($this->submission)),
+            'bill_amount' => $this->bill_amount,
+            'items' => $this->whenLoaded('items', fn() => SubMaterialItemResource::collection($this->items)),
+        ];
     }
 }

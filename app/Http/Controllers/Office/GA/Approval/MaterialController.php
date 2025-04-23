@@ -54,9 +54,10 @@ class MaterialController extends Controller
             $total = $submissions->count();
 
             $submissions = $submissions->with([
+                'submitter.profile',
+                'area',
                 'approvals.approver.profile',
                 'approvals.delegate.profile',
-                'area',
                 'material.items',
             ])
                 ->latest()
@@ -73,9 +74,10 @@ class MaterialController extends Controller
             );
         } else {
             $submissions = $submissions->with([
+                'submitter.profile',
+                'area',
                 'approvals.approver.profile',
                 'approvals.delegate.profile',
-                'area',
                 'material.items',
             ])
                 ->latest()
@@ -123,6 +125,8 @@ class MaterialController extends Controller
 
             $sub_material_created = SubMaterial::updateOrCreate([
                 'submission_id' => $submission_created->id,
+            ], [
+                'bill_amount' => request('bill_amount'),
             ]);
 
             $sub_material_created->items()->create([
@@ -162,6 +166,10 @@ class MaterialController extends Controller
             $submissionService = new SubmissionUpdateService(request('submission_id'));
 
             $submission = $submissionService->updateSubmission();
+
+            $submission->material->update([
+                'bill_amount' => request('bill_amount'),
+            ]);
 
             $submission->material->items()->first()->update([
                 'name' => request('name'),
