@@ -17,6 +17,12 @@ class SubMaterialExport implements FromCollection, WithHeadings, WithMapping
             $group->where('code', 'MATERIAL');
         });
 
+        if (request()->has('area_id')) {
+            $submissions->whereHas('area', function ($area) {
+                $area->where('uuid', request('area_id'));
+            });
+        }
+
         if (request()->has('status')) {
             $submissions->where('status', request('status'));
         }
@@ -32,10 +38,10 @@ class SubMaterialExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             'Nama Pemohon',
+            'Area',
             'Nomor Referensi',
             'Tanggal Dikirim',
             'Status',
-            'Nomor Registrasi',
             'Nama Barang',
             'Nomor Referensi Barang',
             'Kuantitas',
@@ -55,10 +61,10 @@ class SubMaterialExport implements FromCollection, WithHeadings, WithMapping
 
         return [
             $submission->submitter->profile->name,
+            $submission->area->name,
             $submission->reference_number,
             $submission->datetime,
             $submission->status,
-            $submission->registration_number,
             $item?->name,
             $item?->reference_number,
             $item?->quantity,

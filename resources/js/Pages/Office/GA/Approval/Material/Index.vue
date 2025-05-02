@@ -71,7 +71,18 @@ export default {
         <div
           class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0"
         >
-          <a v-if="search_params.take" :href="route('office.ga.approval.material.export')">
+          <a
+            v-if="search_params.take"
+            :href="
+              route('office.ga.approval.material.export', {
+                status: search_params.status,
+                from_date: search_params.from_date,
+                to_date: search_params.to_date,
+                area_id: search_params.area_id?.data?.uuid,
+                take: search_params.take,
+              })
+            "
+          >
             <DefaultButton type="green">
               <div class="flex items-center space-x-1 text-xs">
                 <svg
