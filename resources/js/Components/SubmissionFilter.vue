@@ -73,8 +73,9 @@ export default {
         this.form.take = searchParams.take;
       }
 
-      if (searchParams.area) {
-        this.form.area_id = searchParams.area;
+      if (searchParams.area_id) {
+        this.form.area_id = searchParams.area_id.data;
+        this.field.area_id.options = [searchParams.area_id.data];
       }
 
       if (searchParams.status) {
