@@ -116,6 +116,82 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+//report
+Route::prefix('/hhk')->group(function () {
+    Route::get('laporan-mingguan', function () {
+        return view('report.hhk.weekly_report');
+    });
+    Route::get('laporan-identitas', function () {
+        return view('report.hhk.identity_report');
+    });
+    Route::get('laporan-lapd', function () {
+        return view('report.hhk.lapd_report');
+    });
+});
+
+Route::prefix('/sd')->group(function () {
+    Route::get('weekly-time', function () {
+        return view('report.sd.weekly_time');
+    });
+
+    Route::get('mid-semester', function () {
+        return view('report.sd.mid-semester_report');
+    });
+
+    Route::get('rapor-nasional', function () {
+        return view('report.sd.national-report-card');
+    });
+    
+    Route::get('rapor-sekolah', function () {
+        return view('report.sd.school-report_card');
+    });
+
+    Route::get('laporan-p5', function () {
+        return view('report.sd.p5-report_card');
+    });
+});
+
+Route::prefix('/sma')->group(function () {
+    Route::get('mid-semester', function () {
+        return view('report.sma.mid-semester_report');
+    });
+
+    Route::get('rapor-nasional', function () {
+        return view('report.sma.national-report_report');
+    });
+    
+    Route::get('mid-semester-core', function () {
+        return view('report.sma.Mid-Semester-Core_report');
+    });
+
+    Route::get('laporan-prestasi', function () {
+        return view('report.sma.achievements_report');
+    });
+});
+
+// academic-tr-report
+Route::prefix('/smp')->group(function () {
+    Route::get('transkrip-akademik', function () {
+        return view('report.smp.academic-tr-report');
+    });
+
+    Route::get('rapor-nasional', function () {
+        return view('report.smp.national-report');
+    });
+    
+    Route::get('laporan-p5', function () {
+        return view('report.smp.p5-report');
+    });
+
+    Route::get('laporan-prestasi', function () {
+        return view('report.smp.achievements_report');
+    });
+
+    Route::get('subject-transkrip', function () {
+        return view('report.smp.subject-tr');
+    });
+});
+
 // public routes
 Route::prefix('/')->group(function () {
     Route::get('/', [PublicController::class, 'index']);
