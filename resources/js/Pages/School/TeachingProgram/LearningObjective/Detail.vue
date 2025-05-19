@@ -1,8 +1,7 @@
 <script setup>
-import Pagination from '@/Components/Pagination.vue';
 import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import LearningObjectiveForm from './Form.vue';
@@ -24,7 +23,7 @@ export default {
       breadcrumbs: [
         { label: 'Sekolah', href: route('school') },
         {
-          label: `Indikator Pembelajaran (${this.school_curriculum.data.title})`,
+          label: `Objektif Pembelajaran (${this.school_curriculum.data.title})`,
           href: route('school.teachingProgram.learningObjective'),
         },
         { label: 'Lihat', href: '#' },
@@ -158,6 +157,7 @@ export default {
           >
             <div class="flex w-full space-x-3 md:w-1/3">
               <el-select
+                v-if="learning_objective_category.data.options.scope_school_phase"
                 v-model="filters.school_phase_id"
                 placeholder="Pilih Fase"
                 loading-text="..."
@@ -183,6 +183,7 @@ export default {
                 />
               </el-select>
               <el-select
+                v-if="learning_objective_category.data.options.scope_school_grade"
                 v-model="filters.school_grade_id"
                 placeholder="Pilih Tingkat Kelas"
                 loading-text="..."
@@ -205,6 +206,7 @@ export default {
                 />
               </el-select>
               <el-select
+                v-if="learning_objective_category.data.options.scope_school_subject"
                 v-model="filters.school_subject_id"
                 placeholder="Pilih Mata Pelajaran"
                 loading-text="..."
@@ -228,7 +230,7 @@ export default {
               </el-select>
             </div>
           </div>
-          <div v-if="filters.school_phase_id && filters.school_grade_id && filters.school_subject_id">
+          <div>
             <div
               class="mt-3 flex flex-col items-stretch justify-between space-y-3 py-1 dark:border-gray-700 md:flex-row md:items-center md:space-x-3 md:space-y-0"
             >
@@ -329,7 +331,7 @@ export default {
                         class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white"
                       >
                         <div class="flex items-center">
-                          {{ learning_objective.parent.code }}
+                          {{ learning_objective.parent?.code }}
                         </div>
                       </th>
                       <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

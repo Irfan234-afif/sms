@@ -16,7 +16,6 @@ class DummySchoolManagementSeeder extends Seeder
      */
     public function run(): void
     {
-        $school_curriculums = json_decode(file_get_contents('database/data/dummy/school_curriculum.json'));
         $school_clubs = json_decode(file_get_contents('database/data/dummy/school_club.json'));
         $school_extracurriculars = json_decode(file_get_contents('database/data/dummy/school_extracurricular.json'));
 

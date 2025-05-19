@@ -66,22 +66,22 @@ class MigrateSchoolData extends Command
             $this->error("error to execute:$th->getMessage()");
         }
         $this->newLine();
-        $this->info('migrating school teaching program academic...');
-        try {
-            DB::beginTransaction();
+        // $this->info('migrating school teaching program academic...');
+        // try {
+        //     DB::beginTransaction();
 
-            $this->withProgressBar($schools, function ($school) {
-                MigrateSchoolTeachingProgramAcademic::execute($school);
-            });
+        //     $this->withProgressBar($schools, function ($school) {
+        //         MigrateSchoolTeachingProgramAcademic::execute($school);
+        //     });
 
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
+        //     DB::commit();
+        // } catch (\Throwable $th) {
+        //     DB::rollBack();
 
-            throw $th;
+        //     throw $th;
 
-            $this->error("error to execute:$th->getMessage()");
-        }
-        $this->newLine();
+        //     $this->error("error to execute:$th->getMessage()");
+        // }
+        // $this->newLine();
     }
 }

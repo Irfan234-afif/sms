@@ -110,6 +110,8 @@ use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
 use App\Http\Controllers\School\Setting\Entity\SchoolAcademicProgramController;
 use App\Http\Controllers\School\Setting\SchoolController as SettingSchoolController;
+use App\Http\Controllers\School\TeachingProgram\AssessmentModuleController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentAspectController;
 use App\Http\Controllers\School\TeachingProgram\LearningObjectiveController;
 use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
@@ -141,7 +143,7 @@ Route::prefix('/sd')->group(function () {
     Route::get('rapor-nasional', function () {
         return view('report.sd.national-report-card');
     });
-    
+
     Route::get('rapor-sekolah', function () {
         return view('report.sd.school-report_card');
     });
@@ -159,7 +161,7 @@ Route::prefix('/sma')->group(function () {
     Route::get('rapor-nasional', function () {
         return view('report.sma.national-report_report');
     });
-    
+
     Route::get('mid-semester-core', function () {
         return view('report.sma.Mid-Semester-Core_report');
     });
@@ -178,7 +180,7 @@ Route::prefix('/smp')->group(function () {
     Route::get('rapor-nasional', function () {
         return view('report.smp.national-report');
     });
-    
+
     Route::get('laporan-p5', function () {
         return view('report.smp.p5-report');
     });
@@ -1127,6 +1129,22 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('get-learning-objective', [LearningObjectiveController::class, 'getLearningObjective'])->name('.getLearningObjective');
                         Route::post('save', [LearningObjectiveController::class, 'save'])->name('.save');
                         Route::delete('delete', [LearningObjectiveController::class, 'delete'])->name('.delete');
+                    });
+                // assessment module routes
+                Route::prefix('assessment-module')
+                    ->name('.assessmentModule')
+                    ->group(function () {
+                        Route::get('/', [AssessmentModuleController::class, 'index']);
+                        Route::get('{assessment_module_id}/detail', [AssessmentModuleController::class, 'detail'])->name('.detail');
+                        Route::post('save', [AssessmentModuleController::class, 'save'])->name('.save');
+                        Route::delete('delete', [AssessmentModuleController::class, 'delete'])->name('.delete');
+                        // assessment aspect routes
+                        Route::prefix('assessment-aspect')
+                            ->name('.assessmentAspect')
+                            ->group(function () {
+                                Route::post('save', [AssessmentAspectController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentAspectController::class, 'delete'])->name('.delete');
+                            });
                     });
             });
         // management routes

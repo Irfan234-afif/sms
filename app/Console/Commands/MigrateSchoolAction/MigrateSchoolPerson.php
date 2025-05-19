@@ -98,7 +98,6 @@ class MigrateSchoolPerson
                         'national_id' => $student->father_nationality_id,
                         'languages' => [],
                         'phone' => $student->father_phone,
-                        'email' => $student->father_email,
                         'occupation' => $student->father_occupation,
                     ]
                 );
@@ -110,7 +109,6 @@ class MigrateSchoolPerson
                         'national_id' => $student->mother_nationality_id,
                         'languages' => [],
                         'phone' => $student->mother_phone,
-                        'email' => $student->mother_email,
                         'occupation' => $student->mother_occupation,
                     ]
                 );

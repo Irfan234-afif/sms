@@ -23,8 +23,14 @@ class SchoolCurriculum extends Model
         return $this->hasMany(LearningObjectiveCategory::class, 'school_curriculum_id');
     }
 
+
     public function learning_rubrics()
     {
         return $this->hasMany(LearningRubric::class, 'school_curriculum_id');
+    }
+
+    public function assessment_modules()
+    {
+        return $this->hasMany(AssessmentModule::class, 'school_curriculum_id');
     }
 }

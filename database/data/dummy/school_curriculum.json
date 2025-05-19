@@ -1,5 +1,232 @@
 [
   {
-    "title": "Kurikulum Merdeka"
+    "title": "Kurikulum Merdeka",
+    "code": "KM",
+    "learning_objective_categories": [
+      {
+        "title": "Capaian Pembelajaran",
+        "code": "CP",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": false,
+          "scope_school_year": false
+        },
+        "childs": [
+          {
+            "title": "Tujuan Pembelajaran",
+            "code": "TP",
+            "options": {
+              "scope_school_phase": true,
+              "scope_school_grade": true,
+              "scope_school_subject": true,
+              "scope_school_year": true
+            }
+          }
+        ]
+      },
+      {
+        "title": "Learning Objective",
+        "code": "LO",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": true,
+          "scope_school_year": true
+        },
+        "childs": []
+      }
+    ],
+    "assessment_modules": [
+      {
+        "name": "Penilaian Sikap",
+        "description": "Penilaian Sikap Per Mata Pelajaran",
+        "aspects": [
+          {
+            "name": "Weekly",
+            "sort_number": 1,
+            "use_session": true,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Sikap",
+            "description": "Rubrik untuk penilaian Sikap",
+            "scales": [
+              {
+                "sort_number": 1,
+                "score": 1,
+                "predicate": "1",
+                "narrative": "1"
+              },
+              {
+                "sort_number": 2,
+                "score": 2,
+                "predicate": "2",
+                "narrative": "2"
+              },
+              {
+                "sort_number": 3,
+                "score": 3,
+                "predicate": "3",
+                "narrative": "3"
+              },
+              {
+                "sort_number": 4,
+                "score": 4,
+                "predicate": "4",
+                "narrative": "4"
+              },
+              {
+                "sort_number": 5,
+                "score": 5,
+                "predicate": "5",
+                "narrative": "5"
+              }
+            ]
+          }
+        ],
+        "final_rules": []
+      },
+      {
+        "name": "Penilaian Umum",
+        "description": "Penilaian Mata Pelajaran Umum",
+        "aspects": [
+          {
+            "name": "Penilaian Keterampilan",
+            "sort_number": 1,
+            "use_session": true,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan",
+            "sort_number": 2,
+            "use_session": true,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Ujian Semester",
+            "sort_number": 3,
+            "use_session": true,
+            "use_final_score": true,
+            "final_score_method": "SUM",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          }
+        ],
+        "rubrics": [],
+        "final_rules": [
+          {
+            "name": "Mid Semester",
+            "sort_number": 1,
+            "use_score": true,
+            "score_type": "SUM_ASPECT",
+            "use_predicate": false,
+            "predicate_type": null,
+            "use_narrative": false,
+            "narrative_type": null,
+            "final_scores": [
+              {
+                "aspect": "Penilaian Keterampilan",
+                "portion_score": 50
+              },
+              {
+                "aspect": "Penilaian Pengetahuan",
+                "portion_score": 50
+              }
+            ],
+            "final_narratives": []
+          },
+          {
+            "name": "End Semester",
+            "sort_number": 2,
+            "use_score": true,
+            "score_type": "SUM_ASPECT",
+            "use_predicate": true,
+            "predicate_type": "SUBJECT_TRESHOLD",
+            "use_narrative": true,
+            "narrative_type": "SUBJECT_TRESHOLD_AND_LEARNING_OBJECTIVE",
+            "learning_objective_aspect": "Penilaian Pengetahuan",
+            "final_scores": [
+              {
+                "aspect": "Penilaian Keterampilan",
+                "portion_score": 20
+              },
+              {
+                "aspect": "Penilaian Pengetahuan",
+                "portion_score": 50
+              },
+              {
+                "aspect": "Ujian Semester",
+                "portion_score": 30
+              }
+            ],
+            "final_narratives": [
+              {
+                "aspect": "Penilaian Pengetahuan"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Subject Transcript",
+        "description": "Penilaian Subject Transcript Cambridge",
+        "aspects": [
+          {
+            "name": "Learning Objective",
+            "sort_number": 1,
+            "use_session": true,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "LO"
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Learning Objective",
+            "description": "Rubrik Learning Objective",
+            "scales": [
+              {
+                "sort_number": 1,
+                "score": 4,
+                "predicate": "A",
+                "narrative": "A"
+              },
+              {
+                "sort_number": 2,
+                "score": 3,
+                "predicate": "B",
+                "narrative": "B"
+              },
+              {
+                "sort_number": 3,
+                "score": 2,
+                "predicate": "C",
+                "narrative": "C"
+              },
+              {
+                "sort_number": 4,
+                "score": 1,
+                "predicate": "D",
+                "narrative": "D"
+              }
+            ]
+          }
+        ],
+        "final_rules": []
+      }
+    ]
   }
 ]

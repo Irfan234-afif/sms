@@ -102,7 +102,7 @@ export default {
 
           let requestPayload = JSON.parse(JSON.stringify(this.form));
 
-          requestPayload.parent_id = requestPayload.parent_id.uuid;
+          requestPayload.parent_id = requestPayload.parent_id?.uuid;
 
           axios
             .post(route('school.management.schoolCurriculum.learningObjectiveCategory.save'), requestPayload, {
@@ -224,17 +224,33 @@ export default {
         >
           <el-row :gutter="10">
             <el-col :span="12">
-              <el-checkbox border class="w-full" v-model="form.options.scope_school_year">Tahun Ajaran</el-checkbox>
-            </el-col>
-            <el-col :span="12">
               <el-checkbox border class="w-full" v-model="form.options.scope_school_phase">Fase</el-checkbox>
             </el-col>
             <el-col :span="12">
-              <el-checkbox border class="w-full" v-model="form.options.scope_school_grade">Tingkat Kelas</el-checkbox>
+              <el-checkbox
+                border
+                class="w-full"
+                :disabled="form.options.scope_school_phase == false"
+                v-model="form.options.scope_school_grade"
+                >Tingkat Kelas</el-checkbox
+              >
             </el-col>
             <el-col :span="12">
-              <el-checkbox border class="w-full" v-model="form.options.scope_school_subject"
+              <el-checkbox
+                border
+                class="w-full"
+                :disabled="form.options.scope_school_grade == false"
+                v-model="form.options.scope_school_subject"
                 >Mata Pelajaran</el-checkbox
+              >
+            </el-col>
+            <el-col :span="12">
+              <el-checkbox
+                border
+                class="w-full"
+                :disabled="form.options.scope_school_subject == false"
+                v-model="form.options.scope_school_year"
+                >Tahun Ajaran</el-checkbox
               >
             </el-col>
           </el-row>

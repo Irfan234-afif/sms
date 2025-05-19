@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,10 +25,12 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterEmployeeSeeder::class);
         // dummy
         $this->command->warn('Executing dummy seeder');
-        $this->call(DummySchoolManagementSeeder::class);
-        $this->call(DummyPublicationActivitySeeder::class);
-        $this->call(DummySubmissionActivitySeeder::class);
-        $this->call(DummyAdmissionStudentActivitySeeder::class);
+        Artisan::call('app:migrate-school-data');
+        // $this->call(DummySchoolManagementSeeder::class);
+        // $this->call(DummyPublicationActivitySeeder::class);
+        // $this->call(DummySubmissionActivitySeeder::class);
+        // $this->call(DummyAdmissionStudentActivitySeeder::class);
+        $this->call(DummySchoolTeachingProgramActivitySeeder::class);
         // 
     }
 }

@@ -87,13 +87,13 @@ export default {
           >
             <div class="flex items-center justify-between border-b pb-4">
               <h5 class="text-base font-medium leading-none text-gray-900 dark:text-white">
-                Kelola Kategori Indikator Pembelajaran
+                Kelola Kategori Objektif Pembelajaran
               </h5>
               <DefaultButton
                 type="default"
                 @click="
                   openModal({
-                    title: 'Kategori Indikator Pembelajaran Baru',
+                    title: 'Kategori Objektif Pembelajaran Baru',
                     mode: 'learning-objective-category-create-form',
                     maxWidth: 'md',
                     data: {
@@ -130,7 +130,7 @@ export default {
                       type="default"
                       @click="
                         openModal({
-                          title: 'Sunting Kategori Indikator Pembelajaran',
+                          title: 'Sunting Kategori Objektif Pembelajaran',
                           mode: 'learning-objective-category-edit-form',
                           maxWidth: 'md',
                           data: {
@@ -146,7 +146,7 @@ export default {
                       type="red"
                       @click="
                         openModal({
-                          title: 'Hapus Kategori Indikator Pembelajaran',
+                          title: 'Hapus Kategori Objektif Pembelajaran',
                           mode: 'learning-objective-category-delete-confirm',
                           maxWidth: 'md',
                           data: {
@@ -157,86 +157,7 @@ export default {
                               school_curriculum_id: school_curriculum.data.uuid,
                             }),
                             message:
-                              'Ingin menghapus Kategori Indikator Pembelajaran? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
-                          },
-                        })
-                      "
-                    >
-                      Hapus
-                    </OutlineButton>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <hr />
-          <div
-            class="mt-4 w-full max-w-lg rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-4"
-          >
-            <div class="flex items-center justify-between border-b pb-4">
-              <h5 class="text-base font-medium leading-none text-gray-900 dark:text-white">Kelola Rubrik Penilaian</h5>
-              <DefaultButton
-                type="default"
-                @click="
-                  openModal({
-                    title: 'Rubrik Penilaian Baru',
-                    mode: 'learning-rubric-create-form',
-                    maxWidth: '2xl',
-                    data: {
-                      school_curriculum: school_curriculum.data,
-                    },
-                  })
-                "
-              >
-                Rubrik Baru
-              </DefaultButton>
-            </div>
-            <div class="flow-root">
-              <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                <li v-for="(learning_rubric, index) in learning_rubrics.data" :key="index" class="py-3 sm:py-4">
-                  <div class="flex items-center space-x-2">
-                    <div class="ms-4 min-w-0 flex-1">
-                      <p class="truncate text-xs font-medium text-gray-900 dark:text-white">
-                        {{ learning_rubric.title }}
-                      </p>
-                      <div class="mt-1 flex items-center space-x-2 truncate text-xs text-gray-500 dark:text-gray-400">
-                        <div>
-                          {{ learning_rubric.code }}
-                        </div>
-                      </div>
-                    </div>
-                    <OutlineButton
-                      type="default"
-                      @click="
-                        openModal({
-                          title: 'Sunting Rubrik Penilaian',
-                          mode: 'learning-rubric-edit-form',
-                          maxWidth: '2xl',
-                          data: {
-                            school_curriculum: school_curriculum.data,
-                            learning_rubric: learning_rubric,
-                          },
-                        })
-                      "
-                    >
-                      Sunting
-                    </OutlineButton>
-                    <OutlineButton
-                      type="red"
-                      @click="
-                        openModal({
-                          title: 'Hapus Rubrik Penilaian',
-                          mode: 'learning-rubric-delete-confirm',
-                          maxWidth: 'md',
-                          data: {
-                            actionUrl: route('school.management.schoolCurriculum.learningRubric.delete', {
-                              learning_rubric_id: learning_rubric.uuid,
-                            }),
-                            redirectUrl: route('school.management.schoolCurriculum.detail', {
-                              school_curriculum_id: school_curriculum.data.uuid,
-                            }),
-                            message:
-                              'Ingin menghapus Rubrik Penilaian? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
+                              'Ingin menghapus Kategori Objektif Pembelajaran? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
                           },
                         })
                       "
