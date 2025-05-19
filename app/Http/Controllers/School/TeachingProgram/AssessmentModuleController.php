@@ -4,8 +4,10 @@ namespace App\Http\Controllers\School\TeachingProgram;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AssessmentModuleResource;
+use App\Http\Resources\LearningObjectiveCategoryResource;
 use App\Http\Resources\SchoolCurriculumResource;
 use App\Models\AssessmentModule;
+use App\Models\LearningObjectiveCategory;
 use App\Models\School;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -43,7 +45,8 @@ class AssessmentModuleController extends Controller
         $assessment_module = AssessmentModule::where('uuid', $assessment_module_id)
             ->with('aspects.learning_objective_category')
             ->with('rubrics.scales')
-            ->with('final_rules')
+            ->with('final_rules.scores.aspect')
+            ->with('final_rules.narratives.aspect')
             ->firstOrFail();
 
         $data = [

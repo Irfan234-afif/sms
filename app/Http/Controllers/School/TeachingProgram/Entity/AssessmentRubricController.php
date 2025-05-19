@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\School\TeachingProgram\Entity;
 
 use App\Http\Controllers\Controller;
-use App\Models\AssessmentAspect;
+use App\Models\AssessmentRubric;
 use App\Models\AssessmentModule;
 use App\Models\LearningObjectiveCategory;
 use App\Models\School;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
-class AssessmentAspectController extends Controller
+class AssessmentRubricController extends Controller
 {
     private $school;
 
@@ -27,30 +27,42 @@ class AssessmentAspectController extends Controller
 
         try {
             $assessment_module = AssessmentModule::where('uuid', request('assessment_module_id'))->firstOrFail();
-            $assessment_aspect = AssessmentAspect::where('uuid', request('assessment_aspect_id'))->first();
-            $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->first();
+            $assessment_rubric = AssessmentRubric::where('uuid', request('assessment_rubric_id'))->first();
 
-            AssessmentAspect::updateOrCreate(
+            $assessment_rubric_created = AssessmentRubric::updateOrCreate(
                 [
-                    'id' => $assessment_aspect?->id,
+                    'id' => $assessment_rubric ? $assessment_rubric->id : null,
                     'module_id' => $assessment_module->id,
                 ],
                 [
                     'name' => request('name'),
-                    'sort_number' => request('sort_number'),
-                    'use_session' => request('use_session'),
-                    'use_final_score' => request('use_final_score'),
-                    'final_score_method' => request('final_score_method'),
-                    'use_learning_objective' => request('use_learning_objective'),
-                    'learning_objective_category_id' => $learning_objective_category?->id,
+                    'description' => request('description'),
                 ]
             );
+
+            $scale_ids = [];
+
+            foreach (request('scales') as $scale) {
+                $scale_created = $assessment_rubric_created->scales()->updateOrCreate([
+                    'uuid' => $scale['id'],
+                ], [
+                    'score' => $scale['score'],
+                    'predicate' => $scale['predicate'],
+                    'narrative' => $scale['narrative'],
+                ]);
+
+                array_push($scale_ids, $scale_created->id);
+            }
+
+            $assessment_rubric_created->scales()
+                ->whereNotIn('id', $scale_ids)
+                ->delete();
 
             DB::commit();
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Aspek Penilaian berhasil disimpan.',
+                'message' => 'Module Penilaian berhasil disimpan.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -67,15 +79,15 @@ class AssessmentAspectController extends Controller
         DB::beginTransaction();
 
         try {
-            $assessment_aspect = AssessmentAspect::where('uuid', request('assessment_aspect_id'))->firstOrFail();
+            $assessment_rubric = AssessmentRubric::where('uuid', request('assessment_rubric_id'))->firstOrFail();
 
-            $assessment_aspect->delete();
+            $assessment_rubric->delete();
 
             DB::commit();
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Aspek Penilaian berhasil dihapus.',
+                'message' => 'Module Penilaian berhasil dihapus.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();

@@ -36,7 +36,6 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('rubric_id')->constrained('assessment_rubrics');
             $table->decimal('score', 5, 2)->nullable();
-            $table->integer('sort_number');
             $table->string('predicate')->nullable();
             $table->longText('narrative')->nullable();
             $table->timestamps();

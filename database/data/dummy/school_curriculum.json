@@ -58,31 +58,26 @@
             "description": "Rubrik untuk penilaian Sikap",
             "scales": [
               {
-                "sort_number": 1,
                 "score": 1,
                 "predicate": "1",
                 "narrative": "1"
               },
               {
-                "sort_number": 2,
                 "score": 2,
                 "predicate": "2",
                 "narrative": "2"
               },
               {
-                "sort_number": 3,
                 "score": 3,
                 "predicate": "3",
                 "narrative": "3"
               },
               {
-                "sort_number": 4,
                 "score": 4,
                 "predicate": "4",
                 "narrative": "4"
               },
               {
-                "sort_number": 5,
                 "score": 5,
                 "predicate": "5",
                 "narrative": "5"
@@ -153,9 +148,9 @@
             "use_score": true,
             "score_type": "SUM_ASPECT",
             "use_predicate": true,
-            "predicate_type": "SUBJECT_TRESHOLD",
+            "predicate_type": "SUBJECT_THRESHOLD",
             "use_narrative": true,
-            "narrative_type": "SUBJECT_TRESHOLD_AND_LEARNING_OBJECTIVE",
+            "narrative_type": "SUBJECT_THRESHOLD_PLUS_LEARNING_OBJECTIVE",
             "learning_objective_aspect": "Penilaian Pengetahuan",
             "final_scores": [
               {
@@ -199,25 +194,21 @@
             "description": "Rubrik Learning Objective",
             "scales": [
               {
-                "sort_number": 1,
                 "score": 4,
                 "predicate": "A",
                 "narrative": "A"
               },
               {
-                "sort_number": 2,
                 "score": 3,
                 "predicate": "B",
                 "narrative": "B"
               },
               {
-                "sort_number": 3,
                 "score": 2,
                 "predicate": "C",
                 "narrative": "C"
               },
               {
-                "sort_number": 4,
                 "score": 1,
                 "predicate": "D",
                 "narrative": "D"

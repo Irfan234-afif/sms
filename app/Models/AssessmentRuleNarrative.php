@@ -14,4 +14,9 @@ class AssessmentRuleNarrative extends Model
         'final_rule_id',
         'aspect_id',
     ];
+
+    public function aspect()
+    {
+        return $this->belongsTo(AssessmentAspect::class);
+    }
 }

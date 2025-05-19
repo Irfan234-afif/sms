@@ -168,10 +168,9 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
                 // scales
                 foreach ($rubric->scales as $scale) {
                     $assessment_rubric_created->scales()->updateOrCreate([
-                        'sort_number' => $scale->sort_number,
+                        'predicate' => $scale->predicate,
                     ], [
                         'score' => $scale->score,
-                        'predicate' => $scale->predicate,
                         'narrative' => $scale->narrative,
                     ]);
                 }

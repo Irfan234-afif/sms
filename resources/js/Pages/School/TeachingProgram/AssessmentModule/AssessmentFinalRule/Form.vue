@@ -3,6 +3,7 @@ import DefaultButton from '@/Components/DefaultButton.vue';
 import fieldValidation from '@/Helpers/fieldValidation';
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
+import OutlineButton from '@/Components/OutlineButton.vue';
 </script>
 
 <script>
@@ -19,14 +20,18 @@ export default {
       loaded: true,
       isValid: false,
       form: {
-        assessment_aspect_id: this.propertyModal.data?.assessment_aspect?.uuid,
+        assessment_final_rule_id: this.propertyModal.data?.assessment_final_rule?.uuid,
         assessment_module_id: this.propertyModal.data.assessment_module.uuid,
         name: null,
-        use_session: false,
-        use_final_score: false,
-        final_score_method: null,
-        use_learning_objective: false,
-        learning_objective_category_id: null,
+        sort_number: this.propertyModal.data.sort_number,
+        use_score: false,
+        score_type: null,
+        use_predicate: false,
+        predicate_type: null,
+        use_narrative: false,
+        narrative_type: null,
+        final_rule_scores: [],
+        final_rule_narratives: [],
       },
       field: {
         name: {
@@ -36,99 +41,145 @@ export default {
           disabled: false,
           options: [],
         },
-        use_session: {
-          label: 'Gunakan Sesi',
-          rules: [fieldValidation.isRequired('Gunakan Sesi')],
+        use_score: {
+          label: 'Gunakan Skor',
+          rules: [fieldValidation.isRequired('Gunakan Skor')],
           error: null,
           disabled: false,
           options: [],
         },
-        use_final_score: {
-          label: 'Gunakan Skor Final',
-          rules: [fieldValidation.isRequired('Gunakan Skor Final')],
-          error: null,
-          disabled: false,
-          options: [],
-        },
-        final_score_method: {
-          label: 'Metode Skor Final',
-          rules: [fieldValidation.isRequired('Metode Skor Final')],
+        score_type: {
+          label: 'Jenis Skor',
+          rules: [fieldValidation.isRequired('Jenis Skor')],
           error: null,
           disabled: false,
           options: [
             {
-              label: 'Rata-rata',
-              value: 'AVERAGE',
+              label: 'Rata-rata Penilaian Aspek',
+              value: 'AVERAGE_ASPECT',
             },
             {
-              label: 'Penjumlahan',
-              value: 'SUM',
+              label: 'Penjumlahan Penilaian Aspek',
+              value: 'SUM_ASPECT',
             },
           ],
         },
-        use_learning_objective: {
-          label: 'Aspek Penilaian',
-          rules: [fieldValidation.isRequired('Aspek Penilaian')],
+        use_predicate: {
+          label: 'Gunakan Predikat',
+          rules: [fieldValidation.isRequired('Gunakan Predikat')],
           error: null,
           disabled: false,
           options: [],
         },
-        learning_objective_category_id: {
-          label: 'Aspek Penilaian',
-          rules: [fieldValidation.isRequired('Aspek Penilaian')],
+        predicate_type: {
+          label: 'Jenis Predikat',
+          rules: [fieldValidation.isRequired('Jenis Predikat')],
+          error: null,
+          disabled: false,
+          options: [
+            {
+              label: 'KKM Mata Pelajaran',
+              value: 'SUBJECT_THRESHOLD',
+            },
+          ],
+        },
+        use_narrative: {
+          label: 'Gunakan Naratif',
+          rules: [fieldValidation.isRequired('Gunakan Naratif')],
           error: null,
           disabled: false,
           options: [],
+        },
+        narrative_type: {
+          label: 'Jenis Naratif',
+          rules: [fieldValidation.isRequired('Jenis Naratif')],
+          error: null,
+          disabled: false,
+          options: [
+            {
+              label: 'KKM Mata Pelajaran + Objektif Pembelajaran',
+              value: 'SUBJECT_THRESHOLD_PLUS_LEARNING_OBJECTIVE',
+            },
+          ],
         },
       },
     };
   },
   created() {
     let mode = this.propertyModal.mode;
-    if (mode == 'assessment-aspect-edit-form') {
-      this.form.name = this.propertyModal.data.assessment_aspect?.name;
-      this.form.use_session = !!this.propertyModal.data.assessment_aspect?.use_session;
-      this.form.use_final_score = !!this.propertyModal.data.assessment_aspect?.use_final_score;
-      this.form.final_score_method = this.propertyModal.data.assessment_aspect?.final_score_method;
-      this.form.use_learning_objective = !!this.propertyModal.data.assessment_aspect?.use_learning_objective;
-      this.form.learning_objective_category_id =
-        this.propertyModal.data.assessment_aspect?.learning_objective_category?.uuid;
-      if (this.propertyModal.data.assessment_aspect?.learning_objective_category) {
-        this.field.learning_objective_category_id.options = [
-          this.propertyModal.data.assessment_aspect?.learning_objective_category,
-        ];
+    if (mode == 'assessment-final-rule-edit-form') {
+      this.form.name = this.propertyModal.data.assessment_final_rule?.name;
+      this.form.sort_number = this.propertyModal.data.assessment_final_rule?.sort_number;
+      this.form.use_score = !!this.propertyModal.data.assessment_final_rule?.use_score;
+      this.form.score_type = this.propertyModal.data.assessment_final_rule?.score_type;
+      this.form.use_predicate = !!this.propertyModal.data.assessment_final_rule?.use_predicate;
+      this.form.predicate_type = this.propertyModal.data.assessment_final_rule?.predicate_type;
+      this.form.use_narrative = !!this.propertyModal.data.assessment_final_rule?.use_narrative;
+      this.form.narrative_type = this.propertyModal.data.assessment_final_rule?.narrative_type;
+      if (this.propertyModal.data.assessment_final_rule?.scores) {
+        this.propertyModal.data.assessment_final_rule?.scores.map((item) => {
+          this.addNewFinalRuleScore(item);
+        });
+      } else {
+        this.addNewFinalRuleScore(null);
+      }
+      if (this.propertyModal.data.assessment_final_rule?.narratives) {
+        this.propertyModal.data.assessment_final_rule?.narratives.map((item) => {
+          this.addNewFinalRuleNarrative(item);
+        });
+      } else {
+        this.addNewFinalRuleNarrative(null);
       }
     }
   },
   methods: {
-    optionLearningObjectiveCategory(search) {
-      this.field.learning_objective_category_id.loading = true;
-      axios
-        .get(
-          route('school.teachingProgram.assessmentModule.assessmentAspect.optionLearningObjectiveCategory', {
-            search: search,
-          }),
-        )
-        .then((response) => {
-          this.field.learning_objective_category_id.options = response.data;
-          this.field.learning_objective_category_id.loading = false;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.field.learning_objective_category_id.loading = false;
-        });
+    addNewFinalRuleScore(final_rule_score = null) {
+      let newObj = {
+        id: null,
+        aspect_id: null,
+        portion_score: 0,
+      };
+
+      if (final_rule_score) {
+        newObj.id = final_rule_score.uuid;
+        newObj.aspect_id = final_rule_score.aspect.uuid;
+        newObj.portion_score = final_rule_score.portion_score;
+      }
+
+      this.form.final_rule_scores.push(newObj);
+    },
+
+    removeFinalRuleScore(index) {
+      this.form.final_rule_scores.splice(index, 1);
+    },
+
+    addNewFinalRuleNarrative(final_rule_narrative = null) {
+      let newObj = {
+        id: null,
+        aspect_id: null,
+        portion_score: 0,
+      };
+
+      if (final_rule_narrative) {
+        newObj.id = final_rule_narrative.uuid;
+        newObj.aspect_id = final_rule_narrative.aspect.uuid;
+      }
+
+      this.form.final_rule_narratives.push(newObj);
+    },
+
+    removeFinalRuleNarrative(index) {
+      this.form.final_rule_narratives.splice(index, 1);
     },
     submit() {
-      this.$refs['assessmentAspect'].validate((valid) => {
+      this.$refs['assessmentFinalRule'].validate((valid) => {
         if (valid) {
           this.process = true;
 
           let requestPayload = JSON.parse(JSON.stringify(this.form));
 
-          requestPayload.learning_objective_category_id = requestPayload.learning_objective_category_id?.uuid;
-
           axios
-            .post(route('school.teachingProgram.assessmentModule.assessmentAspect.save'), requestPayload, {
+            .post(route('school.teachingProgram.assessmentModule.assessmentFinalRule.save'), requestPayload, {
               headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
@@ -155,7 +206,7 @@ export default {
               if (error.response?.data?.errors) {
                 for (let field in error.response.data.errors) {
                   this.field[field].error = error.response.data.errors[field][0];
-                  this.$refs['assessmentAspect'].validateField(field);
+                  this.$refs['assessmentFinalRule'].validateField(field);
                   message = error.response.data.errors[field][0];
                 }
               }
@@ -189,7 +240,7 @@ export default {
       {{ propertyModal?.title }}
     </h2>
     <div class="px-2">
-      <el-form v-if="loaded" ref="assessmentAspect" label-position="top" :model="form" :disabled="process">
+      <el-form v-if="loaded" ref="assessmentFinalRule" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
           :label="field.name.label"
@@ -201,37 +252,84 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.use_session.label"
-          :rules="field.use_session.rules"
-          :error="field.use_session.error"
-          prop="use_session"
+          :label="field.use_score.label"
+          :rules="field.use_score.rules"
+          :error="field.use_score.error"
+          prop="use_score"
         >
-          <el-checkbox border v-model="form.use_session" :label="form.use_session ? 'Ya' : 'Tidak'" />
+          <el-checkbox border v-model="form.use_score" :label="form.use_score ? 'Ya' : 'Tidak'" />
         </el-form-item>
         <el-form-item
+          v-if="form.use_score"
           class="font-medium"
-          :label="field.use_final_score.label"
-          :rules="field.use_final_score.rules"
-          :error="field.use_final_score.error"
-          prop="use_final_score"
+          :label="field.score_type.label"
+          :rules="field.score_type.rules"
+          :error="field.score_type.error"
+          prop="score_type"
         >
-          <el-checkbox border v-model="form.use_final_score" :label="form.use_final_score ? 'Ya' : 'Tidak'" />
-        </el-form-item>
-        <el-form-item
-          v-if="form.use_final_score"
-          class="font-medium"
-          :label="field.final_score_method.label"
-          :rules="field.final_score_method.rules"
-          :error="field.final_score_method.error"
-          prop="final_score_method"
-        >
-          <el-select
-            v-model="form.final_score_method"
-            :placeholder="`Pilih ${field.final_score_method.label}`"
-            clearable
-          >
+          <el-select v-model="form.score_type" :placeholder="`Pilih ${field.score_type.label}`" clearable>
             <el-option
-              v-for="option in field.final_score_method.options"
+              v-for="option in field.score_type.options"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            />
+          </el-select>
+        </el-form-item>
+        <div v-if="form.use_score == true && form.score_type">
+          <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Skor Aspek Penilaian</h2>
+          <div class="space-y-3">
+            <div
+              v-for="(final_rule_score, index) in form.final_rule_scores"
+              :key="index"
+              class="grid rounded-2xl border px-4 py-3 md:grid-cols-1"
+            >
+              <el-form-item class="font-medium" label="Aspek Penilaian">
+                <el-select v-model="final_rule_score.aspect_id" placeholder="Pilih Aspek Penilaian" clearable>
+                  <el-option
+                    v-for="option in propertyModal.data.assessment_aspects"
+                    :key="option.uuid"
+                    :label="option.name"
+                    :value="option.uuid"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item class="font-medium" label="Porsi Skor">
+                <el-input type="number" v-model="final_rule_score.portion_score" autocomplete="off">
+                  <template #append>
+                    <div>%</div>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <div class="flex items-center justify-end">
+                <OutlineButton class="my-auto" type="red" @click="removeFinalRuleScore(index)">Hapus</OutlineButton>
+              </div>
+            </div>
+          </div>
+          <DefaultButton type="light" @click="addNewFinalRuleScore()" class="my-3"
+            >Tambah Aspek Penilaian</DefaultButton
+          >
+        </div>
+        <el-form-item
+          class="font-medium"
+          :label="field.use_predicate.label"
+          :rules="field.use_predicate.rules"
+          :error="field.use_predicate.error"
+          prop="use_predicate"
+        >
+          <el-checkbox border v-model="form.use_predicate" :label="form.use_predicate ? 'Ya' : 'Tidak'" />
+        </el-form-item>
+        <el-form-item
+          v-if="form.use_predicate"
+          class="font-medium"
+          :label="field.predicate_type.label"
+          :rules="field.predicate_type.rules"
+          :error="field.predicate_type.error"
+          prop="predicate_type"
+        >
+          <el-select v-model="form.predicate_type" :placeholder="`Pilih ${field.predicate_type.label}`" clearable>
+            <el-option
+              v-for="option in field.predicate_type.options"
               :key="option.value"
               :label="option.label"
               :value="option.value"
@@ -240,48 +338,51 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.use_learning_objective.label"
-          :rules="field.use_learning_objective.rules"
-          :error="field.use_learning_objective.error"
-          prop="use_learning_objective"
+          :label="field.use_narrative.label"
+          :rules="field.use_narrative.rules"
+          :error="field.use_narrative.error"
+          prop="use_narrative"
         >
-          <el-checkbox
-            border
-            v-model="form.use_learning_objective"
-            :label="form.use_learning_objective ? 'Ya' : 'Tidak'"
-          />
+          <el-checkbox border v-model="form.use_narrative" :label="form.use_narrative ? 'Ya' : 'Tidak'" />
         </el-form-item>
         <el-form-item
-          v-if="form.use_learning_objective"
+          v-if="form.use_narrative"
           class="font-medium"
-          :label="field.learning_objective_category_id.label"
-          :rules="field.learning_objective_category_id.rules"
-          :error="field.learning_objective_category_id.error"
-          prop="learning_objective_category_id"
+          :label="field.narrative_type.label"
+          :rules="field.narrative_type.rules"
+          :error="field.narrative_type.error"
+          prop="narrative_type"
         >
-          <el-select
-            v-model="form.learning_objective_category_id"
-            :placeholder="`Pilih ${field.learning_objective_category_id.label}`"
-            loading-text="..."
-            no-match-text="Data tidak ditemukan"
-            no-data-text="Tidak ada data"
-            :disabled="field.learning_objective_category_id.disabled"
-            :remote-method="optionLearningObjectiveCategory"
-            value-key="uuid"
-            remote
-            filterable
-            reserve-keyword
-            clearable
-            autocomplete="off"
-          >
+          <el-select v-model="form.narrative_type" :placeholder="`Pilih ${field.narrative_type.label}`" clearable>
             <el-option
-              v-for="option in field.learning_objective_category_id.options"
-              :key="option.uuid"
-              :label="option.title"
-              :value="option"
+              v-for="option in field.narrative_type.options"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
             />
           </el-select>
         </el-form-item>
+        <div v-if="form.narrative_type == 'SUBJECT_THRESHOLD_PLUS_LEARNING_OBJECTIVE'">
+          <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Naratif Aspek Penilaian</h2>
+          <div class="space-y-3">
+            <div
+              v-for="(final_rule_narrative, index) in form.final_rule_narratives"
+              :key="index"
+              class="grid rounded-2xl border px-4 py-3 md:grid-cols-1"
+            >
+              <el-form-item class="font-medium" label="Aspek Penilaian">
+                <el-select v-model="final_rule_narrative.aspect_id" placeholder="Pilih Aspek Penilaian" clearable>
+                  <el-option
+                    v-for="option in propertyModal.data.assessment_aspects_using_lo"
+                    :key="option.uuid"
+                    :label="option.name"
+                    :value="option.uuid"
+                  />
+                </el-select>
+              </el-form-item>
+            </div>
+          </div>
+        </div>
       </el-form>
     </div>
     <div class="flex justify-end space-x-3">

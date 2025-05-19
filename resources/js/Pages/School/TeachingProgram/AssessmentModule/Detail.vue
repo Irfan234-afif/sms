@@ -121,9 +121,7 @@ export default {
                         {{ assessment_aspect.name }}
                       </p>
                       <div class="mt-1 flex items-center space-x-2 truncate text-xs text-gray-500 dark:text-gray-400">
-                        <div>
-                          {{ assessment_aspect.code }}
-                        </div>
+                        <div></div>
                       </div>
                     </div>
                     <OutlineButton
@@ -204,9 +202,7 @@ export default {
                         {{ assessment_rubric.name }}
                       </p>
                       <div class="mt-1 flex items-center space-x-2 truncate text-xs text-gray-500 dark:text-gray-400">
-                        <div>
-                          {{ assessment_rubric.code }}
-                        </div>
+                        <div></div>
                       </div>
                     </div>
                     <OutlineButton
@@ -264,10 +260,14 @@ export default {
                   @click="
                     openModal({
                       title: 'Penilaian Akhir Baru',
-                      mode: 'assessment-aspect-create-form',
+                      mode: 'assessment-final-rule-create-form',
                       maxWidth: 'md',
                       data: {
                         assessment_module: assessment_module.data,
+                        assessment_aspects: assessment_module.data.aspects,
+                        assessment_aspects_using_lo: assessment_module.data.aspects.filter(
+                          (aspect) => aspect.use_learning_objective,
+                        ),
                       },
                     })
                   "
@@ -288,9 +288,7 @@ export default {
                           {{ assessment_final_rule.name }}
                         </p>
                         <div class="mt-1 flex items-center space-x-2 truncate text-xs text-gray-500 dark:text-gray-400">
-                          <div>
-                            {{ assessment_final_rule.code }}
-                          </div>
+                          <div></div>
                         </div>
                       </div>
                       <OutlineButton
@@ -298,11 +296,15 @@ export default {
                         @click="
                           openModal({
                             title: 'Sunting Penilaian Akhir',
-                            mode: 'assessment-aspect-edit-form',
+                            mode: 'assessment-final-rule-edit-form',
                             maxWidth: 'md',
                             data: {
                               assessment_module: assessment_module.data,
                               assessment_final_rule: assessment_final_rule,
+                              assessment_aspects: assessment_module.data.aspects,
+                              assessment_aspects_using_lo: assessment_module.data.aspects.filter(
+                                (aspect) => aspect.use_learning_objective,
+                              ),
                             },
                           })
                         "
@@ -314,7 +316,7 @@ export default {
                         @click="
                           openModal({
                             title: 'Hapus Penilaian Akhir',
-                            mode: 'assessment-aspect-delete-confirm',
+                            mode: 'assessment-final-rule-delete-confirm',
                             maxWidth: 'md',
                             data: {
                               actionUrl: route('school.teachingProgram.assessmentModule.assessmentFinalRule.delete', {

@@ -112,6 +112,8 @@ use App\Http\Controllers\School\Setting\Entity\SchoolAcademicProgramController;
 use App\Http\Controllers\School\Setting\SchoolController as SettingSchoolController;
 use App\Http\Controllers\School\TeachingProgram\AssessmentModuleController;
 use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentAspectController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentFinalRuleController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentRubricController;
 use App\Http\Controllers\School\TeachingProgram\LearningObjectiveController;
 use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
@@ -1144,6 +1146,20 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->group(function () {
                                 Route::post('save', [AssessmentAspectController::class, 'save'])->name('.save');
                                 Route::delete('delete', [AssessmentAspectController::class, 'delete'])->name('.delete');
+                            });
+                        // assessment rubric routes
+                        Route::prefix('assessment-rubric')
+                            ->name('.assessmentRubric')
+                            ->group(function () {
+                                Route::post('save', [AssessmentRubricController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentRubricController::class, 'delete'])->name('.delete');
+                            });
+                        // assessment final rule routes
+                        Route::prefix('assessment-final-rule')
+                            ->name('.assessmentFinalRule')
+                            ->group(function () {
+                                Route::post('save', [AssessmentFinalRuleController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentFinalRuleController::class, 'delete'])->name('.delete');
                             });
                     });
             });

@@ -13,7 +13,6 @@ class AssessmentRubricScale extends Model
     protected $fillable = [
         'rubric_id',
         'score',
-        'sort_number',
         'predicate',
         'narrative',
     ];

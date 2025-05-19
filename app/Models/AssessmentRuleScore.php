@@ -15,4 +15,9 @@ class AssessmentRuleScore extends Model
         'aspect_id',
         'portion_score',
     ];
+
+    public function aspect()
+    {
+        return $this->belongsTo(AssessmentAspect::class);
+    }
 }
