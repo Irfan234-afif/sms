@@ -97,6 +97,9 @@ use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
+use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSessionController;
+use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSubjectController;
+use App\Http\Controllers\School\LearningActivity\SchoolClassroomController as LearningActivitySchoolClassroomController;
 use App\Http\Controllers\School\Management\Entity\LearningObjectiveCategoryController;
 use App\Http\Controllers\School\Management\Entity\LearningRubricController;
 use App\Http\Controllers\School\SchoolController;
@@ -1160,6 +1163,38 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                             ->group(function () {
                                 Route::post('save', [AssessmentFinalRuleController::class, 'save'])->name('.save');
                                 Route::delete('delete', [AssessmentFinalRuleController::class, 'delete'])->name('.delete');
+                            });
+                    });
+            });
+        // learning activity routes
+        Route::prefix('learning-activity')
+            ->name('.learningActivity')
+            ->group(function () {
+                // school classroom routes
+                Route::prefix('school-classroom')
+                    ->name('.schoolClassroom')
+                    ->group(function () {
+                        Route::get('/', [LearningActivitySchoolClassroomController::class, 'index']);
+                        Route::get('{school_classroom_id}/detail', [LearningActivitySchoolClassroomController::class, 'detail'])->name('.detail');
+                        // school classroom routes
+                        Route::prefix('{school_classroom_id}/assessment-subject')
+                            ->name('.assessmentSubject')
+                            ->group(function () {
+                                Route::get('/', [AssessmentSubjectController::class, 'index']);
+                                Route::get('{assessment_record_id}/detail', [AssessmentSubjectController::class, 'detail'])->name('.detail');
+                                Route::get('option-school-subject', [AssessmentSubjectController::class, 'optionSchoolSubject'])->name('.optionSchoolSubject');
+                                Route::get('option-assessment-module', [AssessmentSubjectController::class, 'optionAssessmentModule'])->name('.optionAssessmentModule');
+                                Route::post('save', [AssessmentSubjectController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentSubjectController::class, 'delete'])->name('.delete');
+                                // school classroom routes
+                                Route::prefix('{assessment_record_id}/assessment-record')
+                                    ->name('.assessmentRecord')
+                                    ->group(function () {
+                                        Route::get('/', [AssessmentSessionController::class, 'index']);
+                                        Route::get('option-learning-objective', [AssessmentSessionController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
+                                        Route::get('option-assessment-rubric', [AssessmentSessionController::class, 'optionAssessmentRubric'])->name('.optionAssessmentRubric');
+                                        Route::post('save', [AssessmentSessionController::class, 'save'])->name('.save');
+                                    });
                             });
                     });
             });

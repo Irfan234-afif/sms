@@ -211,6 +211,59 @@ import { Link } from '@inertiajs/vue3';
             </li>
           </ul>
         </li>
+        <li v-if="$page.props.auth.active_school.academic_program_active">
+          <button
+            type="button"
+            class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            aria-controls="dropdown-learning-activity"
+            data-collapse-toggle="dropdown-learning-activity"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6 flex-shrink-0 text-gray-700 transition duration-75 group-hover:text-gray-800 dark:text-gray-500 dark:group-hover:text-white"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M4 12h.01" />
+              <path d="M4 6h.01" />
+              <path d="M4 18h.01" />
+              <path d="M8 18h2" />
+              <path d="M8 12h2" />
+              <path d="M8 6h2" />
+              <path d="M14 6h6" />
+              <path d="M14 12h6" />
+              <path d="M14 18h6" />
+            </svg>
+            <span class="ml-3 flex-1 whitespace-nowrap text-left">Kegiatan Belajar Mengajar</span>
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <ul id="dropdown-learning-activity" class="hidden space-y-2 py-2">
+            <li>
+              <Link
+                :href="route('school.learningActivity.schoolClassroom')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Kegiatan Kelas</Link
+              >
+            </li>
+          </ul>
+        </li>
         <li>
           <button
             type="button"

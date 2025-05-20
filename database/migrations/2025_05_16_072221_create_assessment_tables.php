@@ -95,11 +95,10 @@ return new class extends Migration
         Schema::create('assessment_records', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('module_id')->constrained('assessment_modules');
             $table->foreignId('school_academic_program_id')->constrained('school_academic_programs');
             $table->foreignId('school_classroom_id')->constrained('school_classrooms');
-            $table->foreignId('homeroom_teacher_id')->constrained('employees');
-            $table->foreignId('school_subject_id')->constrained('school_subjects');
+            $table->foreignId('school_subject_id')->nullable()->constrained('school_subjects');
+            $table->foreignId('module_id')->constrained('assessment_modules');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
@@ -114,9 +113,9 @@ return new class extends Migration
             $table->string('name');
             $table->integer('sort_number');
             $table->string('type')->nullable();
-            $table->string('method')->nullable();
             $table->foreignId('rubric_id')->nullable()->constrained('assessment_rubrics');
             $table->date('date')->nullable();
+            $table->decimal('portion_score', 5, 2)->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -136,6 +135,7 @@ return new class extends Migration
             $table->foreignId('assessment_student_id')->constrained('assessment_students');
             $table->foreignId('session_id')->constrained('assessment_sessions');
             $table->decimal('score', 5, 2)->nullable();
+            $table->decimal('final_score', 5, 2)->nullable();
             $table->string('predicate')->nullable();
             $table->text('narrative')->nullable();
             $table->timestamps();
