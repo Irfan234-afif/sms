@@ -38,8 +38,8 @@ export default {
           options: [],
         },
         title: {
-          label: 'Indikator',
-          rules: [fieldValidation.isRequired('Indikator')],
+          label: 'Objektif Pembelajaran',
+          rules: [fieldValidation.isRequired('Objektif Pembelajaran')],
           error: null,
         },
         code: {
@@ -191,7 +191,7 @@ export default {
             />
           </el-select>
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           class="font-medium"
           :label="field.title.label"
           :rules="field.title.rules"
@@ -199,7 +199,7 @@ export default {
           prop="title"
         >
           <el-input v-model="form.title" autocomplete="off" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item
           class="font-medium"
           :label="field.code.label"

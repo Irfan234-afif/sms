@@ -49,8 +49,8 @@ export default {
           options: [],
         },
         score_method: {
-          label: 'Jenis Skor',
-          rules: [fieldValidation.isRequired('Jenis Skor')],
+          label: 'Metode Skor',
+          rules: [fieldValidation.isRequired('Metode Skor')],
           error: null,
           disabled: false,
           options: [
@@ -72,8 +72,8 @@ export default {
           options: [],
         },
         predicate_method: {
-          label: 'Jenis Predikat',
-          rules: [fieldValidation.isRequired('Jenis Predikat')],
+          label: 'Metode Predikat',
+          rules: [fieldValidation.isRequired('Metode Predikat')],
           error: null,
           disabled: false,
           options: [
@@ -91,8 +91,8 @@ export default {
           options: [],
         },
         narrative_method: {
-          label: 'Jenis Naratif',
-          rules: [fieldValidation.isRequired('Jenis Naratif')],
+          label: 'Metode Naratif',
+          rules: [fieldValidation.isRequired('Metode Naratif')],
           error: null,
           disabled: false,
           options: [

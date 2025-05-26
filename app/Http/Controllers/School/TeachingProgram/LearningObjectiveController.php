@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use Ramsey\Uuid\Uuid;
 
 class LearningObjectiveController extends Controller
 {
@@ -191,9 +192,9 @@ class LearningObjectiveController extends Controller
             $learning_objective = LearningObjective::where('uuid', request('learning_objective_id'))->first();
             $parent = LearningObjective::where('uuid', request('parent_id'))->first();
             // todo:modified by school
-            $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->firstOrFail();
-            $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->firstOrFail();
-            $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
+            $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->first();
+            $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->first();
+            $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
             $school_year = null;
 
             if ($learning_objective_category->options['scope_school_year']) {
@@ -207,12 +208,12 @@ class LearningObjectiveController extends Controller
                     'category_id' => $learning_objective_category->id,
                     'school_phase_id' => $school_phase?->id,
                     'school_grade_id' => $school_grade?->id,
-                    'school_subject_id' => $school_subject->id,
+                    'school_subject_id' => $school_subject?->id,
                     'school_year_id' => $school_year?->id,
                 ],
                 [
                     'parent_id' => $parent ? $parent->id : null,
-                    'title' => request('title'),
+                    'title' => Uuid::uuid1(), // todo: nullable column
                     'code' => request('code'),
                     'narrative' => request('narrative'),
                 ]

@@ -179,7 +179,7 @@
         ],
         "final_rules": [
           {
-            "name": "Mid Semester",
+            "name": "Nilai Mid Semester",
             "sort_order": 1,
             "use_score": true,
             "score_method": "SUM_ASPECT",
@@ -200,7 +200,7 @@
             "final_narratives": []
           },
           {
-            "name": "End Semester",
+            "name": "Nilai Akhir Semester",
             "sort_order": 2,
             "use_score": true,
             "score_method": "SUM_ASPECT",

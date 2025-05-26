@@ -244,7 +244,7 @@ export default {
                   type="default"
                   @click="
                     openModal({
-                      title: 'Indikator Baru',
+                      title: 'Objektif Pembelajaran Baru',
                       mode: 'learning-objective-create-form',
                       maxWidth: 'xl',
                       data: {
@@ -271,7 +271,7 @@ export default {
                       <path d="M12 5l0 14" />
                       <path d="M5 12l14 0" />
                     </svg>
-                    <div>Indikator Baru</div>
+                    <div>Objektif Pembelajaran Baru</div>
                   </div>
                 </DefaultButton>
               </div>
@@ -292,7 +292,6 @@ export default {
                           <label for="checkbox-all" class="sr-only">checkbox</label>
                         </div>
                       </th>
-                      <th scope="col" class="w-1/2 p-4">Indikator</th>
                       <th scope="col" class="p-4">Kode</th>
                       <th v-if="learning_objective_category.data.parent" scope="col" class="p-4">Grup</th>
                       <th scope="col" class="p-4"></th>
@@ -315,11 +314,6 @@ export default {
                           <label for="checkbox-table-search" class="sr-only">checkbox</label>
                         </div>
                       </td>
-                      <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">
-                        <div class="flex items-center">
-                          {{ learning_objective.title }}
-                        </div>
-                      </th>
                       <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                         <div class="flex items-center">
                           {{ learning_objective.code }}
