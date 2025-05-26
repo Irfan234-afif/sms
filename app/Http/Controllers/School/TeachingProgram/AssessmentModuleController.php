@@ -28,7 +28,8 @@ class AssessmentModuleController extends Controller
         $school_curriculum = $this->school->academic_program_active->curriculum;
 
         $assessment_modules = $school_curriculum->assessment_modules()
-            ->get();
+            ->latest()
+            ->paginate(10);
 
         $data = [
             'school_curriculum' => SchoolCurriculumResource::make($school_curriculum),
@@ -75,7 +76,7 @@ class AssessmentModuleController extends Controller
                     'school_curriculum_id' => $school_curriculum->id,
                 ],
                 [
-                    'type' => request('type'),
+                    'type' => 'SUBJECT', // todo: dynamic input 
                     'name' => request('name'),
                     'description' => request('description'),
                 ]

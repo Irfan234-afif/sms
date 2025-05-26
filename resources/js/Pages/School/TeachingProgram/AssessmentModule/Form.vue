@@ -31,7 +31,7 @@ export default {
         },
         description: {
           label: 'Keterangan',
-          rules: [fieldValidation.isRequired('Keterangan')],
+          rules: [],
           error: null,
         },
       },
