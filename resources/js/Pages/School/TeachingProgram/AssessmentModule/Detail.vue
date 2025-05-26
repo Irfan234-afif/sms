@@ -100,7 +100,7 @@ export default {
                     maxWidth: 'md',
                     data: {
                       assessment_module: assessment_module.data,
-                      sort_number: assessment_module.data.aspects.length + 1,
+                      sort_order: assessment_module.data.aspects.length + 1,
                     },
                   })
                 "

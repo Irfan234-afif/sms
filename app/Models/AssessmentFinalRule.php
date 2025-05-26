@@ -13,13 +13,13 @@ class AssessmentFinalRule extends Model
     protected $fillable = [
         'module_id',
         'name',
-        'sort_number',
+        'sort_order',
         'use_score',
-        'score_type',
+        'score_method',
         'use_predicate',
-        'predicate_type',
+        'predicate_method',
         'use_narrative',
-        'narrative_type',
+        'narrative_method',
     ];
 
     public function scores()

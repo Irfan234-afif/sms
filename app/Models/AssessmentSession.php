@@ -15,7 +15,7 @@ class AssessmentSession extends Model
         'aspect_id',
         'learning_objective_id',
         'name',
-        'sort_number',
+        'sort_order',
         'type',
         'rubric_id',
         'date',
@@ -25,6 +25,11 @@ class AssessmentSession extends Model
     public function record()
     {
         return $this->belongsTo(AssessmentRecord::class, 'record_id');
+    }
+
+    public function aspect()
+    {
+        return $this->belongsTo(AssessmentAspect::class, 'aspect_id');
     }
 
     public function learning_objective()

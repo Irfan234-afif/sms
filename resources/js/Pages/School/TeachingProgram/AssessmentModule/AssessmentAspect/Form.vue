@@ -22,8 +22,8 @@ export default {
         assessment_aspect_id: this.propertyModal.data?.assessment_aspect?.uuid,
         assessment_module_id: this.propertyModal.data.assessment_module.uuid,
         name: null,
-        sort_number: this.propertyModal.data.sort_number,
-        use_session: false,
+        sort_order: this.propertyModal.data.sort_order,
+        use_sessions: false,
         use_final_score: false,
         final_score_method: null,
         use_learning_objective: false,
@@ -37,7 +37,7 @@ export default {
           disabled: false,
           options: [],
         },
-        use_session: {
+        use_sessions: {
           label: 'Gunakan Sesi',
           rules: [fieldValidation.isRequired('Gunakan Sesi')],
           error: null,
@@ -88,8 +88,8 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'assessment-aspect-edit-form') {
       this.form.name = this.propertyModal.data.assessment_aspect?.name;
-      this.form.sort_number = this.propertyModal.data.assessment_aspect?.sort_number;
-      this.form.use_session = !!this.propertyModal.data.assessment_aspect?.use_session;
+      this.form.sort_order = this.propertyModal.data.assessment_aspect?.sort_order;
+      this.form.use_sessions = !!this.propertyModal.data.assessment_aspect?.use_sessions;
       this.form.use_final_score = !!this.propertyModal.data.assessment_aspect?.use_final_score;
       this.form.final_score_method = this.propertyModal.data.assessment_aspect?.final_score_method;
       this.form.use_learning_objective = !!this.propertyModal.data.assessment_aspect?.use_learning_objective;
@@ -203,12 +203,12 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
-          :label="field.use_session.label"
-          :rules="field.use_session.rules"
-          :error="field.use_session.error"
-          prop="use_session"
+          :label="field.use_sessions.label"
+          :rules="field.use_sessions.rules"
+          :error="field.use_sessions.error"
+          prop="use_sessions"
         >
-          <el-checkbox border v-model="form.use_session" :label="form.use_session ? 'Ya' : 'Tidak'" />
+          <el-checkbox border v-model="form.use_sessions" :label="form.use_sessions ? 'Ya' : 'Tidak'" />
         </el-form-item>
         <el-form-item
           class="font-medium"

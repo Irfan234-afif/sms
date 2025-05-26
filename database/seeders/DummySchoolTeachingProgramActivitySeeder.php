@@ -143,6 +143,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
             $assessment_module_created = $school_curriculum->assessment_modules()->updateOrCreate([
                 'name' => $assessment_module->name,
             ], [
+                'type' => $assessment_module->type,
                 'description' => $assessment_module->description,
             ]);
             // aspects
@@ -150,8 +151,9 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
                 $assessment_module_created->aspects()->updateOrCreate([
                     'name' => $aspect->name,
                 ], [
-                    'sort_number' => $aspect->sort_number,
-                    'use_session' => $aspect->use_session,
+                    'sort_order' => $aspect->sort_order,
+                    'use_sessions' => $aspect->use_sessions,
+                    'total_sessions' => $aspect->total_sessions,
                     'use_final_score' => $aspect->use_final_score,
                     'final_score_method' => $aspect->final_score_method,
                     'use_learning_objective' => $aspect->use_learning_objective,
@@ -168,9 +170,27 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
                 // scales
                 foreach ($rubric->scales as $scale) {
                     $assessment_rubric_created->scales()->updateOrCreate([
-                        'predicate' => $scale->predicate,
-                    ], [
                         'score' => $scale->score,
+                    ], [
+                        'predicate' => $scale->predicate,
+                        'narrative' => $scale->narrative,
+                    ]);
+                }
+            }
+            // thresholds
+            foreach ($assessment_module->thresholds as $threshold) {
+                $assessment_threshold_created = $assessment_module_created->thresholds()->updateOrCreate([
+                    'name' => $threshold->name,
+                ], [
+                    'description' => $threshold->description,
+                ]);
+                // scales
+                foreach ($threshold->scales as $scale) {
+                    $assessment_threshold_created->scales()->updateOrCreate([
+                        'score' => $scale->score,
+                    ], [
+                        'type' => $scale->type,
+                        'predicate' => $scale->predicate,
                         'narrative' => $scale->narrative,
                     ]);
                 }
@@ -180,25 +200,26 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
                 $assessment_final_rule_created =  $assessment_module_created->final_rules()->updateOrCreate([
                     'name' => $final_rule->name,
                 ], [
-                    'sort_number' => $final_rule->sort_number,
+                    'sort_order' => $final_rule->sort_order,
                     'use_score' => $final_rule->use_score,
-                    'score_type' => $final_rule->score_type,
+                    'score_method' => $final_rule->score_method,
                     'use_predicate' => $final_rule->use_predicate,
-                    'predicate_type' => $final_rule->predicate_type,
+                    'predicate_method' => $final_rule->predicate_method,
                     'use_narrative' => $final_rule->use_narrative,
-                    'narrative_type' => $final_rule->narrative_type,
+                    'narrative_method' => $final_rule->narrative_method,
                 ]);
 
                 foreach ($final_rule->final_scores as $final_score) {
                     $assessment_final_rule_created->scores()->updateOrCreate([
-                        'aspect_id' => $assessment_module_created->aspects()->where('name', $final_score->aspect)->first()->id,
+                        'aspect_id' => $assessment_module_created->aspects()->where('name', $final_score->aspect_name)->first()->id,
+                    ], [
                         'portion_score' => $final_score->portion_score,
                     ]);
                 }
 
                 foreach ($final_rule->final_narratives as $final_narrative) {
                     $assessment_final_rule_created->narratives()->updateOrCreate([
-                        'aspect_id' => $assessment_module_created->aspects()->where('name', $final_narrative->aspect)->first()->id,
+                        'aspect_id' => $assessment_module_created->aspects()->where('name', $final_narrative->aspect_name)->first()->id,
                     ]);
                 }
             }

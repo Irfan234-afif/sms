@@ -41,11 +41,23 @@
       {
         "name": "Penilaian Sikap",
         "description": "Penilaian Sikap Per Mata Pelajaran",
+        "type": "SUBJECT",
         "aspects": [
           {
-            "name": "Weekly",
-            "sort_number": 1,
-            "use_session": true,
+            "name": "Sikap Mid Semester",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 8,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Sikap Akhir Semester",
+            "sort_order": 2,
+            "use_sessions": true,
+            "total_sessions": 8,
             "use_final_score": false,
             "final_score_method": null,
             "use_learning_objective": false,
@@ -85,34 +97,59 @@
             ]
           }
         ],
+        "thresholds": [],
         "final_rules": []
       },
       {
         "name": "Penilaian Umum",
         "description": "Penilaian Mata Pelajaran Umum",
+        "type": "SUBJECT",
         "aspects": [
           {
-            "name": "Penilaian Keterampilan",
-            "sort_number": 1,
-            "use_session": true,
+            "name": "Penilaian Keterampilan Mid Semester",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 10,
             "use_final_score": true,
             "final_score_method": "AVERAGE",
             "use_learning_objective": false,
             "learning_objective_category_code": null
           },
           {
-            "name": "Penilaian Pengetahuan",
-            "sort_number": 2,
-            "use_session": true,
+            "name": "Penilaian Pengetahuan Mid Semester",
+            "sort_order": 2,
+            "use_sessions": true,
+            "total_sessions": 10,
             "use_final_score": true,
             "final_score_method": "AVERAGE",
             "use_learning_objective": true,
             "learning_objective_category_code": "TP"
           },
           {
-            "name": "Ujian Semester",
-            "sort_number": 3,
-            "use_session": true,
+            "name": "Penilaian Keterampilan Akhir Semester",
+            "sort_order": 3,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan Akhir Semester",
+            "sort_order": 4,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Ujian Akhir Semester",
+            "sort_order": 5,
+            "use_sessions": true,
+            "total_sessions": 3,
             "use_final_score": true,
             "final_score_method": "SUM",
             "use_learning_objective": false,
@@ -120,23 +157,43 @@
           }
         ],
         "rubrics": [],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "type": "PASSED",
+                "score": 75,
+                "predicate": "A",
+                "narrative": "Siswa telah mampu dalam"
+              },
+              {
+                "type": "FAILED",
+                "score": 50,
+                "predicate": "B",
+                "narrative": "Namun Siswa perlu bimbingan"
+              }
+            ]
+          }
+        ],
         "final_rules": [
           {
             "name": "Mid Semester",
-            "sort_number": 1,
+            "sort_order": 1,
             "use_score": true,
-            "score_type": "SUM_ASPECT",
+            "score_method": "SUM_ASPECT",
             "use_predicate": false,
-            "predicate_type": null,
+            "predicate_method": null,
             "use_narrative": false,
-            "narrative_type": null,
+            "narrative_method": null,
             "final_scores": [
               {
-                "aspect": "Penilaian Keterampilan",
+                "aspect_name": "Penilaian Keterampilan Mid Semester",
                 "portion_score": 50
               },
               {
-                "aspect": "Penilaian Pengetahuan",
+                "aspect_name": "Penilaian Pengetahuan Mid Semester",
                 "portion_score": 50
               }
             ],
@@ -144,31 +201,41 @@
           },
           {
             "name": "End Semester",
-            "sort_number": 2,
+            "sort_order": 2,
             "use_score": true,
-            "score_type": "SUM_ASPECT",
+            "score_method": "SUM_ASPECT",
             "use_predicate": true,
-            "predicate_type": "SUBJECT_THRESHOLD",
+            "predicate_method": "THRESHOLD",
             "use_narrative": true,
-            "narrative_type": "SUBJECT_THRESHOLD_PLUS_LEARNING_OBJECTIVE",
-            "learning_objective_aspect": "Penilaian Pengetahuan",
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
             "final_scores": [
               {
-                "aspect": "Penilaian Keterampilan",
+                "aspect_name": "Penilaian Keterampilan Mid Semester",
                 "portion_score": 20
               },
               {
-                "aspect": "Penilaian Pengetahuan",
-                "portion_score": 50
+                "aspect_name": "Penilaian Pengetahuan Mid Semester",
+                "portion_score": 20
               },
               {
-                "aspect": "Ujian Semester",
-                "portion_score": 30
+                "aspect_name": "Penilaian Keterampilan Akhir Semester",
+                "portion_score": 20
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Akhir Semester",
+                "portion_score": 20
+              },
+              {
+                "aspect_name": "Ujian Akhir Semester",
+                "portion_score": 20
               }
             ],
             "final_narratives": [
               {
-                "aspect": "Penilaian Pengetahuan"
+                "aspect_name": "Penilaian Pengetahuan Mid Semester"
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Akhir Semester"
               }
             ]
           }
@@ -177,11 +244,13 @@
       {
         "name": "Subject Transcript",
         "description": "Penilaian Subject Transcript Cambridge",
+        "type": "SUBJECT",
         "aspects": [
           {
             "name": "Learning Objective",
-            "sort_number": 1,
-            "use_session": true,
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 15,
             "use_final_score": false,
             "final_score_method": null,
             "use_learning_objective": true,
@@ -216,6 +285,7 @@
             ]
           }
         ],
+        "thresholds": [],
         "final_rules": []
       }
     ]

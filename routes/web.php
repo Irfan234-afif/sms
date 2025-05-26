@@ -98,6 +98,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
 use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSessionController;
+use App\Http\Controllers\School\LearningActivity\Entity\AssessmentStudentController;
 use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSubjectController;
 use App\Http\Controllers\School\LearningActivity\SchoolClassroomController as LearningActivitySchoolClassroomController;
 use App\Http\Controllers\School\Management\Entity\LearningObjectiveCategoryController;
@@ -1186,7 +1187,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::get('option-assessment-module', [AssessmentSubjectController::class, 'optionAssessmentModule'])->name('.optionAssessmentModule');
                                 Route::post('save', [AssessmentSubjectController::class, 'save'])->name('.save');
                                 Route::delete('delete', [AssessmentSubjectController::class, 'delete'])->name('.delete');
-                                // school classroom routes
+                                // assessment session routes
                                 Route::prefix('{assessment_record_id}/assessment-record')
                                     ->name('.assessmentRecord')
                                     ->group(function () {
@@ -1194,6 +1195,13 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                         Route::get('option-learning-objective', [AssessmentSessionController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
                                         Route::get('option-assessment-rubric', [AssessmentSessionController::class, 'optionAssessmentRubric'])->name('.optionAssessmentRubric');
                                         Route::post('save', [AssessmentSessionController::class, 'save'])->name('.save');
+                                    });
+                                // assessment student routes
+                                Route::prefix('{assessment_record_id}/assessment-student')
+                                    ->name('.assessmentStudent')
+                                    ->group(function () {
+                                        Route::get('/', [AssessmentStudentController::class, 'index']);
+                                        Route::post('save', [AssessmentStudentController::class, 'save'])->name('.save');
                                     });
                             });
                     });

@@ -23,13 +23,13 @@ export default {
         assessment_final_rule_id: this.propertyModal.data?.assessment_final_rule?.uuid,
         assessment_module_id: this.propertyModal.data.assessment_module.uuid,
         name: null,
-        sort_number: this.propertyModal.data.sort_number,
+        sort_order: this.propertyModal.data.sort_order,
         use_score: false,
-        score_type: null,
+        score_method: null,
         use_predicate: false,
-        predicate_type: null,
+        predicate_method: null,
         use_narrative: false,
-        narrative_type: null,
+        narrative_method: null,
         final_rule_scores: [],
         final_rule_narratives: [],
       },
@@ -48,7 +48,7 @@ export default {
           disabled: false,
           options: [],
         },
-        score_type: {
+        score_method: {
           label: 'Jenis Skor',
           rules: [fieldValidation.isRequired('Jenis Skor')],
           error: null,
@@ -71,15 +71,15 @@ export default {
           disabled: false,
           options: [],
         },
-        predicate_type: {
+        predicate_method: {
           label: 'Jenis Predikat',
           rules: [fieldValidation.isRequired('Jenis Predikat')],
           error: null,
           disabled: false,
           options: [
             {
-              label: 'KKM Mata Pelajaran',
-              value: 'SUBJECT_THRESHOLD',
+              label: 'Kriteria Ketercapaian',
+              value: 'THRESHOLD',
             },
           ],
         },
@@ -90,15 +90,15 @@ export default {
           disabled: false,
           options: [],
         },
-        narrative_type: {
+        narrative_method: {
           label: 'Jenis Naratif',
           rules: [fieldValidation.isRequired('Jenis Naratif')],
           error: null,
           disabled: false,
           options: [
             {
-              label: 'KKM Mata Pelajaran + Objektif Pembelajaran',
-              value: 'SUBJECT_THRESHOLD_PLUS_LEARNING_OBJECTIVE',
+              label: 'Kriteria Ketercapaian + Objektif Pembelajaran',
+              value: 'THRESHOLD_PLUS_LEARNING_OBJECTIVE',
             },
           ],
         },
@@ -109,13 +109,13 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'assessment-final-rule-edit-form') {
       this.form.name = this.propertyModal.data.assessment_final_rule?.name;
-      this.form.sort_number = this.propertyModal.data.assessment_final_rule?.sort_number;
+      this.form.sort_order = this.propertyModal.data.assessment_final_rule?.sort_order;
       this.form.use_score = !!this.propertyModal.data.assessment_final_rule?.use_score;
-      this.form.score_type = this.propertyModal.data.assessment_final_rule?.score_type;
+      this.form.score_method = this.propertyModal.data.assessment_final_rule?.score_method;
       this.form.use_predicate = !!this.propertyModal.data.assessment_final_rule?.use_predicate;
-      this.form.predicate_type = this.propertyModal.data.assessment_final_rule?.predicate_type;
+      this.form.predicate_method = this.propertyModal.data.assessment_final_rule?.predicate_method;
       this.form.use_narrative = !!this.propertyModal.data.assessment_final_rule?.use_narrative;
-      this.form.narrative_type = this.propertyModal.data.assessment_final_rule?.narrative_type;
+      this.form.narrative_method = this.propertyModal.data.assessment_final_rule?.narrative_method;
       if (this.propertyModal.data.assessment_final_rule?.scores) {
         this.propertyModal.data.assessment_final_rule?.scores.map((item) => {
           this.addNewFinalRuleScore(item);
@@ -262,21 +262,21 @@ export default {
         <el-form-item
           v-if="form.use_score"
           class="font-medium"
-          :label="field.score_type.label"
-          :rules="field.score_type.rules"
-          :error="field.score_type.error"
-          prop="score_type"
+          :label="field.score_method.label"
+          :rules="field.score_method.rules"
+          :error="field.score_method.error"
+          prop="score_method"
         >
-          <el-select v-model="form.score_type" :placeholder="`Pilih ${field.score_type.label}`" clearable>
+          <el-select v-model="form.score_method" :placeholder="`Pilih ${field.score_method.label}`" clearable>
             <el-option
-              v-for="option in field.score_type.options"
+              v-for="option in field.score_method.options"
               :key="option.value"
               :label="option.label"
               :value="option.value"
             />
           </el-select>
         </el-form-item>
-        <div v-if="form.use_score == true && form.score_type">
+        <div v-if="form.use_score == true && form.score_method">
           <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Skor Aspek Penilaian</h2>
           <div class="space-y-3">
             <div
@@ -322,14 +322,14 @@ export default {
         <el-form-item
           v-if="form.use_predicate"
           class="font-medium"
-          :label="field.predicate_type.label"
-          :rules="field.predicate_type.rules"
-          :error="field.predicate_type.error"
-          prop="predicate_type"
+          :label="field.predicate_method.label"
+          :rules="field.predicate_method.rules"
+          :error="field.predicate_method.error"
+          prop="predicate_method"
         >
-          <el-select v-model="form.predicate_type" :placeholder="`Pilih ${field.predicate_type.label}`" clearable>
+          <el-select v-model="form.predicate_method" :placeholder="`Pilih ${field.predicate_method.label}`" clearable>
             <el-option
-              v-for="option in field.predicate_type.options"
+              v-for="option in field.predicate_method.options"
               :key="option.value"
               :label="option.label"
               :value="option.value"
@@ -348,21 +348,21 @@ export default {
         <el-form-item
           v-if="form.use_narrative"
           class="font-medium"
-          :label="field.narrative_type.label"
-          :rules="field.narrative_type.rules"
-          :error="field.narrative_type.error"
-          prop="narrative_type"
+          :label="field.narrative_method.label"
+          :rules="field.narrative_method.rules"
+          :error="field.narrative_method.error"
+          prop="narrative_method"
         >
-          <el-select v-model="form.narrative_type" :placeholder="`Pilih ${field.narrative_type.label}`" clearable>
+          <el-select v-model="form.narrative_method" :placeholder="`Pilih ${field.narrative_method.label}`" clearable>
             <el-option
-              v-for="option in field.narrative_type.options"
+              v-for="option in field.narrative_method.options"
               :key="option.value"
               :label="option.label"
               :value="option.value"
             />
           </el-select>
         </el-form-item>
-        <div v-if="form.narrative_type == 'SUBJECT_THRESHOLD_PLUS_LEARNING_OBJECTIVE'">
+        <div v-if="form.narrative_method == 'THRESHOLD_PLUS_LEARNING_OBJECTIVE'">
           <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Naratif Aspek Penilaian</h2>
           <div class="space-y-3">
             <div

@@ -6,21 +6,15 @@ use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AssessmentAspectSession extends Model
+class AssessmentThresholdScale extends Model
 {
     use SoftDeletes, GenerateUuid;
 
     protected $fillable = [
-        'assessment_student_id',
-        'session_id',
+        'threshold_id',
+        'type',
         'score',
-        'final_score',
         'predicate',
         'narrative',
     ];
-
-    public function session()
-    {
-        return $this->belongsTo(AssessmentSession::class, 'session_id');
-    }
 }

@@ -36,13 +36,13 @@ class AssessmentFinalRuleController extends Controller
                 ],
                 [
                     'name' => request('name'),
-                    'sort_number' => request('sort_number'),
+                    'sort_order' => request('sort_order'),
                     'use_score' => request('use_score'),
-                    'score_type' => request('score_type'),
+                    'score_method' => request('score_method'),
                     'use_predicate' => request('use_predicate'),
-                    'predicate_type' => request('predicate_type'),
+                    'predicate_method' => request('predicate_method'),
                     'use_narrative' => request('use_narrative'),
-                    'narrative_type' => request('narrative_type'),
+                    'narrative_method' => request('narrative_method'),
                 ]
             );
 

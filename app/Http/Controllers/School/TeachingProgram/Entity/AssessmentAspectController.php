@@ -37,8 +37,8 @@ class AssessmentAspectController extends Controller
                 ],
                 [
                     'name' => request('name'),
-                    'sort_number' => request('sort_number'),
-                    'use_session' => request('use_session'),
+                    'sort_order' => request('sort_order'),
+                    'use_sessions' => request('use_sessions'),
                     'use_final_score' => request('use_final_score'),
                     'final_score_method' => request('final_score_method'),
                     'use_learning_objective' => request('use_learning_objective'),

@@ -13,8 +13,8 @@ class AssessmentAspect extends Model
     protected $fillable = [
         'module_id',
         'name',
-        'sort_number',
-        'use_session',
+        'sort_order',
+        'use_sessions',
         'use_final_score',
         'final_score_method',
         'use_learning_objective',

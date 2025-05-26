@@ -70,7 +70,7 @@ class AssessmentSessionController extends Controller
                 AssessmentSession::updateOrCreate([
                     'record_id' => $assessment_record->id,
                     'aspect_id' => $assessment_aspect->id,
-                    'sort_number' => $session['sort_number'],
+                    'sort_order' => $session['sort_order'],
                 ], [
                     'name' => $session['name'],
                     'learning_objective_id' => $learning_objective?->id,

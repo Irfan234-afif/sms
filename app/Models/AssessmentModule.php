@@ -12,6 +12,7 @@ class AssessmentModule extends Model
 
     protected $fillable = [
         'school_curriculum_id',
+        'type',
         'name',
         'description',
     ];
@@ -24,6 +25,11 @@ class AssessmentModule extends Model
     public function rubrics()
     {
         return $this->hasMany(AssessmentRubric::class, 'module_id');
+    }
+
+    public function thresholds()
+    {
+        return $this->hasMany(AssessmentThreshold::class, 'module_id');
     }
 
     public function final_rules()

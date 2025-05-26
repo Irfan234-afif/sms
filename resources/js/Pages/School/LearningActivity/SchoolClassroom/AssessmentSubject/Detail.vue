@@ -1,11 +1,9 @@
 <script setup>
 import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
-import { Head } from '@inertiajs/vue3';
-import Modal from '@/Components/Modal.vue';
+import { Head, Link } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
-import OutlineButton from '@/Components/OutlineButton.vue';
 import AssessmentSessionForm from './AssessmentSession/Form.vue';
 </script>
 
@@ -104,7 +102,7 @@ export default {
           <hr />
           <div
             v-for="(assessment_aspect, index) in assessment_record.data.module.aspects.filter((aspect) => {
-              return aspect.use_session;
+              return aspect.use_sessions;
             })"
             :key="index"
             class="my-4 w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-4"
@@ -122,6 +120,20 @@ export default {
               />
             </div>
           </div>
+          <Link
+            :href="
+              route('school.learningActivity.schoolClassroom.assessmentSubject.assessmentStudent', {
+                assessment_record_id: assessment_record.data.uuid,
+                school_classroom_id: school_classroom.data.uuid,
+              })
+            "
+          >
+            <DefaultButton type="yellow">
+              <div class="flex items-center space-x-1">
+                <div>Lakukan Penilaian</div>
+              </div>
+            </DefaultButton>
+          </Link>
         </div>
       </section>
     </template>

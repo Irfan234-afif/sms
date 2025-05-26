@@ -42,4 +42,9 @@ class AssessmentRecord extends Model
     {
         return $this->hasMany(AssessmentSession::class, 'record_id');
     }
+
+    public function students()
+    {
+        return $this->hasMany(AssessmentStudent::class, 'record_id', 'id');
+    }
 }

@@ -43,7 +43,7 @@ export default {
         learning_objective_id_options: item.learning_objective ? [item.learning_objective] : [],
         rubric_id: item.rubric ? item.rubric.uuid : null,
         rubric_id_options: item.rubric ? [item.rubric] : [],
-        sort_number: index + 1,
+        sort_order: index + 1,
         name: item.name,
         type: item.type,
         date: item.date,
@@ -95,7 +95,7 @@ export default {
         learning_objective_id_options: [],
         rubric_id: null,
         rubric_id_options: [],
-        sort_number: this.sessions.length + 1,
+        sort_order: this.sessions.length + 1,
         name: null,
         type: 'SCORE',
         date: null,
@@ -109,7 +109,7 @@ export default {
     },
     renumberSortNumbers() {
       this.sessions.forEach((item, index) => {
-        item.sort_number = index + 1;
+        item.sort_order = index + 1;
       });
     },
     submit() {
@@ -184,7 +184,7 @@ export default {
       <template v-for="(session, index) in sessions" :key="index">
         <div class="rounded-lg border p-4 shadow-sm">
           <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">
-            {{ 'Sesi ' + session.sort_number }}
+            {{ 'Sesi ' + session.sort_order }}
           </h2>
           <div class="flex space-x-3">
             <el-form-item class="w-full font-medium md:w-1/4" label="Judul">

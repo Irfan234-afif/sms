@@ -45,6 +45,7 @@ class AssessmentModuleController extends Controller
         $assessment_module = AssessmentModule::where('uuid', $assessment_module_id)
             ->with('aspects.learning_objective_category')
             ->with('rubrics.scales')
+            ->with('thresholds.scales')
             ->with('final_rules.scores.aspect')
             ->with('final_rules.narratives.aspect')
             ->firstOrFail();
@@ -74,6 +75,7 @@ class AssessmentModuleController extends Controller
                     'school_curriculum_id' => $school_curriculum->id,
                 ],
                 [
+                    'type' => request('type'),
                     'name' => request('name'),
                     'description' => request('description'),
                 ]
