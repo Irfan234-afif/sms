@@ -101,21 +101,23 @@ export default {
         });
     },
     getLearningObjective() {
-      axios
-        .get(
-          route('school.teachingProgram.learningObjective.getLearningObjective', {
-            learning_objective_category_id: this.learning_objective_category.data.uuid,
-            school_phase_id: this.filters.school_phase_id?.uuid,
-            school_grade_id: this.filters.school_grade_id?.uuid,
-            school_subject_id: this.filters.school_subject_id?.uuid,
-          }),
-        )
-        .then((response) => {
-          this.learning_objectives = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (this.learning_objective_category.data.options.scope_school_grade) {
+        axios
+          .get(
+            route('school.teachingProgram.learningObjective.getLearningObjective', {
+              learning_objective_category_id: this.learning_objective_category.data.uuid,
+              school_phase_id: this.filters.school_phase_id?.uuid,
+              school_grade_id: this.filters.school_grade_id?.uuid,
+              school_subject_id: this.filters.school_subject_id?.uuid,
+            }),
+          )
+          .then((response) => {
+            this.learning_objectives = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     openModal(property) {
       this.showModal = true;
@@ -334,7 +336,7 @@ export default {
                             type="default"
                             @click="
                               openModal({
-                                title: `Sunting ${learning_objective.title}`,
+                                title: `Sunting ${learning_objective.code}`,
                                 mode: 'learning-objective-edit-form',
                                 maxWidth: 'xl',
                                 data: {

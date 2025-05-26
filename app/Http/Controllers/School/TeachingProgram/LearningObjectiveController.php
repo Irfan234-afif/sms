@@ -125,24 +125,24 @@ class LearningObjectiveController extends Controller
         $learning_objectives = $learning_objective_category->parent->objectives()
             ->with('parent');
 
-        if ($school_phase) {
+        if ($school_phase && $learning_objective_category->parent->options['scope_school_phase']) {
             $learning_objectives->where('school_phase_id', $school_phase->id);
         }
 
-        if ($school_grade) {
+        if ($school_grade && $learning_objective_category->parent->options['scope_school_grade']) {
             $learning_objectives->where('school_grade_id', $school_grade->id);
         }
 
-        if ($school_subject) {
+        if ($school_subject && $learning_objective_category->parent->options['scope_school_subject']) {
             $learning_objectives->where('school_subject_id', $school_subject->id);
         }
 
-        if ($school_year && $learning_objective_category->options['scope_school_year']) {
+        if ($school_year && $learning_objective_category->parent->options['scope_school_year']) {
             $learning_objectives->where('school_year_id', $school_year->id);
         }
 
         if (request()->has('search')) {
-            $learning_objectives->where('title', 'like', '%' . request('search') . '%');
+            $learning_objectives->where('code', 'like', '%' . request('search') . '%');
         }
 
         return response()->json(LearningObjectiveResource::collection($learning_objectives->latest()->get()), 200);
@@ -160,15 +160,15 @@ class LearningObjectiveController extends Controller
         $learning_objectives = $learning_objective_category->objectives()
             ->with('parent');
 
-        if ($school_phase) {
+        if ($school_phase && $learning_objective_category->options['scope_school_phase']) {
             $learning_objectives->where('school_phase_id', $school_phase->id);
         }
 
-        if ($school_grade) {
+        if ($school_grade && $learning_objective_category->options['scope_school_grade']) {
             $learning_objectives->where('school_grade_id', $school_grade->id);
         }
 
-        if ($school_subject) {
+        if ($school_subject && $learning_objective_category->options['scope_school_subject']) {
             $learning_objectives->where('school_subject_id', $school_subject->id);
         }
 
@@ -177,7 +177,7 @@ class LearningObjectiveController extends Controller
         }
 
         if (request()->has('search')) {
-            $learning_objectives->where('title', 'like', '%' . request('search') . '%');
+            $learning_objectives->where('code', 'like', '%' . request('search') . '%');
         }
 
         return response()->json(LearningObjectiveResource::collection($learning_objectives->latest()->get()), 200);
