@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\School\TeachingProgram\Entity;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LearningObjectiveCategoryResource;
 use App\Models\AssessmentAspect;
 use App\Models\AssessmentModule;
 use App\Models\LearningObjectiveCategory;
@@ -19,6 +20,19 @@ class AssessmentAspectController extends Controller
     {
         $active_school = Session::get('active_school');
         $this->school = School::where('uuid', $active_school?->uuid)->firstOrFail();
+    }
+
+    public function optionLearningObjectiveCategory()
+    {
+        $school_curriculum = $this->school->academic_program_active->curriculum;
+
+        $learning_objectiv_categories = $school_curriculum->learning_objective_categories();
+
+        if (request()->has('search')) {
+            $learning_objectiv_categories->where('title', 'like', '%' . request('search') . '%');
+        }
+
+        return response()->json(LearningObjectiveCategoryResource::collection($learning_objectiv_categories->latest()->get()), 200);
     }
 
     public function save()
@@ -39,6 +53,7 @@ class AssessmentAspectController extends Controller
                     'name' => request('name'),
                     'sort_order' => request('sort_order'),
                     'use_sessions' => request('use_sessions'),
+                    'total_sessions' => request('total_sessions'),
                     'use_final_score' => request('use_final_score'),
                     'final_score_method' => request('final_score_method'),
                     'use_learning_objective' => request('use_learning_objective'),
@@ -50,7 +65,7 @@ class AssessmentAspectController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Aspek Penilaian berhasil disimpan.',
+                'message' => 'Penilaian Aspek berhasil disimpan.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -75,7 +90,7 @@ class AssessmentAspectController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Aspek Penilaian berhasil dihapus.',
+                'message' => 'Penilaian Aspek berhasil dihapus.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();

@@ -28,7 +28,7 @@ export default {
           href: route('school.learningActivity.schoolClassroom'),
         },
         {
-          label: 'Penilaian Mata Pelajaran',
+          label: 'Penilaian Akademik',
           href: '#',
         },
       ],

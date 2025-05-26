@@ -35,8 +35,8 @@ export default {
       },
       field: {
         name: {
-          label: 'Aspek Penilaian',
-          rules: [fieldValidation.isRequired('Aspek Penilaian')],
+          label: 'Penilaian Aspek',
+          rules: [fieldValidation.isRequired('Penilaian Aspek')],
           error: null,
           disabled: false,
           options: [],
@@ -157,7 +157,6 @@ export default {
       let newObj = {
         id: null,
         aspect_id: null,
-        portion_score: 0,
       };
 
       if (final_rule_narrative) {
@@ -277,15 +276,15 @@ export default {
           </el-select>
         </el-form-item>
         <div v-if="form.use_score == true && form.score_method">
-          <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Skor Aspek Penilaian</h2>
+          <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Skor Penilaian Aspek</h2>
           <div class="space-y-3">
             <div
               v-for="(final_rule_score, index) in form.final_rule_scores"
               :key="index"
               class="grid rounded-2xl border px-4 py-3 md:grid-cols-1"
             >
-              <el-form-item class="font-medium" label="Aspek Penilaian">
-                <el-select v-model="final_rule_score.aspect_id" placeholder="Pilih Aspek Penilaian" clearable>
+              <el-form-item class="font-medium" label="Penilaian Aspek">
+                <el-select v-model="final_rule_score.aspect_id" placeholder="Pilih Penilaian Aspek" clearable>
                   <el-option
                     v-for="option in propertyModal.data.assessment_aspects"
                     :key="option.uuid"
@@ -307,7 +306,7 @@ export default {
             </div>
           </div>
           <DefaultButton type="light" @click="addNewFinalRuleScore()" class="my-3"
-            >Tambah Aspek Penilaian</DefaultButton
+            >Tambah Penilaian Aspek</DefaultButton
           >
         </div>
         <el-form-item
@@ -363,15 +362,15 @@ export default {
           </el-select>
         </el-form-item>
         <div v-if="form.narrative_method == 'THRESHOLD_PLUS_LEARNING_OBJECTIVE'">
-          <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Naratif Aspek Penilaian</h2>
+          <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">Naratif Penilaian Aspek</h2>
           <div class="space-y-3">
             <div
               v-for="(final_rule_narrative, index) in form.final_rule_narratives"
               :key="index"
               class="grid rounded-2xl border px-4 py-3 md:grid-cols-1"
             >
-              <el-form-item class="font-medium" label="Aspek Penilaian">
-                <el-select v-model="final_rule_narrative.aspect_id" placeholder="Pilih Aspek Penilaian" clearable>
+              <el-form-item class="font-medium" label="Penilaian Aspek">
+                <el-select v-model="final_rule_narrative.aspect_id" placeholder="Pilih Penilaian Aspek" clearable>
                   <el-option
                     v-for="option in propertyModal.data.assessment_aspects_using_lo"
                     :key="option.uuid"
@@ -380,8 +379,14 @@ export default {
                   />
                 </el-select>
               </el-form-item>
+              <div class="flex items-center justify-end">
+                <OutlineButton class="my-auto" type="red" @click="removeFinalRuleNarrative(index)">Hapus</OutlineButton>
+              </div>
             </div>
           </div>
+          <DefaultButton type="light" @click="addNewFinalRuleNarrative()" class="my-3"
+            >Tambah Penilaian Aspek</DefaultButton
+          >
         </div>
       </el-form>
     </div>

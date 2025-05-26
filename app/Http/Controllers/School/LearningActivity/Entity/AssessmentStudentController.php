@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\School\LearningActivity\Entity;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AssessmentRecordResource;
+use App\Http\Resources\AssessmentActivity\AssessmentRecordResource;
 use App\Http\Resources\SchoolClassroomResource;
-use App\Models\AssessmentAspectSession;
 use App\Models\AssessmentFinalResult;
-use App\Models\AssessmentModule;
 use App\Models\AssessmentRecord;
 use App\Models\AssessmentStudent;
 use App\Models\School;
 use App\Models\SchoolClassroom;
-use App\Models\SchoolSubject;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,15 +37,15 @@ class AssessmentStudentController extends Controller
                 'subject',
                 'module.aspects.learning_objective_category',
                 'module.rubrics',
-                'sessions.learning_objective',
+                'sessions.learning_objectives',
                 'sessions.rubric',
                 'students.student.profile',
-                'students.sessions.session.aspect',
-                'students.sessions.session',
+                'students.aspect_results.aspect',
+                'students.aspect_results.sessions.session.learning_objectives',
+                'students.aspect_results.sessions.session.rubric',
                 'students.final_results.final_rule',
             ])->firstOrFail();
 
-        // if ($assessment_record->students->isEmpty()) {
         $students = $school_classroom->members;
 
 
@@ -61,11 +58,16 @@ class AssessmentStudentController extends Controller
                     'student_id' => $student->id,
                 ]);
 
-                foreach ($assessment_record->sessions as $session) {
-                    AssessmentAspectSession::updateOrCreate([
-                        'assessment_student_id' => $assessment_student_created->id,
-                        'session_id' => $session->id,
+                foreach ($assessment_record->module->aspects as $aspect) {
+                    $assessment_aspect_result_created =  $assessment_student_created->aspect_results()->updateOrCreate([
+                        'aspect_id' => $aspect->id,
                     ]);
+
+                    foreach ($assessment_record->sessions()->where('aspect_id', $aspect->id)->get() as $session) {
+                        $assessment_aspect_result_created->sessions()->updateOrCreate([
+                            'session_id' => $session->id,
+                        ]);
+                    }
                 }
 
                 foreach ($assessment_record->module->final_rules as $final_rule) {
@@ -81,7 +83,6 @@ class AssessmentStudentController extends Controller
             DB::rollBack();
             throw new Exception($th->getMessage(), 1);
         }
-        // }
 
         $data = [
             'school_classroom' => SchoolClassroomResource::make($school_classroom),

@@ -20,9 +20,9 @@ class AssessmentStudent extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function sessions()
+    public function aspect_results()
     {
-        return $this->hasMany(AssessmentAspectSession::class, 'assessment_student_id', 'id');
+        return $this->hasMany(AssessmentAspectResult::class, 'assessment_student_id', 'id');
     }
 
     public function final_results()

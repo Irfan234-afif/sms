@@ -15,6 +15,7 @@ class AssessmentAspect extends Model
         'name',
         'sort_order',
         'use_sessions',
+        'total_sessions',
         'use_final_score',
         'final_score_method',
         'use_learning_objective',

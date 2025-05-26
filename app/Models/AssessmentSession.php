@@ -13,7 +13,6 @@ class AssessmentSession extends Model
     protected $fillable = [
         'record_id',
         'aspect_id',
-        'learning_objective_id',
         'name',
         'sort_order',
         'type',
@@ -32,13 +31,14 @@ class AssessmentSession extends Model
         return $this->belongsTo(AssessmentAspect::class, 'aspect_id');
     }
 
-    public function learning_objective()
+    public function learning_objectives()
     {
-        return $this->belongsTo(LearningObjective::class, 'learning_objective_id');
+        return $this->belongsToMany(LearningObjective::class, 'assessment_session_objectives', 'session_id', 'learning_objective_id')
+            ->withPivot('uuid');
     }
 
     public function rubric()
     {
-        return $this->belongsTo(AssessmentRubric::class, 'rubric_id');
+        return $this->belongsTo(AssessmentRubric::class, 'rubric_id', );
     }
 }

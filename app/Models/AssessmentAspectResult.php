@@ -6,27 +6,26 @@ use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AssessmentAspectSession extends Model
+class AssessmentAspectResult extends Model
 {
     use SoftDeletes, GenerateUuid;
 
     protected $fillable = [
-        'aspect_result_id',
-        'session_id',
-        'rubric_scale_id',
+        'assessment_student_id',
+        'aspect_id',
         'raw_score',
         'final_score',
         'final_predicate',
         'final_narrative',
     ];
 
-    public function session()
+    public function aspect()
     {
-        return $this->belongsTo(AssessmentSession::class, 'session_id');
+        return $this->belongsTo(AssessmentAspect::class, 'aspect_id');
     }
 
-    public function rubric_scale()
+    public function sessions()
     {
-        return $this->belongsTo(AssessmentRubricScale::class, 'rubric_scale_id');
+        return $this->hasMany(AssessmentAspectSession::class, 'aspect_result_id');
     }
 }

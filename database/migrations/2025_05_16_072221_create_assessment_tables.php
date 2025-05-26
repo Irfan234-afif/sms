@@ -57,7 +57,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('threshold_id')->constrained('assessment_thresholds');
-            $table->string('type')->nullable(); // PASSED, FAILED
+            $table->string('status')->nullable(); // PASSED, FAILED
             $table->decimal('score', 5, 2)->nullable();
             $table->string('predicate')->nullable();
             $table->longText('narrative')->nullable();
@@ -102,7 +102,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('final_rule_id')->constrained('assessment_final_rules');
             $table->foreignId('aspect_id')->constrained('assessment_aspects');
-            $table->decimal('portion_score', 5, 2)->default(0);
+            $table->decimal('portion_score', 5, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -119,12 +119,12 @@ return new class extends Migration
         Schema::create('assessment_records', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('academic_program_id')->constrained('school_academic_programs');
-            $table->foreignId('classroom_id')->constrained('school_classrooms');
+            $table->foreignId('school_academic_program_id')->constrained('school_academic_programs');
+            $table->foreignId('school_classroom_id')->constrained('school_classrooms');
             $table->foreignId('module_id')->constrained('assessment_modules');
-            $table->foreignId('subject_id')->nullable()->constrained('school_subjects');
+            $table->foreignId('school_subject_id')->nullable()->constrained('school_subjects');
             $table->string('name');
-            $table->string('label');
+            $table->string('label')->nullable();
             $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -138,10 +138,10 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description')->nullable();
             $table->integer('sort_order')->default(0);
-            $table->string('type')->nullable();
+            $table->string('type')->nullable(); // be assessment_type
             $table->foreignId('rubric_id')->nullable()->constrained('assessment_rubrics');
             $table->date('date')->nullable();
-            $table->decimal('portion_score', 5, 2)->default(0);
+            $table->decimal('portion_score', 5, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

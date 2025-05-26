@@ -22,6 +22,11 @@ class AssessmentFinalRule extends Model
         'narrative_method',
     ];
 
+    public function module()
+    {
+        return $this->belongsTo(AssessmentModule::class, 'module_id');
+    }
+
     public function scores()
     {
         return $this->hasMany(AssessmentRuleScore::class, 'final_rule_id');

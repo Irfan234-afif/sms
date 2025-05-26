@@ -17,6 +17,11 @@ class AssessmentThreshold extends Model
         'description',
     ];
 
+    public function module()
+    {
+        return $this->belongsTo(AssessmentModule::class, 'module_id');
+    }
+
     public function scales()
     {
         return $this->hasMany(AssessmentThresholdScale::class, 'threshold_id');

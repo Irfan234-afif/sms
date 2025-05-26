@@ -7,6 +7,7 @@ import Breadcrumb from '@/Components/Breadcrumb.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import AssessmentAspectForm from './AssessmentAspect/Form.vue';
+import AssessmentThresholdForm from './AssessmentThreshold/Form.vue';
 import AssessmentRubricForm from './AssessmentRubric/Form.vue';
 import AssessmentFinalRuleForm from './AssessmentFinalRule/Form.vue';
 </script>
@@ -90,12 +91,12 @@ export default {
             class="my-4 w-full max-w-lg rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-4"
           >
             <div class="flex items-center justify-between border-b pb-4">
-              <h5 class="text-base font-medium leading-none text-gray-900 dark:text-white">Aspek Penilaian</h5>
+              <h5 class="text-base font-medium leading-none text-gray-900 dark:text-white">Penilaian Aspek</h5>
               <DefaultButton
                 type="default"
                 @click="
                   openModal({
-                    title: 'Aspek Penilaian Baru',
+                    title: 'Penilaian Aspek Baru',
                     mode: 'assessment-aspect-create-form',
                     maxWidth: 'md',
                     data: {
@@ -120,7 +121,7 @@ export default {
                     <path d="M12 5l0 14" />
                     <path d="M5 12l14 0" />
                   </svg>
-                  <div>Aspek Penilaian Baru</div>
+                  <div>Penilaian Aspek Baru</div>
                 </div>
               </DefaultButton>
             </div>
@@ -144,7 +145,7 @@ export default {
                       type="default"
                       @click="
                         openModal({
-                          title: 'Sunting Aspek Penilaian',
+                          title: 'Sunting Penilaian Aspek',
                           mode: 'assessment-aspect-edit-form',
                           maxWidth: 'md',
                           data: {
@@ -177,7 +178,7 @@ export default {
                       type="red"
                       @click="
                         openModal({
-                          title: 'Hapus Aspek Penilaian',
+                          title: 'Hapus Penilaian Aspek',
                           mode: 'assessment-aspect-delete-confirm',
                           maxWidth: 'md',
                           data: {
@@ -188,7 +189,7 @@ export default {
                               school_curriculum_id: school_curriculum.data.uuid,
                             }),
                             message:
-                              'Ingin menghapus Aspek Penilaian? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
+                              'Ingin menghapus Penilaian Aspek? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
                           },
                         })
                       "
@@ -224,12 +225,145 @@ export default {
             class="my-4 w-full max-w-lg rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-4"
           >
             <div class="flex items-center justify-between border-b pb-4">
-              <h5 class="text-base font-medium leading-none text-gray-900 dark:text-white">Rubrik Nilai</h5>
+              <h5 class="text-base font-medium leading-none text-gray-900 dark:text-white">Kriteria Ketercapaian</h5>
               <DefaultButton
                 type="default"
                 @click="
                   openModal({
-                    title: 'Rubrik Nilai Baru',
+                    title: 'Kriteria Ketercapaian Baru',
+                    mode: 'assessment-threshold-create-form',
+                    maxWidth: 'md',
+                    data: {
+                      assessment_module: assessment_module.data,
+                    },
+                  })
+                "
+              >
+                <div class="flex items-center space-x-1 text-xs">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 5l0 14" />
+                    <path d="M5 12l14 0" />
+                  </svg>
+                  <div>Kriteria Ketercapaian Baru</div>
+                </div>
+              </DefaultButton>
+            </div>
+            <div class="flow-root">
+              <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                <li
+                  v-for="(assessment_threshold, index) in assessment_module.data.thresholds"
+                  :key="index"
+                  class="py-3 sm:py-4"
+                >
+                  <div class="flex items-center space-x-2">
+                    <div class="ms-4 min-w-0 flex-1">
+                      <p class="truncate text-xs font-medium text-gray-900 dark:text-white">
+                        {{ assessment_threshold.name }}
+                      </p>
+                      <div class="mt-1 flex items-center space-x-2 truncate text-xs text-gray-500 dark:text-gray-400">
+                        <div></div>
+                      </div>
+                    </div>
+                    <OutlineButton
+                      type="default"
+                      @click="
+                        openModal({
+                          title: 'Sunting Kriteria Ketercapaian',
+                          mode: 'assessment-threshold-edit-form',
+                          maxWidth: 'md',
+                          data: {
+                            assessment_module: assessment_module.data,
+                            assessment_threshold: assessment_threshold,
+                          },
+                        })
+                      "
+                    >
+                      <div class="flex items-center space-x-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-4"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                          <path d="M16 5l3 3" />
+                        </svg>
+                        <div>Sunting</div>
+                      </div>
+                    </OutlineButton>
+                    <OutlineButton
+                      type="red"
+                      @click="
+                        openModal({
+                          title: 'Hapus Kriteria Ketercapaian',
+                          mode: 'assessment-threshold-delete-confirm',
+                          maxWidth: 'md',
+                          data: {
+                            actionUrl: route('school.teachingProgram.assessmentModule.assessmentThreshold.delete', {
+                              assessment_threshold_id: assessment_threshold.uuid,
+                            }),
+                            redirectUrl: route('school.teachingProgram.assessmentModule.detail', {
+                              school_curriculum_id: school_curriculum.data.uuid,
+                            }),
+                            message:
+                              'Ingin menghapus Kriteria Ketercapaian? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
+                          },
+                        })
+                      "
+                    >
+                      <div class="flex items-center space-x-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-4"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M4 7l16 0" />
+                          <path d="M10 11l0 6" />
+                          <path d="M14 11l0 6" />
+                          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                        </svg>
+                        <div>Hapus</div>
+                      </div>
+                    </OutlineButton>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <hr />
+          <div
+            class="my-4 w-full max-w-lg rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-4"
+          >
+            <div class="flex items-center justify-between border-b pb-4">
+              <h5 class="text-base font-medium leading-none text-gray-900 dark:text-white">Rubrik</h5>
+              <DefaultButton
+                type="default"
+                @click="
+                  openModal({
+                    title: 'Rubrik Baru',
                     mode: 'assessment-rubric-create-form',
                     maxWidth: 'md',
                     data: {
@@ -253,7 +387,7 @@ export default {
                     <path d="M12 5l0 14" />
                     <path d="M5 12l14 0" />
                   </svg>
-                  <div>Rubrik Nilai Baru</div>
+                  <div>Rubrik Baru</div>
                 </div>
               </DefaultButton>
             </div>
@@ -277,7 +411,7 @@ export default {
                       type="default"
                       @click="
                         openModal({
-                          title: 'Sunting Rubrik Nilai',
+                          title: 'Sunting Rubrik',
                           mode: 'assessment-rubric-edit-form',
                           maxWidth: 'md',
                           data: {
@@ -310,7 +444,7 @@ export default {
                       type="red"
                       @click="
                         openModal({
-                          title: 'Hapus Rubrik Nilai',
+                          title: 'Hapus Rubrik',
                           mode: 'assessment-rubric-delete-confirm',
                           maxWidth: 'md',
                           data: {
@@ -321,7 +455,7 @@ export default {
                               school_curriculum_id: school_curriculum.data.uuid,
                             }),
                             message:
-                              'Ingin menghapus Rubrik Nilai? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
+                              'Ingin menghapus Rubrik? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
                           },
                         })
                       "
@@ -504,6 +638,14 @@ export default {
             v-if="
               propertyModal?.mode == 'assessment-aspect-create-form' ||
               propertyModal?.mode == 'assessment-aspect-edit-form'
+            "
+            :propertyModal="propertyModal"
+            @close="closeModal()"
+          />
+          <AssessmentThresholdForm
+            v-if="
+              propertyModal?.mode == 'assessment-threshold-create-form' ||
+              propertyModal?.mode == 'assessment-threshold-edit-form'
             "
             :propertyModal="propertyModal"
             @close="closeModal()"

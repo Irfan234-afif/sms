@@ -24,6 +24,7 @@ export default {
         name: null,
         sort_order: this.propertyModal.data.sort_order,
         use_sessions: false,
+        total_sessions: 1,
         use_final_score: false,
         final_score_method: null,
         use_learning_objective: false,
@@ -31,22 +32,29 @@ export default {
       },
       field: {
         name: {
-          label: 'Aspek Penilaian',
-          rules: [fieldValidation.isRequired('Aspek Penilaian')],
+          label: 'Penilaian Aspek',
+          rules: [fieldValidation.isRequired('Penilaian Aspek')],
           error: null,
           disabled: false,
           options: [],
         },
         use_sessions: {
           label: 'Gunakan Sesi',
-          rules: [fieldValidation.isRequired('Gunakan Sesi')],
+          rules: [],
+          error: null,
+          disabled: false,
+          options: [],
+        },
+        total_sessions: {
+          label: 'Jumlah Sesi',
+          rules: [fieldValidation.isRequired('Jumlah Sesi')],
           error: null,
           disabled: false,
           options: [],
         },
         use_final_score: {
           label: 'Gunakan Skor Final',
-          rules: [fieldValidation.isRequired('Gunakan Skor Final')],
+          rules: [],
           error: null,
           disabled: false,
           options: [],
@@ -68,15 +76,15 @@ export default {
           ],
         },
         use_learning_objective: {
-          label: 'Aspek Penilaian',
-          rules: [fieldValidation.isRequired('Aspek Penilaian')],
+          label: 'Gunakan Objektif Pembelajaran',
+          rules: [],
           error: null,
           disabled: false,
           options: [],
         },
         learning_objective_category_id: {
-          label: 'Aspek Penilaian',
-          rules: [fieldValidation.isRequired('Aspek Penilaian')],
+          label: 'Kategori Objektif Pembelajaran',
+          rules: [fieldValidation.isRequired('Kategori Objektif Pembelajaran')],
           error: null,
           disabled: false,
           options: [],
@@ -90,6 +98,7 @@ export default {
       this.form.name = this.propertyModal.data.assessment_aspect?.name;
       this.form.sort_order = this.propertyModal.data.assessment_aspect?.sort_order;
       this.form.use_sessions = !!this.propertyModal.data.assessment_aspect?.use_sessions;
+      this.form.total_sessions = this.propertyModal.data.assessment_aspect?.total_sessions;
       this.form.use_final_score = !!this.propertyModal.data.assessment_aspect?.use_final_score;
       this.form.final_score_method = this.propertyModal.data.assessment_aspect?.final_score_method;
       this.form.use_learning_objective = !!this.propertyModal.data.assessment_aspect?.use_learning_objective;
@@ -126,8 +135,6 @@ export default {
           this.process = true;
 
           let requestPayload = JSON.parse(JSON.stringify(this.form));
-
-          requestPayload.learning_objective_category_id = requestPayload.learning_objective_category_id?.uuid;
 
           axios
             .post(route('school.teachingProgram.assessmentModule.assessmentAspect.save'), requestPayload, {
@@ -218,6 +225,20 @@ export default {
           prop="use_final_score"
         >
           <el-checkbox border v-model="form.use_final_score" :label="form.use_final_score ? 'Ya' : 'Tidak'" />
+        </el-form-item>
+        <el-form-item
+          v-if="form.use_final_score"
+          class="font-medium"
+          :label="field.total_sessions.label"
+          :rules="field.total_sessions.rules"
+          :error="field.total_sessions.error"
+          prop="total_sessions"
+        >
+          <el-input type="number" v-model="form.total_sessions" autocomplete="off">
+            <template #append>
+              <div>Sesi</div>
+            </template>
+          </el-input>
         </el-form-item>
         <el-form-item
           v-if="form.use_final_score"

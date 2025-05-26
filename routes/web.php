@@ -118,6 +118,7 @@ use App\Http\Controllers\School\TeachingProgram\AssessmentModuleController;
 use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentAspectController;
 use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentFinalRuleController;
 use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentRubricController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentThresholdController;
 use App\Http\Controllers\School\TeachingProgram\LearningObjectiveController;
 use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
@@ -1148,8 +1149,16 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::prefix('assessment-aspect')
                             ->name('.assessmentAspect')
                             ->group(function () {
+                                Route::get('option-learning-objective-category', [AssessmentAspectController::class, 'optionLearningObjectiveCategory'])->name('.optionLearningObjectiveCategory');
                                 Route::post('save', [AssessmentAspectController::class, 'save'])->name('.save');
                                 Route::delete('delete', [AssessmentAspectController::class, 'delete'])->name('.delete');
+                            });
+                        // assessment threshold routes
+                        Route::prefix('assessment-threshold')
+                            ->name('.assessmentThreshold')
+                            ->group(function () {
+                                Route::post('save', [AssessmentThresholdController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentThresholdController::class, 'delete'])->name('.delete');
                             });
                         // assessment rubric routes
                         Route::prefix('assessment-rubric')

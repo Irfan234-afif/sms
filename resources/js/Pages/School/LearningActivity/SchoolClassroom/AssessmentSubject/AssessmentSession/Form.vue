@@ -39,8 +39,10 @@ export default {
         uuid: item.uuid,
         record_id: this.assessment_record.uuid,
         aspect_id: this.assessment_aspect.uuid,
-        learning_objective_id: item.learning_objective ? item.learning_objective.uuid : null,
-        learning_objective_id_options: item.learning_objective ? [item.learning_objective] : [],
+        learning_objective_ids: Array.isArray(item.learning_objectives)
+          ? item.learning_objectives.map((lo) => lo.uuid)
+          : [],
+        learning_objective_ids_options: item.learning_objectives ? item.learning_objectives : [],
         rubric_id: item.rubric ? item.rubric.uuid : null,
         rubric_id_options: item.rubric ? [item.rubric] : [],
         sort_order: index + 1,
@@ -63,7 +65,7 @@ export default {
           }),
         )
         .then((response) => {
-          this.sessions[index].learning_objective_id_options = response.data;
+          this.sessions[index].learning_objective_ids_options = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -91,8 +93,8 @@ export default {
         uuid: null,
         record_id: this.assessment_record.uuid,
         aspect_id: this.assessment_aspect.uuid,
-        learning_objective_id: null,
-        learning_objective_id_options: [],
+        learning_objective_ids: [],
+        learning_objective_ids_options: [],
         rubric_id: null,
         rubric_id_options: [],
         sort_order: this.sessions.length + 1,
@@ -149,13 +151,7 @@ export default {
         })
         .catch((error) => {
           let message = 'Terjadi kesalahan';
-          // if (error.response?.data?.errors) {
-          //   for (let field in error.response.data.errors) {
-          //     this.field[field].error = error.response.data.errors[field][0];
-          //     this.$refs['assessmentSessionForm'].validateField(field);
-          //     message = error.response.data.errors[field][0];
-          //   }
-          // }
+          console.error(error);
 
           ElNotification({
             title: 'Error',
@@ -180,44 +176,50 @@ export default {
 
 <template>
   <div class="space-y-6 py-5">
-    <el-form v-if="loaded" ref="assessmentSessionForm" label-position="top" :disabled="process" class="space-y-4">
-      <template v-for="(session, index) in sessions" :key="index">
-        <div class="rounded-lg border p-4 shadow-sm">
-          <h2 class="mb-4 border-b pb-2 text-sm font-medium text-gray-900">
-            {{ 'Sesi ' + session.sort_order }}
-          </h2>
-          <div class="flex space-x-3">
-            <el-form-item class="w-full font-medium md:w-1/4" label="Judul">
+    <el-form v-if="loaded" ref="assessmentSessionForm" label-position="top" :disabled="process">
+      <table class="min-w-full border-collapse text-xs">
+        <thead class="bg-gray-100 text-left">
+          <tr>
+            <th class="p-2 text-center">#</th>
+            <th class="p-2">Sesi</th>
+            <th class="p-2" v-if="assessment_aspect.use_learning_objective">Objektif Pembelajaran</th>
+            <th class="p-2">Jenis Penilaian</th>
+            <th class="p-2"></th>
+            <th class="p-2">Porsi Nilai</th>
+            <th class="p-2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(session, index) in sessions" :key="index" class="align-top">
+            <td class="w-12 p-2 text-center">
+              {{ session.sort_order }}
+            </td>
+            <td class="w-1/5 p-2">
               <el-input v-model="session.name" autocomplete="off" />
-            </el-form-item>
-            <el-form-item
-              v-if="assessment_aspect.use_learning_objective"
-              class="w-full font-medium md:w-1/4"
-              label="Objektif Pembelajaran"
-            >
+            </td>
+            <td v-if="assessment_aspect.use_learning_objective" class="w-1/5 p-2">
               <el-select
-                v-model="session.learning_objective_id"
-                placeholder="Pilih Objektif Pembelajaran"
+                v-model="session.learning_objective_ids"
+                placeholder="Pilih"
+                :remote-method="(search) => optionLearningObjective(search, index)"
+                multiple
+                remote
+                filterable
+                autocomplete="off"
                 loading-text="..."
                 no-match-text="Data tidak ditemukan"
                 no-data-text="Tidak ada data"
-                :remote-method="(search) => optionLearningObjective(search, index)"
-                remote
-                filterable
-                reserve-keyword
-                clearable
-                autocomplete="off"
               >
                 <el-option
-                  v-for="option in session.learning_objective_id_options"
+                  v-for="option in session.learning_objective_ids_options"
                   :key="option.uuid"
-                  :label="option.title"
+                  :label="option.code"
                   :value="option.uuid"
                 />
               </el-select>
-            </el-form-item>
-            <el-form-item class="w-full font-medium md:w-1/4" label="Jenis Penilaian">
-              <el-select v-model="session.type" placeholder="Pilih Jenis Penilaian">
+            </td>
+            <td class="w-1/5 p-2">
+              <el-select v-model="session.type" placeholder="Pilih">
                 <el-option
                   v-for="option in type_options"
                   :key="option.value"
@@ -225,20 +227,20 @@ export default {
                   :value="option.value"
                 />
               </el-select>
-            </el-form-item>
-            <el-form-item class="w-full font-medium md:w-1/4" label="Rubrik" v-if="session.type === 'RUBRIC'">
+            </td>
+            <td class="w-1/5 p-2">
               <el-select
+                v-if="session.type === 'RUBRIC'"
                 v-model="session.rubric_id"
                 placeholder="Pilih Rubrik"
-                loading-text="..."
-                no-match-text="Data tidak ditemukan"
-                no-data-text="Tidak ada data"
                 :remote-method="(search) => optionAssessmentRubric(search, index)"
                 remote
                 filterable
-                reserve-keyword
                 clearable
                 autocomplete="off"
+                loading-text="..."
+                no-match-text="Data tidak ditemukan"
+                no-data-text="Tidak ada data"
               >
                 <el-option
                   v-for="option in session.rubric_id_options"
@@ -247,16 +249,16 @@ export default {
                   :value="option.uuid"
                 />
               </el-select>
-            </el-form-item>
-            <el-form-item class="w-full font-medium md:w-1/5" label="Porsi Nilai">
+            </td>
+            <td class="w-1/8 p-2">
               <el-input type="number" v-model="session.portion_score" autocomplete="off">
                 <template #append>
-                  <div>%</div>
+                  <span>%</span>
                 </template>
               </el-input>
-            </el-form-item>
-            <div v-if="index == sessions.length - 1" class="pt-7">
-              <OutlineButton type="red" @click="removeAssessmentSession(index)" class="flex space-x-1">
+            </td>
+            <td class="p-2 text-center">
+              <OutlineButton type="red" @click="removeAssessmentSession(index)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -275,11 +277,14 @@ export default {
                   <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                 </svg>
               </OutlineButton>
-            </div>
-          </div>
-        </div>
-      </template>
-      <DefaultButton type="default" @click="addNewAssessmentSession(index)">Tambah Sesi</DefaultButton>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-4">
+        <DefaultButton type="default" @click="addNewAssessmentSession">Tambah Sesi</DefaultButton>
+      </div>
     </el-form>
     <div class="flex justify-end space-x-3">
       <DefaultButton type="default" @click="submit" :disabled="process"> Simpan </DefaultButton>

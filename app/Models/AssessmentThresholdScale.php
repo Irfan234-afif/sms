@@ -12,9 +12,14 @@ class AssessmentThresholdScale extends Model
 
     protected $fillable = [
         'threshold_id',
-        'type',
+        'status',
         'score',
         'predicate',
         'narrative',
     ];
+
+    public function threshold()
+    {
+        return $this->belongsTo(AssessmentThreshold::class, 'threshold_id');
+    }
 }

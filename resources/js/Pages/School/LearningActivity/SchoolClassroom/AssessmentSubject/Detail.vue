@@ -22,7 +22,7 @@ export default {
           href: route('school.learningActivity.schoolClassroom'),
         },
         {
-          label: 'Penilaian Mata Pelajaran',
+          label: 'Penilaian Akademik',
           href: route('school.learningActivity.schoolClassroom.assessmentSubject', {
             school_classroom_id: this.school_classroom.data.uuid,
           }),
@@ -100,19 +100,48 @@ export default {
             </div>
           </div>
           <hr />
-          <div
-            v-for="(assessment_aspect, index) in assessment_record.data.module.aspects.filter((aspect) => {
-              return aspect.use_sessions;
-            })"
-            :key="index"
-            class="my-4 w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-4"
-          >
-            <div class="flex items-center justify-between border-b pb-4">
-              <h5 class="text-sm font-medium leading-none text-gray-900 dark:text-white">
-                Sesi Aspek {{ assessment_aspect.name }}
-              </h5>
-            </div>
-            <div class="flow-root">
+
+          <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+            <ul
+              class="-mb-px flex flex-wrap text-center text-sm font-medium"
+              id="default-tab"
+              data-tabs-toggle="#default-tab-content"
+              role="tablist"
+            >
+              <li
+                v-for="(assessment_aspect, index) in assessment_record.data.module.aspects.filter(
+                  (aspect) => aspect.use_sessions,
+                )"
+                :key="index"
+                class="me-2"
+                role="presentation"
+              >
+                <button
+                  class="inline-block rounded-t-lg border-b-2 p-4"
+                  :id="`tab-${index}`"
+                  :data-tabs-target="`#tab-panel-${index}`"
+                  type="button"
+                  role="tab"
+                  :aria-controls="`tab-panel-${index}`"
+                  aria-selected="false"
+                >
+                  {{ assessment_aspect.name }}
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div id="default-tab-content">
+            <div
+              v-for="(assessment_aspect, index) in assessment_record.data.module.aspects.filter(
+                (aspect) => aspect.use_sessions,
+              )"
+              :key="index"
+              class="hidden rounded-lg"
+              :id="`tab-panel-${index}`"
+              role="tabpanel"
+              :aria-labelledby="`tab-${index}`"
+            >
               <AssessmentSessionForm
                 :assessment_record="assessment_record.data"
                 :assessment_aspect="assessment_aspect"
@@ -120,6 +149,7 @@ export default {
               />
             </div>
           </div>
+
           <Link
             :href="
               route('school.learningActivity.schoolClassroom.assessmentSubject.assessmentStudent', {

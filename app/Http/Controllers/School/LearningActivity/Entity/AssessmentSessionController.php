@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use Ramsey\Uuid\Uuid;
 
 class AssessmentSessionController extends Controller
 {
@@ -34,11 +35,13 @@ class AssessmentSessionController extends Controller
         $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->firstOrFail();
         // add more params
         $learning_objectives = LearningObjective::where('category_id', $learning_objective_category->id)
+            ->where('school_year_id', $this->school->academic_program_active->school_year_id)
+            ->where('school_phase_id', $assessment_record->classroom->grade->school_phase_id)
             ->where('school_grade_id', $assessment_record->classroom->school_grade_id)
             ->where('school_subject_id', $assessment_record->school_subject_id);
 
         if (request()->has('search')) {
-            $learning_objectives->where('title', 'like', '%' . request('search') . '%');
+            $learning_objectives->where('code', 'like', '%' . request('search') . '%');
         }
 
         return response()->json(LearningObjectiveResource::collection($learning_objectives->latest()->get()), 200);
@@ -64,21 +67,26 @@ class AssessmentSessionController extends Controller
             foreach (request('sessions') as $session) {
                 $assessment_record = AssessmentRecord::where('uuid', $session['record_id'])->firstOrFail();
                 $assessment_aspect = AssessmentAspect::where('uuid', $session['aspect_id'])->firstOrFail();
-                $learning_objective = LearningObjective::where('uuid', $session['learning_objective_id'])->first();
+                $learning_objective_ids = LearningObjective::whereIn('uuid', $session['learning_objective_ids'] ?? [])->pluck('id')->toArray();
                 $assessment_rubric = AssessmentRubric::where('uuid', $session['rubric_id'])->first();
 
-                AssessmentSession::updateOrCreate([
+                $assessment_session_created = AssessmentSession::updateOrCreate([
                     'record_id' => $assessment_record->id,
                     'aspect_id' => $assessment_aspect->id,
                     'sort_order' => $session['sort_order'],
                 ], [
                     'name' => $session['name'],
-                    'learning_objective_id' => $learning_objective?->id,
                     'rubric_id' => $assessment_rubric?->id,
                     'type' => $session['type'],
                     'date' => $session['date'],
                     'portion_score' => $session['portion_score'],
                 ]);
+
+                $assessment_session_created->learning_objectives()->detach();
+
+                foreach ($learning_objective_ids as $objective_id) {
+                    $assessment_session_created->learning_objectives()->attach($objective_id, ['uuid' => Uuid::uuid1()]);
+                }
             }
 
             DB::commit();

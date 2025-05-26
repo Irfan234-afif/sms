@@ -20,7 +20,7 @@ export default {
       loaded: true,
       isValid: false,
       form: {
-        assessment_rubric_id: this.propertyModal.data?.assessment_rubric?.uuid,
+        assessment_threshold_id: this.propertyModal.data?.assessment_threshold?.uuid,
         assessment_module_id: this.propertyModal.data.assessment_module.uuid,
         name: null,
         description: null,
@@ -46,10 +46,10 @@ export default {
   },
   created() {
     let mode = this.propertyModal.mode;
-    if (mode == 'assessment-rubric-edit-form') {
-      this.form.name = this.propertyModal.data.assessment_rubric?.name;
-      this.form.description = this.propertyModal.data.assessment_rubric?.description;
-      this.propertyModal.data.assessment_rubric?.scales.map((item) => {
+    if (mode == 'assessment-threshold-edit-form') {
+      this.form.name = this.propertyModal.data.assessment_threshold?.name;
+      this.form.description = this.propertyModal.data.assessment_threshold?.description;
+      this.propertyModal.data.assessment_threshold?.scales.map((item) => {
         this.addNewScale(item);
       });
     }
@@ -58,6 +58,7 @@ export default {
     addNewScale(scale = null) {
       let newObj = {
         id: null,
+        status: 'PASSED',
         score: 0,
         predicate: '',
         narrative: '',
@@ -65,6 +66,7 @@ export default {
 
       if (scale) {
         newObj.id = scale.uuid;
+        newObj.status = scale.status;
         newObj.score = scale.score;
         newObj.predicate = scale.predicate;
         newObj.narrative = scale.narrative;
@@ -76,12 +78,12 @@ export default {
       this.form.scales.splice(index, 1);
     },
     submit() {
-      this.$refs['assessmentRubricForm'].validate((valid) => {
+      this.$refs['assessmentThresholdForm'].validate((valid) => {
         if (valid) {
           this.process = true;
           let requestPayload = JSON.parse(JSON.stringify(this.form));
           axios
-            .post(route('school.teachingProgram.assessmentModule.assessmentRubric.save'), requestPayload, {
+            .post(route('school.teachingProgram.assessmentModule.assessmentThreshold.save'), requestPayload, {
               headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
@@ -108,7 +110,7 @@ export default {
               if (error.response?.data?.errors) {
                 for (let field in error.response.data.errors) {
                   this.field[field].error = error.response.data.errors[field][0];
-                  this.$refs['assessmentRubricForm'].validateField(field);
+                  this.$refs['assessmentThresholdForm'].validateField(field);
                   message = error.response.data.errors[field][0];
                 }
               }
@@ -141,7 +143,7 @@ export default {
       {{ propertyModal?.title }}
     </h2>
     <div class="px-2">
-      <el-form v-if="loaded" ref="assessmentRubricForm" label-position="top" :model="form" :disabled="process">
+      <el-form v-if="loaded" ref="assessmentThresholdForm" label-position="top" :model="form" :disabled="process">
         <el-form-item
           class="font-medium"
           :label="field.name.label"
@@ -167,7 +169,13 @@ export default {
             :key="index"
             class="grid rounded-2xl border px-4 py-3 md:grid-cols-1"
           >
-            <el-form-item class="font-medium" :label="`Skor ${index + 1}`">
+            <el-form-item class="font-medium" label="Status">
+              <el-radio-group v-model="scale.status">
+                <el-radio value="PASSED" label="Tuntas"></el-radio>
+                <el-radio value="FAILED" label="Tidak Tuntas"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item class="font-medium" label="Skor">
               <el-input-number v-model="scale.score" autocomplete="off" />
             </el-form-item>
             <el-form-item class="font-medium" label="Predikat">

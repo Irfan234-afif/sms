@@ -189,7 +189,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
                     $assessment_threshold_created->scales()->updateOrCreate([
                         'score' => $scale->score,
                     ], [
-                        'type' => $scale->type,
+                        'status' => $scale->status,
                         'predicate' => $scale->predicate,
                         'narrative' => $scale->narrative,
                     ]);

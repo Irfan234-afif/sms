@@ -61,7 +61,7 @@ class AssessmentSubjectController extends Controller
                 'subject',
                 'module.aspects.learning_objective_category',
                 'module.rubrics',
-                'sessions.learning_objective',
+                'sessions.learning_objectives',
                 'sessions.rubric',
             ])->firstOrFail();
 
@@ -107,7 +107,7 @@ class AssessmentSubjectController extends Controller
             $assessment_module = AssessmentModule::where('uuid', request('assessment_module_id'))->firstOrFail();
             $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
 
-            AssessmentRecord::updateOrCreate(
+            $assessment_record_created = AssessmentRecord::updateOrCreate(
                 [
                     'school_academic_program_id' => $this->school->academic_program_active->id,
                     'school_classroom_id' => $school_classroom?->id,
@@ -118,6 +118,18 @@ class AssessmentSubjectController extends Controller
                     'name' => request('name'),
                 ]
             );
+
+            foreach ($assessment_module->aspects()->where('use_sessions', true)->get() as $aspect) {
+                foreach (range(1, $aspect->total_sessions) as $session) {
+                    $assessment_record_created->sessions()->firstOrCreate([
+                        'aspect_id' => $aspect->id,
+                        'sort_order' => $session,
+                    ], [
+                        'name' => 'Sesi ' . $session,
+                        'portion_score' => 100,
+                    ]);
+                }
+            }
 
             DB::commit();
 

@@ -163,13 +163,13 @@
             "description": "Kriteria Ketercapaian dalam penilaian",
             "scales": [
               {
-                "type": "PASSED",
+                "status": "PASSED",
                 "score": 75,
                 "predicate": "A",
                 "narrative": "Siswa telah mampu dalam"
               },
               {
-                "type": "FAILED",
+                "status": "FAILED",
                 "score": 50,
                 "predicate": "B",
                 "narrative": "Namun Siswa perlu bimbingan"
