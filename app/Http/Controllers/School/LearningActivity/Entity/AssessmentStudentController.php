@@ -7,7 +7,10 @@ use App\Http\Resources\AssessmentActivity\AssessmentRecordResource;
 use App\Http\Resources\SchoolClassroomResource;
 use App\Models\AssessmentFinalResult;
 use App\Models\AssessmentRecord;
+use App\Models\AssessmentRubricScale;
 use App\Models\AssessmentStudent;
+use App\Models\AssessmentThresholdScale;
+use App\Models\LearningObjective;
 use App\Models\School;
 use App\Models\SchoolClassroom;
 use Exception;
@@ -97,6 +100,42 @@ class AssessmentStudentController extends Controller
         DB::beginTransaction();
 
         try {
+            foreach (request('assessment_students') as $assessment_student) {
+                $student = AssessmentStudent::where('uuid', $assessment_student['uuid'])->firstOrFail();
+
+                foreach ($assessment_student['aspect_results'] as $aspect_result_data) {
+                    $aspect_result = $student->aspect_results()->where('uuid', $aspect_result_data['uuid'])->firstOrFail();
+                    $aspect_result->update([
+                        'raw_score' => $aspect_result_data['raw_score'],
+                        'final_score' => $aspect_result_data['final_score'],
+                    ]);
+
+                    foreach ($aspect_result_data['sessions'] as $session_data) {
+                        $session = $aspect_result->sessions()->where('uuid', $session_data['uuid'])->firstOrFail();
+                        $session->update([
+                            'raw_score' => $session_data['raw_score'],
+                            'final_score' => $session_data['final_score'],
+                            'rubric_scale_id' => AssessmentRubricScale::where('uuid', $session_data['rubric_scale_id'])->first()?->id,
+                            'final_predicate' => $session_data['final_predicate'] ?? null,
+                            'final_narrative' => $session_data['final_narrative'] ?? null,
+                        ]);
+                    }
+                }
+
+                foreach ($assessment_student['final_results'] as $final_result_data) {
+                    $final_result = $student->final_results()->where('uuid', $final_result_data['uuid'])->firstOrFail();
+                    $final_result->update([
+                        'raw_score' => $final_result_data['raw_score'],
+                        'final_score' => $final_result_data['final_score'],
+                        'final_predicate' => $final_result_data['final_predicate'],
+                        'threshold_scale_passed_id' => AssessmentThresholdScale::where('uuid', $final_result_data['threshold_scale_passed_id'])->first()?->id,
+                        'threshold_scale_failed_id' => AssessmentThresholdScale::where('uuid', $final_result_data['threshold_scale_failed_id'])->first()?->id,
+                        'learning_objective_passed_id' => LearningObjective::where('uuid', $final_result_data['learning_objective_passed_id'])->first()?->id,
+                        'learning_objective_failed_id' => LearningObjective::where('uuid', $final_result_data['learning_objective_failed_id'])->first()?->id,
+                        'final_narrative' => $final_result_data['final_narrative'],
+                    ]);
+                }
+            }
 
             DB::commit();
 

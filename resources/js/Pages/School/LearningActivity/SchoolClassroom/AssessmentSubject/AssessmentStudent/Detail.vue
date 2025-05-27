@@ -40,9 +40,7 @@ export default {
       },
     };
   },
-  created() {
-    // this.assessment_students = this.assessment_record.data.students;
-  },
+  created() {},
   methods: {
     openModal(property) {
       this.showModal = true;
@@ -103,7 +101,10 @@ export default {
           </div>
           <hr />
         </div>
-        <AssessmentStudentForm :students="assessment_record.data.students" />
+        <AssessmentStudentForm
+          :assessment_record="assessment_record.data"
+          :students="assessment_record.data.students"
+        />
       </section>
     </template>
   </SchoolLayout>

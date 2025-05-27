@@ -21,7 +21,7 @@ class AssessmentAspectSessionResource extends JsonResource
             'learning_objectives' => LearningObjectiveResource::collection($this->session->learning_objectives),
             'type' => $this->session->type,
             'rubric_name' => $this->session->rubric ? $this->session->rubric->name : null,
-            'rubric_scales' => $this->session->rubric ? AssessmentRubricScaleResource::collection($this->session->rubric->rubric_scales) : [],
+            'rubric_scale_options' => $this->session->rubric ? AssessmentRubricScaleResource::collection($this->session->rubric->scales) : [],
             'rubric_scale_id' => $this->rubric_scale ? $this->rubric_scale->uuid : null,
             'raw_score' =>  $this->raw_score ?  (float)  $this->raw_score : null,
             'portion_score' => (float) $this->session->portion_score,

@@ -17,6 +17,7 @@ class AssessmentRecordResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'classroom_uuid' => $this->classroom->uuid,
             'classroom_name' => $this->classroom->title,
             'subject_name' => $this->subject->title,
             'module_name' => $this->module->name,

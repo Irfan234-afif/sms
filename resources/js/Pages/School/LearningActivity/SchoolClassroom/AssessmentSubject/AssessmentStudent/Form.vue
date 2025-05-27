@@ -1,28 +1,56 @@
+<script setup>
+import DefaultButton from '@/Components/DefaultButton.vue';
+import axios from 'axios';
+import { ElNotification } from 'element-plus';
+import _ from 'lodash';
+</script>
+
 <script>
 export default {
   props: {
+    assessment_record: Object,
     students: Array,
   },
   data() {
     return {
-      assessment_students: JSON.parse(JSON.stringify(this.students)), // Clone untuk local state
+      process: false,
+      loaded: true,
+      isValid: false,
+      assessment_students: JSON.parse(JSON.stringify(this.students)),
     };
+  },
+  watch: {
+    assessment_students: {
+      handler: _.debounce(function (newVal) {
+        newVal.forEach((assessment_student) => {
+          (assessment_student.aspect_results || []).forEach((aspect_result) => {
+            (aspect_result.sessions || []).forEach((session) => {
+              this.handleRawScoreChange(session, aspect_result, assessment_student);
+            });
+          });
+        });
+      }, 300), // tunggu 300ms setelah perubahan terakhir
+      deep: true,
+      immediate: true,
+    },
   },
   methods: {
     updateAspectResult(aspect_result) {
-      let total_sessions = null;
-      let total_score = null;
+      aspect_result.final_score = null;
+      let total_sessions = 0;
+      let total_score = 0;
 
       aspect_result.sessions.forEach((session) => {
-        if (session.final_score != null && session.final_score !== '') {
+        const score = parseFloat(session.final_score);
+        if (!isNaN(score) && score !== 0) {
           total_sessions += 1;
-          total_score += Number(session.final_score);
+          total_score += score;
         }
       });
 
       if (total_sessions > 0) {
         if (aspect_result.final_score_method === 'AVERAGE') {
-          aspect_result.final_score = parseFloat((total_score / total_sessions).toFixed(2));
+          aspect_result.final_score = parseFloat(total_score / total_sessions).toFixed();
         } else if (aspect_result.final_score_method === 'SUM') {
           aspect_result.final_score = total_score;
         } else {
@@ -146,16 +174,77 @@ export default {
     },
 
     handleRawScoreChange(aspect_session, aspect_result, student) {
-      aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
+      if (aspect_session.type == 'SCORE') {
+        aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
+      } else if (aspect_session.type == 'RUBRIC') {
+        let rubric_scale = aspect_session.rubric_scale_options.find((x) => x.uuid === aspect_session.rubric_scale_id);
+        aspect_session.raw_score = rubric_scale.score;
+        aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
+        aspect_session.final_predicate = rubric_scale.predicate;
+        aspect_session.final_narrative = rubric_scale.narrative;
+      } else {
+        aspect_session.final_score = null;
+      }
       this.updateAspectResult(aspect_result);
       this.updateFinalResult(student);
+    },
+
+    async submit() {
+      axios
+        .post(
+          route('school.learningActivity.schoolClassroom.assessmentSubject.assessmentStudent.save', {
+            assessment_record_id: this.assessment_record.uuid,
+            school_classroom_id: this.assessment_record.classroom_uuid,
+          }),
+          {
+            assessment_students: this.assessment_students,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          },
+        )
+        .then((response) => {
+          if (response.data.status === 'success') {
+            ElNotification({
+              title: 'Berhasil',
+              message: response.data.message,
+              type: 'success',
+            });
+            setTimeout(() => {
+              this.$inertia.reload();
+            }, 2000);
+          } else {
+            ElNotification({
+              title: 'Error',
+              message: response.data.message,
+              type: 'error',
+            });
+          }
+        })
+        .catch((error) => {
+          let message = 'Terjadi kesalahan';
+          console.error(error);
+
+          ElNotification({
+            title: 'Error',
+            message: message,
+            type: 'error',
+          });
+        })
+        .finally(() => {
+          this.process = false;
+          this.loaded = false;
+          this.$nextTick(() => {
+            this.loaded = true;
+          });
+        });
     },
   },
 };
 </script>
 
 <template>
-  <div>
+  <div class="space-y-3">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
         <thead>
@@ -212,11 +301,27 @@ export default {
                       </template>
                     </el-popover>
                     <el-input
+                      v-if="session.type == 'SCORE'"
                       type="number"
                       class="w-full"
                       v-model.number="session.raw_score"
                       @input="handleRawScoreChange(session, aspect_result, student)"
                     />
+                    <el-select
+                      v-if="session.type == 'RUBRIC'"
+                      class="w-full"
+                      v-model="session.rubric_scale_id"
+                      placeholder="Pilih"
+                      @input="handleRawScoreChange(session, aspect_result, student)"
+                      clearable
+                    >
+                      <el-option
+                        v-for="option in session.rubric_scale_options"
+                        :key="option.uuid"
+                        :label="option.predicate"
+                        :value="option.uuid"
+                      />
+                    </el-select>
                   </div>
                 </template>
                 <div class="col-span-1 flex space-x-3" v-if="aspect_result.use_final_score">
@@ -235,7 +340,9 @@ export default {
                   <div class="col-span-2 flex space-x-3" v-if="final_result.use_score">
                     <el-button style="width: 280px" type="success" plain>Nilai Akhir</el-button>
                     <el-input type="number" v-model.number="final_result.final_score" readonly />
-                    <el-button plain v-if="final_result.use_predicate">{{ final_result.predicate ?? '-' }}</el-button>
+                    <el-button plain v-if="final_result.use_predicate">{{
+                      final_result.final_predicate ?? '-'
+                    }}</el-button>
                   </div>
                   <div class="col-span-2 flex space-x-3" v-if="final_result.use_narrative">
                     <el-button style="width: 240px" plain>KK Tuntas</el-button>
@@ -316,6 +423,9 @@ export default {
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="flex justify-end space-x-3">
+      <DefaultButton type="default" @click="submit" :disabled="process"> Simpan </DefaultButton>
     </div>
   </div>
 </template>
