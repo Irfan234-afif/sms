@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use Ramsey\Uuid\Uuid;
 
 class LearningObjectiveController extends Controller
 {
@@ -35,8 +36,8 @@ class LearningObjectiveController extends Controller
     public function index()
     {
         // todo:modified by school
-        $school_curriculum = SchoolCurriculum::where('school_id', $this->school->id)
-            ->orderBy('id', 'DESC')->first();
+        $school_curriculum = $this->school->academic_program_active->curriculum;
+
         $learning_objective_categories = $school_curriculum->learning_objective_categories()
             ->with('parent')
             ->get();
@@ -55,8 +56,8 @@ class LearningObjectiveController extends Controller
             ->with('grades')
             ->get();
         // todo:modified by school
-        $school_curriculum = SchoolCurriculum::where('id', $this->school->academic_program_active->school_curriculum_id)
-            ->orderBy('id', 'DESC')->first();
+        $school_curriculum = $this->school->academic_program_active->curriculum;
+
         $learning_objective_category = LearningObjectiveCategory::where('uuid', $learning_objective_category_id)
             ->with('parent')
             ->firstOrFail();
@@ -124,24 +125,24 @@ class LearningObjectiveController extends Controller
         $learning_objectives = $learning_objective_category->parent->objectives()
             ->with('parent');
 
-        if ($school_year) {
-            $learning_objectives->where('school_year_id', $school_year->id);
-        }
-
-        if ($school_phase) {
+        if ($school_phase && $learning_objective_category->parent->options['scope_school_phase']) {
             $learning_objectives->where('school_phase_id', $school_phase->id);
         }
 
-        if ($school_grade) {
+        if ($school_grade && $learning_objective_category->parent->options['scope_school_grade']) {
             $learning_objectives->where('school_grade_id', $school_grade->id);
         }
 
-        if ($school_subject) {
+        if ($school_subject && $learning_objective_category->parent->options['scope_school_subject']) {
             $learning_objectives->where('school_subject_id', $school_subject->id);
         }
 
+        if ($school_year && $learning_objective_category->parent->options['scope_school_year']) {
+            $learning_objectives->where('school_year_id', $school_year->id);
+        }
+
         if (request()->has('search')) {
-            $learning_objectives->where('title', 'like', '%' . request('search') . '%');
+            $learning_objectives->where('code', 'like', '%' . request('search') . '%');
         }
 
         return response()->json(LearningObjectiveResource::collection($learning_objectives->latest()->get()), 200);
@@ -159,24 +160,24 @@ class LearningObjectiveController extends Controller
         $learning_objectives = $learning_objective_category->objectives()
             ->with('parent');
 
-        if ($school_year) {
-            $learning_objectives->where('school_year_id', $school_year->id);
-        }
-
-        if ($school_phase) {
+        if ($school_phase && $learning_objective_category->options['scope_school_phase']) {
             $learning_objectives->where('school_phase_id', $school_phase->id);
         }
 
-        if ($school_grade) {
+        if ($school_grade && $learning_objective_category->options['scope_school_grade']) {
             $learning_objectives->where('school_grade_id', $school_grade->id);
         }
 
-        if ($school_subject) {
+        if ($school_subject && $learning_objective_category->options['scope_school_subject']) {
             $learning_objectives->where('school_subject_id', $school_subject->id);
         }
 
+        if ($school_year && $learning_objective_category->options['scope_school_year']) {
+            $learning_objectives->where('school_year_id', $school_year->id);
+        }
+
         if (request()->has('search')) {
-            $learning_objectives->where('title', 'like', '%' . request('search') . '%');
+            $learning_objectives->where('code', 'like', '%' . request('search') . '%');
         }
 
         return response()->json(LearningObjectiveResource::collection($learning_objectives->latest()->get()), 200);
@@ -191,24 +192,28 @@ class LearningObjectiveController extends Controller
             $learning_objective = LearningObjective::where('uuid', request('learning_objective_id'))->first();
             $parent = LearningObjective::where('uuid', request('parent_id'))->first();
             // todo:modified by school
-            $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
-            $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->firstOrFail();
-            $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->firstOrFail();
-            $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
+            $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->first();
+            $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->first();
+            $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
+            $school_year = null;
+
+            if ($learning_objective_category->options['scope_school_year']) {
+                $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
+            }
 
             LearningObjective::updateOrCreate(
                 [
                     'id' => $learning_objective ? $learning_objective->id : null,
                     'school_curriculum_id' => $learning_objective_category->school_curriculum_id,
                     'category_id' => $learning_objective_category->id,
-                    'school_year_id' => $school_year->id,
-                    'school_phase_id' => $school_phase ? $school_phase->id : null,
-                    'school_grade_id' => $school_grade ? $school_grade->id : null,
-                    'school_subject_id' => $school_subject ? $school_subject->id : null,
+                    'school_phase_id' => $school_phase?->id,
+                    'school_grade_id' => $school_grade?->id,
+                    'school_subject_id' => $school_subject?->id,
+                    'school_year_id' => $school_year?->id,
                 ],
                 [
                     'parent_id' => $parent ? $parent->id : null,
-                    'title' => request('title'),
+                    'title' => Uuid::uuid1(), // todo: nullable column
                     'code' => request('code'),
                     'narrative' => request('narrative'),
                 ]
@@ -218,7 +223,7 @@ class LearningObjectiveController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Indikator Pembelajaran berhasil disimpan.',
+                'message' => 'Objektif Pembelajaran berhasil disimpan.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -243,7 +248,7 @@ class LearningObjectiveController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Indikator Pembelajaran berhasil dihapus.',
+                'message' => 'Objektif Pembelajaran berhasil dihapus.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();

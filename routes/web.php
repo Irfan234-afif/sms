@@ -97,6 +97,10 @@ use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
+use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSessionController;
+use App\Http\Controllers\School\LearningActivity\Entity\AssessmentStudentController;
+use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSubjectController;
+use App\Http\Controllers\School\LearningActivity\SchoolClassroomController as LearningActivitySchoolClassroomController;
 use App\Http\Controllers\School\Management\Entity\LearningObjectiveCategoryController;
 use App\Http\Controllers\School\Management\Entity\LearningRubricController;
 use App\Http\Controllers\School\SchoolController;
@@ -110,11 +114,92 @@ use App\Http\Controllers\School\Management\SchoolSubjectController;
 use App\Http\Controllers\School\Management\SchoolSubjectGroupController;
 use App\Http\Controllers\School\Setting\Entity\SchoolAcademicProgramController;
 use App\Http\Controllers\School\Setting\SchoolController as SettingSchoolController;
+use App\Http\Controllers\School\TeachingProgram\AssessmentModuleController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentAspectController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentFinalRuleController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentRubricController;
+use App\Http\Controllers\School\TeachingProgram\Entity\AssessmentThresholdController;
 use App\Http\Controllers\School\TeachingProgram\LearningObjectiveController;
 use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+//report
+Route::prefix('/hhk')->group(function () {
+    Route::get('laporan-mingguan', function () {
+        return view('report.hhk.weekly_report');
+    });
+    Route::get('laporan-identitas', function () {
+        return view('report.hhk.identity_report');
+    });
+    Route::get('laporan-lapd', function () {
+        return view('report.hhk.lapd_report');
+    });
+});
+
+Route::prefix('/sd')->group(function () {
+    Route::get('weekly-time', function () {
+        return view('report.sd.weekly_time');
+    });
+
+    Route::get('mid-semester', function () {
+        return view('report.sd.mid-semester_report');
+    });
+
+    Route::get('rapor-nasional', function () {
+        return view('report.sd.national-report-card');
+    });
+
+    Route::get('rapor-sekolah', function () {
+        return view('report.sd.school-report_card');
+    });
+
+    Route::get('laporan-p5', function () {
+        return view('report.sd.p5-report_card');
+    });
+});
+
+Route::prefix('/sma')->group(function () {
+    Route::get('mid-semester', function () {
+        return view('report.sma.mid-semester_report');
+    });
+
+    Route::get('rapor-nasional', function () {
+        return view('report.sma.national-report_report');
+    });
+
+    Route::get('mid-semester-core', function () {
+        return view('report.sma.Mid-Semester-Core_report');
+    });
+
+    Route::get('laporan-prestasi', function () {
+        return view('report.sma.achievements_report');
+    });
+});
+
+// academic-tr-report
+Route::prefix('/smp')->group(function () {
+    Route::get('transkrip-akademik', function () {
+        return view('report.smp.academic-tr-report');
+    });
+
+    Route::get('rapor-nasional', function () {
+        return view('report.smp.national-report');
+    });
+
+    Route::get('laporan-p5', function () {
+        return view('report.smp.p5-report');
+    });
+
+    Route::get('laporan-prestasi', function () {
+        return view('report.smp.achievements_report');
+    });
+
+    Route::get('subject-transkrip', function () {
+        return view('report.smp.subject-tr');
+    });
+});
 
 // public routes
 Route::prefix('/')->group(function () {
@@ -1051,6 +1136,83 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('get-learning-objective', [LearningObjectiveController::class, 'getLearningObjective'])->name('.getLearningObjective');
                         Route::post('save', [LearningObjectiveController::class, 'save'])->name('.save');
                         Route::delete('delete', [LearningObjectiveController::class, 'delete'])->name('.delete');
+                    });
+                // assessment module routes
+                Route::prefix('assessment-module')
+                    ->name('.assessmentModule')
+                    ->group(function () {
+                        Route::get('/', [AssessmentModuleController::class, 'index']);
+                        Route::get('{assessment_module_id}/detail', [AssessmentModuleController::class, 'detail'])->name('.detail');
+                        Route::post('save', [AssessmentModuleController::class, 'save'])->name('.save');
+                        Route::delete('delete', [AssessmentModuleController::class, 'delete'])->name('.delete');
+                        // assessment aspect routes
+                        Route::prefix('assessment-aspect')
+                            ->name('.assessmentAspect')
+                            ->group(function () {
+                                Route::get('option-learning-objective-category', [AssessmentAspectController::class, 'optionLearningObjectiveCategory'])->name('.optionLearningObjectiveCategory');
+                                Route::post('save', [AssessmentAspectController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentAspectController::class, 'delete'])->name('.delete');
+                            });
+                        // assessment threshold routes
+                        Route::prefix('assessment-threshold')
+                            ->name('.assessmentThreshold')
+                            ->group(function () {
+                                Route::post('save', [AssessmentThresholdController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentThresholdController::class, 'delete'])->name('.delete');
+                            });
+                        // assessment rubric routes
+                        Route::prefix('assessment-rubric')
+                            ->name('.assessmentRubric')
+                            ->group(function () {
+                                Route::post('save', [AssessmentRubricController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentRubricController::class, 'delete'])->name('.delete');
+                            });
+                        // assessment final rule routes
+                        Route::prefix('assessment-final-rule')
+                            ->name('.assessmentFinalRule')
+                            ->group(function () {
+                                Route::post('save', [AssessmentFinalRuleController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentFinalRuleController::class, 'delete'])->name('.delete');
+                            });
+                    });
+            });
+        // learning activity routes
+        Route::prefix('learning-activity')
+            ->name('.learningActivity')
+            ->group(function () {
+                // school classroom routes
+                Route::prefix('school-classroom')
+                    ->name('.schoolClassroom')
+                    ->group(function () {
+                        Route::get('/', [LearningActivitySchoolClassroomController::class, 'index']);
+                        Route::get('{school_classroom_id}/detail', [LearningActivitySchoolClassroomController::class, 'detail'])->name('.detail');
+                        // school classroom routes
+                        Route::prefix('{school_classroom_id}/assessment-subject')
+                            ->name('.assessmentSubject')
+                            ->group(function () {
+                                Route::get('/', [AssessmentSubjectController::class, 'index']);
+                                Route::get('{assessment_record_id}/detail', [AssessmentSubjectController::class, 'detail'])->name('.detail');
+                                Route::get('option-school-subject', [AssessmentSubjectController::class, 'optionSchoolSubject'])->name('.optionSchoolSubject');
+                                Route::get('option-assessment-module', [AssessmentSubjectController::class, 'optionAssessmentModule'])->name('.optionAssessmentModule');
+                                Route::post('save', [AssessmentSubjectController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentSubjectController::class, 'delete'])->name('.delete');
+                                // assessment session routes
+                                Route::prefix('{assessment_record_id}/assessment-record')
+                                    ->name('.assessmentRecord')
+                                    ->group(function () {
+                                        Route::get('/', [AssessmentSessionController::class, 'index']);
+                                        Route::get('option-learning-objective', [AssessmentSessionController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
+                                        Route::get('option-assessment-rubric', [AssessmentSessionController::class, 'optionAssessmentRubric'])->name('.optionAssessmentRubric');
+                                        Route::post('save', [AssessmentSessionController::class, 'save'])->name('.save');
+                                    });
+                                // assessment student routes
+                                Route::prefix('{assessment_record_id}/assessment-student')
+                                    ->name('.assessmentStudent')
+                                    ->group(function () {
+                                        Route::get('/', [AssessmentStudentController::class, 'index']);
+                                        Route::post('save', [AssessmentStudentController::class, 'save'])->name('.save');
+                                    });
+                            });
                     });
             });
         // management routes

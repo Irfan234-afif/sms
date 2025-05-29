@@ -34,8 +34,8 @@ export default {
           options: this.propertyModal.data.school_grades,
         },
         minimum_value: {
-          label: 'Nilai Minimum',
-          rules: [fieldValidation.isRequired('Nilai Minimum')],
+          label: 'Skor Minimum',
+          rules: [fieldValidation.isRequired('Skor Minimum')],
           error: null,
         },
       },
@@ -224,7 +224,7 @@ export default {
                 <el-form-item class="font-medium" :label="`Predikat ${index + 1}`">
                   <el-input v-model="scale.predicate" autocomplete="off" />
                 </el-form-item>
-                <el-form-item class="font-medium" label="Nilai Minimum">
+                <el-form-item class="font-medium" label="Skor Minimum">
                   <el-input-number v-model="scale.value" autocomplete="off" />
                 </el-form-item>
                 <el-form-item class="font-medium" label="Naratif">
@@ -246,7 +246,7 @@ export default {
                 :key="index"
                 class="grid rounded-2xl border px-4 py-3 md:grid-cols-1"
               >
-                <el-form-item class="font-medium" label="Nilai Minimum">
+                <el-form-item class="font-medium" label="Skor Minimum">
                   <el-input-number v-model="narrative.value" autocomplete="off" />
                 </el-form-item>
                 <el-form-item class="font-medium" label="Naratif">

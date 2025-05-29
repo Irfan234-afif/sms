@@ -182,14 +182,18 @@ class SchoolClassroomController extends Controller
     {
         $school_classroom = SchoolClassroom::where('uuid', request('school_classroom_id'))->firstOrFail();
 
-        $students = Student::where('school_id', $this->school->id)
-            ->where('school_grade_id', $school_classroom->school_grade_id);
+        // $students = Student::where('school_id', $this->school->id)
+        //     ->where('school_grade_id', $school_classroom->school_grade_id); todo: fix params
+
+        $students = Student::where('school_id', $this->school->id);
 
 
         if (request()->has('search')) {
-            $students->whereHas('profile', function ($profile) {
-                $profile->where('name', 'like', '%' . request('search') . '%');
-            })->orWhere('school_national_id', 'like', '%' . request('search') . '%');
+            $students->where(function ($query) {
+                $query->whereHas('profile', function ($profile) {
+                    $profile->where('name', 'like', '%' . request('search') . '%');
+                })->orWhere('school_national_id', 'like', '%' . request('search') . '%');
+            });
         }
 
         return response()->json(StudentResource::collection($students->with('profile')->latest()->get()), 200);

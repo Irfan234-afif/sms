@@ -16,7 +16,7 @@ export default {
       breadcrumbs: [
         { label: 'Sekolah', href: route('school') },
         {
-          label: `Indikator Pembelajaran (${this.school_curriculum.data.title})`,
+          label: `Objektif Pembelajaran (${this.school_curriculum.data.title})`,
           href: route('school.teachingProgram.learningObjective'),
         },
       ],

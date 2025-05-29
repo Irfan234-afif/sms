@@ -70,7 +70,7 @@ class SchoolSubjectController extends Controller
                 ],
                 [
                     'school_id' => $this->school->id,
-                    'school_subject_group_id' => $school_subject_group->id,
+                    'school_subject_group_id' => $school_subject_group?->id,
                     'title' => request('title'),
                     'description' => request('description'),
                 ]

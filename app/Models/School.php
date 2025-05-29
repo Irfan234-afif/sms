@@ -27,6 +27,11 @@ class School extends Model
         return $this->hasOne(SchoolAcademicProgram::class, 'school_id')->where('is_active', true);
     }
 
+    public function curriculums()
+    {
+        return $this->hasMany(SchoolCurriculum::class, 'school_id');
+    }
+
     public function academic_programs()
     {
         return $this->hasMany(SchoolAcademicProgram::class, 'school_id');

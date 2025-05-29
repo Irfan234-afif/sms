@@ -71,7 +71,7 @@ class LearningObjectiveCategoryController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Kategori Indikator Pembelajaran berhasil disimpan.',
+                'message' => 'Kategori Objektif Pembelajaran berhasil disimpan.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -96,7 +96,7 @@ class LearningObjectiveCategoryController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Kategori Indikator Pembelajaran berhasil dihapus.',
+                'message' => 'Kategori Objektif Pembelajaran berhasil dihapus.',
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();

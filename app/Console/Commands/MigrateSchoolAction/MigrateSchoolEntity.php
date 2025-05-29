@@ -65,7 +65,6 @@ class MigrateSchoolEntity
                 'title' => $school_subject->name,
             ], [
                 'school_subject_group_id' => $school_subject_group->id,
-                'alternative_title' => $school_subject->alternative_name,
                 'description' => '-',
             ]);
         }
