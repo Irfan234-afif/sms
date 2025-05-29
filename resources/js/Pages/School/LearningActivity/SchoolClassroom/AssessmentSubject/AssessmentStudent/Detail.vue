@@ -101,10 +101,12 @@ export default {
           </div>
           <hr />
         </div>
-        <AssessmentStudentForm
-          :assessment_record="assessment_record.data"
-          :students="assessment_record.data.students"
-        />
+        <div v-if="assessment_record.data.students">
+          <AssessmentStudentForm
+            :assessment_record="assessment_record.data"
+            :students="assessment_record.data.students"
+          />
+        </div>
       </section>
     </template>
   </SchoolLayout>

@@ -28,14 +28,17 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
 
         // Create school curriculum
         if (App::environment(['local', 'testing'])) {
-            $schools = School::whereIn('id', [3, 4])->get();
             $this->command->warn('Create school curriculum');
-            $this->command->getOutput()->progressStart(count($schools));
-            foreach ($schools as $school) {
+            $this->command->getOutput()->progressStart(count($school_curriculums));
+            foreach ($school_curriculums as $school_curriculum) {
                 DB::beginTransaction();
 
                 try {
                     foreach ($school_curriculums as $school_curriculum) {
+                        $school = School::whereHas('level', function ($level) use ($school_curriculum) {
+                            $level->where('code', $school_curriculum->school_level_code);
+                        })->firstOrFail();
+
                         $school_curriculum_created = SchoolCurriculum::updateOrCreate([
                             'school_id' => $school->id,
                             'code' => $school_curriculum->code,
@@ -63,7 +66,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
 
         // Create school academic program
         if (App::environment(['local', 'testing'])) {
-            $schools = School::whereIn('id', [3, 4])->get();
+            $schools = School::whereIn('id', [1, 2, 3, 4])->get();
             $school_year = SchoolYear::latest()->first();
             $this->command->warn('Create school academic program');
             $this->command->getOutput()->progressStart(count($schools));
@@ -93,7 +96,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
 
         // Fill learning objective
         if (App::environment(['local', 'testing'])) {
-            $schools = School::whereIn('id', [3, 4])->get();
+            $schools = School::whereIn('id', [1, 2, 3, 4])->get();
             $this->command->warn('Fill learning objective');
             $this->command->getOutput()->progressStart(count($schools));
             foreach ($schools as $school) {

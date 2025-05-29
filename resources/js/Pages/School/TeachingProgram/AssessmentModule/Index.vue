@@ -128,6 +128,7 @@ export default {
                     </div>
                   </th>
                   <th scope="col" class="p-4">Modul Penilaian</th>
+                  <th scope="col" class="p-4">Kategori</th>
                   <th scope="col" class="p-4">Keterangan</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
@@ -152,6 +153,11 @@ export default {
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
                       {{ assessment_module.name }}
+                    </div>
+                  </th>
+                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center">
+                      {{ assessment_module.type_label }}
                     </div>
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

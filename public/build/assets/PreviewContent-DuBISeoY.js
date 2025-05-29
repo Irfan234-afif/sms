@@ -1,1 +1,0 @@
-import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{g as e,o}from"./app-DcIS7nb8.js";const c={props:{content:String},computed:{}},r=["innerHTML"];function s(i,_,n,a,p,m){return o(),e("div",{class:"ck-content",innerHTML:n.content},null,8,r)}const l=t(c,[["render",s]]);export{l as P};

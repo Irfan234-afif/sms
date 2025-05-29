@@ -27,13 +27,18 @@ class AssessmentModuleController extends Controller
     {
         $school_curriculum = $this->school->academic_program_active->curriculum;
 
-        $assessment_modules = $school_curriculum->assessment_modules()
-            ->latest()
-            ->paginate(10);
+        $assessment_modules = $school_curriculum->assessment_modules();
+
+        if (request()->has('search')) {
+            $assessment_modules->where('name', 'like', '%' . request('search') . '%');
+        }
 
         $data = [
+            'search_params' => [
+                'search' => request('search'),
+            ],
             'school_curriculum' => SchoolCurriculumResource::make($school_curriculum),
-            'assessment_modules' => AssessmentModuleResource::collection($assessment_modules),
+            'assessment_modules' => AssessmentModuleResource::collection($assessment_modules->latest()->paginate(10)),
         ];
 
         return Inertia::render('School/TeachingProgram/AssessmentModule/Index', $data);
@@ -52,9 +57,6 @@ class AssessmentModuleController extends Controller
             ->firstOrFail();
 
         $data = [
-            'search_params' => [
-                'search' => request('search'),
-            ],
             'school_curriculum' => SchoolCurriculumResource::make($school_curriculum),
             'assessment_module' => AssessmentModuleResource::make($assessment_module),
         ];

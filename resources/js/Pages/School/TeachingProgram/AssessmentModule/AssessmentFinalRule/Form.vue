@@ -35,8 +35,8 @@ export default {
       },
       field: {
         name: {
-          label: 'Penilaian Aspek',
-          rules: [fieldValidation.isRequired('Penilaian Aspek')],
+          label: 'Penilaian Akhir',
+          rules: [fieldValidation.isRequired('Penilaian Akhir')],
           error: null,
           disabled: false,
           options: [],

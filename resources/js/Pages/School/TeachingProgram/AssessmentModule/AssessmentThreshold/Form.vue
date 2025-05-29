@@ -28,8 +28,8 @@ export default {
       },
       field: {
         name: {
-          label: 'Rubrik',
-          rules: [fieldValidation.isRequired('Rubrik')],
+          label: 'Kriteria Ketercapaian',
+          rules: [fieldValidation.isRequired('Kriteria Ketercapaian')],
           error: null,
           disabled: false,
           options: [],

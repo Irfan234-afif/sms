@@ -1,7 +1,1039 @@
 [
   {
     "title": "Kurikulum Merdeka",
-    
+    "school_level_code": "KINDERGARTEN",
+    "code": "KM",
+    "learning_objective_categories": [
+      {
+        "title": "Capaian Pembelajaran",
+        "code": "CP",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": false,
+          "scope_school_year": false
+        },
+        "childs": [
+          {
+            "title": "Tujuan Pembelajaran",
+            "code": "TP",
+            "options": {
+              "scope_school_phase": true,
+              "scope_school_grade": true,
+              "scope_school_subject": true,
+              "scope_school_year": true
+            }
+          }
+        ]
+      },
+      {
+        "title": "Ruang Lingkup Pembelajaran",
+        "code": "RLP",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": true,
+          "scope_school_year": true
+        },
+        "childs": []
+      }
+    ],
+    "assessment_modules": [
+      {
+        "name": "Penilaian Mingguan",
+        "description": "Penilaian Mata Pelajaran Mingguan",
+        "type": "SUBJECT",
+        "aspects": [
+          {
+            "name": "Weekly 1",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 2",
+            "sort_order": 2,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 3",
+            "sort_order": 3,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 4",
+            "sort_order": 4,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 5",
+            "sort_order": 5,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 6",
+            "sort_order": 6,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 7",
+            "sort_order": 7,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 8",
+            "sort_order": 8,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 9",
+            "sort_order": 9,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 10",
+            "sort_order": 10,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 11",
+            "sort_order": 11,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 12",
+            "sort_order": 12,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 13",
+            "sort_order": 13,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 14",
+            "sort_order": 14,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 15",
+            "sort_order": 15,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 16",
+            "sort_order": 16,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Weekly 17",
+            "sort_order": 17,
+            "use_sessions": true,
+            "total_sessions": 1,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Potensi Kembang Anak",
+            "description": "Rubrik untuk penilaian Potensi Kembang Anak",
+            "scales": [
+              {
+                "score": 1,
+                "predicate": "BB",
+                "narrative": "Belum Berkembang"
+              },
+              {
+                "score": 2,
+                "predicate": "MB",
+                "narrative": "Mulai Berkembang"
+              },
+              {
+                "score": 3,
+                "predicate": "BSH",
+                "narrative": "Berkembang Sesuai Harapan"
+              },
+              {
+                "score": 4,
+                "predicate": "BSB",
+                "narrative": "Berkembang Sangat Baik"
+              }
+            ]
+          }
+        ],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "status": "FAILED",
+                "score": 1,
+                "predicate": "BB",
+                "narrative": "Belum Berkembang"
+              },
+              {
+                "status": "PASSED",
+                "score": 2,
+                "predicate": "MB",
+                "narrative": "Mulai Berkembang"
+              },
+              {
+                "status": "PASSED",
+                "score": 3,
+                "predicate": "BSH",
+                "narrative": "Berkembang Sesuai Harapan"
+              },
+              {
+                "status": "PASSED",
+                "score": 4,
+                "predicate": "BSB",
+                "narrative": "Berkembang Sangat Baik"
+              }
+            ]
+          }
+        ],
+        "final_rules": [
+          {
+            "name": "Evaluasi Triwulan",
+            "sort_order": 2,
+            "use_score": false,
+            "score_method": null,
+            "use_predicate": false,
+            "predicate_method": null,
+            "use_narrative": false,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [],
+            "final_narratives": [
+              {
+                "aspect_name": "Weekly 1"
+              },
+              {
+                "aspect_name": "Weekly 2"
+              },
+              {
+                "aspect_name": "Weekly 3"
+              },
+              {
+                "aspect_name": "Weekly 4"
+              },
+              {
+                "aspect_name": "Weekly 5"
+              },
+              {
+                "aspect_name": "Weekly 6"
+              },
+              {
+                "aspect_name": "Weekly 7"
+              },
+              {
+                "aspect_name": "Weekly 8"
+              },
+              {
+                "aspect_name": "Weekly 9"
+              },
+              {
+                "aspect_name": "Weekly 10"
+              },
+              {
+                "aspect_name": "Weekly 11"
+              },
+              {
+                "aspect_name": "Weekly 12"
+              }
+            ]
+          },
+          {
+            "name": "Evaluasi Semester",
+            "sort_order": 2,
+            "use_score": false,
+            "score_method": null,
+            "use_predicate": false,
+            "predicate_method": null,
+            "use_narrative": false,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [],
+            "final_narratives": [
+              {
+                "aspect_name": "Weekly 1"
+              },
+              {
+                "aspect_name": "Weekly 2"
+              },
+              {
+                "aspect_name": "Weekly 3"
+              },
+              {
+                "aspect_name": "Weekly 4"
+              },
+              {
+                "aspect_name": "Weekly 5"
+              },
+              {
+                "aspect_name": "Weekly 6"
+              },
+              {
+                "aspect_name": "Weekly 7"
+              },
+              {
+                "aspect_name": "Weekly 8"
+              },
+              {
+                "aspect_name": "Weekly 9"
+              },
+              {
+                "aspect_name": "Weekly 10"
+              },
+              {
+                "aspect_name": "Weekly 11"
+              },
+              {
+                "aspect_name": "Weekly 12"
+              },
+              {
+                "aspect_name": "Weekly 13"
+              },
+              {
+                "aspect_name": "Weekly 14"
+              },
+              {
+                "aspect_name": "Weekly 15"
+              },
+              {
+                "aspect_name": "Weekly 16"
+              },
+              {
+                "aspect_name": "Weekly 17"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Kurikulum Merdeka",
+    "school_level_code": "ELEMENTARY",
+    "code": "KM",
+    "learning_objective_categories": [
+      {
+        "title": "Capaian Pembelajaran",
+        "code": "CP",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": false,
+          "scope_school_year": false
+        },
+        "childs": [
+          {
+            "title": "Tujuan Pembelajaran",
+            "code": "TP",
+            "options": {
+              "scope_school_phase": true,
+              "scope_school_grade": true,
+              "scope_school_subject": true,
+              "scope_school_year": true
+            }
+          }
+        ]
+      },
+      {
+        "title": "Learning Objective",
+        "code": "LO",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": true,
+          "scope_school_year": true
+        },
+        "childs": []
+      }
+    ],
+    "assessment_modules": [
+      {
+        "name": "Penilaian Umum",
+        "description": "Penilaian Mata Pelajaran Umum",
+        "type": "SUBJECT",
+        "aspects": [
+          {
+            "name": "Penilaian Umum Mid Semester",
+            "sort_order": 2,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Penilaian Umum Akhir Semester",
+            "sort_order": 4,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Ujian Akhir Semester",
+            "sort_order": 5,
+            "use_sessions": true,
+            "total_sessions": 3,
+            "use_final_score": true,
+            "final_score_method": "SUM",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          }
+        ],
+        "rubrics": [],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "status": "PASSED",
+                "score": 75,
+                "predicate": "A",
+                "narrative": "Siswa telah mampu dalam"
+              },
+              {
+                "status": "FAILED",
+                "score": 50,
+                "predicate": "B",
+                "narrative": "Namun Siswa perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "final_rules": [
+          {
+            "name": "Nilai Mid Semester",
+            "sort_order": 1,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": false,
+            "predicate_method": null,
+            "use_narrative": false,
+            "narrative_method": null,
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Umum Mid Semester",
+                "portion_score": 100
+              }
+            ],
+            "final_narratives": []
+          },
+          {
+            "name": "Nilai Akhir Semester",
+            "sort_order": 2,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": true,
+            "predicate_method": "THRESHOLD",
+            "use_narrative": true,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Umum Mid Semester",
+                "portion_score": 30
+              },
+              {
+                "aspect_name": "Penilaian Umum Akhir Semester",
+                "portion_score": 30
+              },
+              {
+                "aspect_name": "Ujian Akhir Semester",
+                "portion_score": 40
+              }
+            ],
+            "final_narratives": [
+              {
+                "aspect_name": "Penilaian Umum Mid Semester"
+              },
+              {
+                "aspect_name": "Penilaian Umum Akhir Semester"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Kurikulum Merdeka",
+    "school_level_code": "MIDDLE",
+    "code": "KM",
+    "learning_objective_categories": [
+      {
+        "title": "Capaian Pembelajaran",
+        "code": "CP",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": false,
+          "scope_school_year": false
+        },
+        "childs": [
+          {
+            "title": "Tujuan Pembelajaran",
+            "code": "TP",
+            "options": {
+              "scope_school_phase": true,
+              "scope_school_grade": true,
+              "scope_school_subject": true,
+              "scope_school_year": true
+            }
+          }
+        ]
+      },
+      {
+        "title": "Learning Objective",
+        "code": "LO",
+        "options": {
+          "scope_school_phase": true,
+          "scope_school_grade": true,
+          "scope_school_subject": true,
+          "scope_school_year": true
+        },
+        "childs": []
+      }
+    ],
+    "assessment_modules": [
+      {
+        "name": "Penilaian Sikap",
+        "description": "Penilaian Sikap Per Mata Pelajaran",
+        "type": "SUBJECT",
+        "aspects": [
+          {
+            "name": "Sikap Term 1",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 6,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Sikap Term 2",
+            "sort_order": 2,
+            "use_sessions": true,
+            "total_sessions": 6,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Sikap Term 4",
+            "sort_order": 3,
+            "use_sessions": true,
+            "total_sessions": 6,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Sikap Term 5",
+            "sort_order": 4,
+            "use_sessions": true,
+            "total_sessions": 6,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Sikap",
+            "description": "Rubrik untuk penilaian Sikap",
+            "scales": [
+              {
+                "score": 1,
+                "predicate": "1",
+                "narrative": "1"
+              },
+              {
+                "score": 2,
+                "predicate": "2",
+                "narrative": "2"
+              },
+              {
+                "score": 3,
+                "predicate": "3",
+                "narrative": "3"
+              },
+              {
+                "score": 4,
+                "predicate": "4",
+                "narrative": "4"
+              },
+              {
+                "score": 5,
+                "predicate": "5",
+                "narrative": "5"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "final_rules": []
+      },
+      {
+        "name": "Penilaian Umum",
+        "description": "Penilaian Mata Pelajaran Umum",
+        "type": "SUBJECT",
+        "aspects": [
+          {
+            "name": "Penilaian Keterampilan Term 1",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan Term 1",
+            "sort_order": 2,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Penilaian Keterampilan Term 2",
+            "sort_order": 3,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan Term 2",
+            "sort_order": 4,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Penilaian Keterampilan Term 3",
+            "sort_order": 5,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan Term 3",
+            "sort_order": 6,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Penilaian Keterampilan Term 4",
+            "sort_order": 7,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan Term 4",
+            "sort_order": 8,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Penilaian Keterampilan Term 5",
+            "sort_order": 9,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan Term 5",
+            "sort_order": 10,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Penilaian Keterampilan Term 6",
+            "sort_order": 11,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Pengetahuan Term 6",
+            "sort_order": 12,
+            "use_sessions": true,
+            "total_sessions": 10,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "TP"
+          },
+          {
+            "name": "Ujian Akhir Semester",
+            "sort_order": 13,
+            "use_sessions": true,
+            "total_sessions": 3,
+            "use_final_score": true,
+            "final_score_method": "SUM",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          }
+        ],
+        "rubrics": [],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "status": "PASSED",
+                "score": 75,
+                "predicate": "A",
+                "narrative": "Siswa telah mampu dalam"
+              },
+              {
+                "status": "FAILED",
+                "score": 50,
+                "predicate": "B",
+                "narrative": "Namun Siswa perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "final_rules": [
+          {
+            "name": "Nilai Mid Semester",
+            "sort_order": 1,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": false,
+            "predicate_method": null,
+            "use_narrative": false,
+            "narrative_method": null,
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Keterampilan Term 1",
+                "portion_score": 16.66
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 1",
+                "portion_score": 16.66
+              },
+              {
+                "aspect_name": "Penilaian Keterampilan Term 2",
+                "portion_score": 16.66
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 2",
+                "portion_score": 16.66
+              },
+              {
+                "aspect_name": "Penilaian Keterampilan Term 3",
+                "portion_score": 16.66
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 3",
+                "portion_score": 16.66
+              }
+            ],
+            "final_narratives": []
+          },
+          {
+            "name": "Nilai Akhir Semester",
+            "sort_order": 2,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": true,
+            "predicate_method": "THRESHOLD",
+            "use_narrative": true,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Keterampilan Term 1",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 1",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Keterampilan Term 2",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 2",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Keterampilan Term 3",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 3",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Keterampilan Term 4",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 4",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Keterampilan Term 5",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 5",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Keterampilan Term 6",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 6",
+                "portion_score": 5.42
+              },
+              {
+                "aspect_name": "Ujian Akhir Semester",
+                "portion_score": 35
+              }
+            ],
+            "final_narratives": [
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 1"
+              },
+
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 2"
+              },
+
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 3"
+              },
+
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 4"
+              },
+
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 5"
+              },
+
+              {
+                "aspect_name": "Penilaian Pengetahuan Term 6"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Subject Transcript",
+        "description": "Penilaian Subject Transcript Cambridge",
+        "type": "SUBJECT",
+        "aspects": [
+          {
+            "name": "Learning Objective Term 1",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 5,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "LO"
+          },
+          {
+            "name": "Learning Objective Term 2",
+            "sort_order": 2,
+            "use_sessions": true,
+            "total_sessions": 5,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "LO"
+          },
+          {
+            "name": "Learning Objective Term 4",
+            "sort_order": 3,
+            "use_sessions": true,
+            "total_sessions": 5,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "LO"
+          },
+          {
+            "name": "Learning Objective Term 5",
+            "sort_order": 4,
+            "use_sessions": true,
+            "total_sessions": 5,
+            "use_final_score": false,
+            "final_score_method": null,
+            "use_learning_objective": true,
+            "learning_objective_category_code": "LO"
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Learning Objective",
+            "description": "Rubrik Learning Objective",
+            "scales": [
+              {
+                "score": 4,
+                "predicate": "A",
+                "narrative": "A"
+              },
+              {
+                "score": 3,
+                "predicate": "B",
+                "narrative": "B"
+              },
+              {
+                "score": 2,
+                "predicate": "C",
+                "narrative": "C"
+              },
+              {
+                "score": 1,
+                "predicate": "D",
+                "narrative": "D"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "final_rules": []
+      }
+    ]
+  },
+  {
+    "title": "Kurikulum Merdeka",
+    "school_level_code": "HIGH",
     "code": "KM",
     "learning_objective_categories": [
       {
@@ -48,7 +1080,7 @@
             "name": "Sikap Mid Semester",
             "sort_order": 1,
             "use_sessions": true,
-            "total_sessions": 8,
+            "total_sessions": 9,
             "use_final_score": false,
             "final_score_method": null,
             "use_learning_objective": false,
@@ -58,7 +1090,7 @@
             "name": "Sikap Akhir Semester",
             "sort_order": 2,
             "use_sessions": true,
-            "total_sessions": 8,
+            "total_sessions": 9,
             "use_final_score": false,
             "final_score_method": null,
             "use_learning_objective": false,

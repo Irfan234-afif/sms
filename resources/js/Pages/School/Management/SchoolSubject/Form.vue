@@ -27,7 +27,7 @@ export default {
       field: {
         school_subject_group_id: {
           label: 'Grup Mata Pelajaran',
-          rules: [fieldValidation.isRequired('Grup Mata Pelajaran')],
+          rules: [],
           error: null,
           disabled: false,
           options: [],
@@ -39,7 +39,7 @@ export default {
         },
         description: {
           label: 'Keterangan',
-          rules: [fieldValidation.isRequired('Keterangan')],
+          rules: [],
           error: null,
         },
       },
@@ -80,7 +80,7 @@ export default {
 
           let requestPayload = JSON.parse(JSON.stringify(this.form));
 
-          requestPayload.school_subject_group_id = requestPayload.school_subject_group_id.uuid;
+          requestPayload.school_subject_group_id = requestPayload.school_subject_group_id?.uuid;
 
           axios
             .post(route('school.management.schoolSubject.save'), requestPayload, {

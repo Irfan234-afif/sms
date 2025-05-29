@@ -64,12 +64,13 @@ class AssessmentSessionController extends Controller
         DB::beginTransaction();
 
         try {
+            $assessment_session_ids = [];
+            
             foreach (request('sessions') as $session) {
                 $assessment_record = AssessmentRecord::where('uuid', $session['record_id'])->firstOrFail();
                 $assessment_aspect = AssessmentAspect::where('uuid', $session['aspect_id'])->firstOrFail();
                 $learning_objective_ids = LearningObjective::whereIn('uuid', $session['learning_objective_ids'] ?? [])->pluck('id')->toArray();
                 $assessment_rubric = AssessmentRubric::where('uuid', $session['rubric_id'])->first();
-
                 $assessment_session_created = AssessmentSession::updateOrCreate([
                     'record_id' => $assessment_record->id,
                     'aspect_id' => $assessment_aspect->id,

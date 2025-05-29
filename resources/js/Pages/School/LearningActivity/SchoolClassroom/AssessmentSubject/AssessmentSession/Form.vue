@@ -47,6 +47,7 @@ export default {
         rubric_id_options: item.rubric ? [item.rubric] : [],
         sort_order: index + 1,
         name: item.name,
+        description: item.description,
         type: item.type,
         date: item.date,
         portion_score: item.portion_score,
@@ -99,6 +100,7 @@ export default {
         rubric_id_options: [],
         sort_order: this.sessions.length + 1,
         name: null,
+        description: null,
         type: 'SCORE',
         date: null,
         portion_score: 100,
@@ -182,6 +184,7 @@ export default {
           <tr>
             <th class="p-2 text-center">#</th>
             <th class="p-2">Sesi</th>
+            <th class="p-2">Keterangan</th>
             <th class="p-2" v-if="assessment_aspect.use_learning_objective">Objektif Pembelajaran</th>
             <th class="p-2">Jenis Penilaian</th>
             <th class="p-2"></th>
@@ -196,6 +199,9 @@ export default {
             </td>
             <td class="w-1/5 p-2">
               <el-input v-model="session.name" autocomplete="off" />
+            </td>
+            <td class="w-1/5 p-2">
+              <el-input type="textarea" v-model="session.description" autocomplete="off" />
             </td>
             <td v-if="assessment_aspect.use_learning_objective" class="w-1/5 p-2">
               <el-select
@@ -218,7 +224,7 @@ export default {
                 />
               </el-select>
             </td>
-            <td class="w-1/5 p-2">
+            <td class="p-2" style="width: 10rem">
               <el-select v-model="session.type" placeholder="Pilih">
                 <el-option
                   v-for="option in type_options"
@@ -250,7 +256,7 @@ export default {
                 />
               </el-select>
             </td>
-            <td class="w-1/8 p-2">
+            <td class="p-2" style="width: 10rem">
               <el-input type="number" v-model="session.portion_score" autocomplete="off">
                 <template #append>
                   <span>%</span>

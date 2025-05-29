@@ -175,18 +175,29 @@ export default {
 
     handleRawScoreChange(aspect_session, aspect_result, student) {
       if (aspect_session.type == 'SCORE') {
-        aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
+        if (aspect_session.raw_score != null && aspect_session.raw_score != '') {
+          aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
+        } else {
+          aspect_session.final_score = null;
+        }
       } else if (aspect_session.type == 'RUBRIC') {
         let rubric_scale = aspect_session.rubric_scale_options.find((x) => x.uuid === aspect_session.rubric_scale_id);
-        aspect_session.raw_score = rubric_scale.score;
-        aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
-        aspect_session.final_predicate = rubric_scale.predicate;
-        aspect_session.final_narrative = rubric_scale.narrative;
+        if (rubric_scale) {
+          aspect_session.raw_score = rubric_scale.score;
+          aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
+          aspect_session.final_predicate = rubric_scale.predicate;
+          aspect_session.final_narrative = rubric_scale.narrative;
+        } else {
+          aspect_session.raw_score = null;
+          aspect_session.final_score = null;
+        }
       } else {
         aspect_session.final_score = null;
       }
       this.updateAspectResult(aspect_result);
       this.updateFinalResult(student);
+
+      console.log(aspect_session.final_score);
     },
 
     async submit() {
@@ -282,15 +293,15 @@ export default {
               :key="idx"
               class="px-4 py-3 align-top"
             >
-              <div class="grid grid-cols-3 gap-3" style="width: 570px">
+              <div class="flex space-x-3">
                 <template
                   v-for="(session, sidx) in aspect_result.sessions.sort((a, b) => a.sort_order - b.sort_order)"
                   :key="sidx"
                 >
-                  <div class="col-span-1 flex space-x-3">
+                  <div class="flex space-x-3" style="width: 200px">
                     <el-popover :title="session.session_name" placement="top-start" :width="500" trigger="click">
                       <template #reference>
-                        <el-button class="w-full" type="primary" plain>{{ session.session_name }}</el-button>
+                        <el-button style="width: 100px" type="primary" plain>{{ session.session_name }}</el-button>
                       </template>
                       <template #default>
                         <div v-if="session.learning_objectives">
@@ -303,7 +314,7 @@ export default {
                     <el-input
                       v-if="session.type == 'SCORE'"
                       type="number"
-                      class="w-full"
+                      style="width: 80px"
                       v-model.number="session.raw_score"
                       @input="handleRawScoreChange(session, aspect_result, student)"
                     />
@@ -325,8 +336,8 @@ export default {
                   </div>
                 </template>
                 <div class="col-span-1 flex space-x-3" v-if="aspect_result.use_final_score">
-                  <el-button class="w-full" type="warning" plain>Nilai Akhir</el-button>
-                  <el-input type="number" class="w-full" v-model.number="aspect_result.final_score" readonly />
+                  <el-button style="width: 100px" type="warning" plain>Nilai Akhir</el-button>
+                  <el-input type="number" style="width: 80px" v-model.number="aspect_result.final_score" readonly />
                 </div>
               </div>
             </td>
@@ -336,87 +347,81 @@ export default {
               class="px-4 py-3 align-top"
             >
               <div class="flex space-x-3">
-                <div class="grid w-full grid-cols-2 gap-3" style="width: 485px">
-                  <div class="col-span-2 flex space-x-3" v-if="final_result.use_score">
-                    <el-button style="width: 280px" type="success" plain>Nilai Akhir</el-button>
+                <div class="flex space-x-3" v-if="final_result.use_score">
+                  <el-button style="width: 100px" type="success" plain>Nilai Akhir</el-button>
+                  <div style="width: 80px">
                     <el-input type="number" v-model.number="final_result.final_score" readonly />
-                    <el-button plain v-if="final_result.use_predicate">{{
-                      final_result.final_predicate ?? '-'
-                    }}</el-button>
                   </div>
-                  <div class="col-span-2 flex space-x-3" v-if="final_result.use_narrative">
-                    <el-button style="width: 240px" plain>KK Tuntas</el-button>
-                    <el-select
-                      class="w-2/3"
-                      v-model="final_result.threshold_scale_passed_id"
-                      placeholder="Pilih"
-                      @change="getFinalResultNarrative(final_result)"
-                      clearable
-                    >
-                      <el-option
-                        v-for="option in final_result.threshold_scale_passed_options"
-                        :key="option.uuid"
-                        :label="option.narrative"
-                        :value="option.uuid"
-                      />
-                    </el-select>
-                  </div>
-                  <div class="col-span-2 flex space-x-3" v-if="final_result.use_narrative">
-                    <el-button style="width: 240px" plain>Objektif Tuntas</el-button>
-                    <el-select
-                      class="w-2/3"
-                      v-model="final_result.learning_objective_passed_id"
-                      placeholder="Pilih"
-                      @change="getFinalResultNarrative(final_result)"
-                      clearable
-                    >
-                      <el-option
-                        v-for="option in final_result.learning_objective_passed_options"
-                        :key="option.uuid"
-                        :label="option.code"
-                        :value="option.uuid"
-                      />
-                    </el-select>
-                  </div>
-                  <div class="col-span-2 flex space-x-3" v-if="final_result.use_narrative">
-                    <el-button style="width: 240px" plain>KK Tidak Tuntas</el-button>
-                    <el-select
-                      class="w-2/3"
-                      v-model="final_result.threshold_scale_failed_id"
-                      placeholder="Pilih"
-                      @change="getFinalResultNarrative(final_result)"
-                      clearable
-                    >
-                      <el-option
-                        v-for="option in final_result.threshold_scale_failed_options"
-                        :key="option.uuid"
-                        :label="option.narrative"
-                        :value="option.uuid"
-                      />
-                    </el-select>
-                  </div>
-                  <div class="col-span-2 flex space-x-3" v-if="final_result.use_narrative">
-                    <el-button style="width: 240px" plain>Objektif Tidak Tuntas</el-button>
-                    <el-select
-                      class="w-2/3"
-                      v-model="final_result.learning_objective_failed_id"
-                      placeholder="Pilih"
-                      @change="getFinalResultNarrative(final_result)"
-                      clearable
-                    >
-                      <el-option
-                        v-for="option in final_result.learning_objective_failed_options"
-                        :key="option.uuid"
-                        :label="option.code"
-                        :value="option.uuid"
-                      />
-                    </el-select>
-                  </div>
+                  <el-button plain v-if="final_result.use_predicate">{{
+                    final_result.final_predicate ?? '-'
+                  }}</el-button>
                 </div>
-                <div class="grid w-full grid-cols-1 gap-3" style="width: 485px" v-if="final_result.use_narrative">
-                  <div class="col-span-2 flex space-x-3" v-if="final_result.use_score">
-                    <el-input type="textarea" :rows="5" v-model="final_result.final_narrative" readonly />
-                  </div>
+                <div class="flex space-x-3" v-if="final_result.use_narrative">
+                  <el-button style="width: 240px" plain>KKTP Tuntas</el-button>
+                  <el-select
+                    v-model="final_result.threshold_scale_passed_id"
+                    placeholder="Pilih"
+                    @change="getFinalResultNarrative(final_result)"
+                    clearable
+                  >
+                    <el-option
+                      v-for="option in final_result.threshold_scale_passed_options"
+                      :key="option.uuid"
+                      :label="option.narrative"
+                      :value="option.uuid"
+                    />
+                  </el-select>
+                </div>
+                <div class="flex space-x-3" v-if="final_result.use_narrative">
+                  <el-button style="width: 240px" plain>Objektif Tuntas</el-button>
+                  <el-select
+                    v-model="final_result.learning_objective_passed_id"
+                    placeholder="Pilih"
+                    @change="getFinalResultNarrative(final_result)"
+                    clearable
+                  >
+                    <el-option
+                      v-for="option in final_result.learning_objective_passed_options"
+                      :key="option.uuid"
+                      :label="option.code"
+                      :value="option.uuid"
+                    />
+                  </el-select>
+                </div>
+                <div class="flex space-x-3" v-if="final_result.use_narrative">
+                  <el-button style="width: 240px" plain>KKTP Tidak Tuntas</el-button>
+                  <el-select
+                    v-model="final_result.threshold_scale_failed_id"
+                    placeholder="Pilih"
+                    @change="getFinalResultNarrative(final_result)"
+                    clearable
+                  >
+                    <el-option
+                      v-for="option in final_result.threshold_scale_failed_options"
+                      :key="option.uuid"
+                      :label="option.narrative"
+                      :value="option.uuid"
+                    />
+                  </el-select>
+                </div>
+                <div class="flex space-x-3" v-if="final_result.use_narrative">
+                  <el-button style="width: 240px" plain>Objektif Tidak Tuntas</el-button>
+                  <el-select
+                    v-model="final_result.learning_objective_failed_id"
+                    placeholder="Pilih"
+                    @change="getFinalResultNarrative(final_result)"
+                    clearable
+                  >
+                    <el-option
+                      v-for="option in final_result.learning_objective_failed_options"
+                      :key="option.uuid"
+                      :label="option.code"
+                      :value="option.uuid"
+                    />
+                  </el-select>
+                </div>
+                <div v-if="final_result.use_narrative" class="flex space-x-3" style="width: 480px">
+                  <el-input type="textarea" :rows="5" v-model="final_result.final_narrative" readonly />
                 </div>
               </div>
             </td>

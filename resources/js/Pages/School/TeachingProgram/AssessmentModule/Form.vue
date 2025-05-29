@@ -21,13 +21,36 @@ export default {
       form: {
         assessment_module_id: null,
         name: null,
+        type: 'SUBJECT',
         description: null,
       },
       field: {
         name: {
-          label: 'Modul Penilaian',
-          rules: [fieldValidation.isRequired('Modul Penilaian')],
+          label: 'Modul',
+          rules: [fieldValidation.isRequired('Modul')],
           error: null,
+        },
+        type: {
+          label: 'Kategory',
+          rules: [fieldValidation.isRequired('Kategory')],
+          error: null,
+          options: [
+            {
+              label: 'Mata Pelajaran',
+              value: 'SUBJECT',
+              disabled: false,
+            },
+            {
+              label: 'Ekstrakurikuler',
+              value: 'EXTRACURRICULAR',
+              disabled: true,
+            },
+            {
+              label: 'Pengembangan Diri',
+              value: 'PERSONAL_DEVELOPMENT',
+              disabled: true,
+            },
+          ],
         },
         description: {
           label: 'Keterangan',
@@ -40,9 +63,10 @@ export default {
   created() {
     let mode = this.propertyModal.mode;
     if (mode == 'assessment-module-edit-form') {
-      this.form.assessment_module_id = this.propertyModal.data.assessment_module?.uuid;
-      this.form.name = this.propertyModal.data.assessment_module?.name;
-      this.form.description = this.propertyModal.data.assessment_module?.description;
+      this.form.assessment_module_id = this.propertyModal.data.assessment_module.uuid;
+      this.form.name = this.propertyModal.data.assessment_module.name;
+      this.form.type = this.propertyModal.data.assessment_module.type;
+      this.form.description = this.propertyModal.data.assessment_module.description;
     }
   },
   methods: {
@@ -124,6 +148,23 @@ export default {
           prop="name"
         >
           <el-input v-model="form.name" autocomplete="off" />
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
+          :label="field.type.label"
+          :rules="field.type.rules"
+          :error="field.type.error"
+          prop="type"
+        >
+          <el-select v-model="form.type" :placeholder="`Pilih ${field.type.label}`" clearable>
+            <el-option
+              v-for="option in field.type.options"
+              :key="option.value"
+              :label="option.label"
+              :disabled="option.disabled"
+              :value="option.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item
           class="font-medium"
