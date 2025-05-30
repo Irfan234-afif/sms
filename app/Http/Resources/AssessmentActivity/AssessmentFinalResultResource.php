@@ -17,7 +17,7 @@ class AssessmentFinalResultResource extends JsonResource
     public function toArray(Request $request): array
     {
         $assessment_threshold = AssessmentThreshold::whereHas('module', function ($module) {
-            $module->where('uuid', $this->final_rule->module->uuid);
+            $module->where('uuid', $this->final_rule?->module?->uuid);
         })->first();
         $threshold_scale_passed_options = [];
         $threshold_scale_failed_options = [];

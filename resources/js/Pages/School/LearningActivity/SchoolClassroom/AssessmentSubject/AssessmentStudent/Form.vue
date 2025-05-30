@@ -126,6 +126,7 @@ export default {
     },
 
     getFinalResultLearningObjectives(student) {
+      
       student.final_results.forEach((final_result) => {
         final_result.learning_objective_passed_options = [];
         final_result.learning_objective_failed_options = [];
@@ -134,10 +135,11 @@ export default {
         final_result.rule_narratives.forEach((rule_narrative) => {
           const aspect_result = student.aspect_results.find((x) => x.aspect_uuid === rule_narrative.aspect_uuid);
 
+          
+
           if (aspect_result && aspect_result.sessions.length > 0) {
             const valid_sessions = aspect_result.sessions.filter(
               (session) =>
-                Array.isArray(session.learning_objectives) &&
                 session.learning_objectives.length > 0 &&
                 session.final_score != null &&
                 session.final_score !== '',
@@ -147,6 +149,8 @@ export default {
         });
 
         if (all_valid_sessions.length === 0) {
+          console.log('cok');
+          
           return;
         }
 
@@ -196,8 +200,6 @@ export default {
       }
       this.updateAspectResult(aspect_result);
       this.updateFinalResult(student);
-
-      console.log(aspect_session.final_score);
     },
 
     async submit() {

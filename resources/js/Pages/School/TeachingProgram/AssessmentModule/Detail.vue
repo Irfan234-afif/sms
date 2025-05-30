@@ -4,6 +4,7 @@ import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
 import { Head } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
+import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import AssessmentAspectForm from './AssessmentAspect/Form.vue';
@@ -187,6 +188,7 @@ export default {
                             }),
                             redirectUrl: route('school.teachingProgram.assessmentModule.detail', {
                               school_curriculum_id: school_curriculum.data.uuid,
+                              assessment_module_id: assessment_module.data.uuid,
                             }),
                             message:
                               'Ingin menghapus Penilaian Aspek? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
@@ -320,6 +322,7 @@ export default {
                             }),
                             redirectUrl: route('school.teachingProgram.assessmentModule.detail', {
                               school_curriculum_id: school_curriculum.data.uuid,
+                              assessment_module_id: assessment_module.data.uuid,
                             }),
                             message:
                               'Ingin menghapus Kriteria Ketercapaian? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
@@ -453,6 +456,7 @@ export default {
                             }),
                             redirectUrl: route('school.teachingProgram.assessmentModule.detail', {
                               school_curriculum_id: school_curriculum.data.uuid,
+                              assessment_module_id: assessment_module.data.uuid,
                             }),
                             message:
                               'Ingin menghapus Rubrik? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
@@ -596,6 +600,7 @@ export default {
                               }),
                               redirectUrl: route('school.teachingProgram.assessmentModule.detail', {
                                 school_curriculum_id: school_curriculum.data.uuid,
+                              assessment_module_id: assessment_module.data.uuid,
                               }),
                               message:
                                 'Ingin menghapus Penilaian Akhir? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
@@ -667,7 +672,7 @@ export default {
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
-          <DialogConfirm
+          <DeleteConfirm
             v-if="
               propertyModal?.mode == 'assessment-aspect-delete-confirm' ||
               propertyModal?.mode == 'assessment-rubric-delete-confirm' ||
