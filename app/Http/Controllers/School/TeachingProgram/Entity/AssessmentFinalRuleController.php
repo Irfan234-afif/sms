@@ -96,7 +96,7 @@ class AssessmentFinalRuleController extends Controller
         DB::beginTransaction();
 
         try {
-            $assessment_final_rule = AssessmentFinalRule::where('uuid', request('assessment_rubric_id'))->firstOrFail();
+            $assessment_final_rule = AssessmentFinalRule::where('uuid', request('assessment_final_rule_id'))->firstOrFail();
 
             $assessment_final_rule->delete();
 

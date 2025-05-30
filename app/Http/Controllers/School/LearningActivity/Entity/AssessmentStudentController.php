@@ -60,26 +60,44 @@ class AssessmentStudentController extends Controller
                     'record_id' => $assessment_record->id,
                     'student_id' => $student->id,
                 ]);
-
+            
+                $assessment_aspect_result_ids = [];
+            
                 foreach ($assessment_record->module->aspects as $aspect) {
-                    $assessment_aspect_result_created =  $assessment_student_created->aspect_results()->updateOrCreate([
+                    $assessment_aspect_result_created = $assessment_student_created->aspect_results()->updateOrCreate([
                         'aspect_id' => $aspect->id,
                     ]);
-
+            
+                    $aspect_result_session_ids = [];
+            
                     foreach ($assessment_record->sessions()->where('aspect_id', $aspect->id)->get() as $session) {
-                        $assessment_aspect_result_created->sessions()->updateOrCreate([
+                        $aspect_result_session_created = $assessment_aspect_result_created->sessions()->updateOrCreate([
                             'session_id' => $session->id,
                         ]);
+                        $aspect_result_session_ids[] = $aspect_result_session_created->id;
                     }
+            
+                    $assessment_aspect_result_created->sessions()->whereNotIn('id', $aspect_result_session_ids)->delete();
+            
+                    $assessment_aspect_result_ids[] = $assessment_aspect_result_created->id;
                 }
-
+            
+                $assessment_student_created->aspect_results()->whereNotIn('id', $assessment_aspect_result_ids)->delete();
+            
+                $final_result_ids = [];
                 foreach ($assessment_record->module->final_rules as $final_rule) {
-                    AssessmentFinalResult::updateOrCreate([
+                    $final_result_created = AssessmentFinalResult::updateOrCreate([
                         'assessment_student_id' => $assessment_student_created->id,
                         'final_rule_id' => $final_rule->id,
                     ]);
+                    $final_result_ids[] = $final_result_created->id;
                 }
+            
+                $assessment_student_created->final_results()
+                    ->whereNotIn('id', $final_result_ids)
+                    ->delete();
             }
+            
 
             DB::commit();
         } catch (\Throwable $th) {
