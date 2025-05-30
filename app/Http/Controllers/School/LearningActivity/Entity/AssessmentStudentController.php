@@ -107,7 +107,7 @@ class AssessmentStudentController extends Controller
 
         $data = [
             'school_classroom' => SchoolClassroomResource::make($school_classroom),
-            'assessment_record' => AssessmentRecordResource::make($assessment_record),
+            'assessment_record' => AssessmentRecordResource::make($assessment_record->refresh()),
         ];
 
         return Inertia::render('School/LearningActivity/SchoolClassroom/AssessmentSubject/AssessmentStudent/Detail', $data);

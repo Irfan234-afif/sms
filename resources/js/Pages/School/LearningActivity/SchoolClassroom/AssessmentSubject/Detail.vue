@@ -150,7 +150,7 @@ export default {
             </div>
           </div>
 
-          <Link
+          <a
             :href="
               route('school.learningActivity.schoolClassroom.assessmentSubject.assessmentStudent', {
                 assessment_record_id: assessment_record.data.uuid,
@@ -163,7 +163,7 @@ export default {
                 <div>Lakukan Penilaian</div>
               </div>
             </DefaultButton>
-          </Link>
+          </a>
         </div>
       </section>
     </template>
