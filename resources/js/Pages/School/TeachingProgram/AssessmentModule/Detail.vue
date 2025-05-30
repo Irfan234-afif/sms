@@ -506,6 +506,7 @@ export default {
                         assessment_aspects_using_lo: assessment_module.data.aspects.filter(
                           (aspect) => aspect.use_learning_objective,
                         ),
+                        sort_order: assessment_module.data.final_rules.length + 1,
                       },
                     })
                   "
