@@ -18,6 +18,6 @@ class AssessmentRuleScore extends Model
 
     public function aspect()
     {
-        return $this->belongsTo(AssessmentAspect::class);
+        return $this->belongsTo(AssessmentAspect::class)->withTrashed();
     }
 }
