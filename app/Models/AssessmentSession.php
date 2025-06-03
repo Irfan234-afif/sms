@@ -14,6 +14,7 @@ class AssessmentSession extends Model
         'record_id',
         'aspect_id',
         'name',
+        'description',
         'sort_order',
         'type',
         'rubric_id',
@@ -39,6 +40,6 @@ class AssessmentSession extends Model
 
     public function rubric()
     {
-        return $this->belongsTo(AssessmentRubric::class, 'rubric_id', );
+        return $this->belongsTo(AssessmentRubric::class, 'rubric_id',);
     }
 }

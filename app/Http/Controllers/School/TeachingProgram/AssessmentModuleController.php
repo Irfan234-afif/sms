@@ -49,7 +49,9 @@ class AssessmentModuleController extends Controller
         $school_curriculum = $this->school->academic_program_active->curriculum;
 
         $assessment_module = AssessmentModule::where('uuid', $assessment_module_id)
-            ->with('aspects.learning_objective_category')
+            ->with(['aspects' => function ($q) {
+                $q->orderBy('sort_order')->with('learning_objective_category');
+            }])
             ->with('rubrics.scales')
             ->with('thresholds.scales')
             ->with('final_rules.scores.aspect')

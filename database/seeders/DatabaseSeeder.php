@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterEmployeeSeeder::class);
         // dummy
         $this->command->warn('Executing dummy seeder');
-        Artisan::call('app:migrate-school-data');
-        // $this->call(DummySchoolManagementSeeder::class);
+        // Artisan::call('app:migrate-school-data');
+        $this->call(DummySchoolManagementSeeder::class);
         // $this->call(DummyPublicationActivitySeeder::class);
         // $this->call(DummySubmissionActivitySeeder::class);
-        // $this->call(DummyAdmissionStudentActivitySeeder::class);
+        $this->call(DummyAdmissionStudentActivitySeeder::class);
+        $this->call(DummySchoolPlacementActivitySeeder::class);
         $this->call(DummySchoolTeachingProgramActivitySeeder::class);
-        // 
     }
 }

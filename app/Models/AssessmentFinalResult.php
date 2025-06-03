@@ -19,7 +19,11 @@ class AssessmentFinalResult extends Model
         'threshold_scale_failed_id',
         'learning_objective_passed_id',
         'learning_objective_failed_id',
+        'predicate_passed',
+        'predicate_failed',
         'final_predicate',
+        'narrative_passed',
+        'narrative_failed',
         'final_narrative',
     ];
 

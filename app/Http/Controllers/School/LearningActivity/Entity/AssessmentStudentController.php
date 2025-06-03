@@ -60,30 +60,30 @@ class AssessmentStudentController extends Controller
                     'record_id' => $assessment_record->id,
                     'student_id' => $student->id,
                 ]);
-            
+
                 $assessment_aspect_result_ids = [];
-            
+
                 foreach ($assessment_record->module->aspects as $aspect) {
                     $assessment_aspect_result_created = $assessment_student_created->aspect_results()->updateOrCreate([
                         'aspect_id' => $aspect->id,
                     ]);
-            
+
                     $aspect_result_session_ids = [];
-            
+
                     foreach ($assessment_record->sessions()->where('aspect_id', $aspect->id)->get() as $session) {
                         $aspect_result_session_created = $assessment_aspect_result_created->sessions()->updateOrCreate([
                             'session_id' => $session->id,
                         ]);
                         $aspect_result_session_ids[] = $aspect_result_session_created->id;
                     }
-            
+
                     $assessment_aspect_result_created->sessions()->whereNotIn('id', $aspect_result_session_ids)->delete();
-            
+
                     $assessment_aspect_result_ids[] = $assessment_aspect_result_created->id;
                 }
-            
+
                 $assessment_student_created->aspect_results()->whereNotIn('id', $assessment_aspect_result_ids)->delete();
-            
+
                 $final_result_ids = [];
                 foreach ($assessment_record->module->final_rules as $final_rule) {
                     $final_result_created = AssessmentFinalResult::updateOrCreate([
@@ -92,12 +92,12 @@ class AssessmentStudentController extends Controller
                     ]);
                     $final_result_ids[] = $final_result_created->id;
                 }
-            
+
                 $assessment_student_created->final_results()
                     ->whereNotIn('id', $final_result_ids)
                     ->delete();
             }
-            
+
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -145,12 +145,17 @@ class AssessmentStudentController extends Controller
                     $final_result->update([
                         'raw_score' => $final_result_data['raw_score'],
                         'final_score' => $final_result_data['final_score'],
-                        'final_predicate' => $final_result_data['final_predicate'],
                         'threshold_scale_passed_id' => AssessmentThresholdScale::where('uuid', $final_result_data['threshold_scale_passed_id'])->first()?->id,
                         'threshold_scale_failed_id' => AssessmentThresholdScale::where('uuid', $final_result_data['threshold_scale_failed_id'])->first()?->id,
                         'learning_objective_passed_id' => LearningObjective::where('uuid', $final_result_data['learning_objective_passed_id'])->first()?->id,
                         'learning_objective_failed_id' => LearningObjective::where('uuid', $final_result_data['learning_objective_failed_id'])->first()?->id,
+                        'predicate_passed' => $final_result_data['predicate_passed'],
+                        'predicate_failed' => $final_result_data['predicate_failed'],
+                        'final_predicate' => $final_result_data['final_predicate'],
+                        'narrative_passed' => $final_result_data['narrative_passed'],
+                        'narrative_failed' => $final_result_data['narrative_failed'],
                         'final_narrative' => $final_result_data['final_narrative'],
+
                     ]);
                 }
             }

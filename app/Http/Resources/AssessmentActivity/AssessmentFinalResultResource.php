@@ -47,7 +47,11 @@ class AssessmentFinalResultResource extends JsonResource
             'learning_objective_passed_id' => $this->learning_objective_passed ? $this->learning_objective_passed->uuid : null,
             'learning_objective_failed_options' => [],
             'learning_objective_failed_id' => $this->learning_objective_failed ? $this->learning_objective_failed->uuid : null,
+            'predicate_passed' => $this->predicate_passed,
+            'predicate_failed' => $this->predicate_failed,
             'final_predicate' => $this->final_predicate,
+            'narrative_passed' => $this->narrative_passed,
+            'narrative_failed' => $this->narrative_failed,
             'final_narrative' => $this->final_narrative,
             // rules
             'rule_scores' => AssessmentRuleScoreResource::collection($this->final_rule->scores),

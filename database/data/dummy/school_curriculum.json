@@ -25,17 +25,6 @@
             }
           }
         ]
-      },
-      {
-        "title": "Ruang Lingkup Pembelajaran",
-        "code": "RLP",
-        "options": {
-          "scope_school_phase": true,
-          "scope_school_grade": true,
-          "scope_school_subject": true,
-          "scope_school_year": true
-        },
-        "childs": []
       }
     ],
     "assessment_modules": [
@@ -419,17 +408,6 @@
             }
           }
         ]
-      },
-      {
-        "title": "Learning Objective",
-        "code": "LO",
-        "options": {
-          "scope_school_phase": true,
-          "scope_school_grade": true,
-          "scope_school_subject": true,
-          "scope_school_year": true
-        },
-        "childs": []
       }
     ],
     "assessment_modules": [
@@ -1159,8 +1137,18 @@
             "learning_objective_category_code": "TP"
           },
           {
-            "name": "Penilaian Keterampilan Akhir Semester",
+            "name": "Ujian Mid Semester",
             "sort_order": 3,
+            "use_sessions": true,
+            "total_sessions": 3,
+            "use_final_score": true,
+            "final_score_method": "SUM",
+            "use_learning_objective": false,
+            "learning_objective_category_code": null
+          },
+          {
+            "name": "Penilaian Keterampilan Akhir Semester",
+            "sort_order": 4,
             "use_sessions": true,
             "total_sessions": 10,
             "use_final_score": true,
@@ -1170,7 +1158,7 @@
           },
           {
             "name": "Penilaian Pengetahuan Akhir Semester",
-            "sort_order": 4,
+            "sort_order": 5,
             "use_sessions": true,
             "total_sessions": 10,
             "use_final_score": true,
@@ -1180,7 +1168,7 @@
           },
           {
             "name": "Ujian Akhir Semester",
-            "sort_order": 5,
+            "sort_order": 6,
             "use_sessions": true,
             "total_sessions": 3,
             "use_final_score": true,
@@ -1223,11 +1211,15 @@
             "final_scores": [
               {
                 "aspect_name": "Penilaian Keterampilan Mid Semester",
-                "portion_score": 50
+                "portion_score": 30
               },
               {
                 "aspect_name": "Penilaian Pengetahuan Mid Semester",
-                "portion_score": 50
+                "portion_score": 30
+              },
+              {
+                "aspect_name": "Ujian Mid Semester",
+                "portion_score": 40
               }
             ],
             "final_narratives": []
@@ -1244,23 +1236,27 @@
             "final_scores": [
               {
                 "aspect_name": "Penilaian Keterampilan Mid Semester",
-                "portion_score": 20
+                "portion_score": 10
               },
               {
                 "aspect_name": "Penilaian Pengetahuan Mid Semester",
+                "portion_score": 10
+              },
+              {
+                "aspect_name": "Ujian Mid Semester",
                 "portion_score": 20
               },
               {
                 "aspect_name": "Penilaian Keterampilan Akhir Semester",
-                "portion_score": 20
+                "portion_score": 10
               },
               {
                 "aspect_name": "Penilaian Pengetahuan Akhir Semester",
-                "portion_score": 20
+                "portion_score": 10
               },
               {
                 "aspect_name": "Ujian Akhir Semester",
-                "portion_score": 20
+                "portion_score": 30
               }
             ],
             "final_narratives": [

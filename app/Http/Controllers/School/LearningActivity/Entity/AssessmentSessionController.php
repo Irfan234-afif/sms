@@ -65,7 +65,7 @@ class AssessmentSessionController extends Controller
 
         try {
             $assessment_session_ids = [];
-            
+
             foreach (request('sessions') as $session) {
                 $assessment_record = AssessmentRecord::where('uuid', $session['record_id'])->firstOrFail();
                 $assessment_aspect = AssessmentAspect::where('uuid', $session['aspect_id'])->firstOrFail();
@@ -77,6 +77,7 @@ class AssessmentSessionController extends Controller
                     'sort_order' => $session['sort_order'],
                 ], [
                     'name' => $session['name'],
+                    'description' => $session['description'],
                     'rubric_id' => $assessment_rubric?->id,
                     'type' => $session['type'],
                     'date' => $session['date'],
