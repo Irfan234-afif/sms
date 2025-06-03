@@ -14,12 +14,26 @@ class AssessmentAspectSessionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $type_label = 'Tidak diketahui';
+
+        switch ($this->session->type) {
+            case 'SCORE':
+                $type_label = 'Skor';
+                break;
+
+            case 'RUBRIC':
+                $type_label = 'Rubrik';
+                break;
+        }
         return [
             'uuid' => $this->uuid,
             'session_name' => $this->session->name,
+            'description' => $this->session->description,
             'sort_order' => $this->session->sort_order,
+            'use_learning_objective' => (bool) $this->session?->aspect?->use_learning_objective,
             'learning_objectives' => LearningObjectiveResource::collection($this->session->learning_objectives),
             'type' => $this->session->type,
+            'type_label' => $type_label,
             'rubric_name' => $this->session->rubric ? $this->session->rubric->name : null,
             'rubric_scale_options' => $this->session->rubric ? AssessmentRubricScaleResource::collection($this->session->rubric->scales) : [],
             'rubric_scale_id' => $this->rubric_scale ? $this->rubric_scale->uuid : null,

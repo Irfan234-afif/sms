@@ -46,7 +46,7 @@ class DummyAdmissionStudentActivitySeeder extends Seeder
                 DB::beginTransaction();
 
                 try {
-                    foreach (range(1, rand(25, 50)) as $index) {
+                    foreach (range(1, rand(150, 250)) as $index) {
                         $school = School::inRandomOrder()->first();
                         $school_year = SchoolYear::inRandomOrder()->first();
                         $school_grade = $school->level->grades()->inRandomOrder()->first();

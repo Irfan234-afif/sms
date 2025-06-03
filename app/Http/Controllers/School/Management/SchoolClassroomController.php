@@ -182,11 +182,8 @@ class SchoolClassroomController extends Controller
     {
         $school_classroom = SchoolClassroom::where('uuid', request('school_classroom_id'))->firstOrFail();
 
-        // $students = Student::where('school_id', $this->school->id)
-        //     ->where('school_grade_id', $school_classroom->school_grade_id); todo: fix params
-
-        $students = Student::where('school_id', $this->school->id);
-
+        $students = Student::where('school_id', $this->school->id)
+            ->where('school_grade_id', $school_classroom->school_grade_id);
 
         if (request()->has('search')) {
             $students->where(function ($query) {

@@ -52,6 +52,11 @@ class School extends Model
         return $this->hasMany(SchoolMajor::class, 'school_id');
     }
 
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'school_id');
+    }
+
     public function subject_groups()
     {
         return $this->hasMany(SchoolSubjectGroup::class, 'school_id');

@@ -1,7 +1,7 @@
 <script setup>
 import SchoolLayout from '@/Layouts/SchoolLayout.vue';
 import SchoolSidebar from '@/Layouts/Sidebars/SchoolSidebar.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import AssessmentSessionForm from './AssessmentSession/Form.vue';
@@ -131,7 +131,7 @@ export default {
             </ul>
           </div>
 
-          <div id="default-tab-content">
+          <div id="default-tab-content" class="w-full">
             <div
               v-for="(assessment_aspect, index) in assessment_record.data.module.aspects.filter(
                 (aspect) => aspect.use_sessions,
@@ -142,11 +142,13 @@ export default {
               role="tabpanel"
               :aria-labelledby="`tab-${index}`"
             >
-              <AssessmentSessionForm
-                :assessment_record="assessment_record.data"
-                :assessment_aspect="assessment_aspect"
-                :assessment_sessions="assessment_record.data.sessions"
-              />
+              <div class="w-full">
+                <AssessmentSessionForm
+                  :assessment_record="assessment_record.data"
+                  :assessment_aspect="assessment_aspect"
+                  :assessment_sessions="assessment_record.data.sessions"
+                />
+              </div>
             </div>
           </div>
 
