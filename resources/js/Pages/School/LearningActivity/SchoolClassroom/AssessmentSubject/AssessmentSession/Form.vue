@@ -24,8 +24,12 @@ export default {
           value: 'SCORE',
         },
         {
-          label: 'Rubrik',
-          value: 'RUBRIC',
+          label: 'Rubrik Tunggal',
+          value: 'SINGLE_RUBRIC',
+        },
+        {
+          label: 'Rubrik Ganda',
+          value: 'MULTI_RUBRIC',
         },
       ],
     };
@@ -40,21 +44,45 @@ export default {
         record_id: this.assessment_record.uuid,
         aspect_id: this.assessment_aspect.uuid,
         learning_objective_ids: Array.isArray(item.learning_objectives)
-          ? item.learning_objectives.map((lo) => lo.uuid)
+          ? item.learning_objectives.map((learning_objective) => learning_objective.uuid)
           : [],
         learning_objective_ids_options: item.learning_objectives ? item.learning_objectives : [],
         rubric_id: item.rubric ? item.rubric.uuid : null,
         rubric_id_options: item.rubric ? [item.rubric] : [],
+        rubric_ids: Array.isArray(item.rubrics) ? item.rubrics.map((rubric) => rubric.uuid) : [],
+        rubric_ids_options: item.rubrics ? item.rubrics : [],
         sort_order: index + 1,
         name: item.name,
         description: item.description,
         type: item.type,
+        method: item.method,
         date: item.date,
         portion_score: item.portion_score,
       }));
     }
   },
   methods: {
+    updateAssessmentType(index) {
+      if (this.sessions[index].type == 'SCORE') {
+        this.sessions[index].method = null;
+        this.sessions[index].rubric_id = null;
+        this.sessions[index].rubric_id_options = [];
+        this.sessions[index].rubric_ids = [];
+        this.sessions[index].rubric_ids_options = [];
+      }
+
+      if (this.sessions[index].type == 'SINGLE_RUBRIC') {
+        this.sessions[index].method = null;
+        this.sessions[index].rubric_ids = [];
+        this.sessions[index].rubric_ids_options = [];
+      }
+
+      if (this.sessions[index].type == 'MULTI_RUBRIC') {
+        this.sessions[index].method = 'AVERAGE';
+        this.sessions[index].rubric_id = null;
+        this.sessions[index].rubric_id_options = [];
+      }
+    },
     optionLearningObjective(search, index) {
       axios
         .get(
@@ -67,6 +95,23 @@ export default {
         )
         .then((response) => {
           this.sessions[index].learning_objective_ids_options = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    optionAssessmentMultiRubric(search, index) {
+      axios
+        .get(
+          route('school.learningActivity.schoolClassroom.assessmentSubject.assessmentRecord.optionAssessmentRubric', {
+            search: search,
+            assessment_record_id: this.assessment_record.uuid,
+            school_classroom_id: this.assessment_record.classroom.uuid,
+            assessment_module_id: this.assessment_record.module.uuid,
+          }),
+        )
+        .then((response) => {
+          this.sessions[index].rubric_ids_options = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -98,10 +143,13 @@ export default {
         learning_objective_ids_options: [],
         rubric_id: null,
         rubric_id_options: [],
+        rubric_ids: [],
+        rubric_ids_options: [],
         sort_order: this.sessions.length + 1,
         name: null,
         description: null,
         type: 'SCORE',
+        method: null,
         date: null,
         portion_score: 100,
       };
@@ -225,7 +273,7 @@ export default {
               </el-select>
             </td>
             <td class="px-1.5 py-2">
-              <el-select v-model="session.type" placeholder="Pilih">
+              <el-select v-model="session.type" placeholder="Pilih" @change="updateAssessmentType(index)">
                 <el-option
                   v-for="option in type_options"
                   :key="option.value"
@@ -236,7 +284,7 @@ export default {
             </td>
             <td class="px-1.5 py-2">
               <el-select
-                v-if="session.type === 'RUBRIC'"
+                v-if="session.type === 'SINGLE_RUBRIC'"
                 v-model="session.rubric_id"
                 placeholder="Pilih Rubrik"
                 :remote-method="(search) => optionAssessmentRubric(search, index)"
@@ -250,6 +298,26 @@ export default {
               >
                 <el-option
                   v-for="option in session.rubric_id_options"
+                  :key="option.uuid"
+                  :label="option.name"
+                  :value="option.uuid"
+                />
+              </el-select>
+              <el-select
+                v-if="session.type === 'MULTI_RUBRIC'"
+                v-model="session.rubric_ids"
+                placeholder="Pilih"
+                :remote-method="(search) => optionAssessmentMultiRubric(search, index)"
+                multiple
+                remote
+                filterable
+                autocomplete="off"
+                loading-text="..."
+                no-match-text="Data tidak ditemukan"
+                no-data-text="Tidak ada data"
+              >
+                <el-option
+                  v-for="option in session.rubric_ids_options"
                   :key="option.uuid"
                   :label="option.name"
                   :value="option.uuid"

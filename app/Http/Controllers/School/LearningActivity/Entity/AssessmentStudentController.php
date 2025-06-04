@@ -33,21 +33,8 @@ class AssessmentStudentController extends Controller
     {
         $school_classroom = SchoolClassroom::where('uuid', $school_classroom_id)->firstOrFail();
 
-        $assessment_record = AssessmentRecord::where('uuid', $assessment_record_id)
-            ->with([
-                'academic_program',
-                'classroom',
-                'subject',
-                'module.aspects.learning_objective_category',
-                'module.rubrics',
-                'sessions.learning_objectives',
-                'sessions.rubric',
-                'students.student.profile',
-                'students.aspect_results.aspect',
-                'students.aspect_results.sessions.session.learning_objectives',
-                'students.aspect_results.sessions.session.rubric',
-                'students.final_results.final_rule',
-            ])->firstOrFail();
+        $assessment_record = AssessmentRecord::where('uuid', $assessment_record_id)->firstOrFail();
+
 
         $students = $school_classroom->members;
 
@@ -68,16 +55,29 @@ class AssessmentStudentController extends Controller
                         'aspect_id' => $aspect->id,
                     ]);
 
-                    $aspect_result_session_ids = [];
+                    $aspect_session_ids = [];
 
                     foreach ($assessment_record->sessions()->where('aspect_id', $aspect->id)->get() as $session) {
-                        $aspect_result_session_created = $assessment_aspect_result_created->sessions()->updateOrCreate([
+                        $aspect_session_created = $assessment_aspect_result_created->sessions()->updateOrCreate([
                             'session_id' => $session->id,
                         ]);
-                        $aspect_result_session_ids[] = $aspect_result_session_created->id;
+
+                        $aspect_session_rubric_ids = [];
+
+                        foreach ($session->rubrics as $rubric) {
+                            $aspect_session_rubric_created = $aspect_session_created->aspect_session_rubrics()->updateOrCreate([
+                                'session_rubric_id' => $rubric->pivot->id,
+                            ]);
+
+                            $aspect_session_rubric_ids[] = $aspect_session_rubric_created->id;
+                        }
+
+                        $aspect_session_created->aspect_session_rubrics()->whereNotIn('id', $aspect_session_rubric_ids)->delete();
+
+                        $aspect_session_ids[] = $aspect_session_created->id;
                     }
 
-                    $assessment_aspect_result_created->sessions()->whereNotIn('id', $aspect_result_session_ids)->delete();
+                    $assessment_aspect_result_created->sessions()->whereNotIn('id', $aspect_session_ids)->delete();
 
                     $assessment_aspect_result_ids[] = $assessment_aspect_result_created->id;
                 }
@@ -137,6 +137,16 @@ class AssessmentStudentController extends Controller
                             'final_predicate' => $session_data['final_predicate'] ?? null,
                             'final_narrative' => $session_data['final_narrative'] ?? null,
                         ]);
+
+                        foreach ($session_data['rubrics'] as $session_rubric_data) {
+                            $session_rubric = $session->aspect_session_rubrics()->where('uuid', $session_rubric_data['uuid'])->firstOrFail();
+                            $session_rubric->update([
+                                'rubric_scale_id' => AssessmentRubricScale::where('uuid', $session_rubric_data['rubric_scale_id'])->first()?->id,
+                                'score' => $session_rubric_data['score'] ?? null,
+                                'predicate' => $session_rubric_data['predicate'] ?? null,
+                                'narrative' => $session_rubric_data['narrative'] ?? null,
+                            ]);
+                        }
                     }
                 }
 

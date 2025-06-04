@@ -94,6 +94,17 @@ export default {
     },
 
     getFinalResultNarrative(final_result) {
+      [
+        'threshold_scale_passed_id',
+        'threshold_scale_failed_id',
+        'learning_objective_passed_id',
+        'learning_objective_failed_id',
+      ].forEach((key) => {
+        if (final_result[key] === undefined) {
+          final_result[key] = null;
+        }
+      });
+
       final_result.final_narrative = null;
 
       const threshold_scale_passed = final_result.threshold_scale_passed_options.find(
@@ -185,8 +196,9 @@ export default {
         } else {
           aspect_session.final_score = null;
         }
-      } else if (aspect_session.type == 'RUBRIC') {
+      } else if (aspect_session.type == 'SINGLE_RUBRIC') {
         let rubric_scale = aspect_session.rubric_scale_options.find((x) => x.uuid === aspect_session.rubric_scale_id);
+
         if (rubric_scale) {
           aspect_session.raw_score = rubric_scale.score;
           aspect_session.final_score = aspect_session.raw_score * (aspect_session.portion_score / 100);
@@ -195,6 +207,54 @@ export default {
         } else {
           aspect_session.raw_score = null;
           aspect_session.final_score = null;
+        }
+      } else if (aspect_session.type == 'MULTI_RUBRIC') {
+        aspect_session.rubrics.forEach((aspect_session_rubric) => {
+          let rubric_scale = aspect_session_rubric.rubric_scale_options.find(
+            (x) => x.uuid === aspect_session_rubric.rubric_scale_id,
+          );
+
+          if (rubric_scale) {
+            aspect_session_rubric.score = rubric_scale.score;
+            aspect_session_rubric.predicate = rubric_scale.predicate;
+            aspect_session_rubric.narrative = rubric_scale.narrative;
+          } else {
+            aspect_session_rubric.score = null;
+            aspect_session_rubric.predicate = null;
+            aspect_session_rubric.narrative = null;
+          }
+        });
+
+        if (aspect_session.method == 'AVERAGE') {
+          let total_aspect_session_rubrics = 0;
+          let total_score = 0;
+
+          aspect_session.rubrics.forEach((aspect_session_rubric) => {
+            const score = parseFloat(aspect_session_rubric.score);
+            if (!isNaN(score) && score !== 0) {
+              total_aspect_session_rubrics += 1;
+              total_score += score;
+            }
+          });
+
+          if (total_aspect_session_rubrics > 0) {
+            aspect_session.raw_score = parseFloat((total_score / total_aspect_session_rubrics).toFixed(2));
+          } else {
+            aspect_session.raw_score = null;
+          }
+
+          aspect_session.final_score = aspect_session.raw_score;
+        } else {
+          let total_score = 0;
+
+          aspect_session.rubrics.forEach((aspect_session_rubric) => {
+            const score = parseFloat(aspect_session_rubric.final_score);
+            if (!isNaN(score)) {
+              total_score += score;
+            }
+          });
+
+          aspect_session.final_score = total_score;
         }
       } else {
         aspect_session.final_score = null;
@@ -263,7 +323,7 @@ export default {
       <table class="h-full w-full text-left text-xs text-gray-500 dark:text-gray-400">
         <thead>
           <tr>
-            <th rowspan="2" class="px-1.5 py-2">
+            <th class="px-1.5 py-2" rowspan="2">
               <el-button class="w-full" style="height: 80px" type="primary" plain>Siswa</el-button>
             </th>
             <th
@@ -272,6 +332,7 @@ export default {
               )"
               :key="idx"
               class="px-1.5 py-2"
+              :colspan="aspect_result.sessions.length + (aspect_result.use_final_score ? 1 : 0)"
             >
               <el-button class="w-full" type="primary" plain> {{ aspect_result.aspect_name }}</el-button>
             </th>
@@ -286,25 +347,23 @@ export default {
             </th>
           </tr>
           <tr>
-            <th
+            <template
               v-for="(aspect_result, idx) in assessment_students[0].aspect_results.sort(
                 (a, b) => a.sort_order - b.sort_order,
               )"
               :key="idx"
-              class="px-1.5 py-2 align-top"
             >
-              <div class="flex space-x-3">
-                <template
-                  v-for="(session, sidx) in aspect_result.sessions.sort((a, b) => a.sort_order - b.sort_order)"
-                  :key="sidx"
-                >
+              <template
+                v-for="(session, sidx) in aspect_result.sessions.sort((a, b) => a.sort_order - b.sort_order)"
+                :key="sidx"
+              >
+                <th class="px-1.5 py-2">
                   <el-popover :title="session.session_name" placement="top-start" :width="500" trigger="click">
                     <template #reference>
                       <el-button class="w-full" type="primary" plain>
                         {{ session.session_name }}
                       </el-button>
                     </template>
-
                     <template #default>
                       <div class="space-y-2 text-xs text-gray-700">
                         <div class="flex gap-1">
@@ -341,12 +400,14 @@ export default {
                       </div>
                     </template>
                   </el-popover>
-                </template>
-                <div v-if="aspect_result.use_final_score">
+                </th>
+              </template>
+              <th v-if="aspect_result.use_final_score" class="px-1.5 py-2">
+                <div>
                   <el-button style="width: 5.5rem" type="warning" plain>Nilai Akhir</el-button>
                 </div>
-              </div>
-            </th>
+              </th>
+            </template>
             <td
               v-for="(final_result, idx) in assessment_students[0].final_results.sort(
                 (a, b) => a.sort_order - b.sort_order,
@@ -392,31 +453,30 @@ export default {
                 {{ student.student_name }}
               </div>
             </th>
-            <td
+            <template
               v-for="(aspect_result, idx) in student.aspect_results.sort((a, b) => a.sort_order - b.sort_order)"
               :key="idx"
-              class="px-1.5 py-2 align-top"
             >
-              <div class="flex space-x-3">
-                <template
-                  v-for="(session, sidx) in aspect_result.sessions.sort((a, b) => a.sort_order - b.sort_order)"
-                  :key="sidx"
-                >
+              <template
+                v-for="(session, sidx) in aspect_result.sessions.sort((a, b) => a.sort_order - b.sort_order)"
+                :key="sidx"
+              >
+                <td class="px-1.5 py-2 align-top">
                   <div class="flex space-x-3">
                     <el-input
                       style="width: 5.5rem"
                       v-if="session.type == 'SCORE'"
                       type="number"
                       v-model.number="session.raw_score"
-                      @input="handleRawScoreChange(session, aspect_result, student)"
+                      @change="handleRawScoreChange(session, aspect_result, student)"
                     />
                     <el-select
                       style="width: 7.5rem"
-                      v-if="session.type == 'RUBRIC'"
+                      v-if="session.type == 'SINGLE_RUBRIC'"
                       class="w-full"
                       v-model="session.rubric_scale_id"
                       placeholder="Pilih"
-                      @input="handleRawScoreChange(session, aspect_result, student)"
+                      @change="handleRawScoreChange(session, aspect_result, student)"
                       clearable
                     >
                       <el-option
@@ -426,15 +486,49 @@ export default {
                         :value="option.uuid"
                       />
                     </el-select>
+                    <template v-if="session.type == 'MULTI_RUBRIC'">
+                      <template v-for="(rubric, ridx) in session.rubrics" :key="ridx">
+                        <el-popover placement="bottom-start" trigger="click" width="200">
+                          <p>{{ rubric.rubric_name }}</p>
+                          <template #reference>
+                            <el-button style="width: 4.5rem">
+                              {{ rubric.rubric_code }}
+                            </el-button>
+                          </template>
+                        </el-popover>
+                        <el-select
+                          style="width: 4.5rem"
+                          class="w-full"
+                          v-model="rubric.rubric_scale_id"
+                          placeholder=""
+                          @change="handleRawScoreChange(session, aspect_result, student)"
+                          clearable
+                        >
+                          <el-option
+                            v-for="option in rubric.rubric_scale_options"
+                            :key="option.uuid"
+                            :label="option.predicate"
+                            :value="option.uuid"
+                          />
+                        </el-select>
+                      </template>
+                      <div>
+                        <el-button style="width: 5.5rem" type="warning" plain>
+                          {{ session.final_score }}
+                        </el-button>
+                      </div>
+                    </template>
                   </div>
-                </template>
-                <div v-if="aspect_result.use_final_score">
+                </td>
+              </template>
+              <td v-if="aspect_result.use_final_score" class="px-1.5 py-2 align-top">
+                <div>
                   <el-button style="width: 5.5rem" type="warning" plain>
                     {{ aspect_result.final_score }}
                   </el-button>
                 </div>
-              </div>
-            </td>
+              </td>
+            </template>
             <td
               v-for="(final_result, idx) in student.final_results.sort((a, b) => a.sort_order - b.sort_order)"
               :key="idx"
@@ -457,7 +551,7 @@ export default {
                       style="width: 12.5rem"
                       v-model="final_result.threshold_scale_passed_id"
                       placeholder="Pilih"
-                      @="getFinalResultNarrative(final_result)"
+                      @change="getFinalResultNarrative(final_result)"
                       clearable
                     >
                       <el-option
@@ -473,7 +567,7 @@ export default {
                       style="width: 12.5rem"
                       v-model="final_result.learning_objective_passed_id"
                       placeholder="Pilih"
-                      @="getFinalResultNarrative(final_result)"
+                      @change="getFinalResultNarrative(final_result)"
                       clearable
                     >
                       <el-option
@@ -489,7 +583,7 @@ export default {
                       style="width: 12.5rem"
                       v-model="final_result.threshold_scale_failed_id"
                       placeholder="Pilih"
-                      @="getFinalResultNarrative(final_result)"
+                      @change="getFinalResultNarrative(final_result)"
                       clearable
                     >
                       <el-option
@@ -505,7 +599,7 @@ export default {
                       style="width: 12.5rem"
                       v-model="final_result.learning_objective_failed_id"
                       placeholder="Pilih"
-                      @="getFinalResultNarrative(final_result)"
+                      @change="getFinalResultNarrative(final_result)"
                       clearable
                     >
                       <el-option

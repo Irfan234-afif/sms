@@ -62,6 +62,7 @@ class AssessmentSubjectController extends Controller
                 'module.aspects.learning_objective_category',
                 'module.rubrics',
                 'sessions.learning_objectives',
+                'sessions.rubrics',
                 'sessions.rubric',
             ])->firstOrFail();
 
