@@ -25,6 +25,11 @@ class AssessmentAspectSession extends Model
         return $this->belongsTo(AssessmentSession::class, 'session_id');
     }
 
+    public function aspect_session_rubrics()
+    {
+        return $this->hasMany(AssessmentAspectSessionRubric::class, 'aspect_session_id');
+    }
+
     public function rubric_scale()
     {
         return $this->belongsTo(AssessmentRubricScale::class, 'rubric_scale_id');

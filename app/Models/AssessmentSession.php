@@ -17,6 +17,7 @@ class AssessmentSession extends Model
         'description',
         'sort_order',
         'type',
+        'method',
         'rubric_id',
         'date',
         'portion_score',
@@ -38,8 +39,14 @@ class AssessmentSession extends Model
             ->withPivot('uuid');
     }
 
+    public function rubrics()
+    {
+        return $this->belongsToMany(AssessmentRubric::class, 'assessment_session_rubrics', 'session_id', 'rubric_id')
+            ->withPivot('id', 'uuid');
+    }
+
     public function rubric()
     {
-        return $this->belongsTo(AssessmentRubric::class, 'rubric_id',);
+        return $this->belongsTo(AssessmentRubric::class, 'rubric_id');
     }
 }

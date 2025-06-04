@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AssessmentRubricResource;
 use App\Http\Resources\LearningObjectiveResource;
 use App\Models\AssessmentAspect;
+use App\Models\AssessmentAspectSessionRubric;
 use App\Models\AssessmentRecord;
 use App\Models\AssessmentRubric;
 use App\Models\AssessmentSession;
+use App\Models\AssessmentSessionRubric;
 use App\Models\LearningObjective;
 use App\Models\LearningObjectiveCategory;
 use App\Models\School;
@@ -69,8 +71,11 @@ class AssessmentSessionController extends Controller
             foreach (request('sessions') as $session) {
                 $assessment_record = AssessmentRecord::where('uuid', $session['record_id'])->firstOrFail();
                 $assessment_aspect = AssessmentAspect::where('uuid', $session['aspect_id'])->firstOrFail();
+
                 $learning_objective_ids = LearningObjective::whereIn('uuid', $session['learning_objective_ids'] ?? [])->pluck('id')->toArray();
+                $rubric_ids = AssessmentRubric::whereIn('uuid', $session['rubric_ids'] ?? [])->pluck('id')->toArray();
                 $assessment_rubric = AssessmentRubric::where('uuid', $session['rubric_id'])->first();
+
                 $assessment_session_created = AssessmentSession::updateOrCreate([
                     'record_id' => $assessment_record->id,
                     'aspect_id' => $assessment_aspect->id,
@@ -80,6 +85,7 @@ class AssessmentSessionController extends Controller
                     'description' => $session['description'],
                     'rubric_id' => $assessment_rubric?->id,
                     'type' => $session['type'],
+                    'method' => $session['method'],
                     'date' => $session['date'],
                     'portion_score' => $session['portion_score'],
                 ]);
@@ -87,7 +93,23 @@ class AssessmentSessionController extends Controller
                 $assessment_session_created->learning_objectives()->detach();
 
                 foreach ($learning_objective_ids as $objective_id) {
-                    $assessment_session_created->learning_objectives()->attach($objective_id, ['uuid' => Uuid::uuid1()]);
+                    $assessment_session_created->learning_objectives()->attach($objective_id, [
+                        'uuid' => Uuid::uuid1(),
+                    ]);
+                }
+
+                AssessmentSessionRubric::where('session_id', $assessment_session_created->id)
+                    ->update(['deleted_at' => now()]);
+
+                foreach ($rubric_ids as $rubric_id) {
+                    AssessmentSessionRubric::withTrashed()
+                        ->updateOrCreate([
+                            'session_id' => $assessment_session_created->id,
+                            'rubric_id' => $rubric_id,
+                        ], [
+                            'uuid' => Uuid::uuid1(),
+                            'deleted_at' => null,
+                        ]);
                 }
             }
 
