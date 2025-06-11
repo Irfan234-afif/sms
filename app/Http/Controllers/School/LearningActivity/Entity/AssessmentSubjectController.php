@@ -33,6 +33,7 @@ class AssessmentSubjectController extends Controller
 
         $assessment_records = AssessmentRecord::where('school_academic_program_id', $this->school->academic_program_active->id)
             ->where('school_classroom_id', $school_classroom->id)
+            ->whereHas('module')
             ->with([
                 'academic_program',
                 'classroom',
