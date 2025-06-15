@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\School\LearningActivity\Entity;
+namespace App\Http\Controllers\School\LearningActivity\SchoolExtracurricularEntity;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AssessmentModuleResource;
@@ -10,14 +10,14 @@ use App\Http\Resources\SchoolSubjectResource;
 use App\Models\AssessmentModule;
 use App\Models\AssessmentRecord;
 use App\Models\School;
-use App\Models\SchoolClassroom;
+use App\Models\SchoolExtracurricular;
 use App\Models\SchoolSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
-class AssessmentSubjectController extends Controller
+class AssessmentExtracurricularController extends Controller
 {
     private $school;
 
@@ -27,16 +27,16 @@ class AssessmentSubjectController extends Controller
         $this->school = School::where('uuid', $active_school?->uuid)->firstOrFail();
     }
 
-    public function index($school_classroom_id)
+    public function index($school_extracurricular_id)
     {
-        $school_classroom = SchoolClassroom::where('uuid', $school_classroom_id)->firstOrFail();
+        $school_extracurricular = SchoolExtracurricular::where('uuid', $school_extracurricular_id)->firstOrFail();
 
         $assessment_records = AssessmentRecord::where('school_academic_program_id', $this->school->academic_program_active->id)
-            ->where('school_classroom_id', $school_classroom->id)
+            ->where('assessable_type', SchoolExtracurricular::class)
+            ->where('assessable_id', $school_extracurricular->id)
             ->whereHas('module')
             ->with([
                 'academic_program',
-                'classroom',
                 'assessable',
                 'module',
             ])
@@ -44,21 +44,20 @@ class AssessmentSubjectController extends Controller
             ->paginate(15);
 
         $data = [
-            'school_classroom' => SchoolClassroomResource::make($school_classroom),
+            'school_extracurricular' => SchoolClassroomResource::make($school_extracurricular),
             'assessment_records' => AssessmentRecordResource::collection($assessment_records),
         ];
 
-        return Inertia::render('School/LearningActivity/SchoolClassroom/AssessmentSubject/Index', $data);
+        return Inertia::render('School/LearningActivity/SchoolExtracurricular/AssessmentExtracurricular/Index', $data);
     }
 
-    public function detail($school_classroom_id, $assessment_record_id)
+    public function detail($school_extracurricular_id, $assessment_record_id)
     {
-        $school_classroom = SchoolClassroom::where('uuid', $school_classroom_id)->firstOrFail();
+        $school_extracurricular = SchoolExtracurricular::where('uuid', $school_extracurricular_id)->firstOrFail();
 
         $assessment_record = AssessmentRecord::where('uuid', $assessment_record_id)
             ->with([
                 'academic_program',
-                'classroom',
                 'assessable',
                 'module.aspects.learning_objective_category',
                 'module.rubrics',
@@ -68,11 +67,11 @@ class AssessmentSubjectController extends Controller
             ])->firstOrFail();
 
         $data = [
-            'school_classroom' => SchoolClassroomResource::make($school_classroom),
+            'school_extracurricular' => SchoolClassroomResource::make($school_extracurricular),
             'assessment_record' => AssessmentRecordResource::make($assessment_record),
         ];
 
-        return Inertia::render('School/LearningActivity/SchoolClassroom/AssessmentSubject/Detail', $data);
+        return Inertia::render('School/LearningActivity/SchoolExtracurricular/AssessmentExtracurricular/Detail', $data);
     }
 
     public function optionAssessmentModule()
@@ -80,7 +79,7 @@ class AssessmentSubjectController extends Controller
         // todo:modified by school
         $school_curriculum = $this->school->academic_program_active->curriculum;
 
-        $assessment_modules = $school_curriculum->assessment_modules()->where('type', 'SUBJECT');
+        $assessment_modules = $school_curriculum->assessment_modules()->where('type', 'EXTRACURRICULAR');
 
         if (request()->has('search')) {
             $assessment_modules->where('name', 'like', '%' . request('search') . '%');
@@ -89,32 +88,19 @@ class AssessmentSubjectController extends Controller
         return response()->json(AssessmentModuleResource::collection($assessment_modules->latest()->get()), 200);
     }
 
-    public function optionSchoolSubject()
-    {
-        $school_subjects = SchoolSubject::where('school_id', $this->school->id);
-
-        if (request()->has('search')) {
-            $school_subjects->where('title', 'like', '%' . request('search') . '%');
-        }
-
-        return response()->json(SchoolSubjectResource::collection($school_subjects->latest()->get()), 200);
-    }
-
     public function save()
     {
         DB::beginTransaction();
 
         try {
-            $school_classroom = SchoolClassroom::where('uuid', request('school_classroom_id'))->firstOrFail();
+            $school_extracurricular = SchoolExtracurricular::where('uuid', request('school_extracurricular_id'))->firstOrFail();
             $assessment_module = AssessmentModule::where('uuid', request('assessment_module_id'))->firstOrFail();
-            $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->firstOrFail();
 
             $assessment_record_created = AssessmentRecord::updateOrCreate(
                 [
                     'school_academic_program_id' => $this->school->academic_program_active->id,
-                    'school_classroom_id' => $school_classroom?->id,
-                    'assessable_type' => SchoolSubject::class,
-                    'assessable_id' => $school_subject->id,
+                    'assessable_type' => SchoolExtracurricular::class,
+                    'assessable_id' => $school_extracurricular->id,
                     'module_id' => $assessment_module->id,
                 ],
                 [

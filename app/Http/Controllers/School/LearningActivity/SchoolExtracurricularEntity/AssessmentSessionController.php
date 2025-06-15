@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\School\LearningActivity\Entity;
+namespace App\Http\Controllers\School\LearningActivity\SchoolExtracurricularEntity;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AssessmentRubricResource;
@@ -14,7 +14,7 @@ use App\Models\AssessmentSessionRubric;
 use App\Models\LearningObjective;
 use App\Models\LearningObjectiveCategory;
 use App\Models\School;
-use App\Models\SchoolSubject;
+use App\Models\SchoolExtracurricular;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -36,12 +36,11 @@ class AssessmentSessionController extends Controller
         // todo:modified by school
         $assessment_record = AssessmentRecord::where('uuid', request('assessment_record_id'))->firstOrFail();
         $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->firstOrFail();
+
         // add more params
         $learning_objectives = LearningObjective::where('category_id', $learning_objective_category->id)
             ->where('school_year_id', $this->school->academic_program_active->school_year_id)
-            ->where('school_phase_id', $assessment_record->classroom->grade->school_phase_id)
-            ->where('school_grade_id', $assessment_record->classroom->school_grade_id)
-            ->where('objectiveable_type', SchoolSubject::class)
+            ->where('objectiveable_type', $assessment_record->assessable_type)
             ->where('objectiveable_id', $assessment_record->assessable_id);
 
         if (request()->has('search')) {

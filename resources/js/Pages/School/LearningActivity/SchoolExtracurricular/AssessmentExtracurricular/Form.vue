@@ -19,19 +19,11 @@ export default {
       loaded: true,
       isValid: false,
       form: {
-        school_subject_id: null,
         assessment_module_id: null,
-        school_classroom_id: this.propertyModal.data.school_classroom.uuid,
+        school_extracurricular_id: this.propertyModal.data.school_extracurricular.uuid,
         name: null,
       },
       field: {
-        school_subject_id: {
-          label: 'Mata Pelajaran',
-          rules: [fieldValidation.isRequired('Mata Pelajaran')],
-          error: null,
-          disabled: false,
-          options: [],
-        },
         assessment_module_id: {
           label: 'Modul Penilaian',
           rules: [fieldValidation.isRequired('Modul Penilaian')],
@@ -50,9 +42,7 @@ export default {
   created() {
     let mode = this.propertyModal.mode;
     if (mode == 'assessment-record-edit-form') {
-      this.form.school_subject_id = this.propertyModal.data.assessment_record.assessable;
-      this.field.school_subject_id.options = [this.propertyModal.data.assessment_record.assessable];
-      this.field.school_subject_id.disabled = true;
+      this.form.school_ass_id = this.propertyModal.data.assessment_record.subject;
       this.form.assessment_module_id = this.propertyModal.data.assessment_record.module;
       this.field.assessment_module_id.options = [this.propertyModal.data.assessment_record.module];
       this.field.assessment_module_id.disabled = true;
@@ -60,37 +50,19 @@ export default {
     }
   },
   methods: {
-    optionSchoolSubject(search) {
-      this.field.school_subject_id.loading = true;
-      axios
-        .get(
-          route('school.learningActivity.schoolClassroom.assessmentSubject.optionSchoolSubject', {
-            search: search,
-            school_classroom_id: this.propertyModal.data.school_classroom.uuid,
-          }),
-        )
-        .then((response) => {
-          this.field.school_subject_id.options = response.data;
-          this.field.school_subject_id.loading = false;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.field.school_subject_id.loading = false;
-        });
-    },
     optionAssessmentModule(search) {
       this.field.assessment_module_id.loading = true;
       axios
         .get(
-          route('school.learningActivity.schoolClassroom.assessmentSubject.optionAssessmentModule', {
+          route('school.learningActivity.schoolExtracurricular.assessmentExtracurricular.optionAssessmentModule', {
             search: search,
-            school_classroom_id: this.propertyModal.data.school_classroom.uuid,
+            school_extracurricular_id: this.propertyModal.data.school_extracurricular.uuid,
           }),
         )
         .then((response) => {
           this.field.assessment_module_id.options = response.data;
           this.field.assessment_module_id.loading = false;
-        })
+      })
         .catch((error) => {
           console.log(error);
           this.field.assessment_module_id.loading = false;
@@ -103,13 +75,12 @@ export default {
 
           let requestPayload = JSON.parse(JSON.stringify(this.form));
 
-          requestPayload.school_subject_id = requestPayload.school_subject_id.uuid;
           requestPayload.assessment_module_id = requestPayload.assessment_module_id.uuid;
 
           axios
             .post(
-              route('school.learningActivity.schoolClassroom.assessmentSubject.save', {
-                school_classroom_id: this.propertyModal.data.school_classroom.uuid,
+              route('school.learningActivity.schoolExtracurricular.assessmentExtracurricular.save', {
+                school_extracurricular_id: this.propertyModal.data.school_extracurricular.uuid,
               }),
               requestPayload,
               {
@@ -183,36 +154,6 @@ export default {
           prop="name"
         >
           <el-input v-model="form.name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item
-          class="font-medium"
-          :label="field.school_subject_id.label"
-          :rules="field.school_subject_id.rules"
-          :error="field.school_subject_id.error"
-          prop="school_subject_id"
-        >
-          <el-select
-            v-model="form.school_subject_id"
-            :placeholder="`Pilih ${field.school_subject_id.label}`"
-            loading-text="..."
-            no-match-text="Data tidak ditemukan"
-            no-data-text="Tidak ada data"
-            :disabled="field.school_subject_id.disabled"
-            :remote-method="optionSchoolSubject"
-            value-key="uuid"
-            remote
-            filterable
-            reserve-keyword
-            clearable
-            autocomplete="off"
-          >
-            <el-option
-              v-for="option in field.school_subject_id.options"
-              :key="option.uuid"
-              :label="option.title"
-              :value="option"
-            />
-          </el-select>
         </el-form-item>
         <el-form-item
           class="font-medium"

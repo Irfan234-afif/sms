@@ -9,7 +9,7 @@ import AssessmentStudentForm from './Form.vue';
 <script>
 export default {
   props: {
-    school_classroom: Object,
+    school_extracurricular: Object,
     assessment_record: Object,
   },
   data() {
@@ -17,13 +17,13 @@ export default {
       breadcrumbs: [
         { label: 'Sekolah', href: route('school') },
         {
-          label: `Kelas (${this.school_classroom.data.title})`,
-          href: route('school.learningActivity.schoolClassroom'),
+          label: `Ekstrakurikuler (${this.school_extracurricular.data.title})`,
+          href: route('school.learningActivity.schoolExtracurricular'),
         },
         {
-          label: 'Penilaian Mata Pelajaran',
-          href: route('school.learningActivity.schoolClassroom.assessmentSubject', {
-            school_classroom_id: this.school_classroom.data.uuid,
+          label: 'Penilaian',
+          href: route('school.learningActivity.schoolExtracurricular.assessmentExtracurricular', {
+            school_extracurricular_id: this.school_extracurricular.data.uuid,
           }),
         },
         {
@@ -79,13 +79,7 @@ export default {
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-12">
               <div class="space-y-4">
                 <dl>
-                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Kelas</dt>
-                  <dd class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ assessment_record.data.classroom_name ?? '-' }}
-                  </dd>
-                </dl>
-                <dl>
-                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Mata Pelajaran</dt>
+                  <dt class="text-xs font-medium text-gray-800 dark:text-white">Ekstrakurikuler</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
                     {{ assessment_record.data.assessable_name ?? '-' }}
                   </dd>

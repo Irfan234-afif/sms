@@ -16,7 +16,7 @@ import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 export default {
   props: {
     search_params: Object,
-    school_classroom: Object,
+    school_extracurricular: Object,
     assessment_records: Object,
   },
   data() {
@@ -24,11 +24,11 @@ export default {
       breadcrumbs: [
         { label: 'Sekolah', href: route('school') },
         {
-          label: `Kelas (${this.school_classroom.data.title})`,
-          href: route('school.learningActivity.schoolClassroom'),
+          label: `Ekstrakurikuler (${this.school_extracurricular.data.title})`,
+          href: route('school.learningActivity.schoolExtracurricular'),
         },
         {
-          label: 'Penilaian Mata Pelajaran',
+          label: 'Penilaian',
           href: '#',
         },
       ],
@@ -82,7 +82,7 @@ export default {
                 mode: 'assessment-record-create-form',
                 maxWidth: 'md',
                 data: {
-                  school_classroom: school_classroom.data,
+                  school_extracurricular: school_extracurricular.data,
                 },
               })
             "
@@ -131,7 +131,6 @@ export default {
                   </th>
                   <th scope="col" class="p-4">Penilaian</th>
                   <th scope="col" class="p-4">Modul</th>
-                  <th scope="col" class="p-4">Mata Pelajaran</th>
                   <th scope="col" class="p-4"></th>
                 </tr>
               </thead>
@@ -162,11 +161,6 @@ export default {
                       {{ assessment_record.module.name }}
                     </div>
                   </th>
-                  <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
-                    <div class="flex items-center">
-                      {{ assessment_record.assessable.title }}
-                    </div>
-                  </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center justify-end space-x-3">
                       <OutlineButton
@@ -177,7 +171,7 @@ export default {
                             mode: 'assessment-record-edit-form',
                             maxWidth: 'md',
                             data: {
-                              school_classroom: school_classroom.data,
+                              school_extracurricular: school_extracurricular.data,
                               assessment_record: assessment_record,
                             },
                           })
@@ -204,8 +198,8 @@ export default {
                       </OutlineButton>
                       <Link
                         :href="
-                          route('school.learningActivity.schoolClassroom.assessmentSubject.detail', {
-                            school_classroom_id: school_classroom.data.uuid,
+                          route('school.learningActivity.schoolExtracurricular.assessmentExtracurricular.detail', {
+                            school_extracurricular_id: school_extracurricular.data.uuid,
                             assessment_record_id: assessment_record.uuid,
                           })
                         "
@@ -238,13 +232,19 @@ export default {
                             mode: 'assessment-record-delete-confirm',
                             maxWidth: 'md',
                             data: {
-                              actionUrl: route('school.learningActivity.schoolClassroom.assessmentSubject.delete', {
-                                school_classroom_id: school_classroom.data.uuid,
-                                assessment_record_id: assessment_record.uuid,
-                              }),
-                              redirectUrl: route('school.learningActivity.schoolClassroom.assessmentSubject', {
-                                school_classroom_id: school_classroom.data.uuid,
-                              }),
+                              actionUrl: route(
+                                'school.learningActivity.schoolExtracurricular.assessmentExtracurricular.delete',
+                                {
+                                  school_extracurricular_id: school_extracurricular.data.uuid,
+                                  assessment_record_id: assessment_record.uuid,
+                                },
+                              ),
+                              redirectUrl: route(
+                                'school.learningActivity.schoolExtracurricular.assessmentExtracurricular',
+                                {
+                                  school_extracurricular_id: school_extracurricular.data.uuid,
+                                },
+                              ),
                               message:
                                 'Ingin menghapus Penilaian? Tindakan ini akan memengaruhi data terkait serta penilaian ke depannya. Apakah Anda yakin ingin melanjutkan?',
                             },
