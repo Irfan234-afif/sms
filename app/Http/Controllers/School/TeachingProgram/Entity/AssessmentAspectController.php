@@ -26,13 +26,14 @@ class AssessmentAspectController extends Controller
     {
         $school_curriculum = $this->school->academic_program_active->curriculum;
 
-        $learning_objectiv_categories = $school_curriculum->learning_objective_categories();
+        $assessment_module = AssessmentModule::where('uuid', request('assessment_module_id'))->firstOrFail();
+        $learning_objective_categories = $school_curriculum->learning_objective_categories()->where('type', $assessment_module->type);
 
         if (request()->has('search')) {
-            $learning_objectiv_categories->where('title', 'like', '%' . request('search') . '%');
+            $learning_objective_categories->where('title', 'like', '%' . request('search') . '%');
         }
 
-        return response()->json(LearningObjectiveCategoryResource::collection($learning_objectiv_categories->latest()->get()), 200);
+        return response()->json(LearningObjectiveCategoryResource::collection($learning_objective_categories->latest()->get()), 200);
     }
 
     public function save()

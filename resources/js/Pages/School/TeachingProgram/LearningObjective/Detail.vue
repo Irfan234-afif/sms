@@ -40,12 +40,12 @@ export default {
         search: null,
         school_phase_id: null,
         school_grade_id: null,
-        school_subject_id: null,
+        school_objective_id: null,
       },
       filterOptions: {
         school_phase_id: [],
         school_grade_id: [],
-        school_subject_id: [],
+        school_objective_id: [],
       },
     };
   },
@@ -86,29 +86,33 @@ export default {
           console.log(error);
         });
     },
-    optionSchoolSubject(search) {
+    optionSchoolObjective(search) {
       axios
         .get(
-          route('school.teachingProgram.learningObjective.optionSchoolSubject', {
+          route('school.teachingProgram.learningObjective.optionSchoolObjective', {
             search: search,
+            learning_objective_category_id: this.learning_objective_category.data.uuid,
           }),
         )
         .then((response) => {
-          this.filterOptions.school_subject_id = response.data;
+          this.filterOptions.school_objective_id = response.data;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     getLearningObjective() {
-      if (this.learning_objective_category.data.options.scope_school_grade) {
+      if (
+        this.learning_objective_category.data.options.scope_school_grade ||
+        this.learning_objective_category.data.type == 'EXTRACURRICULAR'
+      ) {
         axios
           .get(
             route('school.teachingProgram.learningObjective.getLearningObjective', {
               learning_objective_category_id: this.learning_objective_category.data.uuid,
               school_phase_id: this.filters.school_phase_id?.uuid,
               school_grade_id: this.filters.school_grade_id?.uuid,
-              school_subject_id: this.filters.school_subject_id?.uuid,
+              school_objective_id: this.filters.school_objective_id?.uuid,
             }),
           )
           .then((response) => {
@@ -208,13 +212,13 @@ export default {
                 />
               </el-select>
               <el-select
-                v-if="learning_objective_category.data.options.scope_school_subject"
-                v-model="filters.school_subject_id"
-                placeholder="Pilih Mata Pelajaran"
+                v-if="learning_objective_category.data.options.scope_school_objective"
+                v-model="filters.school_objective_id"
+                :placeholder="`Pilih ${learning_objective_category.data.type_label}`"
                 loading-text="..."
                 no-match-text="Data tidak ditemukan"
                 no-data-text="Tidak ada data"
-                :remote-method="optionSchoolSubject"
+                :remote-method="optionSchoolObjective"
                 value-key="uuid"
                 remote
                 filterable
@@ -224,7 +228,7 @@ export default {
                 @change="getLearningObjective"
               >
                 <el-option
-                  v-for="option in filterOptions.school_subject_id"
+                  v-for="option in filterOptions.school_objective_id"
                   :key="option.uuid"
                   :label="option.title"
                   :value="option"
@@ -253,7 +257,7 @@ export default {
                         learning_objective_category: learning_objective_category.data,
                         school_phase_id: filters.school_phase_id?.uuid,
                         school_grade_id: filters.school_grade_id?.uuid,
-                        school_subject_id: filters.school_subject_id?.uuid,
+                        school_objective_id: filters.school_objective_id?.uuid,
                       },
                     })
                   "
@@ -344,7 +348,7 @@ export default {
                                   learning_objective_category: learning_objective_category.data,
                                   school_phase_id: filters.school_phase_id?.uuid,
                                   school_grade_id: filters.school_grade_id?.uuid,
-                                  school_subject_id: filters.school_subject_id?.uuid,
+                                  school_objective_id: filters.school_objective_id?.uuid,
                                 },
                               })
                             "

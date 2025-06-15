@@ -18,11 +18,11 @@ export default {
       breadcrumbs: [
         { label: 'Sekolah', href: route('school') },
         {
-          label: `Kegiatan Kelas (${this.school_classroom.data.title})`,
+          label: `Kelas (${this.school_classroom.data.title})`,
           href: route('school.learningActivity.schoolClassroom'),
         },
         {
-          label: 'Penilaian Akademik',
+          label: 'Penilaian Mata Pelajaran',
           href: route('school.learningActivity.schoolClassroom.assessmentSubject', {
             school_classroom_id: this.school_classroom.data.uuid,
           }),

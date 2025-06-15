@@ -7,6 +7,8 @@ use App\Models\LearningObjectiveCategory;
 use App\Models\School;
 use App\Models\SchoolAcademicProgram;
 use App\Models\SchoolCurriculum;
+use App\Models\SchoolSubject;
+use App\Models\SchoolExtracurricular;
 use App\Models\SchoolYear;
 use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -66,7 +68,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
 
         // Create school academic program
         if (App::environment(['local', 'testing'])) {
-            $schools = School::whereIn('id', [1, 2, 3, 4])->get();
+            $schools = School::get();
             $school_year = SchoolYear::latest()->first();
             $this->command->warn('Create school academic program');
             $this->command->getOutput()->progressStart(count($schools));
@@ -96,7 +98,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
 
         // Fill learning objective
         if (App::environment(['local', 'testing'])) {
-            $schools = School::whereIn('id', [1, 2, 3, 4])->get();
+            $schools = School::get();
             $this->command->warn('Fill learning objective');
             $this->command->getOutput()->progressStart(count($schools));
             foreach ($schools as $school) {
@@ -123,6 +125,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
         foreach ($learning_objective_categories as $learning_objective_category) {
             $learning_objective_category_created = $school_curriculum->learning_objective_categories()->updateOrCreate([
                 'code' => $learning_objective_category->code,
+                'type' => $learning_objective_category->type,
             ], [
                 'title' => $learning_objective_category->title,
                 'options' => $learning_objective_category->options,
@@ -132,6 +135,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
                 $learning_objective_category_created->childs()->updateOrCreate([
                     'school_curriculum_id' => $school_curriculum->id,
                     'code' => $child->code,
+                    'type' => $learning_objective_category->type,
                 ], [
                     'title' => $child->title,
                     'options' => $child->options,
@@ -151,6 +155,11 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
             ]);
             // aspects
             foreach ($assessment_module->aspects as $aspect) {
+                $learning_objective_category = LearningObjectiveCategory::where('school_curriculum_id', $school_curriculum->id)
+                    ->where('type', $assessment_module->type)
+                    ->where('code', $aspect->learning_objective_category_code)
+                    ->first();
+
                 $assessment_module_created->aspects()->updateOrCreate([
                     'name' => $aspect->name,
                 ], [
@@ -160,7 +169,7 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
                     'use_final_score' => $aspect->use_final_score,
                     'final_score_method' => $aspect->final_score_method,
                     'use_learning_objective' => $aspect->use_learning_objective,
-                    'learning_objective_category_id' => LearningObjectiveCategory::where('school_curriculum_id', $school_curriculum->id)->where('code', $aspect->learning_objective_category_code)->first()?->id,
+                    'learning_objective_category_id' => $learning_objective_category?->id,
                 ]);
             }
             // rubrics
@@ -237,42 +246,109 @@ class DummySchoolTeachingProgramActivitySeeder extends Seeder
             $options = $category->options;
 
             $school_years = $options['scope_school_year'] ? [$school->academic_program_active->year] : [null];
-            $school_phases      = $options['scope_school_phase'] ? $school->level->phases : [null];
-            $school_grades      = $options['scope_school_grade'] ? $school->level->grades : [null];
-            $school_subjects    = $options['scope_school_subject'] ? $school->subjects : [null];
+            $school_phases = $options['scope_school_phase'] ? $school->level->phases : [null];
+            $school_grades = $options['scope_school_grade'] ? $school->level->grades : [null];
 
             foreach ($school_years as $year) {
                 foreach ($school_phases as $phase) {
                     foreach ($school_grades as $grade) {
-                        foreach ($school_subjects as $subject) {
-                            foreach (range(1, 25) as $index) {
-                                $learning_objective_parent = null;
-                                if ($category->parent) {
-                                    $parent_options = $category->parent->options;
+                        if ($category->type == 'SUBJECT') {
 
-                                    $learning_objective_parent = LearningObjective::where([
+                            $school_subjects    = $options['scope_school_objective'] ? $school->subjects : [null];
+
+                            foreach ($school_subjects as $subject) {
+                                foreach (range(1, 25) as $index) {
+                                    $learning_objective_parent = null;
+
+                                    if ($category->parent) {
+                                        $parent_options = $category->parent->options;
+
+                                        $learning_objective_parent = LearningObjective::where([
+                                            'school_curriculum_id' => $school_curriculum->id,
+                                            'category_id' => $category->parent->id,
+                                            'school_phase_id' => $parent_options['scope_school_phase'] ? $phase->id : null,
+                                            'school_grade_id' => $parent_options['scope_school_grade'] ? $grade->id : null,
+                                            'school_year_id' => $parent_options['scope_school_year'] ? $year->id : null,
+                                        ]);
+
+                                        if ($parent_options['scope_school_objective']) {
+                                            $learning_objective_parent = $learning_objective_parent
+                                                ->where('objectiveable_type', SchoolSubject::class)
+                                                ->where('objectiveable_id', $subject->id)
+                                                ->firstOrFail();
+                                        } else {
+                                            $learning_objective_parent = $learning_objective_parent
+                                                ->whereNull('objectiveable_type')
+                                                ->whereNull('objectiveable_id')
+                                                ->firstOrFail();
+                                        }
+                                    }
+
+                                    LearningObjective::updateOrCreate([
                                         'school_curriculum_id' => $school_curriculum->id,
-                                        'category_id' => $category->parent->id,
-                                        'school_phase_id' => $parent_options['scope_school_phase'] ? $phase->id : null,
-                                        'school_grade_id' => $parent_options['scope_school_grade'] ? $grade->id : null,
-                                        'school_subject_id' => $parent_options['scope_school_subject'] ? $subject->id : null,
-                                        'school_year_id' => $parent_options['scope_school_year'] ? $year->id : null,
-                                    ])->firstOrFail();
+                                        'category_id' => $category->id,
+                                        'school_phase_id' => $phase?->id,
+                                        'school_grade_id' => $grade?->id,
+                                        'objectiveable_type' => $subject ? SchoolSubject::class : null,
+                                        'objectiveable_id' => $subject?->id,
+                                        'school_year_id' => $year?->id,
+                                        'code' => $category->code . '-' . $index,
+                                    ], [
+                                        'parent_id' => $learning_objective_parent?->id,
+                                        'title' => $category->title . ' ' . $this->faker->sentence,
+                                        'narrative' => $this->faker->paragraph,
+                                    ]);
                                 }
+                            }
+                        }
 
-                                LearningObjective::updateOrCreate([
-                                    'school_curriculum_id' => $school_curriculum->id,
-                                    'category_id' => $category->id,
-                                    'school_phase_id' => $phase?->id,
-                                    'school_grade_id' => $grade?->id,
-                                    'school_subject_id' => $subject?->id,
-                                    'school_year_id' => $year?->id,
-                                    'code' => $category->code . '-' . $index,
-                                ], [
-                                    'parent_id' => $learning_objective_parent?->id,
-                                    'title' => $category->title . ' ' . $this->faker->sentence,
-                                    'narrative' => $this->faker->paragraph,
-                                ]);
+                        if ($category->type == 'EXTRACURRICULAR') {
+
+                            $school_extracurriculars    = $options['scope_school_objective'] ? $school->extracurriculars : [null];
+
+                            foreach ($school_extracurriculars as $extracurricular) {
+                                foreach (range(1, 25) as $index) {
+                                    $learning_objective_parent = null;
+
+                                    if ($category->parent) {
+                                        $parent_options = $category->parent->options;
+
+                                        $learning_objective_parent = LearningObjective::where([
+                                            'school_curriculum_id' => $school_curriculum->id,
+                                            'category_id' => $category->parent->id,
+                                            'school_phase_id' => $parent_options['scope_school_phase'] ? $phase->id : null,
+                                            'school_grade_id' => $parent_options['scope_school_grade'] ? $grade->id : null,
+                                            'school_year_id' => $parent_options['scope_school_year'] ? $year->id : null,
+                                        ]);
+
+                                        if ($parent_options['scope_school_objective']) {
+                                            $learning_objective_parent = $learning_objective_parent
+                                                ->where('objectiveable_type', SchoolExtracurricular::class)
+                                                ->where('objectiveable_id', $extracurricular->id)
+                                                ->firstOrFail();
+                                        } else {
+                                            $learning_objective_parent = $learning_objective_parent
+                                                ->whereNull('objectiveable_type')
+                                                ->whereNull('objectiveable_id')
+                                                ->firstOrFail();
+                                        }
+                                    }
+
+                                    LearningObjective::updateOrCreate([
+                                        'school_curriculum_id' => $school_curriculum->id,
+                                        'category_id' => $category->id,
+                                        'school_phase_id' => $phase?->id,
+                                        'school_grade_id' => $grade?->id,
+                                        'objectiveable_type' => $extracurricular ? SchoolExtracurricular::class : null,
+                                        'objectiveable_id' => $extracurricular?->id,
+                                        'school_year_id' => $year?->id,
+                                        'code' => $category->code . '-' . $index,
+                                    ], [
+                                        'parent_id' => $learning_objective_parent?->id,
+                                        'title' => $category->title . ' ' . $this->faker->sentence,
+                                        'narrative' => $this->faker->paragraph,
+                                    ]);
+                                }
                             }
                         }
                     }

@@ -1131,7 +1131,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('{learning_objective_category_id}/detail', [LearningObjectiveController::class, 'detail'])->name('.detail');
                         Route::get('option-school-phase', [LearningObjectiveController::class, 'optionSchoolPhase'])->name('.optionSchoolPhase');
                         Route::get('option-school-grade', [LearningObjectiveController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
-                        Route::get('option-school-subject', [LearningObjectiveController::class, 'optionSchoolSubject'])->name('.optionSchoolSubject');
+                        Route::get('option-school-objective', [LearningObjectiveController::class, 'optionSchoolObjective'])->name('.optionSchoolObjective');
                         Route::get('option-learning-objective', [LearningObjectiveController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
                         Route::get('get-learning-objective', [LearningObjectiveController::class, 'getLearningObjective'])->name('.getLearningObjective');
                         Route::post('save', [LearningObjectiveController::class, 'save'])->name('.save');
@@ -1233,12 +1233,6 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::get('option-parent', [LearningObjectiveCategoryController::class, 'optionParent'])->name('.optionParent');
                                 Route::post('save', [LearningObjectiveCategoryController::class, 'save'])->name('.save');
                                 Route::delete('delete', [LearningObjectiveCategoryController::class, 'delete'])->name('.delete');
-                            });
-                        Route::prefix('learning-rubric')
-                            ->name('.learningRubric')
-                            ->group(function () {
-                                Route::post('save', [LearningRubricController::class, 'save'])->name('.save');
-                                Route::delete('delete', [LearningRubricController::class, 'delete'])->name('.delete');
                             });
                     });
                 // school subject group routes
