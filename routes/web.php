@@ -101,6 +101,10 @@ use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSessionControl
 use App\Http\Controllers\School\LearningActivity\Entity\AssessmentStudentController;
 use App\Http\Controllers\School\LearningActivity\Entity\AssessmentSubjectController;
 use App\Http\Controllers\School\LearningActivity\SchoolClassroomController as LearningActivitySchoolClassroomController;
+use App\Http\Controllers\School\LearningActivity\SchoolExtracurricularController as LearningActivitySchoolExtracurricularController;
+use App\Http\Controllers\School\LearningActivity\SchoolExtracurricularEntity\AssessmentExtracurricularController;
+use App\Http\Controllers\School\LearningActivity\SchoolExtracurricularEntity\AssessmentSessionController as SchoolExtracurricularEntityAssessmentSessionController;
+use App\Http\Controllers\School\LearningActivity\SchoolExtracurricularEntity\AssessmentStudentController as SchoolExtracurricularEntityAssessmentStudentController;
 use App\Http\Controllers\School\Management\Entity\LearningObjectiveCategoryController;
 use App\Http\Controllers\School\Management\Entity\LearningRubricController;
 use App\Http\Controllers\School\SchoolController;
@@ -1131,7 +1135,7 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('{learning_objective_category_id}/detail', [LearningObjectiveController::class, 'detail'])->name('.detail');
                         Route::get('option-school-phase', [LearningObjectiveController::class, 'optionSchoolPhase'])->name('.optionSchoolPhase');
                         Route::get('option-school-grade', [LearningObjectiveController::class, 'optionSchoolGrade'])->name('.optionSchoolGrade');
-                        Route::get('option-school-subject', [LearningObjectiveController::class, 'optionSchoolSubject'])->name('.optionSchoolSubject');
+                        Route::get('option-school-objective', [LearningObjectiveController::class, 'optionSchoolObjective'])->name('.optionSchoolObjective');
                         Route::get('option-learning-objective', [LearningObjectiveController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
                         Route::get('get-learning-objective', [LearningObjectiveController::class, 'getLearningObjective'])->name('.getLearningObjective');
                         Route::post('save', [LearningObjectiveController::class, 'save'])->name('.save');
@@ -1214,6 +1218,40 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                     });
                             });
                     });
+
+                // school extracurricular routes
+                Route::prefix('school-extracurricular')
+                    ->name('.schoolExtracurricular')
+                    ->group(function () {
+                        Route::get('/', [LearningActivitySchoolExtracurricularController::class, 'index']);
+                        Route::get('{school_extracurricular_id}/detail', [LearningActivitySchoolExtracurricularController::class, 'detail'])->name('.detail');
+                        // school extracurricular routes
+                        Route::prefix('{school_extracurricular_id}/assessment-extracurricular')
+                            ->name('.assessmentExtracurricular')
+                            ->group(function () {
+                                Route::get('/', [AssessmentExtracurricularController::class, 'index']);
+                                Route::get('{assessment_record_id}/detail', [AssessmentExtracurricularController::class, 'detail'])->name('.detail');
+                                Route::get('option-assessment-module', [AssessmentExtracurricularController::class, 'optionAssessmentModule'])->name('.optionAssessmentModule');
+                                Route::post('save', [AssessmentExtracurricularController::class, 'save'])->name('.save');
+                                Route::delete('delete', [AssessmentExtracurricularController::class, 'delete'])->name('.delete');
+                                // assessment session routes
+                                Route::prefix('{assessment_record_id}/assessment-record')
+                                    ->name('.assessmentRecord')
+                                    ->group(function () {
+                                        Route::get('/', [SchoolExtracurricularEntityAssessmentSessionController::class, 'index']);
+                                        Route::get('option-learning-objective', [SchoolExtracurricularEntityAssessmentSessionController::class, 'optionLearningObjective'])->name('.optionLearningObjective');
+                                        Route::get('option-assessment-rubric', [SchoolExtracurricularEntityAssessmentSessionController::class, 'optionAssessmentRubric'])->name('.optionAssessmentRubric');
+                                        Route::post('save', [SchoolExtracurricularEntityAssessmentSessionController::class, 'save'])->name('.save');
+                                    });
+                                // assessment student routes
+                                Route::prefix('{assessment_record_id}/assessment-student')
+                                    ->name('.assessmentStudent')
+                                    ->group(function () {
+                                        Route::get('/', [SchoolExtracurricularEntityAssessmentStudentController::class, 'index']);
+                                        Route::post('save', [SchoolExtracurricularEntityAssessmentStudentController::class, 'save'])->name('.save');
+                                    });
+                            });
+                    });
             });
         // management routes
         Route::prefix('management')
@@ -1233,12 +1271,6 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::get('option-parent', [LearningObjectiveCategoryController::class, 'optionParent'])->name('.optionParent');
                                 Route::post('save', [LearningObjectiveCategoryController::class, 'save'])->name('.save');
                                 Route::delete('delete', [LearningObjectiveCategoryController::class, 'delete'])->name('.delete');
-                            });
-                        Route::prefix('learning-rubric')
-                            ->name('.learningRubric')
-                            ->group(function () {
-                                Route::post('save', [LearningRubricController::class, 'save'])->name('.save');
-                                Route::delete('delete', [LearningRubricController::class, 'delete'])->name('.delete');
                             });
                     });
                 // school subject group routes

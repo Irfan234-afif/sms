@@ -23,9 +23,8 @@ export default {
         learning_objective_category_id: this.propertyModal.data.learning_objective_category.uuid,
         school_phase_id: this.propertyModal.data.school_phase_id,
         school_grade_id: this.propertyModal.data.school_grade_id,
-        school_subject_id: this.propertyModal.data.school_subject_id,
+        school_objective_id: this.propertyModal.data.school_objective_id,
         parent_id: null,
-        title: null,
         code: null,
         narrative: null,
       },
@@ -36,11 +35,6 @@ export default {
           error: null,
           loading: [],
           options: [],
-        },
-        title: {
-          label: 'Objektif Pembelajaran',
-          rules: [fieldValidation.isRequired('Objektif Pembelajaran')],
-          error: null,
         },
         code: {
           label: 'Kode',
@@ -63,7 +57,6 @@ export default {
       if (this.propertyModal.data.learning_objective?.parent) {
         this.field.parent_id.options = [this.propertyModal.data.learning_objective?.parent];
       }
-      this.form.title = this.propertyModal.data.learning_objective?.title;
       this.form.code = this.propertyModal.data.learning_objective?.code;
       this.form.narrative = this.propertyModal.data.learning_objective?.narrative;
     }
@@ -78,7 +71,7 @@ export default {
             learning_objective_category_id: this.form.learning_objective_category_id,
             school_phase_id: this.form.school_phase_id,
             school_grade_id: this.form.school_grade_id,
-            school_subject_id: this.form.school_subject_id,
+            school_objective_id: this.form.school_objective_id,
           }),
         )
         .then((response) => {
@@ -191,15 +184,6 @@ export default {
             />
           </el-select>
         </el-form-item>
-        <!-- <el-form-item
-          class="font-medium"
-          :label="field.title.label"
-          :rules="field.title.rules"
-          :error="field.title.error"
-          prop="title"
-        >
-          <el-input v-model="form.title" autocomplete="off" />
-        </el-form-item> -->
         <el-form-item
           class="font-medium"
           :label="field.code.label"

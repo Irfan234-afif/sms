@@ -34,6 +34,7 @@ export default {
           label: 'Kategory',
           rules: [fieldValidation.isRequired('Kategory')],
           error: null,
+          disabled: false,
           options: [
             {
               label: 'Mata Pelajaran',
@@ -43,12 +44,7 @@ export default {
             {
               label: 'Ekstrakurikuler',
               value: 'EXTRACURRICULAR',
-              disabled: true,
-            },
-            {
-              label: 'Pengembangan Diri',
-              value: 'PERSONAL_DEVELOPMENT',
-              disabled: true,
+              disabled: false,
             },
           ],
         },
@@ -66,6 +62,7 @@ export default {
       this.form.assessment_module_id = this.propertyModal.data.assessment_module.uuid;
       this.form.name = this.propertyModal.data.assessment_module.name;
       this.form.type = this.propertyModal.data.assessment_module.type;
+      this.field.type.disabled = true;
       this.form.description = this.propertyModal.data.assessment_module.description;
     }
   },
@@ -156,7 +153,7 @@ export default {
           :error="field.type.error"
           prop="type"
         >
-          <el-select v-model="form.type" :placeholder="`Pilih ${field.type.label}`" clearable>
+          <el-select v-model="form.type" :placeholder="`Pilih ${field.type.label}`" :disabled="field.type.disabled">
             <el-option
               v-for="option in field.type.options"
               :key="option.value"

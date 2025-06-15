@@ -21,6 +21,7 @@ export default {
       form: {
         school_curriculum_id: null,
         title: null,
+        type: null,
         code: null,
       },
       field: {

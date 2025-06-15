@@ -118,6 +118,7 @@ export default {
         .get(
           route('school.teachingProgram.assessmentModule.assessmentAspect.optionLearningObjectiveCategory', {
             search: search,
+            assessment_module_id: this.propertyModal.data.assessment_module.uuid,
           }),
         )
         .then((response) => {

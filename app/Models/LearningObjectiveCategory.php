@@ -14,6 +14,7 @@ class LearningObjectiveCategory extends Model
         'school_curriculum_id',
         'parent_id',
         'title',
+        'type',
         'code',
         'options',
     ];

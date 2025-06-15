@@ -6,7 +6,6 @@ import Modal from '@/Components/Modal.vue';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import DefaultButton from '@/Components/DefaultButton.vue';
 import LearningObjectiveCategoryForm from './LearningObjectiveCategory/Form.vue';
-import LearningRubricForm from './LearningRubric/Form.vue';
 import OutlineButton from '@/Components/OutlineButton.vue';
 import DeleteConfirm from '@/Components/DeleteConfirm.vue';
 import Badge from '@/Components/Badge.vue';
@@ -114,13 +113,16 @@ export default {
                 >
                   <div class="flex items-center space-x-2">
                     <div class="ms-4 min-w-0 flex-1">
-                      <p class="truncate text-xs font-medium text-gray-900 dark:text-white">
-                        {{ learning_objective_category.title }}
+                      <p class="truncate text-xs font-medium text-gray-900 dark:text-white space-x-2">
+                        {{ learning_objective_category.title }} <Badge type="warning">
+                          {{ learning_objective_category.type_label }}
+                        </Badge>
                       </p>
                       <div class="mt-1 flex items-center space-x-2 truncate text-xs text-gray-500 dark:text-gray-400">
                         <div>
                           {{ learning_objective_category.code }}
                         </div>
+                      
                         <Badge v-if="learning_objective_category.parent" type="purple">
                           Grup {{ learning_objective_category.parent.title }}
                         </Badge>
@@ -182,18 +184,8 @@ export default {
             :propertyModal="propertyModal"
             @close="closeModal()"
           />
-          <LearningRubricForm
-            v-if="
-              propertyModal?.mode == 'learning-rubric-create-form' || propertyModal?.mode == 'learning-rubric-edit-form'
-            "
-            :propertyModal="propertyModal"
-            @close="closeModal()"
-          />
           <DeleteConfirm
-            v-if="
-              propertyModal?.mode == 'learning-objective-category-delete-confirm' ||
-              propertyModal?.mode == 'learning-rubric-delete-confirm'
-            "
+            v-if="propertyModal?.mode == 'learning-objective-category-delete-confirm'"
             :propertyModal="propertyModal"
             @close="closeModal()"
           />

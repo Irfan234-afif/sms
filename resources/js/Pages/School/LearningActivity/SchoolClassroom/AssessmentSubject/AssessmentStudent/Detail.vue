@@ -17,11 +17,11 @@ export default {
       breadcrumbs: [
         { label: 'Sekolah', href: route('school') },
         {
-          label: `Kegiatan Kelas (${this.school_classroom.data.title})`,
+          label: `Kelas (${this.school_classroom.data.title})`,
           href: route('school.learningActivity.schoolClassroom'),
         },
         {
-          label: 'Penilaian Akademik',
+          label: 'Penilaian Mata Pelajaran',
           href: route('school.learningActivity.schoolClassroom.assessmentSubject', {
             school_classroom_id: this.school_classroom.data.uuid,
           }),
@@ -87,7 +87,7 @@ export default {
                 <dl>
                   <dt class="text-xs font-medium text-gray-800 dark:text-white">Mata Pelajaran</dt>
                   <dd class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ assessment_record.data.subject_name ?? '-' }}
+                    {{ assessment_record.data.assessable_name ?? '-' }}
                   </dd>
                 </dl>
                 <dl>

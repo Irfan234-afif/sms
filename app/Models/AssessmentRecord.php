@@ -14,6 +14,8 @@ class AssessmentRecord extends Model
         'school_academic_program_id',
         'school_classroom_id',
         'school_subject_id',
+        'assessable_type',
+        'assessable_id',
         'module_id',
         'name',
     ];
@@ -31,6 +33,11 @@ class AssessmentRecord extends Model
     public function subject()
     {
         return $this->belongsTo(SchoolSubject::class, 'school_subject_id');
+    }
+
+    public function assessable()
+    {
+        return $this->morphTo();
     }
 
     public function module()

@@ -50,8 +50,8 @@ export default {
   created() {
     let mode = this.propertyModal.mode;
     if (mode == 'assessment-record-edit-form') {
-      this.form.school_subject_id = this.propertyModal.data.assessment_record.subject;
-      this.field.school_subject_id.options = [this.propertyModal.data.assessment_record.subject];
+      this.form.school_subject_id = this.propertyModal.data.assessment_record.assessable;
+      this.field.school_subject_id.options = [this.propertyModal.data.assessment_record.assessable];
       this.field.school_subject_id.disabled = true;
       this.form.assessment_module_id = this.propertyModal.data.assessment_record.module;
       this.field.assessment_module_id.options = [this.propertyModal.data.assessment_record.module];

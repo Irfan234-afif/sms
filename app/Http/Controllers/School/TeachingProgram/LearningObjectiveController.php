@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\LearningObjectiveCategoryResource;
 use App\Http\Resources\LearningObjectiveResource;
 use App\Http\Resources\SchoolCurriculumResource;
+use App\Http\Resources\SchoolExtracurricularResource;
 use App\Http\Resources\SchoolGradeResource;
 use App\Http\Resources\SchoolPhaseResource;
 use App\Http\Resources\SchoolSubjectResource;
@@ -13,6 +14,7 @@ use App\Models\LearningObjective;
 use App\Models\LearningObjectiveCategory;
 use App\Models\School;
 use App\Models\SchoolCurriculum;
+use App\Models\SchoolExtracurricular;
 use App\Models\SchoolGrade;
 use App\Models\SchoolPhase;
 use App\Models\SchoolSubject;
@@ -101,26 +103,55 @@ class LearningObjectiveController extends Controller
         return response()->json(SchoolGradeResource::collection($school_grades->latest()->get()), 200);
     }
 
-    public function optionSchoolSubject()
+    public function optionSchoolObjective()
     {
-        $school_subjects = SchoolSubject::where('school_id', $this->school->id);
+        $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->firstOrFail();
 
-        if (request()->has('search')) {
-            $school_subjects->where('title', 'like', '%' . request('search') . '%');
+        $school_objectives = [];
+
+        if ($learning_objective_category->type == 'SUBJECT') {
+            $school_objectives = SchoolSubject::where('school_id', $this->school->id);
+
+            if (request()->has('search')) {
+                $school_objectives->where('title', 'like', '%' . request('search') . '%');
+            }
+
+            $school_objectives = SchoolSubjectResource::collection($school_objectives->latest()->get());
         }
 
-        return response()->json(SchoolSubjectResource::collection($school_subjects->latest()->get()), 200);
+        if ($learning_objective_category->type == 'EXTRACURRICULAR') {
+            $school_objectives = SchoolExtracurricular::where('school_id', $this->school->id);
+
+            if (request()->has('search')) {
+                $school_objectives->where('title', 'like', '%' . request('search') . '%');
+            }
+
+            $school_objectives = SchoolExtracurricularResource::collection($school_objectives->latest()->get());
+        }
+
+        return response()->json($school_objectives, 200);
     }
 
 
     public function optionLearningObjective()
     {
+        $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->firstOrFail();
         $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
         $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->first();
         $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->first();
-        $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
+        $school_objective_type = null;
+        $school_objective = null;
 
-        $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->firstOrFail();
+        if ($learning_objective_category->type == 'SUBJECT') {
+            $school_objective_type = SchoolSubject::class;
+            $school_objective = SchoolSubject::where('uuid', request('school_objective_id'))->first();
+        }
+
+        if ($learning_objective_category->type == 'EXTRACCURICULAR') {
+            $school_objective_type = SchoolExtracurricular::class;
+            $school_objective = SchoolExtracurricular::where('uuid', request('school_objective_id'))->first();
+        }
+
 
         $learning_objectives = $learning_objective_category->parent->objectives()
             ->with('parent');
@@ -133,8 +164,9 @@ class LearningObjectiveController extends Controller
             $learning_objectives->where('school_grade_id', $school_grade->id);
         }
 
-        if ($school_subject && $learning_objective_category->parent->options['scope_school_subject']) {
-            $learning_objectives->where('school_subject_id', $school_subject->id);
+        if ($school_objective && $learning_objective_category->parent->options['scope_school_objective']) {
+            $learning_objectives->where('objectiveable_type', $school_objective_type)
+                ->where('objectiveable_id', $school_objective->id);
         }
 
         if ($school_year && $learning_objective_category->parent->options['scope_school_year']) {
@@ -150,12 +182,22 @@ class LearningObjectiveController extends Controller
 
     public function getLearningObjective()
     {
+        $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->firstOrFail();
         $school_year = SchoolYear::where('id', $this->school->academic_program_active->school_year_id)->firstOrFail();
         $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->first();
         $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->first();
-        $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
+        $school_objective_type = null;
+        $school_objective = null;
 
-        $learning_objective_category = LearningObjectiveCategory::where('uuid', request('learning_objective_category_id'))->firstOrFail();
+        if ($learning_objective_category->type == 'SUBJECT') {
+            $school_objective_type = SchoolSubject::class;
+            $school_objective = SchoolSubject::where('uuid', request('school_objective_id'))->first();
+        }
+
+        if ($learning_objective_category->type == 'EXTRACURRICULAR') {
+            $school_objective_type = SchoolExtracurricular::class;
+            $school_objective = SchoolExtracurricular::where('uuid', request('school_objective_id'))->first();
+        }
 
         $learning_objectives = $learning_objective_category->objectives()
             ->with('parent');
@@ -168,8 +210,9 @@ class LearningObjectiveController extends Controller
             $learning_objectives->where('school_grade_id', $school_grade->id);
         }
 
-        if ($school_subject && $learning_objective_category->options['scope_school_subject']) {
-            $learning_objectives->where('school_subject_id', $school_subject->id);
+        if ($school_objective && $learning_objective_category->options['scope_school_objective']) {
+            $learning_objectives->where('objectiveable_type', $school_objective_type)
+                ->where('objectiveable_id', $school_objective->id);
         }
 
         if ($school_year && $learning_objective_category->options['scope_school_year']) {
@@ -194,7 +237,19 @@ class LearningObjectiveController extends Controller
             // todo:modified by school
             $school_phase = SchoolPhase::where('uuid', request('school_phase_id'))->first();
             $school_grade = SchoolGrade::where('uuid', request('school_grade_id'))->first();
-            $school_subject = SchoolSubject::where('uuid', request('school_subject_id'))->first();
+            $school_objective_type = null;
+            $school_objective = null;
+
+            if ($learning_objective_category->type == 'SUBJECT') {
+                $school_objective_type = SchoolSubject::class;
+                $school_objective = SchoolSubject::where('uuid', request('school_objective_id'))->first();
+            }
+
+            if ($learning_objective_category->type == 'EXTRACURRICULAR') {
+                $school_objective_type = SchoolExtracurricular::class;
+                $school_objective = SchoolExtracurricular::where('uuid', request('school_objective_id'))->first();
+            }
+
             $school_year = null;
 
             if ($learning_objective_category->options['scope_school_year']) {
@@ -208,7 +263,8 @@ class LearningObjectiveController extends Controller
                     'category_id' => $learning_objective_category->id,
                     'school_phase_id' => $school_phase?->id,
                     'school_grade_id' => $school_grade?->id,
-                    'school_subject_id' => $school_subject?->id,
+                    'objectiveable_type' => $school_objective ? $school_objective_type : null,
+                    'objectiveable_id' => $school_objective?->id,
                     'school_year_id' => $school_year?->id,
                 ],
                 [

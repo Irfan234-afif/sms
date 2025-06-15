@@ -6,21 +6,47 @@
     "learning_objective_categories": [
       {
         "title": "Capaian Pembelajaran",
+        "type": "SUBJECT",
         "code": "CP",
         "options": {
           "scope_school_phase": true,
           "scope_school_grade": true,
-          "scope_school_subject": false,
+          "scope_school_objective": false,
           "scope_school_year": false
         },
         "childs": [
           {
             "title": "Tujuan Pembelajaran",
+            "type": "SUBJECT",
             "code": "TP",
             "options": {
               "scope_school_phase": true,
               "scope_school_grade": true,
-              "scope_school_subject": true,
+              "scope_school_objective": true,
+              "scope_school_year": true
+            }
+          }
+        ]
+      },
+      {
+        "title": "Kompetensi",
+        "type": "EXTRACURRICULAR",
+        "code": "KOMP",
+        "options": {
+          "scope_school_phase": false,
+          "scope_school_grade": false,
+          "scope_school_objective": true,
+          "scope_school_year": true
+        },
+        "childs": [
+          {
+            "title": "Indikator Pencapaian",
+            "type": "EXTRACURRICULAR",
+            "code": "IP",
+            "options": {
+              "scope_school_phase": false,
+              "scope_school_grade": false,
+              "scope_school_objective": true,
               "scope_school_year": true
             }
           }
@@ -379,6 +405,106 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Penilaian Ekstrakurikuler",
+        "description": "Penilaian Ekstrakurikuler",
+        "type": "EXTRACURRICULAR",
+        "aspects": [
+          {
+            "name": "Penilaian Pertemuan & Kompetensi",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 16,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "IP"
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Penilaian",
+            "description": "Rubrik dalam penilaian",
+            "scales": [
+              {
+                "predicate": "4",
+                "score": 86,
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "3",
+                "score": 71,
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "2",
+                "score": 61,
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "1",
+                "score": 0,
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "predicate": "A",
+                "score": 86,
+                "status": "PASSED",
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "B",
+                "score": 71,
+                "status": "PASSED",
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "C",
+                "score": 61,
+                "status": "PASSED",
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "D",
+                "score": 0,
+                "status": "FAILED",
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "final_rules": [
+          {
+            "name": "Nilai Akhir",
+            "sort_order": 2,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": true,
+            "predicate_method": "THRESHOLD",
+            "use_narrative": true,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi",
+                "portion_score": 100
+              }
+            ],
+            "final_narratives": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -389,21 +515,47 @@
     "learning_objective_categories": [
       {
         "title": "Capaian Pembelajaran",
+        "type": "SUBJECT",
         "code": "CP",
         "options": {
           "scope_school_phase": true,
           "scope_school_grade": true,
-          "scope_school_subject": false,
+          "scope_school_objective": false,
           "scope_school_year": false
         },
         "childs": [
           {
             "title": "Tujuan Pembelajaran",
+            "type": "SUBJECT",
             "code": "TP",
             "options": {
               "scope_school_phase": true,
               "scope_school_grade": true,
-              "scope_school_subject": true,
+              "scope_school_objective": true,
+              "scope_school_year": true
+            }
+          }
+        ]
+      },
+      {
+        "title": "Kompetensi",
+        "type": "EXTRACURRICULAR",
+        "code": "KOMP",
+        "options": {
+          "scope_school_phase": false,
+          "scope_school_grade": false,
+          "scope_school_objective": true,
+          "scope_school_year": true
+        },
+        "childs": [
+          {
+            "title": "Indikator Pencapaian",
+            "type": "EXTRACURRICULAR",
+            "code": "IP",
+            "options": {
+              "scope_school_phase": false,
+              "scope_school_grade": false,
+              "scope_school_objective": true,
               "scope_school_year": true
             }
           }
@@ -519,6 +671,106 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Penilaian Ekstrakurikuler",
+        "description": "Penilaian Ekstrakurikuler",
+        "type": "EXTRACURRICULAR",
+        "aspects": [
+          {
+            "name": "Penilaian Pertemuan & Kompetensi",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 16,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "IP"
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Penilaian",
+            "description": "Rubrik dalam penilaian",
+            "scales": [
+              {
+                "predicate": "4",
+                "score": 86,
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "3",
+                "score": 71,
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "2",
+                "score": 61,
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "1",
+                "score": 0,
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "predicate": "A",
+                "score": 86,
+                "status": "PASSED",
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "B",
+                "score": 71,
+                "status": "PASSED",
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "C",
+                "score": 61,
+                "status": "PASSED",
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "D",
+                "score": 0,
+                "status": "FAILED",
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "final_rules": [
+          {
+            "name": "Nilai Akhir",
+            "sort_order": 2,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": true,
+            "predicate_method": "THRESHOLD",
+            "use_narrative": true,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi",
+                "portion_score": 100
+              }
+            ],
+            "final_narratives": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -529,21 +781,23 @@
     "learning_objective_categories": [
       {
         "title": "Capaian Pembelajaran",
+        "type": "SUBJECT",
         "code": "CP",
         "options": {
           "scope_school_phase": true,
           "scope_school_grade": true,
-          "scope_school_subject": false,
+          "scope_school_objective": false,
           "scope_school_year": false
         },
         "childs": [
           {
             "title": "Tujuan Pembelajaran",
+            "type": "SUBJECT",
             "code": "TP",
             "options": {
               "scope_school_phase": true,
               "scope_school_grade": true,
-              "scope_school_subject": true,
+              "scope_school_objective": true,
               "scope_school_year": true
             }
           }
@@ -551,14 +805,39 @@
       },
       {
         "title": "Learning Objective",
+        "type": "SUBJECT",
         "code": "LO",
         "options": {
           "scope_school_phase": true,
           "scope_school_grade": true,
-          "scope_school_subject": true,
+          "scope_school_objective": true,
           "scope_school_year": true
         },
         "childs": []
+      },
+      {
+        "title": "Kompetensi",
+        "type": "EXTRACURRICULAR",
+        "code": "KOMP",
+        "options": {
+          "scope_school_phase": false,
+          "scope_school_grade": false,
+          "scope_school_objective": true,
+          "scope_school_year": true
+        },
+        "childs": [
+          {
+            "title": "Indikator Pencapaian",
+            "type": "EXTRACURRICULAR",
+            "code": "IP",
+            "options": {
+              "scope_school_phase": false,
+              "scope_school_grade": false,
+              "scope_school_objective": true,
+              "scope_school_year": true
+            }
+          }
+        ]
       }
     ],
     "assessment_modules": [
@@ -1006,6 +1285,106 @@
         ],
         "thresholds": [],
         "final_rules": []
+      },
+      {
+        "name": "Penilaian Ekstrakurikuler",
+        "description": "Penilaian Ekstrakurikuler",
+        "type": "EXTRACURRICULAR",
+        "aspects": [
+          {
+            "name": "Penilaian Pertemuan & Kompetensi",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 16,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "IP"
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Penilaian",
+            "description": "Rubrik dalam penilaian",
+            "scales": [
+              {
+                "predicate": "4",
+                "score": 86,
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "3",
+                "score": 71,
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "2",
+                "score": 61,
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "1",
+                "score": 0,
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "predicate": "A",
+                "score": 86,
+                "status": "PASSED",
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "B",
+                "score": 71,
+                "status": "PASSED",
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "C",
+                "score": 61,
+                "status": "PASSED",
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "D",
+                "score": 0,
+                "status": "FAILED",
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "final_rules": [
+          {
+            "name": "Nilai Akhir",
+            "sort_order": 2,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": true,
+            "predicate_method": "THRESHOLD",
+            "use_narrative": true,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi",
+                "portion_score": 100
+              }
+            ],
+            "final_narratives": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -1016,21 +1395,23 @@
     "learning_objective_categories": [
       {
         "title": "Capaian Pembelajaran",
+        "type": "SUBJECT",
         "code": "CP",
         "options": {
           "scope_school_phase": true,
           "scope_school_grade": true,
-          "scope_school_subject": false,
+          "scope_school_objective": false,
           "scope_school_year": false
         },
         "childs": [
           {
             "title": "Tujuan Pembelajaran",
+            "type": "SUBJECT",
             "code": "TP",
             "options": {
               "scope_school_phase": true,
               "scope_school_grade": true,
-              "scope_school_subject": true,
+              "scope_school_objective": true,
               "scope_school_year": true
             }
           }
@@ -1038,14 +1419,39 @@
       },
       {
         "title": "Learning Objective",
+        "type": "SUBJECT",
         "code": "LO",
         "options": {
           "scope_school_phase": true,
           "scope_school_grade": true,
-          "scope_school_subject": true,
+          "scope_school_objective": true,
           "scope_school_year": true
         },
         "childs": []
+      },
+      {
+        "title": "Kompetensi",
+        "type": "EXTRACURRICULAR",
+        "code": "KOMP",
+        "options": {
+          "scope_school_phase": false,
+          "scope_school_grade": false,
+          "scope_school_objective": true,
+          "scope_school_year": true
+        },
+        "childs": [
+          {
+            "title": "Indikator Pencapaian",
+            "type": "EXTRACURRICULAR",
+            "code": "IP",
+            "options": {
+              "scope_school_phase": false,
+              "scope_school_grade": false,
+              "scope_school_objective": true,
+              "scope_school_year": true
+            }
+          }
+        ]
       }
     ],
     "assessment_modules": [
@@ -1316,6 +1722,106 @@
         ],
         "thresholds": [],
         "final_rules": []
+      },
+      {
+        "name": "Penilaian Ekstrakurikuler",
+        "description": "Penilaian Ekstrakurikuler",
+        "type": "EXTRACURRICULAR",
+        "aspects": [
+          {
+            "name": "Penilaian Pertemuan & Kompetensi",
+            "sort_order": 1,
+            "use_sessions": true,
+            "total_sessions": 16,
+            "use_final_score": true,
+            "final_score_method": "AVERAGE",
+            "use_learning_objective": true,
+            "learning_objective_category_code": "IP"
+          }
+        ],
+        "rubrics": [
+          {
+            "name": "Rubrik Penilaian",
+            "description": "Rubrik dalam penilaian",
+            "scales": [
+              {
+                "predicate": "4",
+                "score": 86,
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "3",
+                "score": 71,
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "2",
+                "score": 61,
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "1",
+                "score": 0,
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "thresholds": [
+          {
+            "name": "Kriteria Ketercapaian",
+            "description": "Kriteria Ketercapaian dalam penilaian",
+            "scales": [
+              {
+                "predicate": "A",
+                "score": 86,
+                "status": "PASSED",
+                "narrative": "Sangat menguasai"
+              },
+              {
+                "predicate": "B",
+                "score": 71,
+                "status": "PASSED",
+                "narrative": "Telah mampu"
+              },
+              {
+                "predicate": "C",
+                "score": 61,
+                "status": "PASSED",
+                "narrative": "Cukup mampu"
+              },
+              {
+                "predicate": "D",
+                "score": 0,
+                "status": "FAILED",
+                "narrative": "Perlu bimbingan"
+              }
+            ]
+          }
+        ],
+        "final_rules": [
+          {
+            "name": "Nilai Akhir",
+            "sort_order": 2,
+            "use_score": true,
+            "score_method": "SUM_ASPECT",
+            "use_predicate": true,
+            "predicate_method": "THRESHOLD",
+            "use_narrative": true,
+            "narrative_method": "THRESHOLD_PLUS_LEARNING_OBJECTIVE",
+            "final_scores": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi",
+                "portion_score": 100
+              }
+            ],
+            "final_narratives": [
+              {
+                "aspect_name": "Penilaian Pertemuan & Kompetensi"
+              }
+            ]
+          }
+        ]
       }
     ]
   }

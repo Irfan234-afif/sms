@@ -15,7 +15,7 @@
                 "scope_school_year": true,
                 "scope_school_grade": true,
                 "scope_school_phase": true,
-                "scope_school_subject": true
+                "scope_school_objective": true
               },
               "childs": [
                 {
@@ -25,7 +25,7 @@
                     "scope_school_year": true,
                     "scope_school_grade": true,
                     "scope_school_phase": true,
-                    "scope_school_subject": true
+                    "scope_school_objective": true
                   }
                 }
               ]
@@ -37,7 +37,7 @@
                 "scope_school_year": true,
                 "scope_school_grade": true,
                 "scope_school_phase": true,
-                "scope_school_subject": true
+                "scope_school_objective": true
               },
               "childs": []
             }
@@ -186,7 +186,7 @@
                 "scope_school_year": true,
                 "scope_school_grade": true,
                 "scope_school_phase": true,
-                "scope_school_subject": true
+                "scope_school_objective": true
               },
               "childs": [
                 {
@@ -196,7 +196,7 @@
                     "scope_school_year": true,
                     "scope_school_grade": true,
                     "scope_school_phase": true,
-                    "scope_school_subject": true
+                    "scope_school_objective": true
                   }
                 }
               ]
@@ -208,7 +208,7 @@
                 "scope_school_year": true,
                 "scope_school_grade": true,
                 "scope_school_phase": false,
-                "scope_school_subject": true
+                "scope_school_objective": true
               },
               "childs": []
             },
@@ -219,7 +219,7 @@
                 "scope_school_year": true,
                 "scope_school_grade": true,
                 "scope_school_phase": false,
-                "scope_school_subject": true
+                "scope_school_objective": true
               },
               "childs": []
             }
