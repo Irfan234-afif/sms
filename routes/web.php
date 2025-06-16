@@ -94,6 +94,7 @@ use App\Http\Controllers\Office\MyProfile\Submission\TrainingController as Submi
 use App\Http\Controllers\Office\MyProfile\Submission\VehicleController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
+use App\Http\Controllers\Office\QRD\TrainingProgramController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
@@ -1066,6 +1067,17 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
             ->name('.qrd')
             ->group(function () {
                 Route::get('/', [QRDController::class, 'index']);
+                Route::prefix('training-program')
+                    ->name('.training-program')
+                    ->group(function () {
+                        Route::get('/', [TrainingProgramController::class, 'index'])->name('.index');
+                        Route::get('create', [TrainingProgramController::class, 'create'])->name('.create');
+                        Route::post('store', [TrainingProgramController::class, 'store'])->name('.store');
+                        Route::get('{uuid}', [TrainingProgramController::class, 'show'])->name('.show');
+                        Route::get('{uuid}/edit', [TrainingProgramController::class, 'edit'])->name('.edit');
+                        Route::put('{uuid}', [TrainingProgramController::class, 'update'])->name('.update');
+                        Route::delete('{uuid}', [TrainingProgramController::class, 'delete'])->name('.delete');
+                    });
             });
         // finance routes
         Route::prefix('finance')
