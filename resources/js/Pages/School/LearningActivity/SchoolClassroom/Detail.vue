@@ -5,7 +5,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 const breadcrumbs = [
   { label: 'Sekolah', href: route('school') },
-  { label: 'Kegiatan Kelas', href: route('school.learningActivity.schoolClassroom') },
+  { label: 'Kelas', href: route('school.learningActivity.schoolClassroom') },
   { label: 'Lihat', href: '#' },
 ];
 </script>
@@ -109,7 +109,7 @@ export default {
                 <path d="M19 16h-12a2 2 0 0 0 -2 2" />
                 <path d="M9 8h6" />
               </svg>
-              <span class="flex-1 whitespace-nowrap">Penilaian Akademik</span>
+              <span class="flex-1 whitespace-nowrap">Penilaian Mata Pelajaran</span>
             </Link>
             <Link
               href=""

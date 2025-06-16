@@ -29,7 +29,8 @@ class LearningObjectiveCategoryController extends Controller
             ->where('uuid', request('learning_objective_category_id'))
             ->first();
 
-        $learning_objective_categories = LearningObjectiveCategory::where('school_curriculum_id', $school_curriculum->id);
+        $learning_objective_categories = LearningObjectiveCategory::where('school_curriculum_id', $school_curriculum->id)
+            ->where('type', request('type'));
 
         if ($learning_objective_category_not_include) {
             $learning_objective_categories->whereNotIn('id', [$learning_objective_category_not_include->id]);
@@ -62,6 +63,7 @@ class LearningObjectiveCategoryController extends Controller
                 [
                     'parent_id' => $learning_objective_category_parent ? $learning_objective_category_parent->id : null,
                     'title' => request('title'),
+                    'type' => request('type'),
                     'code' => request('code'),
                     'options' => request('options'),
                 ]

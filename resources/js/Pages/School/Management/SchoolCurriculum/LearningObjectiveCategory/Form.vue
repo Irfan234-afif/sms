@@ -23,12 +23,13 @@ export default {
         school_curriculum_id: this.propertyModal.data.school_curriculum.uuid,
         parent_id: null,
         title: null,
+        type: 'SUBJECT',
         code: null,
         options: {
           scope_school_year: false,
           scope_school_phase: false,
           scope_school_grade: false,
-          scope_school_subject: false,
+          scope_school_objective: false,
         },
       },
       field: {
@@ -45,6 +46,29 @@ export default {
           error: null,
           disabled: false,
           options: [],
+        },
+        type: {
+          label: 'Kategory',
+          rules: [fieldValidation.isRequired('Kategory')],
+          error: null,
+          disabled: false,
+          options: [
+            {
+              label: 'Mata Pelajaran',
+              value: 'SUBJECT',
+              disabled: false,
+            },
+            {
+              label: 'Ekstrakurikuler',
+              value: 'EXTRACURRICULAR',
+              disabled: false,
+            },
+            {
+              label: 'Pengembangan Diri',
+              value: 'PERSONAL_DEVELOPMENT',
+              disabled: true,
+            },
+          ],
         },
         code: {
           label: 'Kode',
@@ -67,8 +91,11 @@ export default {
     let mode = this.propertyModal.mode;
     if (mode == 'learning-objective-category-edit-form') {
       this.form.title = this.propertyModal.data.learning_objective_category?.title;
+      this.form.type = this.propertyModal.data.learning_objective_category.type;
+      this.field.type.disabled = true;
       this.form.code = this.propertyModal.data.learning_objective_category?.code;
       this.form.parent_id = this.propertyModal.data.learning_objective_category?.parent;
+      this.field.parent_id.disabled = true;
       if (this.propertyModal.data.learning_objective_category.parent) {
         this.field.parent_id.options = [this.propertyModal.data.learning_objective_category.parent];
       }
@@ -83,6 +110,7 @@ export default {
           route('school.management.schoolCurriculum.learningObjectiveCategory.optionParent', {
             school_curriculum_id: this.form.school_curriculum_id,
             learning_objective_category_id: this.form.learning_objective_category_id,
+            type: this.form.type,
             search: search,
           }),
         )
@@ -178,6 +206,31 @@ export default {
         </el-form-item>
         <el-form-item
           class="font-medium"
+          :label="field.type.label"
+          :rules="field.type.rules"
+          :error="field.type.error"
+          prop="type"
+        >
+          <el-select
+            v-model="form.type"
+            :placeholder="`Pilih ${field.type.label}`"
+            @change="
+              form.parent_id = null;
+              field.parent_id.options = [];
+            "
+            :disabled="field.type.disabled"
+          >
+            <el-option
+              v-for="option in field.type.options"
+              :key="option.value"
+              :label="option.label"
+              :disabled="option.disabled"
+              :value="option.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          class="font-medium"
           :label="field.code.label"
           :rules="field.code.rules"
           :error="field.code.error"
@@ -224,10 +277,13 @@ export default {
         >
           <el-row :gutter="10">
             <el-col :span="12">
-              <el-checkbox border class="w-full" v-model="form.options.scope_school_phase">Fase</el-checkbox>
+              <el-checkbox v-if="form.type == 'SUBJECT'" border class="w-full" v-model="form.options.scope_school_phase"
+                >Fase</el-checkbox
+              >
             </el-col>
             <el-col :span="12">
               <el-checkbox
+                v-if="form.type == 'SUBJECT'"
                 border
                 class="w-full"
                 :disabled="form.options.scope_school_phase == false"
@@ -239,16 +295,19 @@ export default {
               <el-checkbox
                 border
                 class="w-full"
-                :disabled="form.options.scope_school_grade == false"
-                v-model="form.options.scope_school_subject"
-                >Mata Pelajaran</el-checkbox
+                :disabled="form.options.scope_school_grade == false && form.type == 'SUBJECT'"
+                v-model="form.options.scope_school_objective"
               >
+                <span v-if="form.type == 'SUBJECT'"> Mata Pelajaran </span>
+                <span v-else-if="form.type == 'EXTRACURRICULAR'"> Ekstrakurikuler </span>
+                <span v-else-if="form.type == 'PERSONALITY_DEVELOPMENT'"> Pengembangan Diri </span>
+              </el-checkbox>
             </el-col>
             <el-col :span="12">
               <el-checkbox
                 border
                 class="w-full"
-                :disabled="form.options.scope_school_subject == false"
+                :disabled="form.options.scope_school_objective == false"
                 v-model="form.options.scope_school_year"
                 >Tahun Ajaran</el-checkbox
               >

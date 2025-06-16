@@ -14,6 +14,7 @@ use App\Models\AssessmentSessionRubric;
 use App\Models\LearningObjective;
 use App\Models\LearningObjectiveCategory;
 use App\Models\School;
+use App\Models\SchoolSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -40,7 +41,8 @@ class AssessmentSessionController extends Controller
             ->where('school_year_id', $this->school->academic_program_active->school_year_id)
             ->where('school_phase_id', $assessment_record->classroom->grade->school_phase_id)
             ->where('school_grade_id', $assessment_record->classroom->school_grade_id)
-            ->where('school_subject_id', $assessment_record->school_subject_id);
+            ->where('objectiveable_type', SchoolSubject::class)
+            ->where('objectiveable_id', $assessment_record->assessable_id);
 
         if (request()->has('search')) {
             $learning_objectives->where('code', 'like', '%' . request('search') . '%');

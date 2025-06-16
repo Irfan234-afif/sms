@@ -8,7 +8,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 const breadcrumbs = [
   { label: 'Sekolah', href: route('school') },
-  { label: 'Kegiatan Kelas', href: route('school.learningActivity.schoolClassroom') },
+  { label: 'Kelas', href: route('school.learningActivity.schoolClassroom') },
 ];
 </script>
 

@@ -24,11 +24,11 @@ export default {
       breadcrumbs: [
         { label: 'Sekolah', href: route('school') },
         {
-          label: `Kegiatan Kelas (${this.school_classroom.data.title})`,
+          label: `Kelas (${this.school_classroom.data.title})`,
           href: route('school.learningActivity.schoolClassroom'),
         },
         {
-          label: 'Penilaian Akademik',
+          label: 'Penilaian Mata Pelajaran',
           href: '#',
         },
       ],
@@ -164,7 +164,7 @@ export default {
                   </th>
                   <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center">
-                      {{ assessment_record.subject.title }}
+                      {{ assessment_record.assessable.title }}
                     </div>
                   </th>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">

@@ -17,7 +17,9 @@ class LearningObjective extends Model
         'school_year_id',
         'school_phase_id',
         'school_grade_id',
-        'school_subject_id',
+        'school_subject_id', //
+        'objectiveable_type',
+        'objectiveable_id',
         'title',
         'code',
         'narrative',
@@ -26,5 +28,10 @@ class LearningObjective extends Model
     public function parent()
     {
         return $this->belongsTo(LearningObjective::class, 'parent_id');
+    }
+
+    public function objectiveable()
+    {
+        return $this->morphTo();
     }
 }

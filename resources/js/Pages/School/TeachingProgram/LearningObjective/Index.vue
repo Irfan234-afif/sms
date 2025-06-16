@@ -63,7 +63,9 @@ export default {
                   <path d="M19 16h-12a2 2 0 0 0 -2 2" />
                   <path d="M9 8h6" />
                 </svg>
-                <span class="flex-1 whitespace-nowrap">{{ learning_objective_category.title }} </span>
+                <span class="flex-1 whitespace-nowrap"
+                  >{{ learning_objective_category.title }} - {{ learning_objective_category.type_label }}</span
+                >
               </Link>
             </template>
           </div>

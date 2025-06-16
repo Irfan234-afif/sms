@@ -37,7 +37,7 @@ class AssessmentSubjectController extends Controller
             ->with([
                 'academic_program',
                 'classroom',
-                'subject',
+                'assessable',
                 'module',
             ])
             ->latest()
@@ -59,7 +59,7 @@ class AssessmentSubjectController extends Controller
             ->with([
                 'academic_program',
                 'classroom',
-                'subject',
+                'assessable',
                 'module.aspects.learning_objective_category',
                 'module.rubrics',
                 'sessions.learning_objectives',
@@ -80,7 +80,7 @@ class AssessmentSubjectController extends Controller
         // todo:modified by school
         $school_curriculum = $this->school->academic_program_active->curriculum;
 
-        $assessment_modules = $school_curriculum->assessment_modules();
+        $assessment_modules = $school_curriculum->assessment_modules()->where('type', 'SUBJECT');
 
         if (request()->has('search')) {
             $assessment_modules->where('name', 'like', '%' . request('search') . '%');
@@ -113,7 +113,8 @@ class AssessmentSubjectController extends Controller
                 [
                     'school_academic_program_id' => $this->school->academic_program_active->id,
                     'school_classroom_id' => $school_classroom?->id,
-                    'school_subject_id' => $school_subject->id,
+                    'assessable_type' => SchoolSubject::class,
+                    'assessable_id' => $school_subject->id,
                     'module_id' => $assessment_module->id,
                 ],
                 [
