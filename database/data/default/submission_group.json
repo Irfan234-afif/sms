@@ -88,5 +88,11 @@
         "code": "RESIGNATION",
         "reference_code": "RSN",
         "reference_number": 1
+    },
+    {
+        "name": "Training Program",
+        "code": "TRAINING_PROGRAM",
+        "reference_code": "TRP",
+        "reference_number": 1
     }
 ]
