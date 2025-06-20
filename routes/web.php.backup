@@ -1133,6 +1133,22 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                         Route::get('training-programs', [TrainingProgramSubmissionController::class, 'optionTrainingPrograms'])->name('.training-programs');
                                         Route::get('participants', [TrainingProgramSubmissionController::class, 'optionParticipants'])->name('.participants');
                                     });
+                            });
+                    });
+
+                
+                
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'save'])->name('.save');
+                    });
+            });
+
                 // activity routes
                 Route::prefix('activity')
                     ->name('.activity')
@@ -1160,11 +1176,6 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::get('option-participants', [QRDTrainingProgramActivityController::class, 'optionParticipants'])->name('.optionParticipants');
                             });
                     });
-
-                            });
-                    });
-
-                
                 
                 // setting routes
                 Route::prefix('setting')
@@ -1174,6 +1185,19 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::get('get-submission-approver', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
                         Route::get('option-employee', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
                         Route::post('save', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'save'])->name('.save');
+                    });
+            });
+        // finance routes
+        Route::prefix('finance')
+            ->name('.finance')
+            ->group(function () {
+                Route::get('/', [FinanceController::class, 'index']);
+                // activity routes
+                Route::prefix('activity/admission-student')
+                    ->name('.activity.admissionStudent')
+                    ->group(function () {
+                        Route::get('/', [FinanceActivityAdmissionStudentController::class, 'index']);
+                        Route::get('{registration_number}/detail', [FinanceActivityAdmissionStudentController::class, 'detail'])->name('.detail');
                     });
             });
     });
