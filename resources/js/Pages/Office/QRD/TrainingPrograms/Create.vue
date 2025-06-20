@@ -12,8 +12,8 @@ import { ref } from 'vue';
 const breadcrumbs = [
     { label: 'Yayasan', href: route('office') },
     { label: 'QRD', href: route('office.qrd') },
-    { label: 'Program Pelatihan', href: route('office.qrd.training-program.index') },
-    { label: 'Buat Baru', href: route('office.qrd.training-program.create') }
+    { label: 'Program Pelatihan', href: route('office.qrd.manage.training-program.index') },
+    { label: 'Buat Baru', href: route('office.qrd.manage.training-program.create') }
 ];
 
 const showAssessmentModal = ref(false);
@@ -206,7 +206,7 @@ export default {
                     });
 
                     this.process = true;
-                    this.form.post(route('office.qrd.training-program.store'), {
+                    this.form.post(route('office.qrd.manage.training-program.store'), {
                         preserveScroll: true,
                         onSuccess: () => {
                             ElNotification({
@@ -214,7 +214,7 @@ export default {
                                 message: 'Program pelatihan berhasil dibuat',
                                 type: 'success'
                             });
-                            this.$inertia.visit(route('office.qrd.training-program.index'));
+                            this.$inertia.visit(route('office.qrd.manage.training-program.index'));
                         },
                         onError: (errors) => {
                             // Reset all field errors
@@ -565,7 +565,7 @@ export default {
                     </div>
 
                     <div class="flex justify-end space-x-3">
-                        <el-button @click="$inertia.visit(route('office.qrd.training-program.index'))"
+                        <el-button @click="$inertia.visit(route('office.qrd.manage.training-program.index'))"
                             :disabled="process">
                             Batal
                         </el-button>

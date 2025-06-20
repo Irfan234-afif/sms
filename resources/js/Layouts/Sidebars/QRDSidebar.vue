@@ -65,7 +65,7 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-approval" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.qrd.approval.trainingProgram')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Pelatihan</Link
               >
@@ -112,9 +112,15 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-management" class="hidden space-y-2 py-2">
             <li>
               <Link
-                :href="route('office.qrd.training-program.index')"
+                :href="route('office.qrd.manage.training-program.index')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Program Pelatihan</Link>
+            </li>
+            <li>
+              <Link
+                :href="route('office.qrd.manage.training-program-submission.index')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Pengajuan Pelatihan</Link>
             </li>
           </ul>
         </li>
@@ -166,7 +172,7 @@ import { Link } from '@inertiajs/vue3';
           <ul id="dropdown-setting" class="hidden space-y-2 py-2">
             <li>
               <Link
-                href="#"
+                :href="route('office.qrd.setting.submissionApprover')"
                 class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >Petugas Persetujuan</Link
               >

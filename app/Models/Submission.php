@@ -89,6 +89,11 @@ class Submission extends Model
         return $this->hasOne(SubEvent::class, 'submission_id', 'id');
     }
 
+    public function trainingProgramSubmission()
+    {
+        return $this->hasOne(\App\Models\TrainingProgram\TrainingProgramSubmission::class, 'submission_id', 'id');
+    }
+
     public function attendance()
     {
         return $this->hasOne(SubAttendance::class, 'submission_id', 'id');

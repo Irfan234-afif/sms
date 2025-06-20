@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Office\QRD;
+namespace App\Http\Controllers\Office\QRD\Manage;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\TrainingProgramResource;
@@ -130,7 +130,7 @@ class TrainingProgramController extends Controller
             }
         });
 
-        return redirect()->route('office.qrd.training-program.index')
+        return redirect()->route('office.qrd.manage.training-program.index')
             ->with('success', 'Training program created successfully');
     }
 
@@ -362,7 +362,7 @@ class TrainingProgramController extends Controller
             }
         });
 
-        return redirect()->route('office.qrd.training-program.index')
+        return redirect()->route('office.qrd.manage.training-program.index')
             ->with('success', 'Training program updated successfully');
     }
 
@@ -373,7 +373,7 @@ class TrainingProgramController extends Controller
     {
         $trainingProgram = TrainingProgram::where('uuid', $uuid)->firstOrFail();
         $trainingProgram->delete();
-        return redirect()->route('office.qrd.training-program.index')
+        return redirect()->route('office.qrd.manage.training-program.index')
             ->with('success', 'Training program deleted successfully');
     }
     

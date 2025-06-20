@@ -21,8 +21,8 @@ const activeAssessment = ref(null);
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'QRD', href: route('office.qrd') },
-  { label: 'Program Pelatihan', href: route('office.qrd.training-program.index') },
-  { label: props.program.name, href: route('office.qrd.training-program.show', props.program.id) }
+  { label: 'Program Pelatihan', href: route('office.qrd.manage.training-program.index') },
+  { label: props.program.name, href: route('office.qrd.manage.training-program.show', props.program.id) }
 ];
 
 const togglePhase = (phase) => {
@@ -50,7 +50,7 @@ const toggleAssessment = (assessment) => {
       <div class="mx-4 flex items-center justify-between py-3">
         <div class="flex-1"></div>
         <div class="flex space-x-3">
-          <Link :href="route('office.qrd.training-program.edit', program.uuid)">
+          <Link :href="route('office.qrd.manage.training-program.edit', program.uuid)">
             <OutlineButton type="yellow">
               <div class="flex items-center space-x-1">
                 <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

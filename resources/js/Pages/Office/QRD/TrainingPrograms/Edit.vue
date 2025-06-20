@@ -23,8 +23,8 @@ const props = defineProps({
 const breadcrumbs = [
     { label: 'Yayasan', href: route('office') },
     { label: 'QRD', href: route('office.qrd') },
-    { label: 'Program Pelatihan', href: route('office.qrd.training-program.index') },
-    { label: 'Edit', href: route('office.qrd.training-program.edit', props.program.uuid) }
+    { label: 'Program Pelatihan', href: route('office.qrd.manage.training-program.index') },
+    { label: 'Edit', href: route('office.qrd.manage.training-program.edit', props.program.uuid) }
 ];
 
 const showAssessmentModal = ref(false);
@@ -196,7 +196,7 @@ export default {
                     });
 
                     this.process = true;
-                    this.form.put(route('office.qrd.training-program.update', this.program.uuid), {
+                    this.form.put(route('office.qrd.manage.training-program.update', this.program.uuid), {
                         preserveScroll: true,
                         onSuccess: () => {
                             ElNotification({
@@ -204,7 +204,7 @@ export default {
                                 message: 'Program pelatihan berhasil diperbarui',
                                 type: 'success'
                             });
-                            this.$inertia.visit(route('office.qrd.training-program.index'));
+                            this.$inertia.visit(route('office.qrd.manage.training-program.index'));
                         },
                         onError: (errors) => {
                             // Reset all field errors
@@ -595,7 +595,7 @@ export default {
 
                     <div class="flex justify-end space-x-3">
                         <el-button 
-                            @click="$inertia.visit(route('office.qrd.training-program.index'))" 
+                            @click="$inertia.visit(route('office.qrd.manage.training-program.index'))" 
                             :disabled="process"
                         >
                             Batal

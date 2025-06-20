@@ -34,6 +34,11 @@ class Employee extends Model
         return $this->hasMany(EmployeeAssignment::class, 'employee_id', 'id');
     }
 
+    public function trainingParticipations()
+    {
+        return $this->morphMany(\App\Models\TrainingProgram\TrainingProgramSubmissionParticipant::class, 'participant');
+    }
+
     public static function getSchools()
     {
         $user = User::where('uuid',  Auth::user()->uuid)->first();

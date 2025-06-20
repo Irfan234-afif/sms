@@ -44,6 +44,7 @@ class SubmissionResource extends JsonResource
             'outstation' => $this->whenLoaded('outstation', fn() => SubOutstationResource::make($this->outstation)),
             'leave' => $this->whenLoaded('leave', fn() => SubLeaveResource::make($this->leave)),
             'resignation' => $this->whenLoaded('resignation', fn() => SubResignationResource::make($this->resignation)),
+            'training_program_submission' => $this->whenLoaded('trainingProgramSubmission', fn() => TrainingProgramSubmissionResource::make($this->trainingProgramSubmission)),
         ];
     }
 }

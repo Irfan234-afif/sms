@@ -23,12 +23,12 @@ const props = defineProps({
 const breadcrumbs = [
   { label: 'Yayasan', href: route('office') },
   { label: 'QRD', href: route('office.qrd') },
-  { label: 'Program Pelatihan', href: route('office.qrd.training-program.index') }
+  { label: 'Program Pelatihan', href: route('office.qrd.manage.training-program.index') }
 ];
 
 const deleteProgram = (program) => {
   if (confirm('Are you sure you want to delete this program?')) {
-    router.delete(route('office.qrd.training-program.destroy', program.uuid), {
+    router.delete(route('office.qrd.manage.training-program.destroy', program.uuid), {
       preserveScroll: true,
       onSuccess: () => {
         // Success handled by Inertia response
@@ -52,7 +52,7 @@ const deleteProgram = (program) => {
         </div>
         <div
           class="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
-          <Link :href="route('office.qrd.training-program.create')"
+          <Link :href="route('office.qrd.manage.training-program.create')"
             class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-2.5 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             <svg class="mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -98,7 +98,7 @@ const deleteProgram = (program) => {
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 font-medium text-gray-900">
                     <div class="flex items-center justify-end space-x-3">
-                      <Link :href="route('office.qrd.training-program.show', program.uuid)"
+                      <Link :href="route('office.qrd.manage.training-program.show', program.uuid)"
                         class="text-primary-600 hover:text-primary-900">
                       <OutlineButton type="primary">
                         <div class="flex items-center space-x-1">
@@ -113,7 +113,7 @@ const deleteProgram = (program) => {
                         </div>
                       </OutlineButton>
                       </Link>
-                      <Link :href="route('office.qrd.training-program.edit', program.uuid)"
+                      <Link :href="route('office.qrd.manage.training-program.edit', program.uuid)"
                         class="text-yellow-600 hover:text-yellow-900">
                       <OutlineButton type="yellow">
                         <div class="flex items-center space-x-1">

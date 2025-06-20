@@ -66,6 +66,7 @@ use App\Http\Controllers\Office\MyProfile\Approval\MaterialController as MyProfi
 use App\Http\Controllers\Office\MyProfile\Approval\MediaPostController as MyProfileApprovalMediaPostController;
 use App\Http\Controllers\Office\MyProfile\Approval\OutstationController as MyProfileApprovalOutstationController;
 use App\Http\Controllers\Office\MyProfile\Approval\ResignationController as MyProfileApprovalResignationController;
+use App\Http\Controllers\Office\QRD\Approval\TrainingProgramController as ApprovalTrainingProgramController;
 use App\Http\Controllers\Office\MyProfile\Approval\VehicleController as MyProfileApprovalVehicleController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\AcademicController;
 use App\Http\Controllers\Office\MyProfile\Qualitification\AttachmentController;
@@ -94,7 +95,8 @@ use App\Http\Controllers\Office\MyProfile\Submission\TrainingController as Submi
 use App\Http\Controllers\Office\MyProfile\Submission\VehicleController;
 use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
-use App\Http\Controllers\Office\QRD\TrainingProgramController;
+use App\Http\Controllers\Office\QRD\Manage\TrainingProgramController;
+use App\Http\Controllers\Office\QRD\Manage\TrainingProgramSubmissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
@@ -1071,16 +1073,77 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
             ->name('.qrd')
             ->group(function () {
                 Route::get('/', [QRDController::class, 'index']);
-                Route::prefix('training-program')
-                    ->name('.training-program')
+
+                // approval routes
+                Route::prefix('approval')
+                    ->name('.approval')
                     ->group(function () {
-                        Route::get('/', [TrainingProgramController::class, 'index'])->name('.index');
-                        Route::get('create', [TrainingProgramController::class, 'create'])->name('.create');
-                        Route::post('store', [TrainingProgramController::class, 'store'])->name('.store');
-                        Route::get('{uuid}', [TrainingProgramController::class, 'show'])->name('.show');
-                        Route::get('{uuid}/edit', [TrainingProgramController::class, 'edit'])->name('.edit');
-                        Route::put('{uuid}', [TrainingProgramController::class, 'update'])->name('.update');
-                        Route::delete('{uuid}', [TrainingProgramController::class, 'delete'])->name('.delete');
+                        // training program routes
+                        Route::prefix('training-program')
+                            ->name('.trainingProgram')
+                            ->group(function () {
+                                Route::get('/', [ApprovalTrainingProgramController::class, 'index']);
+                                Route::post('store', [ApprovalTrainingProgramController::class, 'store'])->name('.store');
+                                Route::post('update', [ApprovalTrainingProgramController::class, 'update'])->name('.update');
+                                Route::delete('delete', [ApprovalTrainingProgramController::class, 'delete'])->name('.delete');
+                            });                        
+                    });
+
+                // manage routes
+                Route::prefix('manage')
+                    ->name('.manage')
+                    ->group(function () {
+                        // training program routes
+                        Route::prefix('training-program')
+                            ->name('.training-program')
+                            ->group(function () {
+                                Route::get('/', [TrainingProgramController::class, 'index'])->name('.index');
+                                Route::get('create', [TrainingProgramController::class, 'create'])->name('.create');
+                                Route::post('store', [TrainingProgramController::class, 'store'])->name('.store');
+                                Route::get('{uuid}', [TrainingProgramController::class, 'show'])->name('.show');
+                                Route::get('{uuid}/edit', [TrainingProgramController::class, 'edit'])->name('.edit');
+                                Route::put('{uuid}', [TrainingProgramController::class, 'update'])->name('.update');
+                                Route::delete('{uuid}', [TrainingProgramController::class, 'delete'])->name('.delete');
+                            });
+                        
+                        // training program submission routes
+                        Route::prefix('training-program-submission')
+                            ->name('.training-program-submission')
+                            ->group(function () {
+                                Route::get('/', [TrainingProgramSubmissionController::class, 'index'])->name('.index');
+                                Route::get('create', [TrainingProgramSubmissionController::class, 'create'])->name('.create');
+                                Route::post('store', [TrainingProgramSubmissionController::class, 'store'])->name('.store');
+                                Route::get('{uuid}', [TrainingProgramSubmissionController::class, 'show'])->name('.show');
+                                Route::get('{uuid}/edit', [TrainingProgramSubmissionController::class, 'edit'])->name('.edit');
+                                Route::put('{uuid}', [TrainingProgramSubmissionController::class, 'update'])->name('.update');
+                                Route::delete('{uuid}', [TrainingProgramSubmissionController::class, 'destroy'])->name('.destroy');
+                                
+                                // submission actions
+                                Route::post('{uuid}/update-status', [TrainingProgramSubmissionController::class, 'updateStatus'])->name('.updateStatus');
+                                
+                                // attachment management
+                                Route::delete('{uuid}/attachment/{attachmentUuid}', [TrainingProgramSubmissionController::class, 'deleteAttachment'])->name('.deleteAttachment');
+                                
+                                // option routes for ajax calls
+                                Route::prefix('option')
+                                    ->name('.option')
+                                    ->group(function () {
+                                        Route::get('training-programs', [TrainingProgramSubmissionController::class, 'optionTrainingPrograms'])->name('.training-programs');
+                                        Route::get('participants', [TrainingProgramSubmissionController::class, 'optionParticipants'])->name('.participants');
+                                    });
+                            });
+                    });
+
+                
+                
+                // setting routes
+                Route::prefix('setting')
+                    ->name('.setting.submissionApprover')
+                    ->group(function () {
+                        Route::get('/', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'save'])->name('.save');
                     });
             });
         // finance routes
