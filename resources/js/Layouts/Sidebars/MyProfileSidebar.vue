@@ -343,6 +343,52 @@ import { Link } from '@inertiajs/vue3';
             </li>
           </ul>
         </li>
+        <li>
+          <button
+            type="button"
+            class="group flex w-full items-center rounded-lg p-2 text-xs font-medium text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            aria-controls="dropdown-activity"
+            data-collapse-toggle="dropdown-activity"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6 flex-shrink-0 text-gray-700 transition duration-75 group-hover:text-gray-800 dark:text-gray-500 dark:group-hover:text-white"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+              <path d="M12 7v5l3 3" />
+            </svg>
+            <span class="ml-3 flex-1 whitespace-nowrap text-left">Aktivitas</span>
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <ul id="dropdown-activity" class="hidden space-y-2 py-2">
+            <li>
+              <Link
+                :href="route('office.myProfile.activity.trainingProgram.index')"
+                class="group flex w-full items-center rounded-lg p-2 pl-11 text-xs font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >Aktivitas Pelatihan</Link
+              >
+            </li>
+          </ul>
+        </li>
       </ul>
       <ul class="mt-5 space-y-2 border-t border-gray-200 pt-5 dark:border-gray-700">
         <li>

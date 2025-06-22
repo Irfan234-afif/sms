@@ -14,6 +14,8 @@ return new class extends Migration
             $table->foreignId('phase_module_id')->constrained('phase_modules')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
+            $table->enum('calculation_method', ['AVERAGE', 'SUM'])->default('AVERAGE');
+            $table->integer('passing_score')->default(70);
             $table->string('status')->default('active');
             $table->integer('order')->default(0);
             $table->timestamps();

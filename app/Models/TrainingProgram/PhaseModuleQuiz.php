@@ -17,17 +17,20 @@ class PhaseModuleQuiz extends Model
         'title',
         'description',
         'passing_score',
-        'time_limit',
         'status',
+    ];
+
+    protected $casts = [
+        'passing_score' => 'integer',
     ];
 
     public function module(): BelongsTo
     {
-        return $this->belongsTo(PhaseModule::class);
+        return $this->belongsTo(PhaseModule::class, 'phase_module_id');
     }
 
     public function questions(): HasMany
     {
-        return $this->hasMany(PhaseModuleQuizQuestion::class);
+        return $this->hasMany(PhaseModuleQuizQuestion::class, 'phase_module_quiz_id')->orderBy('order');
     }
 }

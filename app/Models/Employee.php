@@ -34,6 +34,16 @@ class Employee extends Model
         return $this->hasMany(EmployeeAssignment::class, 'employee_id', 'id');
     }
 
+    public function area()
+    {
+        return $this->hasOneThrough(Area::class, EmployeeAssignment::class, 'employee_id', 'id', 'id', 'area_id');
+    }
+
+    public function position()
+    {
+        return $this->hasOneThrough(Position::class, EmployeeAssignment::class, 'employee_id', 'id', 'id', 'position_id');
+    }
+
     public function trainingParticipations()
     {
         return $this->morphMany(\App\Models\TrainingProgram\TrainingProgramSubmissionParticipant::class, 'participant');

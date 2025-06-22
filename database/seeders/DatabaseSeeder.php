@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DummySchoolPlacementActivitySeeder::class);
         $this->call(DummySchoolTeachingProgramActivitySeeder::class);
         $this->call(TrainingProgramSeeder::class);
+        $this->call(TrainingProgramActivitySeeder::class);
     }
 }

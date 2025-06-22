@@ -53,7 +53,7 @@ const submitSubmission = (submission) => {
 const cancelSubmission = (submission) => {
   if (confirm('Apakah Anda yakin ingin membatalkan pengajuan ini?')) {
     router.post(route('office.qrd.manage.training-program-submission.updateStatus', submission.uuid), {
-      status: 'CANCEL'
+      status: 'CANCELLED'
     }, {
       preserveScroll: true,
       onSuccess: () => {
@@ -61,17 +61,6 @@ const cancelSubmission = (submission) => {
       }
     });
   }
-};
-
-const getStatusColor = (status) => {
-  const colors = {
-    'draft': 'gray',
-    'submitted': 'blue',
-    'approved': 'green',
-    'rejected': 'red',
-    'cancelled': 'yellow'
-  };
-  return colors[status] || 'gray';
 };
 
 const getTrainingTypeLabel = (type) => {

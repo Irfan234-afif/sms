@@ -45,7 +45,7 @@ class TrainingProgramController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Office/QRD/TrainingPrograms/Create');
+        return Inertia::render('Office/QRD/TrainingPrograms/Form');
     }
 
     /**
@@ -86,7 +86,21 @@ class TrainingProgramController extends Controller
                             // Handle quizzes
                             if (isset($moduleData['quizzes'])) {
                                 foreach ($moduleData['quizzes'] as $quizData) {
-                                    $module->quizzes()->create($quizData);
+                                    $quiz = $module->quizzes()->create(Arr::except($quizData, ['questions']));
+                                    
+                                    // Handle questions
+                                    if (isset($quizData['questions'])) {
+                                        foreach ($quizData['questions'] as $questionData) {
+                                            $question = $quiz->questions()->create(Arr::except($questionData, ['options']));
+                                            
+                                            // Handle options
+                                            if (isset($questionData['options'])) {
+                                                foreach ($questionData['options'] as $optionData) {
+                                                    $question->options()->create($optionData);
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
 
@@ -156,8 +170,12 @@ class TrainingProgramController extends Controller
     public function edit($uuid)
     {
         $trainingProgram = TrainingProgram::where('uuid', $uuid)->firstOrFail();
-        $trainingProgram->load(['phases.modules.materials', 'phases.modules.quizzes', 'phases.modules.assessments.groupIndicators.indicators.sessions.rubrics']);
-        return Inertia::render('Office/QRD/TrainingPrograms/Edit', [
+        $trainingProgram->load([
+            'phases.modules.materials', 
+            'phases.modules.quizzes.questions.options', 
+            'phases.modules.assessments.groupIndicators.indicators.sessions.rubrics'
+        ]);
+        return Inertia::render('Office/QRD/TrainingPrograms/Form', [
             'program' => $trainingProgram,
             'phases' => $trainingProgram->phases
         ]);
@@ -233,9 +251,49 @@ class TrainingProgramController extends Controller
                                 foreach ($moduleData['quizzes'] as $quizData) {
                                     $quiz = $module->quizzes()->updateOrCreate(
                                         ['id' => $quizData['id'] ?? null],
-                                        Arr::except($quizData, ['id'])
+                                        Arr::except($quizData, ['id', 'questions'])
                                     );
                                     $updatedQuizIds[] = $quiz->id;
+
+                                    // Handle questions
+                                    if (isset($quizData['questions'])) {
+                                        $existingQuestionIds = $quiz->questions()->pluck('id')->toArray();
+                                        $updatedQuestionIds = [];
+
+                                        foreach ($quizData['questions'] as $questionData) {
+                                            $question = $quiz->questions()->updateOrCreate(
+                                                ['id' => $questionData['id'] ?? null],
+                                                Arr::except($questionData, ['id', 'options'])
+                                            );
+                                            $updatedQuestionIds[] = $question->id;
+
+                                            // Handle options
+                                            if (isset($questionData['options'])) {
+                                                $existingOptionIds = $question->options()->pluck('id')->toArray();
+                                                $updatedOptionIds = [];
+
+                                                foreach ($questionData['options'] as $optionData) {
+                                                    $option = $question->options()->updateOrCreate(
+                                                        ['id' => $optionData['id'] ?? null],
+                                                        Arr::except($optionData, ['id'])
+                                                    );
+                                                    $updatedOptionIds[] = $option->id;
+                                                }
+
+                                                // Delete options not in the updated list
+                                                $optionsToDelete = array_diff($existingOptionIds, $updatedOptionIds);
+                                                if (!empty($optionsToDelete)) {
+                                                    $question->options()->whereIn('id', $optionsToDelete)->delete();
+                                                }
+                                            }
+                                        }
+
+                                        // Delete questions not in the updated list
+                                        $questionsToDelete = array_diff($existingQuestionIds, $updatedQuestionIds);
+                                        if (!empty($questionsToDelete)) {
+                                            $quiz->questions()->whereIn('id', $questionsToDelete)->delete();
+                                        }
+                                    }
                                 }
 
                                 // Delete quizzes not in the updated list

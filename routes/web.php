@@ -97,6 +97,7 @@ use App\Http\Controllers\Office\QRD\QRDController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\Office\QRD\Manage\TrainingProgramController;
 use App\Http\Controllers\Office\QRD\Manage\TrainingProgramSubmissionController;
+use App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController as QRDSettingSubmissionApproverController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\PublicController;
 use App\Http\Controllers\School\Activity\AdmissionStudentController as SchoolActivityAdmissionStudentController;
@@ -131,6 +132,8 @@ use App\Http\Controllers\School\TeachingProgram\SubjectThresholdController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Office\QRD\Activity\TrainingProgramActivityController as QRDTrainingProgramActivityController;
+use App\Http\Controllers\Office\MyProfile\Activity\TrainingProgramActivityController as MyProfileTrainingProgramActivityController;
 
 //report
 Route::prefix('/hhk')->group(function () {
@@ -650,9 +653,37 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 Route::delete('delete', [CommunityInvolvementController::class, 'delete'])
                                     ->name('.delete');
                             });
-                    });
-            });
-        // icc routes
+                                         });
+                 
+                 // activity routes
+                 Route::prefix('activity')
+                     ->name('.activity')
+                     ->group(function () {
+                         // training program activity routes for participants
+                         Route::prefix('training-program')
+                             ->name('.trainingProgram')
+                             ->group(function () {
+                                 Route::get('/', [MyProfileTrainingProgramActivityController::class, 'index'])->name('.index');
+                                 Route::get('{activityUuid}', [MyProfileTrainingProgramActivityController::class, 'show'])->name('.show');
+                                 Route::get('{activityUuid}/learn', [MyProfileTrainingProgramActivityController::class, 'learn'])->name('.learn');
+                                 
+                                 // learning interface routes
+                                 Route::post('mark-material-viewed', [MyProfileTrainingProgramActivityController::class, 'markMaterialViewed'])->name('.markMaterialViewed');
+                                 Route::post('mark-material-completed', [MyProfileTrainingProgramActivityController::class, 'markMaterialCompleted'])->name('.markMaterialCompleted');
+                                 
+                                 Route::get('{activityUuid}/quiz/{quizId}/take', [MyProfileTrainingProgramActivityController::class, 'takeQuiz'])->name('.takeQuiz');
+                                 Route::post('save-quiz-answers', [MyProfileTrainingProgramActivityController::class, 'saveQuizAnswers'])->name('.saveQuizAnswers');
+                                 Route::post('{activityUuid}/quiz/{quizId}/submit', [MyProfileTrainingProgramActivityController::class, 'submitQuiz'])->name('.submitQuiz');
+                                 Route::get('{activityUuid}/quiz-result/{attemptId}', [MyProfileTrainingProgramActivityController::class, 'viewQuizResult'])->name('.viewQuizResult');
+                                 
+                                 Route::get('{activityUuid}/assessment/{assessmentId}', [MyProfileTrainingProgramActivityController::class, 'viewAssessment'])->name('.viewAssessment');
+                                 
+                                 Route::get('{activityUuid}/certificate', [MyProfileTrainingProgramActivityController::class, 'certificate'])->name('.certificate');
+                                 Route::get('{activityUuid}/certificate/download', [MyProfileTrainingProgramActivityController::class, 'downloadCertificate'])->name('.downloadCertificate');
+                             });
+                     });
+             });
+         // icc routes
         Route::prefix('icc')
             ->name('.icc')
             ->group(function () {
@@ -1068,6 +1099,19 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                         Route::post('save', [SubmissionApproverController::class, 'save'])->name('.save');
                     });
             });
+        // finance routes
+        Route::prefix('finance')
+            ->name('.finance')
+            ->group(function () {
+                Route::get('/', [FinanceController::class, 'index']);
+                // activity routes
+                Route::prefix('activity/admission-student')
+                    ->name('.activity.admissionStudent')
+                    ->group(function () {
+                        Route::get('/', [FinanceActivityAdmissionStudentController::class, 'index']);
+                        Route::get('{registration_number}/detail', [FinanceActivityAdmissionStudentController::class, 'detail'])->name('.detail');
+                    });
+            });
         // qrd routes
         Route::prefix('qrd')
             ->name('.qrd')
@@ -1124,41 +1168,83 @@ Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])
                                 // attachment management
                                 Route::delete('{uuid}/attachment/{attachmentUuid}', [TrainingProgramSubmissionController::class, 'deleteAttachment'])->name('.deleteAttachment');
                                 
-                                // option routes for ajax calls
-                                Route::prefix('option')
-                                    ->name('.option')
-                                    ->group(function () {
-                                        Route::get('training-programs', [TrainingProgramSubmissionController::class, 'optionTrainingPrograms'])->name('.training-programs');
-                                        Route::get('participants', [TrainingProgramSubmissionController::class, 'optionParticipants'])->name('.participants');
-                                    });
+                                                                 // option routes for ajax calls
+                                 Route::prefix('option')
+                                     ->name('.option')
+                                     ->group(function () {
+                                         Route::get('training-programs', [TrainingProgramSubmissionController::class, 'optionTrainingPrograms'])->name('.training-programs');
+                                         Route::get('participants', [TrainingProgramSubmissionController::class, 'optionParticipants'])->name('.participants');
+                                     });
+
                             });
                     });
 
-                
-                
+                // activity routes
+                Route::prefix('activity')
+                    ->name('.activity')
+                    ->group(function () {
+                        // training program activity routes
+                        Route::prefix('training-program-activity')
+                            ->name('.training-program-activity')
+                            ->group(function () {
+                                // AJAX endpoints for data fetching
+                                Route::get('ajax/training-programs', [QRDTrainingProgramActivityController::class, 'getTrainingPrograms'])->name('.ajax.trainingPrograms');
+                                Route::get('ajax/approved-submissions', [QRDTrainingProgramActivityController::class, 'getApprovedSubmissions'])->name('.ajax.approvedSubmissions');
+                                Route::get('ajax/available-participants', [QRDTrainingProgramActivityController::class, 'getAvailableParticipants'])->name('.ajax.availableParticipants');
+                                
+                                Route::get('/', [QRDTrainingProgramActivityController::class, 'index'])->name('.index');
+                                Route::get('create', [QRDTrainingProgramActivityController::class, 'create'])->name('.create');
+                                Route::post('store', [QRDTrainingProgramActivityController::class, 'store'])->name('.store');
+                                Route::get('{uuid}', [QRDTrainingProgramActivityController::class, 'show'])->name('.show');
+                                Route::get('{uuid}/edit', [QRDTrainingProgramActivityController::class, 'edit'])->name('.edit');
+                                Route::put('{uuid}', [QRDTrainingProgramActivityController::class, 'update'])->name('.update');
+                                Route::delete('{uuid}', [QRDTrainingProgramActivityController::class, 'destroy'])->name('.destroy');
+                                
+                                // participant management
+                                Route::get('{uuid}/add-participants', [QRDTrainingProgramActivityController::class, 'addParticipants'])->name('.addParticipants');
+                                Route::post('{uuid}/add-participants', [QRDTrainingProgramActivityController::class, 'storeParticipants'])->name('.storeParticipants');
+                                Route::delete('{uuid}/participant/{participantUuid}', [QRDTrainingProgramActivityController::class, 'removeParticipant'])->name('.removeParticipant');
+                                Route::get('{uuid}/participant/{participantUuid}/detail', [QRDTrainingProgramActivityController::class, 'participantDetail'])->name('.participantDetail');
+                                
+                                // assessment management
+                                Route::get('{uuid}/participant/{participantUuid}/assessment/{assessmentId}/input', [QRDTrainingProgramActivityController::class, 'inputAssessment'])->name('.inputAssessment');
+                                Route::post('{uuid}/participant/{participantUuid}/assessment/{assessmentId}/store', [QRDTrainingProgramActivityController::class, 'storeAssessment'])->name('.storeAssessment');
+                                
+                                // quiz grading management
+                                Route::get('{uuid}/participant/{participantUuid}/quiz-attempt/{attemptId}/grade', [QRDTrainingProgramActivityController::class, 'gradeQuiz'])->name('.gradeQuiz');
+                                Route::post('{uuid}/participant/{participantUuid}/quiz-attempt/{attemptId}/grade', [QRDTrainingProgramActivityController::class, 'storeQuizGrade'])->name('.storeQuizGrade');
+                                
+                                // certificate management
+                                Route::post('{uuid}/participant/{participantUuid}/issue-certificate', [QRDTrainingProgramActivityController::class, 'issueCertificate'])->name('.issueCertificate');
+                                Route::post('{uuid}/participant/{participantUuid}/revoke-certificate', [QRDTrainingProgramActivityController::class, 'revokeCertificate'])->name('.revokeCertificate');
+                                Route::get('{uuid}/participant/{participantUuid}/certificate', [QRDTrainingProgramActivityController::class, 'viewParticipantCertificate'])->name('.viewParticipantCertificate');
+                                Route::get('{uuid}/participant/{participantUuid}/certificate/download', [QRDTrainingProgramActivityController::class, 'downloadParticipantCertificate'])->name('.downloadParticipantCertificate');
+                                
+                                // participant management
+                                Route::delete('{uuid}/participant/{participantUuid}/remove', [QRDTrainingProgramActivityController::class, 'removeParticipant'])->name('.removeParticipant');
+                                
+                                // status management
+                                Route::post('{uuid}/update-status', [QRDTrainingProgramActivityController::class, 'updateStatus'])->name('.updateStatus');
+                                
+                                // create from submission
+                                Route::post('create-from-submission/{submissionId}', [QRDTrainingProgramActivityController::class, 'createFromSubmission'])->name('.createFromSubmission');
+                                
+                                // option routes
+                                Route::get('option-participants', [QRDTrainingProgramActivityController::class, 'optionParticipants'])->name('.optionParticipants');
+                            });
+                    });
+
                 // setting routes
                 Route::prefix('setting')
                     ->name('.setting.submissionApprover')
                     ->group(function () {
-                        Route::get('/', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'index']);
-                        Route::get('get-submission-approver', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
-                        Route::get('option-employee', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
-                        Route::post('save', [\App\Http\Controllers\Office\QRD\Setting\SubmissionApproverController::class, 'save'])->name('.save');
+                        Route::get('/', [QRDSettingSubmissionApproverController::class, 'index']);
+                        Route::get('get-submission-approver', [QRDSettingSubmissionApproverController::class, 'getSubmissionApprover'])->name('.getSubmissionApprover');
+                        Route::get('option-employee', [QRDSettingSubmissionApproverController::class, 'optionEmployee'])->name('.optionEmployee');
+                        Route::post('save', [QRDSettingSubmissionApproverController::class, 'save'])->name('.save');
                     });
-            });
-        // finance routes
-        Route::prefix('finance')
-            ->name('.finance')
-            ->group(function () {
-                Route::get('/', [FinanceController::class, 'index']);
-                // activity routes
-                Route::prefix('activity/admission-student')
-                    ->name('.activity.admissionStudent')
-                    ->group(function () {
-                        Route::get('/', [FinanceActivityAdmissionStudentController::class, 'index']);
-                        Route::get('{registration_number}/detail', [FinanceActivityAdmissionStudentController::class, 'detail'])->name('.detail');
-                    });
-            });
+                                 
+                             });
     });
 // school routes
 Route::middleware(['auth', 'verified', 'role:System Admin|Site Admin|Employee'])

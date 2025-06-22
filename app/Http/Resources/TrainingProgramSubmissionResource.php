@@ -241,7 +241,7 @@ class TrainingProgramSubmissionResource extends JsonResource
             'can_edit' => $this->submission->status === 'DRAFT',
             'can_submit' => $this->submission->status === 'DRAFT',
             'can_cancel' => in_array($this->submission->status, ['DRAFT', 'PENDING']),
-            'can_delete' => in_array($this->submission->status, ['DRAFT', 'CANCEL']),
+            'can_delete' => in_array($this->submission->status, ['DRAFT', 'CANCELLED']),
             
             // Summary information
             'summary' => [

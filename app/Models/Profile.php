@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\GenerateUuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Profile extends Model
 {
-    use GenerateUuid, SoftDeletes;
+    use HasFactory, GenerateUuid, SoftDeletes;
 
     protected $fillable = [
         'national_id',

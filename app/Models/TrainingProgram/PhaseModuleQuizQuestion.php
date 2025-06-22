@@ -15,18 +15,26 @@ class PhaseModuleQuizQuestion extends Model
     protected $fillable = [
         'phase_module_quiz_id',
         'question',
-        'type', // multiple_choice, true_false, essay
+        'type', // multiple_choice, multiple_select, true_false, essay
         'points',
         'order',
+        'explanation',
+        'correct_answer',
+        'status',
+    ];
+
+    protected $casts = [
+        'points' => 'integer',
+        'order' => 'integer',
     ];
 
     public function quiz(): BelongsTo
     {
-        return $this->belongsTo(PhaseModuleQuiz::class);
+        return $this->belongsTo(PhaseModuleQuiz::class, 'phase_module_quiz_id');
     }
 
     public function options(): HasMany
     {
-        return $this->hasMany(PhaseModuleQuizQuestionOption::class);
+        return $this->hasMany(PhaseModuleQuizQuestionOption::class, 'phase_module_quiz_question_id');
     }
 }

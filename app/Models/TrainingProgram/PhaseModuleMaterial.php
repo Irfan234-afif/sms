@@ -23,6 +23,6 @@ class PhaseModuleMaterial extends Model
 
     public function module(): BelongsTo
     {
-        return $this->belongsTo(PhaseModule::class);
+        return $this->belongsTo(PhaseModule::class, 'phase_module_id');
     }
 }

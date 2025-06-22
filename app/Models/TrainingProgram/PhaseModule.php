@@ -22,7 +22,7 @@ class PhaseModule extends Model
 
     public function phase(): BelongsTo
     {
-        return $this->belongsTo(TrainingProgramPhase::class);
+        return $this->belongsTo(TrainingProgramPhase::class, 'training_program_phase_id');
     }
 
     public function materials(): HasMany

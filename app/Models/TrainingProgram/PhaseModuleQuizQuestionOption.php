@@ -16,10 +16,16 @@ class PhaseModuleQuizQuestionOption extends Model
         'option_text',
         'is_correct',
         'order',
+        'explanation',
+    ];
+
+    protected $casts = [
+        'is_correct' => 'boolean',
+        'order' => 'integer',
     ];
 
     public function question(): BelongsTo
     {
-        return $this->belongsTo(PhaseModuleQuizQuestion::class, 'quiz_question_id');
+        return $this->belongsTo(PhaseModuleQuizQuestion::class, 'phase_module_quiz_question_id');
     }
 }

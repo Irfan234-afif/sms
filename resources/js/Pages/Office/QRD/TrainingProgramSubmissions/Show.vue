@@ -96,7 +96,7 @@ const submitSubmission = () => {
 const cancelSubmission = () => {
     if (confirm('Apakah Anda yakin ingin membatalkan pengajuan ini?')) {
         router.post(route('office.qrd.manage.training-program-submission.updateStatus', props.submission.uuid), {
-            status: 'CANCEL'
+            status: 'CANCELLED'
         }, {
             preserveScroll: true,
             onSuccess: () => {

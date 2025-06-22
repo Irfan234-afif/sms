@@ -23,4 +23,10 @@ class AssessmentIndicatorSessionRubric extends Model
     {
         return $this->belongsTo(AssessmentIndicatorSession::class);
     }
+
+    // Alias for easier access
+    public function session(): BelongsTo
+    {
+        return $this->assessmentIndicatorSession();
+    }
 }
